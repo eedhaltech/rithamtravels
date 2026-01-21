@@ -1,0 +1,11 @@
+{% extends "notifications/email_base.html" %}
+
+{% block title %}Booking Confirmation - {{ booking.booking_number }} | {{ company_name }}{% endblock %}
+
+{% block content %}
+<tr>
+    <td style="padding: 0;">
+        {% include "notifications/booking_summary_card.html" %}
+    </td>
+</tr>
+{% endblock %}

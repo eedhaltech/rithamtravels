@@ -1,0 +1,416 @@
+{% extends 'base.html' %}
+
+{% block title %}Coorg - Scotland of India - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .destination-hero {
+        background: linear-gradient(135deg, rgba(139, 69, 19, 0.8), rgba(160, 82, 45, 0.8));
+        position: relative;
+        height: 70vh;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .destination-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+    
+    .destination-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(139, 69, 19, 0.7), rgba(160, 82, 45, 0.7));
+        z-index: 2;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        padding: 0 20px;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+    }
+    
+    .hero-description {
+        font-size: 1.2rem;
+        opacity: 0.8;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn-hero {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        font-size: 1.1rem;
+    }
+    
+    .btn-hero-primary {
+        background: white;
+        color: #8b4513;
+    }
+    
+    .btn-hero-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+        color: #8b4513;
+    }
+    
+    .btn-hero-outline {
+        border: 2px solid white;
+        color: white;
+        background: transparent;
+    }
+    
+    .btn-hero-outline:hover {
+        background: white;
+        color: #8b4513;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+    }
+    
+    .content-section {
+        margin-top: -50px;
+        position: relative;
+        z-index: 4;
+    }
+    
+    .content-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .content-card .card-header {
+        background: linear-gradient(135deg, #8b4513, #a0522d);
+        color: white;
+        border: none;
+        padding: 20px 30px;
+        font-weight: 600;
+    }
+    
+    .content-card .card-body {
+        padding: 30px;
+    }
+    
+    .attraction-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 25px;
+    }
+    
+    .attraction-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        text-align: center;
+    }
+    
+    .attraction-item:hover {
+        background: rgba(139, 69, 19, 0.1);
+        transform: translateY(-5px);
+        border-color: #8b4513;
+        box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
+    }
+    
+    .attraction-icon {
+        font-size: 2.5rem;
+        color: #8b4513;
+        margin-bottom: 15px;
+    }
+    
+    .attraction-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    
+    .attraction-description {
+        color: #6c757d;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .info-highlight {
+        background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(160, 82, 45, 0.1));
+        border: 1px solid rgba(139, 69, 19, 0.2);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    
+    .info-highlight i {
+        font-size: 2rem;
+        color: #8b4513;
+        margin-bottom: 15px;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(160, 82, 45, 0.1));
+        border: 2px solid #8b4513;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+    
+    .btn-cta {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+    }
+    
+    .btn-primary-cta {
+        background: linear-gradient(135deg, #8b4513, #a0522d);
+        color: white;
+    }
+    
+    .btn-primary-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(139, 69, 19, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-cta {
+        border: 2px solid #8b4513;
+        color: #8b4513;
+        background: white;
+    }
+    
+    .btn-outline-cta:hover {
+        background: #8b4513;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+        
+        .hero-description {
+            font-size: 1rem;
+        }
+        
+        .destination-hero {
+            height: 50vh;
+            min-height: 400px;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn-hero {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style>
+{% endblock %}
+{% load static %}
+{% block content %}
+<!-- Destination Hero -->
+<div class="destination-hero">
+    <img src="{% static 'tour/CoorgKarnataka.jpg' %}" class="destination-hero-bg" alt="Coorg Coffee Plantations">
+    <div class="destination-hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">Coorg</h1>
+        <p class="hero-subtitle">Scotland of India</p>
+        <p class="hero-description">Discover the aromatic coffee plantations, misty hills, and rich cultural heritage of Karnataka's most enchanting hill station</p>
+        <div class="hero-buttons">
+            <a href="{% url 'tour_planner' %}" class="btn-hero btn-hero-primary">
+                <i class="bi bi-calendar-check"></i>
+                <span>Book Your Trip</span>
+            </a>
+            <a href="{% url 'contact_us' %}" class="btn-hero btn-hero-outline">
+                <i class="bi bi-chat-dots"></i>
+                <span>Get Quote</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="container">
+    <div class="content-section">
+        <!-- Overview -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-info-circle me-2"></i>About Coorg</h4>
+            </div>
+            <div class="card-body">
+                <p class="mb-4">Also known as Kodagu, Coorg is a picturesque hill station in Karnataka, famous for its coffee plantations, spice gardens, and breathtaking landscapes. At an altitude of 1,525 meters, it offers a perfect blend of natural beauty and cultural richness.</p>
+                
+                <div class="info-highlight">
+                    <i class="bi bi-cup-hot"></i>
+                    <h6>Coffee Capital of India</h6>
+                    <p class="mb-0">Home to some of India's finest coffee estates and the birthplace of Indian coffee culture</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Attractions -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-camera me-2"></i>Top Attractions</h4>
+            </div>
+            <div class="card-body">
+                <div class="attraction-grid">
+                    <div class="attraction-item">
+                        <i class="bi bi-cup-hot attraction-icon"></i>
+                        <h6 class="attraction-title">Coffee Plantations</h6>
+                        <p class="attraction-description">Sprawling coffee estates offering guided tours and fresh coffee tasting experiences</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-water attraction-icon"></i>
+                        <h6 class="attraction-title">Abbey Falls</h6>
+                        <p class="attraction-description">Spectacular waterfall cascading from 70 feet amidst lush coffee and spice plantations</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-mountain attraction-icon"></i>
+                        <h6 class="attraction-title">Raja's Seat</h6>
+                        <p class="attraction-description">Scenic viewpoint offering panoramic views of misty hills and beautiful sunsets</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-tree attraction-icon"></i>
+                        <h6 class="attraction-title">Dubare Elephant Camp</h6>
+                        <p class="attraction-description">Interactive elephant camp where you can feed, bathe, and learn about these gentle giants</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-building attraction-icon"></i>
+                        <h6 class="attraction-title">Madikeri Fort</h6>
+                        <p class="attraction-description">Historic fort built by Muddu Raja in 1681, now housing a museum and palace</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-water attraction-icon"></i>
+                        <h6 class="attraction-title">Talakaveri</h6>
+                        <p class="attraction-description">Sacred birthplace of River Kaveri with a beautiful temple and mountain views</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Best Time to Visit -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-calendar-event me-2"></i>Best Time to Visit</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-sun"></i>
+                            <h6>Summer (Mar-May)</h6>
+                            <p class="mb-0">Pleasant weather perfect for coffee plantation tours and outdoor activities</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-cloud-rain"></i>
+                            <h6>Monsoon (Jun-Sep)</h6>
+                            <p class="mb-0">Lush green landscapes and waterfalls at their magnificent best</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-snow"></i>
+                            <h6>Winter (Oct-Feb)</h6>
+                            <p class="mb-0">Cool and misty weather, ideal for sightseeing and coffee estate walks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h4 class="mb-3"><i class="bi bi-rocket-takeoff me-2"></i>Ready to Explore Coorg?</h4>
+            <p class="text-muted mb-4">Experience the aroma of coffee and the beauty of misty hills with our carefully curated Coorg tour packages!</p>
+            <div class="cta-buttons">
+                <a href="{% url 'tour_planner' %}" class="btn-cta btn-primary-cta">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Book Coorg Trip</span>
+                </a>
+                <a href="{% url 'contact_us' %}" class="btn-cta btn-outline-cta">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Get Custom Quote</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,403 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .payment-container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 40px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    
+    .payment-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .payment-header h1 {
+        color: var(--primary-color);
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    
+    .payment-header p {
+        color: var(--text-color);
+        font-size: 16px;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 8px;
+    }
+    
+    .form-control, .form-select {
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+    }
+    
+    .captcha-box {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: var(--primary-color);
+        letter-spacing: 5px;
+        border: 2px dashed var(--primary-color);
+    }
+    
+    .btn-payment {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border: none;
+        color: white;
+        padding: 15px 40px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 18px;
+        width: 100%;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+    
+    .btn-payment:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        color: white;
+    }
+    
+    .booking-info {
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .booking-info h6 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+    
+    .amount-suggestion {
+        color: var(--secondary-color);
+        font-weight: 600;
+        margin-top: 5px;
+    }
+    
+    .alert {
+        border-radius: 10px;
+        border: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1><i class="bi bi-credit-card-2-front"></i> Payment</h1>
+            <p>Process your advance / partial / full payment online here!</p>
+        </div>
+        
+        <div id="alertContainer"></div>
+        
+        <form id="paymentForm">
+            {% csrf_token %}
+            
+            <div class="mb-4">
+                <label for="booking_number" class="form-label">Booking Number <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="booking_number" name="booking_number" required placeholder="Enter your booking number">
+                <small class="text-muted">Enter your 8-digit booking number</small>
+            </div>
+            
+            <div id="bookingInfo" class="booking-info" style="display: none;">
+                <h6><i class="bi bi-info-circle me-2"></i>Booking Information</h6>
+                <div id="bookingDetails"></div>
+                <div class="amount-suggestion" id="outstandingAmount"></div>
+            </div>
+            
+            <div class="mb-4">
+                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" name="name" required placeholder="Enter your full name">
+            </div>
+            
+            <div class="mb-4">
+                <label for="mobile" class="form-label">Mobile Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="mobile" name="mobile" required placeholder="Enter your mobile number" pattern="[0-9]{10}">
+            </div>
+            
+            <div class="mb-4">
+                <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email address">
+            </div>
+            
+            <div class="mb-4">
+                <label for="amount" class="form-label">Amount (₹) <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="amount" name="amount" required placeholder="Enter payment amount" step="0.01" min="1">
+                <small class="text-muted" id="amountHint">Enter the amount you want to pay</small>
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label">Enter Code <span class="text-danger">*</span></label>
+                <div class="captcha-box mb-3" id="captchaDisplay">
+                    <span id="captchaCode"></span>
+                </div>
+                <input type="text" class="form-control" id="captcha" name="captcha" required placeholder="Enter the code shown above" maxlength="4">
+                <button type="button" class="btn btn-link p-0 mt-2" onclick="generateCaptcha()">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh Code
+                </button>
+            </div>
+            
+            <button type="submit" class="btn btn-payment">
+                <i class="bi bi-lock-fill me-2"></i> Process to Payment
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Razorpay Checkout Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+let captchaCode = '';
+let bookingData = null;
+
+// Generate captcha
+function generateCaptcha() {
+    captchaCode = Math.floor(1000 + Math.random() * 9000).toString();
+    document.getElementById('captchaCode').textContent = captchaCode;
+}
+
+// Initialize captcha on page load
+generateCaptcha();
+
+// Validate booking number
+document.getElementById('booking_number').addEventListener('blur', function() {
+    const bookingNumber = this.value.trim();
+    if (bookingNumber.length === 8) {
+        validateBooking(bookingNumber);
+    } else {
+        hideBookingInfo();
+    }
+});
+
+function validateBooking(bookingNumber) {
+    fetch('/api/bookings/validate-payment/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({ booking_number: bookingNumber })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.exists) {
+            bookingData = data;
+            showBookingInfo(data);
+            // Auto-fill form fields
+            document.getElementById('name').value = data.name || '';
+            document.getElementById('email').value = data.email || '';
+            document.getElementById('mobile').value = data.phone || '';
+            // Set suggested amount
+            if (data.outstanding_amount > 0) {
+                document.getElementById('amount').value = data.outstanding_amount.toFixed(2);
+                document.getElementById('amountHint').textContent = `Outstanding amount: ₹${data.outstanding_amount.toFixed(2)}`;
+            }
+        } else {
+            hideBookingInfo();
+            showAlert('Booking not found. Please check your booking number.', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        hideBookingInfo();
+    });
+}
+
+function showBookingInfo(data) {
+    const bookingInfo = document.getElementById('bookingInfo');
+    const bookingDetails = document.getElementById('bookingDetails');
+    const outstandingAmount = document.getElementById('outstandingAmount');
+    
+    bookingDetails.innerHTML = `
+        <p class="mb-1"><strong>Name:</strong> ${data.name}</p>
+        <p class="mb-1"><strong>Total Amount:</strong> ₹${data.total_amount.toFixed(2)}</p>
+        <p class="mb-1"><strong>Total Paid:</strong> ₹${data.total_paid.toFixed(2)}</p>
+        <p class="mb-0"><strong>Status:</strong> <span class="badge bg-info">${data.status}</span></p>
+    `;
+    
+    if (data.outstanding_amount > 0) {
+        outstandingAmount.innerHTML = `<i class="bi bi-info-circle me-1"></i>Outstanding Amount: ₹${data.outstanding_amount.toFixed(2)}`;
+    } else {
+        outstandingAmount.innerHTML = '<i class="bi bi-check-circle me-1"></i>No outstanding amount';
+    }
+    
+    bookingInfo.style.display = 'block';
+}
+
+function hideBookingInfo() {
+    document.getElementById('bookingInfo').style.display = 'none';
+    bookingData = null;
+}
+
+function showAlert(message, type) {
+    const alertContainer = document.getElementById('alertContainer');
+    alertContainer.innerHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+}
+
+// Form submission
+document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        booking_number: document.getElementById('booking_number').value.trim(),
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('mobile').value.trim(),
+        amount: parseFloat(document.getElementById('amount').value),
+        captcha: document.getElementById('captcha').value.trim(),
+        captcha_code: captchaCode
+    };
+    
+    // Validate captcha
+    if (formData.captcha !== captchaCode) {
+        showAlert('Invalid captcha code. Please try again.', 'danger');
+        generateCaptcha();
+        document.getElementById('captcha').value = '';
+        return;
+    }
+    
+    // Validate amount
+    if (formData.amount <= 0) {
+        showAlert('Please enter a valid amount.', 'danger');
+        return;
+    }
+    
+    // If booking data exists, validate amount
+    if (bookingData && formData.amount > bookingData.outstanding_amount) {
+        showAlert(`Amount cannot exceed outstanding amount of ₹${bookingData.outstanding_amount.toFixed(2)}`, 'danger');
+        return;
+    }
+    
+    // Process payment
+    processPayment(formData);
+});
+
+function processPayment(formData) {
+    // Show loading state
+    const submitBtn = document.querySelector('.btn-payment');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+    
+    fetch('/api/bookings/process-payment/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            showAlert(data.error, 'danger');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        } else {
+            // Initialize Razorpay
+            const razorpayKey = '{{ RAZORPAY_KEY_ID }}';
+            const options = {
+                key: razorpayKey,
+                amount: data.amount,
+                currency: data.currency,
+                name: 'Ritham Tours & Travels',
+                description: `Payment for Booking ${data.booking_number}`,
+                order_id: data.order_id,
+                handler: function(response) {
+                    // Payment successful
+                    handlePaymentSuccess(response, data);
+                },
+                prefill: {
+                    name: formData.name,
+                    email: formData.email,
+                    contact: formData.phone
+                },
+                theme: {
+                    color: '#2563eb'
+                },
+                modal: {
+                    ondismiss: function() {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }
+                }
+            };
+            
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('An error occurred. Please try again.', 'danger');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    });
+}
+
+function handlePaymentSuccess(razorpayResponse, paymentData) {
+    // Send payment details to server
+    const paymentDetails = {
+        razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+        razorpay_order_id: razorpayResponse.razorpay_order_id,
+        razorpay_signature: razorpayResponse.razorpay_signature,
+        payment_id: paymentData.payment_id,
+        booking_number: paymentData.booking_number
+    };
+    
+    fetch('/api/bookings/payment-success/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify(paymentDetails)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Redirect to success page
+            window.location.href = `/payment/success/?payment_id=${razorpayResponse.razorpay_payment_id}&booking_number=${paymentData.booking_number}`;
+        } else {
+            showAlert(data.message || 'Payment verification failed. Please contact support.', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('Payment verification failed. Please contact support with your payment ID.', 'warning');
+    });
+}
+</script>
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+{% load i18n static %}
+
+{% block extrahead %}
+{{ block.super }}
+<script>
+(function($) {
+    $(document).ready(function() {
+        // Handle prepopulated fields for slug
+        $('#id_title').on('input change keyup', function() {
+            var title = $(this).val();
+            var slug = title.toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            $('#id_slug').val(slug);
+        });
+    });
+})(django.jQuery || window.jQuery);
+</script>
+{% endblock %}
+

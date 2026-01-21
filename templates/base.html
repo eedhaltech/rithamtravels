@@ -1,0 +1,1188 @@
+{% load static %}
+{% load seo_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% seo_title seo.title site_seo.site_name %}{% endblock %}</title>
+    
+    <!-- SEO Meta Tags -->
+    {% include 'seo/seo_meta.html' %}
+    
+    <!-- Page-specific SEO overrides -->
+    {% block seo_meta %}{% endblock %}
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --dark-color: #1f2937;
+            --light-color: #f9fafb;
+            --text-color: #374151;
+            --border-color: #e5e7eb;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            max-width: 100%;
+        }
+        
+        /* Prevent horizontal scroll but allow dropdowns */
+        body {
+            overflow-x: hidden;
+        }
+        
+        /* Allow dropdowns to overflow header */
+        header, .navbar, .navbar .container, .navbar-collapse {
+            overflow: visible;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #ffffff;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        /* Top Bar Styling */
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+        
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+        
+        .top-bar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        /* Header Styling */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+        
+        .navbar {
+            padding: 10px 0;
+            width: 100%;
+            position: relative;
+        }
+        
+        .navbar-toggler {
+            border: 1px solid var(--primary-color);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2837, 99, 235, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        .navbar .container {
+            max-width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .navbar-collapse {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-grow: 1;
+        }
+        
+        /* Ensure dropdowns can overflow */
+        .navbar-nav .dropdown {
+            position: relative;
+        }
+        
+        /* Create invisible bridge for smooth hover transitions */
+        .navbar-nav .dropdown::before,
+        .header-actions .dropdown::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 10px;
+            z-index: 1049;
+        }
+        
+        .navbar-nav .dropdown-menu {
+            position: absolute;
+            z-index: 1050;
+        }
+        
+        .header-actions .dropdown {
+            position: relative;
+        }
+        
+        .header-actions .dropdown-menu {
+            position: absolute;
+            z-index: 1050;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 5px;
+            min-width: 180px;
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .header-actions .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .header-actions .dropdown-item {
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .header-actions .dropdown-item:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+        
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .navbar-brand img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--text-color) !important;
+            font-weight: 500;
+            padding: 8px 10px !important;
+            margin: 0 2px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white !important;
+            transform: translateY(-2px);
+        }
+        
+        .navbar-nav .dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 5px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1050;
+            min-width: 200px;
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .navbar-nav .dropdown-item {
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .navbar-nav .dropdown-item:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+        
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .navbar-nav {
+                margin-top: 15px;
+                max-width: 100%;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .header-actions {
+                margin-top: 0;
+                flex-wrap: wrap;
+                gap: 10px;
+                width: 100%;
+                justify-content: stretch;
+                order: 2; /* Ensure header actions come after nav items */
+            }
+            
+            .header-actions > * {
+                flex: 1;
+                min-width: 120px;
+            }
+            
+            .navbar-nav .nav-link {
+                padding: 12px 15px !important;
+                white-space: nowrap;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            .navbar-nav .nav-link:last-child {
+                border-bottom: none;
+            }
+            
+            .navbar-nav .dropdown-menu {
+                position: static;
+                float: none;
+                width: 100%;
+                margin-top: 0;
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+                box-shadow: none;
+                border-radius: 8px;
+                margin-left: 15px;
+                margin-right: 15px;
+                width: calc(100% - 30px);
+            }
+            
+            .header-actions .dropdown-menu {
+                position: static !important;
+                float: none;
+                width: 100%;
+                margin-top: 5px;
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+                box-shadow: none;
+                border-radius: 8px;
+                transform: none !important;
+                left: auto !important;
+                right: auto !important;
+                inset: auto !important;
+            }
+            
+            /* Add separator between nav and actions */
+            .header-actions::before {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 1px;
+                background-color: #e0e0e0;
+                margin: 10px 0;
+            }
+            
+            /* Improve mobile button styling */
+            .header-actions .btn {
+                width: 100%;
+                margin-bottom: 8px;
+                justify-content: center;
+            }
+            
+            .header-actions .dropdown {
+                width: 100%;
+            }
+            
+            .header-actions .dropdown .btn {
+                width: 100%;
+            }
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            font-size: 14px;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+            color: white;
+        }
+        
+        .btn-outline-custom {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .btn-outline-custom:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #d1d5db;
+            padding: 60px 0 20px;
+            /* margin-top: 80px; */
+        }
+        
+        footer h5 {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        footer h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        footer a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 8px 0;
+        }
+        
+        footer a:hover {
+            color: white;
+            padding-left: 10px;
+        }
+        
+        footer .contact-info {
+            color: #d1d5db;
+            line-height: 2;
+        }
+        
+        footer .contact-info i {
+            color: var(--accent-color);
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+        
+        .social-icons a:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+            color: white;
+            padding-left: 0;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+            padding-top: 30px;
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            color: #9ca3af;
+            margin: 0;
+        }
+        
+        /* Card Styling */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            min-height: 600px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            /* border-radius: 0 0 50px 50px; */
+            overflow: hidden;
+        }
+
+        .container.hero-content {
+            margin-bottom: 10px;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.9) 0%, rgba(30, 64, 175, 0.9) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .phone-link {
+          display: flex;
+          align-items: center;
+        }
+
+        .phone-link i {
+          font-size: 1em;
+          margin-right: 8px;
+        }
+
+        .phone-link a {
+          color: #d1d5db;
+          font-size: 1em;
+          text-decoration: none;
+        }
+
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 18px;
+            }
+            
+            .navbar-brand img {
+                height: 32px;
+            }
+            
+            .top-bar {
+                font-size: 11px;
+                padding: 6px 0;
+            }
+            
+            .top-bar .col-md-6 {
+                text-align: center !important;
+                margin-bottom: 5px;
+            }
+            
+            .navbar-nav .nav-link {
+                font-size: 13px;
+                padding: 6px 8px !important;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 16px;
+            }
+            
+            .navbar-brand img {
+                height: 28px;
+            }
+            
+            .btn-outline-custom, .btn-primary-custom {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <i class="bi bi-telephone-fill"></i><strong>24x7 Call:</strong> 
+                    <a href="tel:+919787110763" class="ms-2">+91 97871 10763</a>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="{% static 'msme/msme.jpg' %}" target="_blank" title="MSME Certificate"><i class="bi bi-award me-1"></i> MSME Registered</a>
+                    <a href="{% url 'payment' %}" class="ms-3"><i class="bi bi-cash-coin me-1"></i> Payment</a>
+                    <a href="{% url 'cancellation' %}" class="ms-3"><i class="bi bi-x-circle me-1"></i> Cancellation</a>
+                    <a href="{% url 'online_cab_booking' %}" class="ms-3"><i class="bi bi-car-front me-1"></i> Online Cab Booking</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'admin/img/logo/logo_ritham.png' %}" style="height: 40px; margin-right: 10px;">
+                    <span>Ritham Tours & Travels</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto me-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="tariffDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Tariff
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="tariffDropdown">
+                                <li><a class="dropdown-item" href="{% url 'tariff_local_hour' %}"><i class="bi bi-clock me-2"></i>Local – Hour Basis</a></li>
+                                <li><a class="dropdown-item" href="{% url 'tariff_outstation_day' %}"><i class="bi bi-calendar-day me-2"></i>Outstation – Day Basis</a></li>
+                                <li><a class="dropdown-item" href="{% url 'tariff_outstation_km' %}"><i class="bi bi-speedometer2 me-2"></i>Outstation – Km Basis</a></li>
+                                <!-- <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'tariff_oneway_fixed' %}"><i class="bi bi-arrow-right-circle me-2"></i>One Way – Fixed</a></li>
+                                <li><a class="dropdown-item" href="{% url 'tariff_oneway_km' %}"><i class="bi bi-arrow-right me-2"></i>One Way – Km Basis</a></li> -->
+                            </ul>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="{% url 'tour_planner' %}">Tour Planner</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'booking_status' %}">Booking Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'testimonials' %}">Testimonials</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="{% url 'tour_info_default' %}">Tour Info</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog_list' %}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="header-actions">
+                        {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <button class="btn {% if user.user_type == 'customer' %}btn-primary{% else %}btn-warning{% endif %} dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle me-1"></i>
+                                <span class="d-none d-md-inline">
+                                    {% if user.first_name or user.last_name %}
+                                        {{ user.first_name }} {{ user.last_name }}
+                                    {% else %}
+                                        {{ user.username }}
+                                    {% endif %}
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                {% if user.user_type == 'customer' %}
+                                <li><a class="dropdown-item" href="{% url 'customer_dashboard' %}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{% url 'booking_status' %}"><i class="bi bi-calendar-check me-2"></i>My Bookings</a></li>
+                                {% else %}
+                                <li><a class="dropdown-item" href="{% url 'travels_dashboard' %}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+                                <li><a class="dropdown-item" href="/admin/"><i class="bi bi-gear me-2"></i>Admin Panel</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'logout' %}" id="logoutLink">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <div class="dropdown">
+                            <button class="btn btn-outline-custom dropdown-toggle" type="button" id="loginDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i> <span class="d-none d-md-inline">Login</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+                                <li><a class="dropdown-item" href="{% url 'customer_login' %}"><i class="bi bi-person me-2"></i>Customer Login</a></li>
+                                <li><a class="dropdown-item" href="{% url 'travels_login' %}"><i class="bi bi-briefcase me-2"></i>Travels Login</a></li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <button class="btn btn-primary-custom d-none d-md-inline-flex" data-bs-toggle="modal" data-bs-target="#enquiryModal">
+                            <i class="bi bi-envelope-paper me-1"></i> <span>Enquiry</span>
+                        </button>
+                        <button class="btn btn-primary-custom d-md-none" data-bs-toggle="modal" data-bs-target="#enquiryModal" title="Enquiry">
+                            <i class="bi bi-envelope-paper"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Django Messages Display -->
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <i class="bi {% if message.tags == 'success' %}bi-check-circle{% elif message.tags == 'error' %}bi-x-circle{% elif message.tags == 'warning' %}bi-exclamation-triangle{% else %}bi-info-circle{% endif %} me-2"></i>
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'home' %}"><i class="bi bi-chevron-right me-2"></i>Home</a></li>
+                        <li><a href="{% url 'tariff' %}"><i class="bi bi-chevron-right me-2"></i>Tariff</a></li>
+                        <li><a href="{% url 'tour_planner' %}"><i class="bi bi-chevron-right me-2"></i>Tour Planner</a></li>
+                        <li><a href="{% url 'booking_status' %}"><i class="bi bi-chevron-right me-2"></i>Booking Status</a></li>
+                        <li><a href="{% url 'tour_info_default' %}"><i class="bi bi-chevron-right me-2"></i>Tour Info</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Information</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'about_us' %}"><i class="bi bi-chevron-right me-2"></i>About Us</a></li>
+                        <li><a href="{% url 'testimonials' %}"><i class="bi bi-chevron-right me-2"></i>Testimonials</a></li>
+                        <li><a href="{% url 'payment' %}"><i class="bi bi-chevron-right me-2"></i>Payment</a></li>
+                        <li><a href="{% url 'cancellation' %}"><i class="bi bi-chevron-right me-2"></i>Cancellation</a></li>
+                        <li><a href="{% url 'blog_list' %}"><i class="bi bi-chevron-right me-2"></i>Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Policies</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'terms_conditions' %}"><i class="bi bi-chevron-right me-2"></i>Terms & Conditions</a></li>
+                        <li><a href="{% url 'cancel_refund_policy' %}"><i class="bi bi-chevron-right me-2"></i>Cancellation & Refund Policy</a></li>
+                        <li><a href="{% url 'shipping_policy' %}"><i class="bi bi-chevron-right me-2"></i>Shipping Policy</a></li>
+                        <li><a href="{% url 'privacy_policy' %}"><i class="bi bi-chevron-right me-2"></i>Privacy Policy</a></li>
+                        <li><a href="{% url 'disclaimer_policy' %}"><i class="bi bi-chevron-right me-2"></i>Disclaimer Policy</a></li>
+                        <li><a href="{% url 'razorpay_privacy_policy' %}"><i class="bi bi-chevron-right me-2"></i>Razorpay Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact Us</h5>
+                    <div>
+                    <!-- <div class="contact-info"> -->
+                        <p><i class="bi bi-geo-alt-fill"></i> Coimbatore, Tamil Nadu, India</p>
+                        <p class="phone-link">
+                          <i class="bi bi-telephone-fill"></i>
+                          <a href="tel:+919787110763"> +91 97871 10763</a>
+                        </p>
+                        <p class="phone-link">
+                          <i class="bi bi-envelope-fill"></i>
+                          <a href="mailto:info@rithamtravels.in"> info@rithamtravels.in</a>
+                        </p>
+                        <!-- <p><i class="bi bi-clock-fill"></i> 24/7 Customer Support</p> -->
+                    </div>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/share/1G4KuLPscB/" title="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.linkedin.com/in/krishna-moorthy-9879689b/?originalSubdomain=in" title="LinkedIn" target="_blank"><i class="bi bi-linkedin"></i></a>
+                        <a href="https://www.instagram.com/rithamtoursandtravels" title="Instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+                        <a href="https://wa.me/919787110763" title="WhatsApp" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                        <a href="https://youtube.com/@rithamtoursandtravels?si=rJulxr_AG9qUCaqI" title="YouTube" target="_blank"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="mb-2">&copy; {% now "Y" %} <strong>Ritham Tours & Travels</strong>. All rights reserved.</p>
+                        <p class="small"><a href="http://developermuthu.com/" target="_blank"> Designed by Eedhal Technology</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include Unified Popup Modal -->
+    {% include 'includes/popup_modal.html' %}
+    
+    <!-- Enquiry Modal -->
+    <div class="modal fade" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 15px;">
+                <div class="modal-header" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; border-radius: 15px 15px 0 0;">
+                    <h5 class="modal-title" id="enquiryModalLabel">
+                        <i class="bi bi-envelope-paper me-2"></i>Quick Enquiry
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="enquiryForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="name" required placeholder="Your full name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" name="phone" required placeholder="+91 12345 67890">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="subject" required placeholder="What is your enquiry about?">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Message <span class="text-danger">*</span></label>
+                            <textarea class="form-control" name="message" rows="4" required placeholder="Tell us more about your requirement..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100">
+                            <i class="bi bi-send me-2"></i>Submit Enquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Unified Popup System -->
+    <script src="{% static 'js/popup-system.js' %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    <script>
+        // Handle dropdown redirects
+        function handleDropdownRedirect(selectElement, url) {
+            if (selectElement && selectElement.value) {
+                window.location.href = url;
+            }
+        }
+        
+        // Add redirect functionality to any dropdown with data-redirect attribute
+        $(document).ready(function() {
+            $('select[data-redirect]').on('change', function() {
+                const redirectUrl = $(this).data('redirect');
+                if (this.value && redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
+            });
+            
+            // Handle online cab booking redirect from any element with class 'online-cab-redirect'
+            $('.online-cab-redirect').on('change', function() {
+                if (this.value === 'online_cab_booking') {
+                    window.location.href = '{% url "online_cab_booking" %}';
+                }
+            });
+            
+            // Handle service selection dropdown redirect
+            $('#serviceSelector').on('change', function() {
+                const selectedValue = $(this).val();
+                if (selectedValue === 'online_cab_booking') {
+                    window.location.href = '{% url "online_cab_booking" %}';
+                } else if (selectedValue) {
+                    // Handle other service redirects
+                    window.location.href = selectedValue;
+                }
+            });
+        });
+        
+        // Enquiry Form Submission with Enhanced Loading State
+        $('#enquiryForm').on('submit', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            var submitBtn = form.find('button[type="submit"]');
+            var originalText = submitBtn.html();
+            
+            // Disable button and show loading state
+            submitBtn.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...');
+            submitBtn.prop('disabled', true);
+            submitBtn.removeClass('btn-primary-custom').addClass('btn-secondary');
+            
+            // Disable form inputs to prevent changes during submission
+            form.find('input, textarea').prop('disabled', true);
+            
+            $.ajax({
+                url: '/api/enquiries/',
+                method: 'POST',
+                data: form.serialize(),
+                timeout: 30000, // 30 second timeout
+                success: function(response) {
+                    // Show success state
+                    submitBtn.html('<i class="bi bi-check-circle me-2"></i>Sent Successfully!');
+                    submitBtn.removeClass('btn-secondary').addClass('btn-success');
+                    
+                    // Auto-close modal after success
+                    setTimeout(function() {
+                        $('#enquiryModal').modal('hide');
+                        
+                        // Reset form and button after modal closes
+                        setTimeout(function() {
+                            form[0].reset();
+                            form.find('input, textarea').prop('disabled', false);
+                            submitBtn.html(originalText);
+                            submitBtn.removeClass('btn-success').addClass('btn-primary-custom');
+                            submitBtn.prop('disabled', false);
+                        }, 300);
+                    }, 1500);
+                },
+                error: function(xhr, status, error) {
+                    // Show error state
+                    var errorMessage = 'Error - Try Again';
+                    
+                    // Handle specific error cases
+                    if (status === 'timeout') {
+                        errorMessage = 'Timeout - Try Again';
+                    } else if (xhr.status === 0) {
+                        errorMessage = 'Network Error - Try Again';
+                    } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMessage = 'Error - Try Again';
+                    }
+                    
+                    submitBtn.html('<i class="bi bi-x-circle me-2"></i>' + errorMessage);
+                    submitBtn.removeClass('btn-secondary').addClass('btn-danger');
+                    
+                    // Re-enable form after error
+                    form.find('input, textarea').prop('disabled', false);
+                    
+                    // Reset button after delay
+                    setTimeout(function() {
+                        submitBtn.html(originalText);
+                        submitBtn.removeClass('btn-danger').addClass('btn-primary-custom');
+                        submitBtn.prop('disabled', false);
+                    }, 3000);
+                }
+            });
+        });
+        
+        // Reset form when modal is closed
+        $('#enquiryModal').on('hidden.bs.modal', function() {
+            var form = $('#enquiryForm');
+            var submitBtn = form.find('button[type="submit"]');
+            
+            // Reset everything to initial state
+            form[0].reset();
+            form.find('input, textarea').prop('disabled', false);
+            submitBtn.html('<i class="bi bi-send me-2"></i>Submit Enquiry');
+            submitBtn.removeClass('btn-secondary btn-success btn-danger').addClass('btn-primary-custom');
+            submitBtn.prop('disabled', false);
+        });
+    </script>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" title="Scroll to top">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- Global Modal System -->
+    <!-- Alert Modal -->
+    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="alertModalLabel">
+                        <i id="alertModalIcon" class="me-2"></i>
+                        <span id="alertModalTitle">Alert</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="alertModalMessage" class="mb-0"></p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="confirmModalLabel">
+                        <i id="confirmModalIcon" class="me-2"></i>
+                        <span id="confirmModalTitle">Confirm Action</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmModalMessage" class="mb-0"></p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmModalConfirm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll to Top Button
+        window.addEventListener('scroll', function() {
+            var scrollButton = document.getElementById('scrollToTop');
+            if (window.pageYOffset > 300) {
+                scrollButton.classList.add('show');
+            } else {
+                scrollButton.classList.remove('show');
+            }
+        });
+
+        document.getElementById('scrollToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+    
+        <script>
+            // Handle logout with POST request
+            document.addEventListener('DOMContentLoaded', function() {
+                const logoutLink = document.getElementById('logoutLink');
+                if (logoutLink) {
+                    logoutLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Clear JWT tokens from localStorage
+                        localStorage.removeItem('access_token');
+                        localStorage.removeItem('refresh_token');
+                        
+                        // Create a form and submit as POST
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '{% url "logout" %}';
+                        
+                        // Add CSRF token
+                        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+                        if (csrfToken) {
+                            const csrfInput = document.createElement('input');
+                            csrfInput.type = 'hidden';
+                            csrfInput.name = 'csrfmiddlewaretoken';
+                            csrfInput.value = csrfToken.value;
+                            form.appendChild(csrfInput);
+                        }
+                        
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                }
+            });
+            
+            // Display Django messages as popups if they exist
+            {% if messages %}
+            document.addEventListener('DOMContentLoaded', function() {
+                {% for message in messages %}
+                showPopup('{{ message|escapejs }}', '{{ message.tags }}');
+                {% endfor %}
+            });
+            {% endif %}
+            
+            // All dropdowns now use click-only behavior (Bootstrap default)
+            // No custom hover functionality needed
+        </script>
+        
+        <script>
+            // Global Modal System
+            window.showAlert = function(message, type = 'info', title = null) {
+                const modal = document.getElementById('alertModal');
+                const icon = document.getElementById('alertModalIcon');
+                const titleElement = document.getElementById('alertModalTitle');
+                const messageElement = document.getElementById('alertModalMessage');
+                
+                // Set icon and title based on type
+                const config = {
+                    success: { icon: 'bi-check-circle-fill text-success', title: 'Success' },
+                    danger: { icon: 'bi-exclamation-triangle-fill text-danger', title: 'Error' },
+                    warning: { icon: 'bi-exclamation-triangle-fill text-warning', title: 'Warning' },
+                    info: { icon: 'bi-info-circle-fill text-info', title: 'Information' }
+                };
+                
+                const typeConfig = config[type] || config.info;
+                icon.className = `${typeConfig.icon} me-2`;
+                titleElement.textContent = title || typeConfig.title;
+                messageElement.textContent = message;
+                
+                // Show modal
+                const bootstrapModal = new bootstrap.Modal(modal);
+                bootstrapModal.show();
+            };
+            
+            window.showConfirm = function(message, onConfirm, title = 'Confirm Action', confirmText = 'Confirm', confirmClass = 'btn-danger') {
+                const modal = document.getElementById('confirmModal');
+                const icon = document.getElementById('confirmModalIcon');
+                const titleElement = document.getElementById('confirmModalTitle');
+                const messageElement = document.getElementById('confirmModalMessage');
+                const confirmBtn = document.getElementById('confirmModalConfirm');
+                
+                // Set content
+                icon.className = 'bi-question-circle-fill text-warning me-2';
+                titleElement.textContent = title;
+                messageElement.textContent = message;
+                confirmBtn.textContent = confirmText;
+                confirmBtn.className = `btn ${confirmClass}`;
+                
+                // Remove previous event listeners
+                const newConfirmBtn = confirmBtn.cloneNode(true);
+                confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+                
+                // Add new event listener
+                newConfirmBtn.addEventListener('click', function() {
+                    const bootstrapModal = bootstrap.Modal.getInstance(modal);
+                    bootstrapModal.hide();
+                    if (typeof onConfirm === 'function') {
+                        onConfirm();
+                    }
+                });
+                
+                // Show modal
+                const bootstrapModal = new bootstrap.Modal(modal);
+                bootstrapModal.show();
+            };
+            
+            // Override native alert and confirm functions
+            window.alert = function(message) {
+                showAlert(message, 'info');
+            };
+            
+            window.confirm = function(message) {
+                return new Promise((resolve) => {
+                    showConfirm(message, () => resolve(true), 'Confirm', 'OK', 'btn-primary');
+                    // Handle cancel/close
+                    const modal = document.getElementById('confirmModal');
+                    modal.addEventListener('hidden.bs.modal', () => resolve(false), { once: true });
+                });
+            };
+        </script>
+
+        {% block extra_js %}{% endblock %}
+    </body>
+    </html>

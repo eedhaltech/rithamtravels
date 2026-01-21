@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking Confirmation - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white text-center">
+                    <h3><i class="bi bi-check-circle"></i> Booking Confirmed!</h3>
+                </div>
+                <div class="card-body">
+                    <h5 class="text-center mb-4">Your Booking Number: <strong>{{ booking.booking_number }}</strong></h5>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ booking.name }}</p>
+                            <p><strong>Email:</strong> {{ booking.email }}</p>
+                            <p><strong>Phone:</strong> {{ booking.phone }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Trip Type:</strong> {{ booking.get_trip_type_display }}</p>
+                            <p><strong>Status:</strong> 
+                                {% if booking.status == 'pending' %}
+                                    <span class="badge bg-warning">{{ booking.get_status_display }}</span>
+                                {% elif booking.status == 'confirmed' %}
+                                    <span class="badge bg-success">{{ booking.get_status_display }}</span>
+                                {% elif booking.status == 'cancelled' %}
+                                    <span class="badge bg-danger">{{ booking.get_status_display }}</span>
+                                {% elif booking.status == 'completed' %}
+                                    <span class="badge bg-info">{{ booking.get_status_display }}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ booking.get_status_display }}</span>
+                                {% endif %}
+                            </p>
+                            <p><strong>Total Amount:</strong> ₹{{ booking.total_amount }}</p>
+                        </div>
+                    </div>
+                    
+                    {% if booking.status == 'pending' %}
+                    <div class="alert alert-info mt-3">
+                        <h6><i class="bi bi-info-circle me-2"></i>Booking Status: Pending</h6>
+                        <p class="mb-0">Your booking is pending. Our team will contact you shortly. Please wait for confirmation.</p>
+                    </div>
+                    {% endif %}
+                    
+                    <hr>
+                    
+                    <h6>Location Details:</h6>
+                    <p><strong>Pickup Address:</strong> {{ booking.pickup_address }}</p>
+                    <p><strong>Drop Address:</strong> {{ booking.drop_address }}</p>
+                    <p><strong>Pickup Date & Time:</strong> {{ booking.pickup_date }} at {{ booking.pickup_time }}</p>
+                    {% if booking.drop_date %}
+                    <p><strong>Drop Date & Time:</strong> {{ booking.drop_date }} at {{ booking.drop_time }}</p>
+                    {% endif %}
+                    
+                    {% if payments %}
+                    <hr>
+                    <h6>Payment Details:</h6>
+                    <ul>
+                        {% for payment in payments %}
+                        <li>₹{{ payment.amount }} - {{ payment.status }} - {{ payment.created_at|date:"d M Y" }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+                        <a href="{% url 'booking_status' %}" class="btn btn-secondary">Check Booking Status</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

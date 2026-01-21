@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset OTP - {{ company_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .otp-box {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        .otp-code {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-text {
+            color: #856404;
+            font-size: 14px;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .contact-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .security-tips {
+            background-color: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">{{ company_name }}</div>
+            <p>Password Reset Request - {{ user_type_display }} Account</p>
+        </div>
+
+        <h2>Hello {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.email }}{% endif %}!</h2>
+        
+        <p>We received a request to reset the password for your <strong>{{ user_type_display }}</strong> account.</p>
+        
+        <div class="otp-box">
+            <p style="margin: 0; font-size: 16px;">Your verification code is:</p>
+            <div class="otp-code">{{ otp }}</div>
+            <p style="margin: 0; font-size: 14px;">Valid for {{ expires_in_minutes }} minutes</p>
+        </div>
+
+        <div class="warning-box">
+            <div class="warning-text">
+                <strong>⚠️ Important Security Information:</strong>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>This OTP expires in <strong>{{ expires_in_minutes }} minutes</strong></li>
+                    <li>You have <strong>3 attempts</strong> to enter the correct OTP</li>
+                    <li>Never share this code with anyone</li>
+                    <li>Our team will never ask for your OTP</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="security-tips">
+            <h4>🔒 Security Tips:</h4>
+            <ul>
+                <li>Always verify the sender's email address</li>
+                <li>Log in directly to our website instead of clicking email links</li>
+                <li>Use a strong, unique password for your account</li>
+                <li>Enable two-factor authentication when available</li>
+            </ul>
+        </div>
+
+        <p><strong>Didn't request this?</strong><br>
+        If you didn't request a password reset, please ignore this email. Your account remains secure.</p>
+
+        <div class="contact-info">
+            <h4>Need Help?</h4>
+            <p>If you're having trouble with password reset or have security concerns:</p>
+            <ul>
+                <li>📧 Email: info@rithamtravels.in</li>
+                <li>📞 Phone: +91 97871 10763</li>
+                <li>🕒 Support Hours: 9:00 AM - 6:00 PM (Mon-Sat)</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p><strong>{{ company_name }}</strong><br>
+            Your trusted travel partner</p>
+            <p style="font-size: 12px; color: #999;">
+                This is an automated message. Please do not reply to this email.<br>
+                © {{ "now"|date:"Y" }} {{ company_name }}. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

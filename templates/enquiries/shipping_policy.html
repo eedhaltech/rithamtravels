@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shipping Policy - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h1 class="text-center mb-4 text-primary">Shipping Policy</h1>
+                    <p class="text-muted text-center mb-5">Last updated: {{ "now"|date:"F d, Y" }}</p>
+                    
+                    <div class="policy-content">
+                        <div class="alert alert-info">
+                            <h5><i class="bi bi-info-circle me-2"></i>Service-Based Business Notice</h5>
+                            <p class="mb-0"><strong>This is a service-based travel business. No physical products are shipped. All bookings and confirmations are delivered digitally.</strong></p>
+                        </div>
+
+                        <h2>1. Nature of Our Business</h2>
+                        <p>Ritham Tours & Travels is a service-based travel and tourism company. We provide:</p>
+                        <ul>
+                            <li>Transportation services (cab rentals, tour vehicles)</li>
+                            <li>Travel planning and consultation services</li>
+                            <li>Tour package bookings and arrangements</li>
+                            <li>Travel-related advisory services</li>
+                        </ul>
+                        <p><strong>We do not manufacture, sell, or ship any physical products.</strong></p>
+
+                        <h2>2. Digital Delivery of Services</h2>
+                        
+                        <h3>2.1 Booking Confirmations</h3>
+                        <ul>
+                            <li><strong>Email Delivery:</strong> Booking confirmations sent to registered email address</li>
+                            <li><strong>SMS Notifications:</strong> Booking details and updates via SMS</li>
+                            <li><strong>WhatsApp Messages:</strong> Trip details and driver information</li>
+                            <li><strong>Instant Delivery:</strong> All confirmations delivered within minutes of booking</li>
+                        </ul>
+
+                        <h3>2.2 Travel Documents</h3>
+                        <ul>
+                            <li>E-tickets and vouchers delivered via email</li>
+                            <li>Itinerary details shared digitally</li>
+                            <li>Driver and vehicle information sent before trip</li>
+                            <li>Emergency contact details provided electronically</li>
+                        </ul>
+
+                        <h3>2.3 Payment Receipts</h3>
+                        <ul>
+                            <li>Digital receipts generated automatically</li>
+                            <li>Tax invoices sent via email</li>
+                            <li>Payment confirmations through Razorpay</li>
+                            <li>Refund receipts (if applicable) delivered digitally</li>
+                        </ul>
+
+                        <h2>3. Service Delivery Method</h2>
+                        
+                        <h3>3.1 Transportation Services</h3>
+                        <ul>
+                            <li><strong>Pickup Location:</strong> Services delivered at customer's specified location</li>
+                            <li><strong>On-Time Service:</strong> Vehicles arrive at scheduled time</li>
+                            <li><strong>Professional Drivers:</strong> Trained and licensed drivers provided</li>
+                            <li><strong>Clean Vehicles:</strong> Well-maintained and sanitized vehicles</li>
+                        </ul>
+
+                        <h3>3.2 Service Areas</h3>
+                        <ul>
+                            <li><strong>Primary Service Area:</strong> Coimbatore and surrounding areas</li>
+                            <li><strong>Outstation Services:</strong> Tamil Nadu, Kerala, Karnataka</li>
+                            <li><strong>Local Services:</strong> Within city limits and nearby attractions</li>
+                            <li><strong>Airport Transfers:</strong> To/from major airports in the region</li>
+                        </ul>
+
+                        <h2>4. Information Delivery Timeline</h2>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Information Type</th>
+                                        <th>Delivery Method</th>
+                                        <th>Timeline</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Booking Confirmation</td>
+                                        <td>Email + SMS</td>
+                                        <td>Immediate (within 5 minutes)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Receipt</td>
+                                        <td>Email + SMS</td>
+                                        <td>Immediate (within 2 minutes)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Driver Details</td>
+                                        <td>SMS + WhatsApp</td>
+                                        <td>2-4 hours before trip</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vehicle Information</td>
+                                        <td>SMS + WhatsApp</td>
+                                        <td>2-4 hours before trip</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Trip Updates</td>
+                                        <td>SMS + WhatsApp</td>
+                                        <td>Real-time as needed</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h2>5. Contact Information Accuracy</h2>
+                        
+                        <h3>5.1 Customer Responsibility</h3>
+                        <ul>
+                            <li>Provide accurate email address for digital delivery</li>
+                            <li>Ensure mobile number is active and reachable</li>
+                            <li>Check spam/junk folders for important communications</li>
+                            <li>Update contact information if changed after booking</li>
+                        </ul>
+
+                        <h3>5.2 Delivery Failure</h3>
+                        <ul>
+                            <li>If email delivery fails, we will attempt SMS delivery</li>
+                            <li>If SMS fails, we will call the registered mobile number</li>
+                            <li>Customers can always access booking details through our website</li>
+                            <li>Alternative contact methods available for urgent communications</li>
+                        </ul>
+
+                        <h2>6. Data Security and Privacy</h2>
+                        <ul>
+                            <li>All digital communications are encrypted and secure</li>
+                            <li>Personal information protected as per our <a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                            <li>Booking details accessible only to authorized personnel</li>
+                            <li>Customer data not shared with third parties without consent</li>
+                        </ul>
+
+                        <h2>7. Service Modifications and Updates</h2>
+                        <ul>
+                            <li>Trip modifications communicated immediately via SMS/email</li>
+                            <li>Weather-related updates sent in real-time</li>
+                            <li>Emergency notifications delivered instantly</li>
+                            <li>Service changes confirmed through multiple channels</li>
+                        </ul>
+
+                        <h2>8. Customer Support</h2>
+                        <ul>
+                            <li><strong>24/7 Phone Support:</strong> <a href="tel:+917373812345">+91 73738 12345</a></li>
+                            <li><strong>Email Support:</strong> <a href="mailto:info@rithamtravels.in">info@rithamtravels.in</a></li>
+                            <li><strong>WhatsApp Support:</strong> +91 73738 12345</li>
+                            <li><strong>Online Booking Status:</strong> Available on our website</li>
+                        </ul>
+
+                        <h2>9. Environmental Responsibility</h2>
+                        <div class="alert alert-success">
+                            <h6><i class="bi bi-leaf me-2"></i>Eco-Friendly Approach</h6>
+                            <p class="mb-0">By delivering all communications digitally, we contribute to environmental conservation by eliminating paper waste and reducing our carbon footprint.</p>
+                        </div>
+
+                        <h2>10. Contact Information</h2>
+                        <div class="contact-info mt-3">
+                            <p><strong>Ritham Tours & Travels</strong></p>
+                            <p><i class="bi bi-geo-alt-fill text-primary"></i> Coimbatore, Tamil Nadu, India</p>
+                            <p><i class="bi bi-telephone-fill text-primary"></i> <a href="tel:+917373812345">+91 73738 12345</a></p>
+                            <p><i class="bi bi-envelope-fill text-primary"></i> <a href="mailto:info@rithamtravels.in">info@rithamtravels.in</a></p>
+                            <p><i class="bi bi-globe text-primary"></i> <a href="https://rithamtravels.in/">https://rithamtravels.in/</a></p>
+                        </div>
+
+                        <div class="alert alert-warning mt-4">
+                            <h5><i class="bi bi-exclamation-triangle me-2"></i>Important Reminder</h5>
+                            <p class="mb-0">Ritham Tours & Travels is a service-based business. We do not ship any physical products. All bookings, confirmations, receipts, and travel documents are delivered digitally to ensure fast, secure, and environmentally friendly service delivery.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.policy-content h2 {
+    color: #2563eb;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.policy-content h3 {
+    color: #1e40af;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.policy-content ul, .policy-content ol {
+    margin-bottom: 1.5rem;
+}
+
+.policy-content li {
+    margin-bottom: 0.5rem;
+}
+
+.contact-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.contact-info > * {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-info p {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.contact-info p:first-child {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-info i {
+    font-size: 1.2rem;
+    margin-right: 12px;
+    width: 24px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+}
+
+.contact-info a {
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.contact-info a:hover {
+    color: #f0f8ff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transform: translateX(3px);
+}
+
+.table th {
+    font-weight: 600;
+}
+</style>
+{% endblock %}

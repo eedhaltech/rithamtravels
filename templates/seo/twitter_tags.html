@@ -1,0 +1,42 @@
+{% load seo_tags static %}
+{% comment %}
+Twitter Card Meta Tags Template
+Provides rich Twitter sharing previews
+{% endcomment %}
+
+<!-- Twitter Card Essential Tags -->
+<meta name="twitter:card" content="{% firstof seo.twitter_card_type 'summary_large_image' %}">
+<meta name="twitter:site" content="{{ site_seo.twitter_handle }}">
+<meta name="twitter:creator" content="{{ site_seo.twitter_handle }}">
+
+<!-- Twitter Card Content -->
+<meta name="twitter:title" content="{% seo_title seo.title site_seo.site_name %}">
+<meta name="twitter:description" content="{% seo_description seo.description %}">
+
+<!-- Twitter Card Image -->
+<meta name="twitter:image" content="{% og_image_url seo.og_image %}">
+<meta name="twitter:image:alt" content="{% firstof seo.og_image_alt seo.title site_seo.site_name %}">
+
+<!-- Twitter Card Domain -->
+<meta name="twitter:domain" content="{{ site_seo.site_url|slice:'8:' }}">
+
+<!-- Twitter Card URL -->
+<meta name="twitter:url" content="{% if seo.canonical_url %}{% absolute_url seo.canonical_url %}{% else %}{% absolute_url request.get_full_path %}{% endif %}">
+
+<!-- Twitter App Cards (if applicable) -->
+{% if seo.twitter_app_id_iphone %}
+<meta name="twitter:app:name:iphone" content="{{ site_seo.site_name }}">
+<meta name="twitter:app:id:iphone" content="{{ seo.twitter_app_id_iphone }}">
+{% endif %}
+
+{% if seo.twitter_app_id_android %}
+<meta name="twitter:app:name:googleplay" content="{{ site_seo.site_name }}">
+<meta name="twitter:app:id:googleplay" content="{{ seo.twitter_app_id_android }}">
+{% endif %}
+
+<!-- Twitter Player Card (for video content) -->
+{% if seo.twitter_player_url %}
+<meta name="twitter:player" content="{{ seo.twitter_player_url }}">
+<meta name="twitter:player:width" content="{% firstof seo.twitter_player_width '1280' %}">
+<meta name="twitter:player:height" content="{% firstof seo.twitter_player_height '720' %}">
+{% endif %}

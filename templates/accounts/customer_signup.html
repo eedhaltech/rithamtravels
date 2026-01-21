@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}Customer Signup - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Customer Signup</h4>
+                </div>
+                <div class="card-body">
+                    <form id="signupForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" name="password2" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control" name="phone">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                    </form>
+                    <hr>
+                    <p class="text-center">
+                        Already have an account? <a href="{% url 'customer_login' %}">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $('#signupForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            username: $('input[name="username"]').val(),
+            email: $('input[name="email"]').val(),
+            password: $('input[name="password"]').val(),
+            password2: $('input[name="password2"]').val(),
+            phone: $('input[name="phone"]').val() || '',
+            first_name: '',
+            last_name: ''
+        };
+        
+        // Validate passwords match
+        if (formData.password !== formData.password2) {
+            showPopup('Passwords do not match!', 'error', 'Validation Error');
+            return;
+        }
+        
+        // Validate password strength
+        if (formData.password.length < 8) {
+            showPopup('Password must be at least 8 characters long!', 'error', 'Validation Error');
+            return;
+        }
+        
+        const submitBtn = $('button[type="submit"]');
+        const originalText = submitBtn.html();
+        submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Signing up...');
+        
+        $.ajax({
+            url: '/api/auth/customer/signup/',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            headers: {
+                'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(response) {
+                showPopup('Signup successful! Redirecting to login...', 'success', 'Welcome!', function() {
+                    window.location.href = '/customer-login/';
+                });
+            },
+            error: function(xhr) {
+                submitBtn.prop('disabled', false).html(originalText);
+                
+                let errorMessage = 'Signup failed. Please try again.';
+                
+                if (xhr.responseJSON) {
+                    const errors = xhr.responseJSON;
+                    if (errors.error) {
+                        errorMessage = errors.error;
+                    } else if (errors.password) {
+                        errorMessage = Array.isArray(errors.password) ? errors.password.join(', ') : errors.password;
+                    } else if (errors.username) {
+                        errorMessage = Array.isArray(errors.username) ? errors.username.join(', ') : errors.username;
+                    } else if (errors.email) {
+                        errorMessage = Array.isArray(errors.email) ? errors.email.join(', ') : errors.email;
+                    } else if (errors.non_field_errors) {
+                        errorMessage = Array.isArray(errors.non_field_errors) ? errors.non_field_errors.join(', ') : errors.non_field_errors;
+                    } else {
+                        // Show all errors
+                        const errorList = [];
+                        for (let key in errors) {
+                            if (Array.isArray(errors[key])) {
+                                errorList.push(`${key}: ${errors[key].join(', ')}`);
+                            } else {
+                                errorList.push(`${key}: ${errors[key]}`);
+                            }
+                        }
+                        errorMessage = errorList.join('\n');
+                    }
+                } else if (xhr.status === 400) {
+                    errorMessage = 'Invalid data. Please check all fields.';
+                } else if (xhr.status === 500) {
+                    errorMessage = 'Server error. Please try again later.';
+                }
+                
+                showPopup(errorMessage, 'error', 'Signup Failed');
+            }
+        });
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,359 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Local Areas - {{ city.name }} - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-section {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .table-responsive {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-sm {
+        padding: 5px 15px;
+        font-size: 14px;
+    }
+    
+    .add-area-form {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .city-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-list me-2"></i>Local Areas - {{ city.name }}</h2>
+        <div>
+            <a href="{% url 'travels_city_edit' city.id %}" class="btn btn-primary me-2">
+                <i class="bi bi-pencil me-2"></i>Edit City
+            </a>
+            <a href="{% url 'travels_cities_list' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-2"></i>Back to Cities
+            </a>
+        </div>
+    </div>
+    
+    <!-- City Info Header -->
+    <div class="city-header">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h4 class="mb-1">{{ city.name }}</h4>
+                {% if city.description %}
+                <p class="mb-0 opacity-75">{{ city.description }}</p>
+                {% endif %}
+            </div>
+            <div class="col-md-4 text-md-end">
+                <div class="d-flex align-items-center justify-content-md-end">
+                    <i class="bi bi-geo-alt fs-1 me-3"></i>
+                    <div>
+                        <div class="h5 mb-0">{{ local_areas.count }}</div>
+                        <small>Local Areas</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add New Local Area Form -->
+    <div class="add-area-form">
+        <h5 class="mb-3"><i class="bi bi-plus-circle me-2"></i>Add New Local Area</h5>
+        <form id="addAreaForm">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="areaName" class="form-label">Local Area Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="areaName" name="name" placeholder="Enter local area name" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="latitude" class="form-label">Latitude (Optional)</label>
+                    <input type="number" step="any" class="form-control" id="latitude" name="latitude" placeholder="e.g., 11.0168">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="longitude" class="form-label">Longitude (Optional)</label>
+                    <input type="number" step="any" class="form-control" id="longitude" name="longitude" placeholder="e.g., 76.9558">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-plus-circle me-2"></i>Add Local Area
+                    </button>
+                    <small class="text-muted ms-3">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Adding coordinates enables automatic distance calculation
+                    </small>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Local Areas List -->
+    <div class="dashboard-section">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="mb-0"><i class="bi bi-list me-2"></i>All Local Areas ({{ local_areas.count }})</h5>
+            <div class="d-flex gap-2">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search areas..." style="width: 250px;">
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover" id="areasTable">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th width="40%">Local Area Name</th>
+                        <th width="20%">Coordinates</th>
+                        <th width="15%">Distance Calc</th>
+                        <th width="20%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="areasTableBody">
+                    {% for area in local_areas %}
+                    <tr data-area-id="{{ area.id }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            <strong>{{ area.name }}</strong>
+                        </td>
+                        <td>
+                            {% if area.latitude and area.longitude %}
+                            <small class="text-success">
+                                <i class="bi bi-geo-alt-fill me-1"></i>
+                                {{ area.latitude|floatformat:4 }}, {{ area.longitude|floatformat:4 }}
+                            </small>
+                            {% else %}
+                            <small class="text-muted">
+                                <i class="bi bi-geo-alt me-1"></i>No coordinates
+                            </small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if area.latitude and area.longitude %}
+                            <span class="badge bg-success">Enabled</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Disabled</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="deleteArea({{ area.id }}, '{{ area.name }}')" title="Delete Area">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr id="noAreasRow">
+                        <td colspan="5" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="bi bi-geo-alt fs-1 d-block mb-2"></i>
+                                <p>No local areas found for {{ city.name }}. Add your first local area above.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchTerm = this.value.toLowerCase();
+        const tableRows = document.querySelectorAll('#areasTable tbody tr[data-area-id]');
+        
+        tableRows.forEach(row => {
+            const areaName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            
+            if (areaName.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+    
+    // Add new local area
+    document.getElementById('addAreaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const areaName = formData.get('name').trim();
+        
+        if (!areaName) {
+            showPopup('Please enter a local area name.', 'error');
+            return;
+        }
+        
+        fetch(`/travels-dashboard/cities/{{ city.id }}/local-areas/add/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                // If response is not ok, try to get the error message
+                return response.text().then(text => {
+                    try {
+                        const data = JSON.parse(text);
+                        return data;
+                    } catch (e) {
+                        // If it's not JSON, it's probably an HTML error page
+                        throw new Error(`Server error (${response.status}): ${response.statusText}`);
+                    }
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                showPopup(data.message, 'success');
+                
+                // Remove "no areas" row if it exists
+                const noAreasRow = document.getElementById('noAreasRow');
+                if (noAreasRow) {
+                    noAreasRow.remove();
+                }
+                
+                // Add new row to table
+                const tbody = document.getElementById('areasTableBody');
+                const newRowCount = tbody.querySelectorAll('tr[data-area-id]').length + 1;
+                
+                const newRow = document.createElement('tr');
+                newRow.setAttribute('data-area-id', data.local_area.id);
+                
+                const hasCoordinates = data.local_area.latitude && data.local_area.longitude;
+                const coordinatesHtml = hasCoordinates 
+                    ? `<small class="text-success"><i class="bi bi-geo-alt-fill me-1"></i>${parseFloat(data.local_area.latitude).toFixed(4)}, ${parseFloat(data.local_area.longitude).toFixed(4)}</small>`
+                    : `<small class="text-muted"><i class="bi bi-geo-alt me-1"></i>No coordinates</small>`;
+                
+                const distanceCalcHtml = hasCoordinates
+                    ? `<span class="badge bg-success">Enabled</span>`
+                    : `<span class="badge bg-secondary">Disabled</span>`;
+                
+                newRow.innerHTML = `
+                    <td>${newRowCount}</td>
+                    <td><strong>${data.local_area.name}</strong></td>
+                    <td>${coordinatesHtml}</td>
+                    <td>${distanceCalcHtml}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="deleteArea(${data.local_area.id}, '${data.local_area.name}')" title="Delete Area">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(newRow);
+                
+                // Clear form
+                document.getElementById('areaName').value = '';
+                document.getElementById('latitude').value = '';
+                document.getElementById('longitude').value = '';
+                
+                // Update counter in header
+                updateAreaCount();
+            } else {
+                showPopup(data.message || 'Error adding local area. Please try again.', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error adding local area:', error);
+            showPopup(error.message || 'Network error. Please check your connection and try again.', 'error');
+        });
+    });
+    
+    // Delete local area function
+    function deleteArea(areaId, areaName) {
+        if (confirm(`Are you sure you want to delete "${areaName}"?`)) {
+            fetch(`/travels-dashboard/local-areas/${areaId}/delete/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showPopup(data.message, 'success');
+                    
+                    // Remove the row from table
+                    const row = document.querySelector(`tr[data-area-id="${areaId}"]`);
+                    row.remove();
+                    
+                    // Update row numbers
+                    updateRowNumbers();
+                    
+                    // Update counter
+                    updateAreaCount();
+                    
+                    // Show "no areas" message if table is empty
+                    const remainingRows = document.querySelectorAll('#areasTableBody tr[data-area-id]');
+                    if (remainingRows.length === 0) {
+                        const tbody = document.getElementById('areasTableBody');
+                        tbody.innerHTML = `
+                            <tr id="noAreasRow">
+                                <td colspan="5" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="bi bi-geo-alt fs-1 d-block mb-2"></i>
+                                        <p>No local areas found for {{ city.name }}. Add your first local area above.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                } else {
+                    showPopup(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                showPopup('Error deleting local area. Please try again.', 'error');
+            });
+        }
+    }
+    
+    // Update row numbers after deletion
+    function updateRowNumbers() {
+        const rows = document.querySelectorAll('#areasTableBody tr[data-area-id]');
+        rows.forEach((row, index) => {
+            row.querySelector('td:first-child').textContent = index + 1;
+        });
+    }
+    
+    // Update area count in header and table
+    function updateAreaCount() {
+        const count = document.querySelectorAll('#areasTableBody tr[data-area-id]').length;
+        document.querySelector('.city-header .h5').textContent = count;
+        document.querySelector('.dashboard-section h5').innerHTML = `<i class="bi bi-list me-2"></i>All Local Areas (${count})`;
+    }
+</script>
+{% endblock %}

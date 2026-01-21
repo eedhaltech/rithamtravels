@@ -1,0 +1,488 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(30, 64, 175, 0.9)), 
+                    url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 0 80px;
+        color: white;
+        text-align: center;
+    }
+    
+    .about-section {
+        padding: 80px 0;
+    }
+    
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 20px;
+        position: relative;
+        text-align: center;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        border-radius: 2px;
+    }
+    
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-color);
+        text-align: center;
+        margin-bottom: 60px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .stats-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: none;
+        height: 100%;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .stats-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        display: block;
+    }
+    
+    .stats-label {
+        font-size: 1.1rem;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: none;
+        height: 100%;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .feature-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 15px;
+    }
+    
+    .feature-description {
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    
+    .team-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: none;
+        height: 100%;
+    }
+    
+    .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .team-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+        font-weight: 600;
+    }
+    
+    .team-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 5px;
+    }
+    
+    .team-role {
+        color: var(--primary-color);
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+    
+    .team-description {
+        color: var(--text-color);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .mission-vision-card {
+        background: white;
+        border-radius: 20px;
+        padding: 50px 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: none;
+        height: 100%;
+        text-align: center;
+    }
+    
+    .mission-vision-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .mission-vision-icon {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 30px;
+        font-size: 2.5rem;
+        color: white;
+    }
+    
+    .mission-vision-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 20px;
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .mission-vision-text {
+        color: var(--text-color);
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        padding: 80px 0;
+        color: white;
+        text-align: center;
+    }
+    
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .cta-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+    }
+    
+    .btn-cta {
+        background: white;
+        color: var(--primary-color);
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: none;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+        color: var(--primary-color);
+    }
+    
+    @media (max-width: 768px) {
+        .about-hero {
+            padding: 80px 0 60px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+        }
+        
+        .cta-title {
+            font-size: 2rem;
+        }
+        
+        .about-section {
+            padding: 60px 0;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="display-4 fw-bold mb-4">About Ritham Tours & Travels</h1>
+                <p class="lead mb-0">Your trusted travel partner for over a decade, creating unforgettable journeys across India with comfort, safety, and exceptional service.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Company Overview -->
+<section class="about-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h2 class="section-title text-start">Our Story</h2>
+                <div class="section-subtitle text-start">
+                    <p class="mb-4">Founded in 2010, Ritham Tours & Travels began as a small family business with a simple vision: to make travel accessible, comfortable, and memorable for everyone. What started with a single vehicle and a dream has grown into one of South India's most trusted travel companies.</p>
+                    
+                    <p class="mb-4">Based in the beautiful city of Coimbatore, Tamil Nadu, we have been serving travelers from across India and beyond. Our journey has been marked by countless smiles, satisfied customers, and the joy of being part of their special moments.</p>
+                    
+                    <p class="mb-0">Today, we operate a modern fleet of well-maintained vehicles and employ experienced drivers who share our commitment to safety and service excellence. Every journey with us is crafted with care, attention to detail, and a deep understanding of what makes travel truly special.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-4">
+                    <div class="col-6">
+                        <div class="stats-card">
+                            <span class="stats-number">15+</span>
+                            <div class="stats-label">Years of Experience</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stats-card">
+                            <span class="stats-number">50+</span>
+                            <div class="stats-label">Modern Vehicles</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stats-card">
+                            <span class="stats-number">10K+</span>
+                            <div class="stats-label">Happy Customers</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stats-card">
+                            <span class="stats-number">24/7</span>
+                            <div class="stats-label">Customer Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="about-section" style="background-color: #f8f9fa;">
+    <div class="container">
+        <h2 class="section-title">Our Mission & Vision</h2>
+        <p class="section-subtitle">Driving towards excellence in every journey we undertake</p>
+        
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="mission-vision-card">
+                    <div class="mission-vision-icon">
+                        <i class="bi bi-bullseye"></i>
+                    </div>
+                    <h3 class="mission-vision-title">Our Mission</h3>
+                    <p class="mission-vision-text">To provide safe, comfortable, and reliable transportation services that exceed customer expectations. We are committed to making every journey a pleasant experience through our professional drivers, well-maintained vehicles, and personalized service approach.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mission-vision-card">
+                    <div class="mission-vision-icon">
+                        <i class="bi bi-eye"></i>
+                    </div>
+                    <h3 class="mission-vision-title">Our Vision</h3>
+                    <p class="mission-vision-text">To become the most trusted and preferred travel partner in South India, known for our commitment to safety, reliability, and customer satisfaction. We envision a future where every traveler chooses us for their journey with complete confidence.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="about-section">
+    <div class="container">
+        <h2 class="section-title">Why Choose Ritham Tours?</h2>
+        <p class="section-subtitle">Experience the difference with our commitment to excellence</p>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h4 class="feature-title">Safety First</h4>
+                    <p class="feature-description">All our vehicles undergo regular maintenance and safety checks. Our experienced drivers are trained in defensive driving and follow all safety protocols.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-clock"></i>
+                    </div>
+                    <h4 class="feature-title">Punctual Service</h4>
+                    <p class="feature-description">We value your time and ensure timely pickups and drop-offs. Our drivers are well-versed with routes and traffic patterns for optimal timing.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-car-front"></i>
+                    </div>
+                    <h4 class="feature-title">Modern Fleet</h4>
+                    <p class="feature-description">Our fleet consists of well-maintained, air-conditioned vehicles ranging from sedans to luxury coaches, suitable for all group sizes.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <h4 class="feature-title">24/7 Support</h4>
+                    <p class="feature-description">Our customer support team is available round the clock to assist you with bookings, queries, and any support needed during your journey.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-currency-rupee"></i>
+                    </div>
+                    <h4 class="feature-title">Transparent Pricing</h4>
+                    <p class="feature-description">No hidden charges or surprise fees. Our pricing is transparent and competitive, with detailed breakdowns provided upfront.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-geo-alt"></i>
+                    </div>
+                    <h4 class="feature-title">Local Expertise</h4>
+                    <p class="feature-description">With deep knowledge of South Indian destinations, we provide valuable insights and recommendations to make your trip memorable.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Team -->
+<section class="about-section" style="background-color: #f8f9fa;">
+    <div class="container">
+        <h2 class="section-title">Meet Our Team</h2>
+        <p class="section-subtitle">The dedicated professionals who make your journey exceptional</p>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card">
+                    <div class="team-avatar">R</div>
+                    <h4 class="team-name">Rajesh Kumar</h4>
+                    <p class="team-role">Founder & Managing Director</p>
+                    <p class="team-description">With over 15 years in the travel industry, Rajesh founded Ritham Tours with a vision to provide exceptional travel experiences. His leadership and customer-first approach drive our company's success.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card">
+                    <div class="team-avatar">P</div>
+                    <h4 class="team-name">Priya Sharma</h4>
+                    <p class="team-role">Operations Manager</p>
+                    <p class="team-description">Priya ensures smooth operations and maintains our high service standards. Her attention to detail and organizational skills keep our fleet running efficiently and customers satisfied.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card">
+                    <div class="team-avatar">A</div>
+                    <h4 class="team-name">Arjun Patel</h4>
+                    <p class="team-role">Customer Relations Head</p>
+                    <p class="team-description">Arjun leads our customer service team, ensuring every customer query is handled promptly and professionally. His dedication to customer satisfaction is unmatched.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="cta-title">Ready to Start Your Journey?</h2>
+                <p class="cta-subtitle">Join thousands of satisfied customers who have trusted us with their travel needs. Book your next trip with confidence.</p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{% url 'tour_planner' %}" class="btn-cta">
+                        <i class="bi bi-map me-2"></i>Plan Your Tour
+                    </a>
+                    <a href="{% url 'contact_us' %}" class="btn-cta">
+                        <i class="bi bi-telephone me-2"></i>Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

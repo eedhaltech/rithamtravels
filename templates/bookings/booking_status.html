@@ -1,0 +1,995 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking Status - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .booking-status-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 60px 0;
+        margin-bottom: 50px;
+    }
+    
+    .search-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        border: none;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .search-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+    }
+    
+    .search-form {
+        padding: 40px;
+    }
+    
+    .form-control {
+        border-radius: 15px;
+        border: 2px solid #e1e5e9;
+        padding: 15px 20px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        transform: translateY(-2px);
+    }
+    
+    .btn-search {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 15px;
+        padding: 15px 30px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-search:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-search:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn-search:hover:before {
+        left: 100%;
+    }
+    
+    .booking-details-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        border: none;
+        overflow: hidden;
+        animation: slideInUp 0.6s ease-out;
+    }
+    
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .status-header {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .status-header:before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .booking-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 40px;
+    }
+    
+    .info-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        border-left: 4px solid #667eea;
+    }
+    
+    .info-item:hover {
+        background: #e3f2fd;
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .info-label {
+        font-size: 14px;
+        color: #6c757d;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+    }
+    
+    .info-value {
+        font-size: 16px;
+        color: #2c3e50;
+        font-weight: 500;
+    }
+    
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        animation: pulse 2s infinite;
+    }
+    
+    .status-confirmed {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+    }
+    
+    .status-pending {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+    }
+    
+    .status-cancelled {
+        background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+        color: white;
+    }
+    
+    .status-completed {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .payment-timeline {
+        position: relative;
+        padding: 30px 0;
+    }
+    
+    .payment-timeline:before {
+        content: '';
+        position: absolute;
+        left: 30px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, #667eea, #764ba2);
+    }
+    
+    .payment-item {
+        position: relative;
+        padding: 20px 0 20px 70px;
+        margin-bottom: 20px;
+    }
+    
+    .payment-item:before {
+        content: '';
+        position: absolute;
+        left: 21px;
+        top: 25px;
+        width: 18px;
+        height: 18px;
+        background: #667eea;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 0 0 3px #667eea;
+    }
+    
+    .payment-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e1e5e9;
+        transition: all 0.3s ease;
+    }
+    
+    .payment-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    .error-message {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        animation: shake 0.5s ease-in-out;
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    
+    .quick-actions {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 30px;
+        text-align: center;
+    }
+    
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        margin: 8px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .action-btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .action-btn-secondary {
+        background: white;
+        color: #667eea;
+        border-color: #667eea;
+    }
+    
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hero-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.9;
+    }
+    
+    @media (max-width: 768px) {
+        .booking-info-grid {
+            grid-template-columns: 1fr;
+            padding: 20px;
+        }
+        
+        .search-form {
+            padding: 30px 20px;
+        }
+        
+        .booking-status-hero {
+            padding: 40px 0;
+        }
+        
+        .step-number {
+            width: 25px !important;
+            height: 25px !important;
+            font-size: 12px !important;
+        }
+        
+        .destination-card, .tip-card {
+            margin-bottom: 15px;
+        }
+    }
+    
+    /* Additional styles for new content */
+    .step-item {
+        transition: all 0.3s ease;
+    }
+    
+    .step-item:hover {
+        transform: translateX(5px);
+    }
+    
+    .service-item:hover {
+        transform: translateX(5px);
+        background: #e3f2fd !important;
+    }
+    
+    .destination-card {
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+    
+    .destination-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        border-color: #667eea;
+    }
+    
+    .tip-card {
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+    
+    .tip-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        border-color: #667eea;
+    }
+    
+    .support-item {
+        transition: all 0.3s ease;
+    }
+    
+    .support-item:hover {
+        transform: translateX(5px);
+        background: #e8f5e8 !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="booking-status-hero">
+    <div class="container text-center">
+        <div class="hero-icon">
+            <i class="bi bi-search"></i>
+        </div>
+        <h1 class="display-4 fw-bold mb-3">Track Your Journey</h1>
+        <p class="lead mb-0">Enter your booking number to get real-time updates on your trip status</p>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-11">
+            <!-- Search Card -->
+            <div class="search-card">
+                <div class="search-form">
+                    <form id="statusForm">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-muted">Booking Number</label>
+                            <input type="text" class="form-control" id="bookingNumber" 
+                                   placeholder="Enter your 8-digit booking number" 
+                                   maxlength="8" required>
+                            <div class="form-text">
+                                <i class="bi bi-info-circle me-1"></i>
+                                You can find this in your booking confirmation email
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-search w-100">
+                            <span class="btn-text">
+                                <i class="bi bi-search me-2"></i>Check Status
+                            </span>
+                            <span class="loading-content" style="display: none;">
+                                <span class="loading-spinner me-2"></span>Searching...
+                            </span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Error Message -->
+            <div id="errorMessage" class="mt-4" style="display: none;">
+                <div class="error-message">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    <span id="errorText">Booking not found. Please check your booking number and try again.</span>
+                </div>
+            </div>
+            
+            <!-- Booking Details -->
+            <div id="bookingDetails" class="mt-4" style="display: none;">
+                <div class="booking-details-card">
+                    <div class="status-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h3 class="mb-2">
+                                    <i class="bi bi-ticket-detailed me-2"></i>
+                                    Booking Details
+                                </h3>
+                                <p class="mb-0 opacity-75">Complete information about your trip</p>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <div id="statusBadge"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-info-grid" id="bookingInfo">
+                        <!-- Booking information will be loaded here -->
+                    </div>
+                    
+                    <!-- Payment Timeline -->
+                    <div class="px-4 pb-4">
+                        <h5 class="mb-4">
+                            <i class="bi bi-credit-card me-2"></i>Payment History
+                        </h5>
+                        <div class="payment-timeline" id="paymentTimeline">
+                            <!-- Payment information will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h6 class="mb-3">Need Help?</h6>
+                        <a href="tel:+919787110763" class="action-btn action-btn-primary">
+                            <i class="bi bi-telephone me-2"></i>Call Support
+                        </a>
+                        <a href="mailto:info@rithamtravels.in" class="action-btn action-btn-secondary">
+                            <i class="bi bi-envelope me-2"></i>Email Us
+                        </a>
+                        <a href="{% url 'home' %}" class="action-btn action-btn-secondary">
+                            <i class="bi bi-house me-2"></i>Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Additional Content When No Booking is Searched -->
+    <div id="additionalContent" class="mt-5">
+        <div class="row">
+            <!-- How to Track Section -->
+            <div class="col-lg-6 mb-4">
+                <div class="search-card h-100">
+                    <div class="search-form">
+                        <h4 class="mb-4 text-primary">
+                            <i class="bi bi-question-circle me-2"></i>How to Track Your Booking?
+                        </h4>
+                        <div class="step-item mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="step-number bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 30px; height: 30px; font-size: 14px; font-weight: bold;">1</div>
+                                <div>
+                                    <h6 class="mb-1">Find Your Booking Number</h6>
+                                    <p class="text-muted mb-0 small">Check your booking confirmation email or SMS for the 8-digit booking number.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-item mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="step-number bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 30px; height: 30px; font-size: 14px; font-weight: bold;">2</div>
+                                <div>
+                                    <h6 class="mb-1">Enter Booking Number</h6>
+                                    <p class="text-muted mb-0 small">Type your booking number in the search box above and click "Check Status".</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-item mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="step-number bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 30px; height: 30px; font-size: 14px; font-weight: bold;">3</div>
+                                <div>
+                                    <h6 class="mb-1">View Real-time Status</h6>
+                                    <p class="text-muted mb-0 small">Get instant updates on your booking status, payment details, and trip information.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Our Services Section -->
+            <div class="col-lg-6 mb-4">
+                <div class="search-card h-100">
+                    <div class="search-form">
+                        <h4 class="mb-4 text-primary">
+                            <i class="bi bi-car-front me-2"></i>Our Car Booking Services
+                        </h4>
+                        <div class="service-item mb-3 p-3 bg-light rounded">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-clock text-primary me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Local Hourly Rentals</h6>
+                                    <small class="text-muted">Perfect for city tours and local sightseeing</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-item mb-3 p-3 bg-light rounded">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-calendar-day text-success me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Outstation Day Trips</h6>
+                                    <small class="text-muted">Multi-day packages for hill stations and destinations</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-item mb-3 p-3 bg-light rounded">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-arrow-right text-warning me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">One Way Drops</h6>
+                                    <small class="text-muted">Airport transfers and point-to-point travel</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-item mb-0 p-3 bg-light rounded">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-map text-info me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Multi-City Tours</h6>
+                                    <small class="text-muted">Customized itineraries covering multiple destinations</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Popular Destinations -->
+            <div class="col-lg-8 mb-4">
+                <div class="search-card">
+                    <div class="search-form">
+                        <h4 class="mb-4 text-primary">
+                            <i class="bi bi-geo-alt me-2"></i>Popular Destinations
+                        </h4>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="destination-card p-3 bg-light rounded text-center">
+                                    <i class="bi bi-flower1 text-success mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-1">Ooty</h6>
+                                    <small class="text-muted">Queen of Hill Stations</small>
+                                    <div class="mt-2">
+                                        <a href="{% url 'home' %}?destination=ooty" class="btn btn-sm btn-outline-primary">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="destination-card p-3 bg-light rounded text-center">
+                                    <i class="bi bi-tree text-success mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-1">Kodaikanal</h6>
+                                    <small class="text-muted">Princess of Hill Stations</small>
+                                    <div class="mt-2">
+                                        <a href="{% url 'home' %}?destination=kodaikanal" class="btn btn-sm btn-outline-primary">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="destination-card p-3 bg-light rounded text-center">
+                                    <i class="bi bi-cup-hot text-warning mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-1">Munnar</h6>
+                                    <small class="text-muted">Tea Garden Paradise</small>
+                                    <div class="mt-2">
+                                        <a href="{% url 'home' %}?destination=munnar" class="btn btn-sm btn-outline-primary">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="destination-card p-3 bg-light rounded text-center">
+                                    <i class="bi bi-building text-primary mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-1">Mysore</h6>
+                                    <small class="text-muted">City of Palaces</small>
+                                    <div class="mt-2">
+                                        <a href="{% url 'home' %}?destination=mysore" class="btn btn-sm btn-outline-primary">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="destination-card p-3 bg-light rounded text-center">
+                                    <i class="bi bi-water text-info mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-1">Coorg</h6>
+                                    <small class="text-muted">Scotland of India</small>
+                                    <div class="mt-2">
+                                        <a href="{% url 'home' %}?destination=coorg" class="btn btn-sm btn-outline-primary">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="destination-card p-3 bg-light rounded text-center">
+                                    <i class="bi bi-flower1 text-danger mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-1">Yercaud</h6>
+                                    <small class="text-muted">Jewel of South India</small>
+                                    <div class="mt-2">
+                                        <a href="{% url 'home' %}?destination=yercaud" class="btn btn-sm btn-outline-primary">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customer Support -->
+            <div class="col-lg-4 mb-4">
+                <div class="search-card h-100">
+                    <div class="search-form">
+                        <h4 class="mb-4 text-primary">
+                            <i class="bi bi-headset me-2"></i>24/7 Customer Support
+                        </h4>
+                        <div class="support-item mb-3 p-3 bg-light rounded">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-telephone-fill text-success me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Call Us</h6>
+                                    <a href="tel:+919787110763" class="text-decoration-none">+91 97871 10763</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="support-item mb-3 p-3 bg-light rounded">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-whatsapp text-success me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">WhatsApp</h6>
+                                    <a href="https://wa.me/919787110763" class="text-decoration-none" target="_blank">Chat with us</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="support-item mb-3 p-3 bg-light rounded">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-envelope-fill text-primary me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Email</h6>
+                                    <a href="mailto:info@rithamtravels.in" class="text-decoration-none">info@rithamtravels.in</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="{% url 'contact_us' %}" class="btn btn-primary">
+                                <i class="bi bi-chat-dots me-2"></i>Contact Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Booking Tips -->
+        <div class="row">
+            <div class="col-12">
+                <div class="search-card">
+                    <div class="search-form">
+                        <h4 class="mb-4 text-primary">
+                            <i class="bi bi-lightbulb me-2"></i>Booking Tips & Information
+                        </h4>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <div class="tip-card p-3 bg-light rounded text-center h-100">
+                                    <i class="bi bi-calendar-check text-success mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-2">Book in Advance</h6>
+                                    <small class="text-muted">Get better rates and vehicle availability by booking 2-3 days ahead</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="tip-card p-3 bg-light rounded text-center h-100">
+                                    <i class="bi bi-shield-check text-primary mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-2">Verified Drivers</h6>
+                                    <small class="text-muted">All our drivers are licensed, experienced, and background verified</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="tip-card p-3 bg-light rounded text-center h-100">
+                                    <i class="bi bi-credit-card text-warning mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-2">Flexible Payment</h6>
+                                    <small class="text-muted">Pay online, cash, or partial advance - choose what works for you</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="tip-card p-3 bg-light rounded text-center h-100">
+                                    <i class="bi bi-geo-alt text-danger mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-2">Live Tracking</h6>
+                                    <small class="text-muted">Track your vehicle location and get real-time updates on your trip</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Auto-format booking number input
+        $('#bookingNumber').on('input', function() {
+            let value = $(this).val().replace(/\D/g, ''); // Remove non-digits
+            if (value.length > 8) {
+                value = value.substring(0, 8);
+            }
+            $(this).val(value);
+        });
+
+        // Form submission with enhanced UX
+        $('#statusForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            const bookingNumber = $('#bookingNumber').val().trim();
+            
+            if (bookingNumber.length !== 8) {
+                showError('Please enter a valid 8-digit booking number');
+                return;
+            }
+            
+            // Show loading state
+            showLoading(true);
+            hideError();
+            hideBookingDetails();
+            
+            $.ajax({
+                url: '/api/bookings/status/' + bookingNumber + '/',
+                method: 'GET',
+                timeout: 10000, // 10 second timeout
+                success: function(data) {
+                    showLoading(false);
+                    displayBookingDetails(data);
+                },
+                error: function(xhr, status, error) {
+                    showLoading(false);
+                    if (status === 'timeout') {
+                        showError('Request timed out. Please try again.');
+                    } else if (xhr.status === 404) {
+                        showError('Booking not found. Please check your booking number and try again.');
+                    } else {
+                        showError('An error occurred while fetching booking details. Please try again.');
+                    }
+                }
+            });
+        });
+        
+        function showLoading(show) {
+            if (show) {
+                $('.btn-text').hide();
+                $('.loading-content').show();
+                $('#statusForm button').prop('disabled', true);
+            } else {
+                $('.btn-text').show();
+                $('.loading-content').hide();
+                $('#statusForm button').prop('disabled', false);
+            }
+        }
+        
+        function showError(message) {
+            $('#errorText').text(message);
+            $('#errorMessage').slideDown(300);
+        }
+        
+        function hideError() {
+            $('#errorMessage').slideUp(300);
+        }
+        
+        function hideBookingDetails() {
+            $('#bookingDetails').slideUp(300);
+            $('#additionalContent').slideDown(300); // Show additional content when hiding booking details
+        }
+        
+        function displayBookingDetails(data) {
+            const booking = data.booking;
+            const payments = data.payments || [];
+            
+            // Hide additional content when showing booking details
+            $('#additionalContent').slideUp(300);
+            
+            // Generate status badge
+            const statusBadge = generateStatusBadge(booking.status);
+            $('#statusBadge').html(statusBadge);
+            
+            // Generate booking info grid
+            const bookingInfoHtml = generateBookingInfoGrid(booking);
+            $('#bookingInfo').html(bookingInfoHtml);
+            
+            // Generate payment timeline
+            const paymentTimelineHtml = generatePaymentTimeline(payments);
+            $('#paymentTimeline').html(paymentTimelineHtml);
+            
+            // Show booking details with animation
+            $('#bookingDetails').slideDown(600);
+            
+            // Scroll to booking details
+            setTimeout(() => {
+                $('html, body').animate({
+                    scrollTop: $('#bookingDetails').offset().top - 100
+                }, 800);
+            }, 300);
+        }
+        
+        function generateStatusBadge(status) {
+            const statusConfig = {
+                'confirmed': { class: 'status-confirmed', icon: 'bi-check-circle', text: 'Confirmed' },
+                'pending': { class: 'status-pending', icon: 'bi-clock', text: 'Pending' },
+                'cancelled': { class: 'status-cancelled', icon: 'bi-x-circle', text: 'Cancelled' },
+                'completed': { class: 'status-completed', icon: 'bi-check-all', text: 'Completed' }
+            };
+            
+            const config = statusConfig[status] || { class: 'status-pending', icon: 'bi-question-circle', text: status };
+            
+            return `
+                <div class="status-badge ${config.class}">
+                    <i class="${config.icon} me-2"></i>${config.text}
+                </div>
+            `;
+        }
+        
+        function generateBookingInfoGrid(booking) {
+            const formatDate = (dateStr) => {
+                if (!dateStr) return 'Not specified';
+                const date = new Date(dateStr);
+                return date.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            };
+            
+            const formatCurrency = (amount) => {
+                return new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR'
+                }).format(amount);
+            };
+            
+            return `
+                <div class="info-item">
+                    <div class="info-label">Booking Number</div>
+                    <div class="info-value">#${booking.booking_number}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Customer Name</div>
+                    <div class="info-value">${booking.name || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Email Address</div>
+                    <div class="info-value">${booking.email || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Phone Number</div>
+                    <div class="info-value">${booking.phone || 'Not provided'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Trip Type</div>
+                    <div class="info-value">${booking.trip_type || 'Not specified'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Pickup Date</div>
+                    <div class="info-value">${formatDate(booking.pickup_date)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Pickup Address</div>
+                    <div class="info-value">${booking.pickup_address || 'Not specified'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Drop Address</div>
+                    <div class="info-value">${booking.drop_address || 'Not specified'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Total Amount</div>
+                    <div class="info-value fw-bold text-primary">${formatCurrency(booking.total_amount)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Booking Date</div>
+                    <div class="info-value">${formatDate(booking.created_at)}</div>
+                </div>
+            `;
+        }
+        
+        function generatePaymentTimeline(payments) {
+            if (!payments || payments.length === 0) {
+                return `
+                    <div class="text-center py-4">
+                        <i class="bi bi-credit-card text-muted" style="font-size: 3rem;"></i>
+                        <p class="text-muted mt-3">No payments recorded yet</p>
+                        <small class="text-muted">Payment information will appear here once processed</small>
+                    </div>
+                `;
+            }
+            
+            return payments.map((payment, index) => {
+                const formatDate = (dateStr) => {
+                    const date = new Date(dateStr);
+                    return date.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric', 
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                };
+                
+                const formatCurrency = (amount) => {
+                    return new Intl.NumberFormat('en-IN', {
+                        style: 'currency',
+                        currency: 'INR'
+                    }).format(amount);
+                };
+                
+                const getStatusBadge = (status) => {
+                    const statusConfig = {
+                        'completed': 'bg-success',
+                        'pending': 'bg-warning',
+                        'failed': 'bg-danger',
+                        'refunded': 'bg-info'
+                    };
+                    return statusConfig[status] || 'bg-secondary';
+                };
+                
+                return `
+                    <div class="payment-item">
+                        <div class="payment-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-2">Payment #${index + 1}</h6>
+                                    <p class="mb-1 fw-bold text-primary">${formatCurrency(payment.amount)}</p>
+                                    <small class="text-muted">${formatDate(payment.created_at)}</small>
+                                </div>
+                                <span class="badge ${getStatusBadge(payment.status)}">${payment.status}</span>
+                            </div>
+                            ${payment.payment_method ? `<small class="text-muted mt-2 d-block">via ${payment.payment_method}</small>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Auto-focus on booking number input
+        $('#bookingNumber').focus();
+        
+        // Check if booking number is provided in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingNumber = urlParams.get('booking_number');
+        if (bookingNumber) {
+            $('#bookingNumber').val(bookingNumber);
+            $('#statusForm').submit();
+        }
+    });
+</script>
+{% endblock %}
+

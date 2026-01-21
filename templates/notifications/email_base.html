@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{{ company_name }}{% endblock %}</title>
+    
+    <!-- Email Client Compatibility -->
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    
+    <style type="text/css">
+        /* Reset styles for email clients */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+        
+        /* Client-specific styles */
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+            line-height: 100%;
+        }
+        
+        /* Mobile styles */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            
+            .mobile-padding {
+                padding: 15px !important;
+            }
+            
+            .mobile-text-center {
+                text-align: center !important;
+            }
+            
+            .mobile-hide {
+                display: none !important;
+            }
+            
+            .mobile-full-width {
+                width: 100% !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .dark-mode-bg {
+                background-color: #1f2937 !important;
+            }
+            
+            .dark-mode-text {
+                color: #f9fafb !important;
+            }
+        }
+    </style>
+</head>
+<body style="
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333333;
+">
+    <!-- Email Container -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="
+        margin: 0;
+        padding: 0;
+        background-color: #f3f4f6;
+    ">
+        <tr>
+            <td align="center" style="padding: 20px 0;">
+                
+                <!-- Main Content Container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="container" style="
+                    width: 100%;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    background-color: #ffffff;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                ">
+                    
+                    {% block content %}
+                    <!-- Content will be inserted here -->
+                    {% endblock %}
+                    
+                </table>
+                
+                <!-- Email Footer -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="container" style="
+                    width: 100%;
+                    max-width: 800px;
+                    margin: 20px auto 0 auto;
+                ">
+                    <tr>
+                        <td align="center" style="
+                            padding: 20px;
+                            color: #6b7280;
+                            font-size: 12px;
+                            line-height: 1.4;
+                        ">
+                            <p style="margin: 0 0 10px 0;">
+                                This email was sent by {{ company_name }}
+                            </p>
+                            <p style="margin: 0 0 10px 0;">
+                                If you have any questions, please contact us at 
+                                <a href="tel:{{ company_phone }}" style="color: #2563eb; text-decoration: none;">{{ company_phone }}</a>
+                            </p>
+                            <p style="margin: 0;">
+                                © {% now "Y" %} {{ company_name }}. All rights reserved.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

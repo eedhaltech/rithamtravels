@@ -1,0 +1,427 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tour Packages - Travel Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    .packages-container {
+        background: #f8f9fa;
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+    
+    .packages-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        padding: 20px;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .card-header h5 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #10b981, #059669);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .package-item {
+        background: white;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .package-item:hover {
+        border-color: #2563eb;
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .package-header {
+        display: flex;
+        justify-content: between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+    
+    .package-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1e40af;
+        margin-bottom: 5px;
+    }
+    
+    .package-meta {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        color: #6b7280;
+    }
+    
+    .meta-item i {
+        color: #2563eb;
+    }
+    
+    .package-description {
+        color: #374151;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+    
+    .package-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .stat-badge {
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        padding: 8px 12px;
+        text-align: center;
+        font-size: 12px;
+    }
+    
+    .stat-value {
+        font-weight: 700;
+        color: #1e40af;
+        display: block;
+        font-size: 14px;
+    }
+    
+    .stat-label {
+        color: #6b7280;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 0.5px;
+    }
+    
+    .package-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+    
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 12px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+    
+    .btn-outline-primary {
+        border: 2px solid #2563eb;
+        color: #2563eb;
+        background: transparent;
+    }
+    
+    .btn-outline-primary:hover {
+        background: #2563eb;
+        color: white;
+    }
+    
+    .btn-outline-success {
+        border: 2px solid #10b981;
+        color: #10b981;
+        background: transparent;
+    }
+    
+    .btn-outline-success:hover {
+        background: #10b981;
+        color: white;
+    }
+    
+    .btn-outline-danger {
+        border: 2px solid #ef4444;
+        color: #ef4444;
+        background: transparent;
+    }
+    
+    .btn-outline-danger:hover {
+        background: #ef4444;
+        color: white;
+    }
+    
+    .status-badge {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    .status-active {
+        background: #dcfce7;
+        color: #166534;
+    }
+    
+    .status-inactive {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+    
+    .hotel-indicator {
+        background: #fef3c7;
+        color: #92400e;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    
+    .hotel-included {
+        background: #dcfce7;
+        color: #166534;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6b7280;
+    }
+    
+    .empty-state i {
+        font-size: 4rem;
+        color: #d1d5db;
+        margin-bottom: 20px;
+    }
+    
+    .empty-state h4 {
+        color: #374151;
+        margin-bottom: 10px;
+    }
+    
+    @media (max-width: 768px) {
+        .packages-container {
+            padding: 10px;
+        }
+        
+        .package-header {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .package-meta {
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .package-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .package-actions {
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="packages-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="mb-1">Tour Packages</h2>
+                        <p class="text-muted mb-0">Manage your tour packages and itineraries</p>
+                    </div>
+                    <a href="{% url 'travels_package_add' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2"></i>Add New Package
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packages List -->
+        <div class="packages-card">
+            <div class="card-header">
+                <h5><i class="bi bi-collection me-2"></i>All Tour Packages</h5>
+                <span class="badge bg-light text-dark">{{ packages.count }} Package{{ packages.count|pluralize }}</span>
+            </div>
+            <div class="card-body p-0">
+                {% if packages %}
+                    <div class="p-3">
+                        {% for package in packages %}
+                            <div class="package-item">
+                                <div class="package-header">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                            <h6 class="package-title mb-0">{{ package.name }}</h6>
+                                            <span class="status-badge {% if package.is_active %}status-active{% else %}status-inactive{% endif %}">
+                                                {% if package.is_active %}Active{% else %}Inactive{% endif %}
+                                            </span>
+                                            {% if package.include_hotel %}
+                                                <span class="hotel-indicator hotel-included">
+                                                    <i class="bi bi-building me-1"></i>Hotel Included
+                                                </span>
+                                            {% else %}
+                                                <span class="hotel-indicator">
+                                                    <i class="bi bi-house me-1"></i>No Hotel
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <div class="package-meta">
+                                            <div class="meta-item">
+                                                <i class="bi bi-calendar-week"></i>
+                                                <span>{{ package.duration_display }}</span>
+                                            </div>
+                                            {% if package.pickup_city %}
+                                                <div class="meta-item">
+                                                    <i class="bi bi-geo-alt"></i>
+                                                    <span>Pickup: {{ package.pickup_city.name }}</span>
+                                                </div>
+                                            {% endif %}
+                                            <div class="meta-item">
+                                                <i class="bi bi-map"></i>
+                                                <span>{{ package.cities.count }} Cities</span>
+                                            </div>
+                                            {% if package.vehicle_type %}
+                                                <div class="meta-item">
+                                                    <i class="bi bi-car-front"></i>
+                                                    <span>{{ package.vehicle_type }}</span>
+                                                </div>
+                                            {% endif %}
+                                            <div class="meta-item">
+                                                <i class="bi bi-clock"></i>
+                                                <span>Created {{ package.created_at|date:"M d, Y" }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="package-description">
+                                    {{ package.description|truncatewords:20 }}
+                                </div>
+                                
+                                <div class="package-stats">
+                                    <div class="stat-badge">
+                                        <span class="stat-value">{{ package.days }}</span>
+                                        <span class="stat-label">Days</span>
+                                    </div>
+                                    <div class="stat-badge">
+                                        <span class="stat-value">{{ package.nights }}</span>
+                                        <span class="stat-label">Nights</span>
+                                    </div>
+                                    <div class="stat-badge">
+                                        <span class="stat-value">{{ package.cities.count }}</span>
+                                        <span class="stat-label">Cities</span>
+                                    </div>
+                                    <div class="stat-badge">
+                                        <span class="stat-value">₹{{ package.price_per_vehicle|floatformat:0 }}</span>
+                                        <span class="stat-label">Package Rate</span>
+                                    </div>
+                                    {% if package.price_per_person %}
+                                        <div class="stat-badge">
+                                            <span class="stat-value">₹{{ package.price_per_person|floatformat:0 }}</span>
+                                            <span class="stat-label">Per Person</span>
+                                        </div>
+                                    {% endif %}
+                                    <div class="stat-badge">
+                                        <span class="stat-value">{{ package.day_wise_itinerary|length|default:0 }}</span>
+                                        <span class="stat-label">Day Plans</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="package-actions">
+                                    <a href="{% url 'travels_package_edit' package.id %}" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-pencil me-1"></i>Edit
+                                    </a>
+                                    <button type="button" class="btn btn-outline-success btn-sm" onclick="viewPackage({{ package.id }})">
+                                        <i class="bi bi-eye me-1"></i>View
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deletePackage({{ package.id }}, '{{ package.name }}')">
+                                        <i class="bi bi-trash me-1"></i>Delete
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="bi bi-collection"></i>
+                        <h4>No Tour Packages Yet</h4>
+                        <p>Start creating comprehensive tour packages for your customers.</p>
+                        <a href="{% url 'travels_package_add' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-2"></i>Create Your First Package
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewPackage(packageId) {
+    // This could open a modal or redirect to a detailed view
+    alert('Package view functionality can be implemented to show detailed package information.');
+}
+
+function deletePackage(packageId, packageName) {
+    if (confirm(`Are you sure you want to delete the package "${packageName}"?\n\nThis action cannot be undone.`)) {
+        fetch(`/travels-dashboard/packages/${packageId}/delete/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the package.');
+        });
+    }
+}
+</script>
+{% endblock %}

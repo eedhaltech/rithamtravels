@@ -1,0 +1,853 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ action }} Tour Package - Travel Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    .tour-planner-container {
+        background: #f8f9fa;
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+    
+    .planner-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        padding: 20px;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .card-header h5 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+    
+    .card-body {
+        padding: 25px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .form-control, .form-select {
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        outline: none;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+    }
+    
+    .btn-secondary {
+        background: #6b7280;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    
+    .btn-success {
+        background: #10b981;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    
+    .btn-danger {
+        background: #ef4444;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 6px;
+        font-size: 12px;
+    }
+    
+    .btn-outline-primary {
+        border: 2px solid #2563eb;
+        color: #2563eb;
+        background: transparent;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-primary:hover {
+        background: #2563eb;
+        color: white;
+    }
+    
+    /* Tour Overview Section */
+    .overview-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .stat-item {
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        border: 2px solid #bfdbfe;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .stat-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+    }
+    
+    .stat-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1e40af;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+        color: #6b7280;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Hotel Section */
+    .hotel-section {
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        border: 2px solid #bfdbfe;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .hotel-section.hidden {
+        display: none;
+    }
+    
+    .hotel-checkbox {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .hotel-checkbox input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        cursor: pointer;
+    }
+    
+    .hotel-checkbox label {
+        font-weight: 600;
+        color: #1e40af;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .no-hotel-message {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        border: 2px solid #fbbf24;
+        border-radius: 10px;
+        padding: 20px;
+        color: #92400e;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 15px;
+    }
+    
+    .hotel-fields {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    /* Day Planner Section */
+    .day-planner {
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+    }
+    
+    .day-planner:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .day-header {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .day-header h6 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 16px;
+    }
+    
+    .day-content {
+        padding: 20px;
+        background: white;
+    }
+    
+    .day-content .row {
+        margin-bottom: 15px;
+    }
+    
+    .day-actions {
+        text-align: center;
+        padding: 15px;
+        background: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+    }
+    
+    .places-input {
+        position: relative;
+    }
+    
+    .places-help {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 5px;
+        font-style: italic;
+    }
+    
+    .cities-selection {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        max-height: 250px;
+        overflow-y: auto;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 15px;
+        background: #f9fafb;
+    }
+    
+    .city-checkbox {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+    
+    .city-checkbox:hover {
+        background: #e0f2fe;
+    }
+    
+    .city-checkbox input[type="checkbox"] {
+        margin-right: 10px;
+        width: 16px;
+        height: 16px;
+    }
+    
+    .city-checkbox label {
+        font-size: 14px;
+        cursor: pointer;
+        margin: 0;
+        font-weight: 500;
+    }
+    
+    .add-day-section {
+        text-align: center;
+        padding: 30px;
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        border: 2px dashed #bfdbfe;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .add-day-section i {
+        font-size: 2rem;
+        color: #2563eb;
+        margin-bottom: 10px;
+    }
+    
+    .form-actions {
+        background: white;
+        padding: 25px;
+        border-top: 2px solid #e5e7eb;
+        text-align: center;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .required {
+        color: #ef4444;
+    }
+    
+    .alert {
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        border: none;
+    }
+    
+    .alert-info {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        color: #1e40af;
+        border-left: 4px solid #2563eb;
+    }
+    
+    @media (max-width: 768px) {
+        .tour-planner-container {
+            padding: 10px;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .overview-stats {
+            grid-template-columns: 1fr;
+        }
+        
+        .cities-selection {
+            grid-template-columns: 1fr;
+        }
+        
+        .hotel-fields {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-actions {
+            flex-direction: column;
+        }
+        
+        .day-header {
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tour-planner-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="mb-1">{{ action }} Tour Package</h2>
+                        <p class="text-muted mb-0">Create comprehensive tour packages for your customers</p>
+                    </div>
+                    <a href="{% url 'travels_packages_list' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left"></i> Back to Packages
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" id="tourPlannerForm">
+            {% csrf_token %}
+            
+            <!-- Tour Overview Section -->
+            <div class="planner-card">
+                <div class="card-header">
+                    <h5><i class="bi bi-info-circle me-2"></i>Tour Overview</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Package Name <span class="required">*</span></label>
+                                <input type="text" class="form-control" name="name" id="packageName" 
+                                       value="{{ package.name|default:'' }}" required
+                                       placeholder="e.g., Ooty Kodaikanal Hill Station Tour">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">Duration (Days) <span class="required">*</span></label>
+                                <select class="form-select" name="days" id="packageDays" required>
+                                    <option value="">Select Days</option>
+                                    {% for value, label in package_choices %}
+                                        <option value="{{ value }}" {% if package.days == value %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">Pickup City <span class="required">*</span></label>
+                                <select class="form-select" name="pickup_city" id="pickupCity" required>
+                                    <option value="">Select Pickup City</option>
+                                    {% for city in cities %}
+                                        <option value="{{ city.id }}" {% if package.pickup_city_id == city.id %}selected{% endif %}>{{ city.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">Package Amount (₹) <span class="required">*</span></label>
+                                <input type="number" class="form-control" name="price_per_vehicle" 
+                                       value="{{ package.price_per_vehicle|default:'' }}" required
+                                       placeholder="e.g., 15000" step="0.01">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">Per Person Amount (₹)</label>
+                                <input type="number" class="form-control" name="price_per_person" 
+                                       value="{{ package.price_per_person|default:'' }}"
+                                       placeholder="e.g., 2500" step="0.01">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">Recommended Vehicle</label>
+                                <input type="text" class="form-control" name="vehicle_type" 
+                                       value="{{ package.vehicle_type|default:'' }}"
+                                       placeholder="e.g., Innova, Swift Dzire">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Package Description <span class="required">*</span></label>
+                        <textarea class="form-control" name="description" rows="3" required
+                                  placeholder="Brief description of the tour package">{{ package.description|default:'' }}</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Cities Covered <span class="required">*</span></label>
+                        <div class="cities-selection" id="citiesSelection">
+                            {% for city in cities %}
+                                <div class="city-checkbox">
+                                    <input type="checkbox" name="cities" value="{{ city.id }}" id="city_{{ city.id }}"
+                                           {% if original_package and city in original_package.cities.all %}checked{% endif %}>
+                                    <label for="city_{{ city.id }}">{{ city.name }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Overview Stats -->
+                    <div class="overview-stats" id="overviewStats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="statDays">{% if package %}{{ package.days }}{% else %}0{% endif %}</span>
+                            <span class="stat-label">Days</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="statNights">{% if package %}{{ package.nights|default:'0' }}{% else %}0{% endif %}</span>
+                            <span class="stat-label">Nights</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="statCities">{% if original_package %}{{ original_package.cities.count }}{% else %}0{% endif %}</span>
+                            <span class="stat-label">Cities</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="statAmount">₹{% if package %}{{ package.price_per_vehicle|default:'0' }}{% else %}0{% endif %}</span>
+                            <span class="stat-label">Package Amount</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hotel Booking Section -->
+            <div class="planner-card">
+                <div class="card-header">
+                    <h5><i class="bi bi-building me-2"></i>Hotel Booking</h5>
+                </div>
+                <div class="card-body">
+                    <div class="hotel-checkbox">
+                        <input type="checkbox" name="include_hotel" id="includeHotel" value="1"
+                               {% if package.include_hotel %}checked{% endif %}>
+                        <label for="includeHotel">☑ Include Hotel in Package</label>
+                    </div>
+                    
+                    <div class="hotel-section" id="hotelSection" {% if not package.include_hotel %}style="display: none;"{% endif %}>
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Hotel booking will be included in the package. Fill in the hotel details below.
+                        </div>
+                        
+                        <div class="hotel-fields">
+                            <div class="form-group">
+                                <label class="form-label">Hotel Name</label>
+                                <input type="text" class="form-control" name="hotel_name" id="hotelName"
+                                       value="{% if package and package.hotel_details %}{{ package.hotel_details.name|default:'' }}{% endif %}"
+                                       placeholder="e.g., Hotel Grand Palace">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Hotel City/Location</label>
+                                <input type="text" class="form-control" name="hotel_city" id="hotelCity"
+                                       value="{% if package and package.hotel_details %}{{ package.hotel_details.city|default:'' }}{% endif %}"
+                                       placeholder="e.g., Ooty">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Check-in Date</label>
+                                <input type="date" class="form-control" name="hotel_checkin" id="hotelCheckin"
+                                       value="{% if package and package.hotel_details %}{{ package.hotel_details.checkin|default:'' }}{% endif %}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Check-out Date</label>
+                                <input type="date" class="form-control" name="hotel_checkout" id="hotelCheckout"
+                                       value="{% if package and package.hotel_details %}{{ package.hotel_details.checkout|default:'' }}{% endif %}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Room Type</label>
+                                <select class="form-select" name="hotel_room_type" id="hotelRoomType">
+                                    <option value="">Select Room Type</option>
+                                    <option value="Standard" {% if package and package.hotel_details and package.hotel_details.room_type == 'Standard' %}selected{% endif %}>Standard Room</option>
+                                    <option value="Deluxe" {% if package and package.hotel_details and package.hotel_details.room_type == 'Deluxe' %}selected{% endif %}>Deluxe Room</option>
+                                    <option value="Suite" {% if package and package.hotel_details and package.hotel_details.room_type == 'Suite' %}selected{% endif %}>Suite</option>
+                                    <option value="Premium" {% if package and package.hotel_details and package.hotel_details.room_type == 'Premium' %}selected{% endif %}>Premium Room</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="no-hotel-message" id="noHotelMessage" {% if package.include_hotel %}style="display: none;"{% endif %}>
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        Hotel booking is not included. Travelers need to arrange hotels themselves.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day-wise Tour Planner Section -->
+            <div class="planner-card">
+                <div class="card-header">
+                    <h5><i class="bi bi-calendar-week me-2"></i>Day-wise Tour Planner</h5>
+                    <span class="badge bg-light text-dark">Plan each day of the tour</span>
+                </div>
+                <div class="card-body">
+                    <div id="dayPlannerContainer">
+                        {% if package.day_wise_itinerary %}
+                            {% for day_plan in package.day_wise_itinerary %}
+                                <div class="day-planner" data-day="{{ day_plan.day }}">
+                                    <div class="day-header">
+                                        <h6>Day {{ day_plan.day }}</h6>
+                                        <div>
+                                            <button type="button" class="btn btn-sm btn-light me-2" onclick="editDay({{ day_plan.day }})">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteDay({{ day_plan.day }})">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="day-content">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-label">Pickup Time</label>
+                                                    <input type="time" class="form-control" name="day_{{ day_plan.day }}_pickup_time"
+                                                           value="{{ day_plan.pickup_time|default:'' }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="form-group">
+                                                    <label class="form-label">Pickup Location</label>
+                                                    <input type="text" class="form-control" name="day_{{ day_plan.day }}_pickup_location"
+                                                           value="{{ day_plan.pickup_location|default:'' }}"
+                                                           placeholder="e.g., Hotel, Railway Station, Airport">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Places to Visit</label>
+                                            <textarea class="form-control" name="day_{{ day_plan.day }}_places_to_visit" rows="2"
+                                                      placeholder="e.g., Ooty Lake, Botanical Garden, Rose Garden">{{ day_plan.places_to_visit|default:'' }}</textarea>
+                                            <div class="places-help">Enter multiple places separated by commas</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Route Description / Activities</label>
+                                            <textarea class="form-control" name="day_{{ day_plan.day }}_route_description" rows="2"
+                                                      placeholder="Describe the day's route and activities">{{ day_plan.route_description|default:'' }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Notes / Special Instructions</label>
+                                            <textarea class="form-control" name="day_{{ day_plan.day }}_notes" rows="2"
+                                                      placeholder="Any special notes or instructions for this day">{{ day_plan.notes|default:'' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="add-day-section">
+                        <i class="bi bi-plus-circle"></i>
+                        <h6>Add New Day</h6>
+                        <p class="text-muted mb-3">Click below to add a new day to your tour plan</p>
+                        <button type="button" class="btn btn-primary" onclick="addNewDay()">
+                            <i class="bi bi-plus me-2"></i>Add Day
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-check-circle me-2"></i>{{ action }} Package
+                </button>
+                <a href="{% url 'travels_packages_list' %}" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-x-circle me-2"></i>Cancel
+                </a>
+                {% if package %}
+                    <button type="button" class="btn btn-outline-primary btn-lg" onclick="previewPackage()">
+                        <i class="bi bi-eye me-2"></i>Preview Package
+                    </button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let dayCounter = {% if package and package.day_wise_itinerary %}{{ package.day_wise_itinerary|length }}{% else %}0{% endif %};
+    
+    // Hotel checkbox functionality
+    const includeHotelCheckbox = document.getElementById('includeHotel');
+    const hotelSection = document.getElementById('hotelSection');
+    const noHotelMessage = document.getElementById('noHotelMessage');
+    
+    includeHotelCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            hotelSection.style.display = 'block';
+            noHotelMessage.style.display = 'none';
+        } else {
+            hotelSection.style.display = 'none';
+            noHotelMessage.style.display = 'block';
+        }
+    });
+    
+    // Update overview stats dynamically
+    function updateOverviewStats() {
+        const days = document.getElementById('packageDays').value || 0;
+        const nights = Math.max(0, days - 1);
+        const cities = document.querySelectorAll('input[name="cities"]:checked').length;
+        const amount = document.querySelector('input[name="price_per_vehicle"]').value || 0;
+        
+        document.getElementById('statDays').textContent = days;
+        document.getElementById('statNights').textContent = nights;
+        document.getElementById('statCities').textContent = cities;
+        document.getElementById('statAmount').textContent = '₹' + amount;
+    }
+    
+    // Event listeners for dynamic updates
+    document.getElementById('packageDays').addEventListener('change', updateOverviewStats);
+    document.querySelector('input[name="price_per_vehicle"]').addEventListener('input', updateOverviewStats);
+    document.querySelectorAll('input[name="cities"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateOverviewStats);
+    });
+    
+    // Add new day functionality
+    window.addNewDay = function() {
+        dayCounter++;
+        const container = document.getElementById('dayPlannerContainer');
+        
+        const dayHtml = `
+            <div class="day-planner" data-day="${dayCounter}">
+                <div class="day-header">
+                    <h6>Day ${dayCounter}</h6>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-light me-2" onclick="editDay(${dayCounter})">
+                            <i class="bi bi-pencil"></i> Edit
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="deleteDay(${dayCounter})">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">Pickup Time</label>
+                                <input type="time" class="form-control" name="day_${dayCounter}_pickup_time" value="09:00">
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label class="form-label">Pickup Location</label>
+                                <input type="text" class="form-control" name="day_${dayCounter}_pickup_location"
+                                       placeholder="e.g., Hotel, Railway Station, Airport">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Places to Visit</label>
+                        <textarea class="form-control" name="day_${dayCounter}_places_to_visit" rows="2"
+                                  placeholder="e.g., Ooty Lake, Botanical Garden, Rose Garden"></textarea>
+                        <div class="places-help">Enter multiple places separated by commas</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Route Description / Activities</label>
+                        <textarea class="form-control" name="day_${dayCounter}_route_description" rows="2"
+                                  placeholder="Describe the day's route and activities"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes / Special Instructions</label>
+                        <textarea class="form-control" name="day_${dayCounter}_notes" rows="2"
+                                  placeholder="Any special notes or instructions for this day"></textarea>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.insertAdjacentHTML('beforeend', dayHtml);
+        
+        // Scroll to the new day
+        const newDay = container.lastElementChild;
+        newDay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+    
+    // Delete day functionality
+    window.deleteDay = function(dayNumber) {
+        if (confirm('Are you sure you want to delete Day ' + dayNumber + '?')) {
+            const dayElement = document.querySelector(`[data-day="${dayNumber}"]`);
+            if (dayElement) {
+                dayElement.remove();
+                reorderDays();
+            }
+        }
+    };
+    
+    // Edit day functionality (scroll to day)
+    window.editDay = function(dayNumber) {
+        const dayElement = document.querySelector(`[data-day="${dayNumber}"]`);
+        if (dayElement) {
+            dayElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Focus on first input
+            const firstInput = dayElement.querySelector('input, textarea');
+            if (firstInput) {
+                setTimeout(() => firstInput.focus(), 500);
+            }
+        }
+    };
+    
+    // Reorder days after deletion
+    function reorderDays() {
+        const dayElements = document.querySelectorAll('.day-planner');
+        dayElements.forEach((element, index) => {
+            const newDayNumber = index + 1;
+            const oldDayNumber = element.getAttribute('data-day');
+            
+            element.setAttribute('data-day', newDayNumber);
+            element.querySelector('.day-header h6').textContent = `Day ${newDayNumber}`;
+            
+            // Update form field names
+            const inputs = element.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                const name = input.getAttribute('name');
+                if (name && name.startsWith('day_')) {
+                    const newName = name.replace(`day_${oldDayNumber}_`, `day_${newDayNumber}_`);
+                    input.setAttribute('name', newName);
+                }
+            });
+            
+            // Update onclick handlers
+            const editBtn = element.querySelector('[onclick*="editDay"]');
+            const deleteBtn = element.querySelector('[onclick*="deleteDay"]');
+            if (editBtn) editBtn.setAttribute('onclick', `editDay(${newDayNumber})`);
+            if (deleteBtn) deleteBtn.setAttribute('onclick', `deleteDay(${newDayNumber})`);
+        });
+        
+        dayCounter = dayElements.length;
+    }
+    
+    // Preview package functionality
+    window.previewPackage = function() {
+        // This could open a modal or redirect to a preview page
+        alert('Preview functionality can be implemented to show how the package will look to customers.');
+    };
+    
+    // Form validation
+    document.getElementById('tourPlannerForm').addEventListener('submit', function(e) {
+        const packageName = document.getElementById('packageName').value.trim();
+        const packageDays = document.getElementById('packageDays').value;
+        const pickupCity = document.getElementById('pickupCity').value;
+        const selectedCities = document.querySelectorAll('input[name="cities"]:checked').length;
+        const packageAmount = document.querySelector('input[name="price_per_vehicle"]').value;
+        
+        if (!packageName || !packageDays || !pickupCity || selectedCities === 0 || !packageAmount) {
+            e.preventDefault();
+            alert('Please fill in all required fields:\n- Package Name\n- Duration\n- Pickup City\n- Cities Covered\n- Package Amount');
+            return false;
+        }
+        
+        // Validate hotel fields if hotel is included
+        if (document.getElementById('includeHotel').checked) {
+            const hotelName = document.getElementById('hotelName').value.trim();
+            const hotelCity = document.getElementById('hotelCity').value.trim();
+            
+            if (!hotelName || !hotelCity) {
+                e.preventDefault();
+                alert('Please fill in hotel details when hotel booking is included.');
+                return false;
+            }
+        }
+        
+        return true;
+    });
+    
+    // Initialize overview stats
+    updateOverviewStats();
+});
+</script>
+{% endblock %}

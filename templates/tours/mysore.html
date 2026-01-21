@@ -1,0 +1,416 @@
+{% extends 'base.html' %}
+
+{% block title %}Mysore - City of Palaces - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .destination-hero {
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.8), rgba(255, 165, 0, 0.8));
+        position: relative;
+        height: 70vh;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .destination-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+    
+    .destination-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.7), rgba(255, 165, 0, 0.7));
+        z-index: 2;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        padding: 0 20px;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+    }
+    
+    .hero-description {
+        font-size: 1.2rem;
+        opacity: 0.8;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn-hero {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        font-size: 1.1rem;
+    }
+    
+    .btn-hero-primary {
+        background: white;
+        color: #ff8c00;
+    }
+    
+    .btn-hero-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+        color: #ff8c00;
+    }
+    
+    .btn-hero-outline {
+        border: 2px solid white;
+        color: white;
+        background: transparent;
+    }
+    
+    .btn-hero-outline:hover {
+        background: white;
+        color: #ff8c00;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+    }
+    
+    .content-section {
+        margin-top: -50px;
+        position: relative;
+        z-index: 4;
+    }
+    
+    .content-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .content-card .card-header {
+        background: linear-gradient(135deg, #ff8c00, #ffa500);
+        color: white;
+        border: none;
+        padding: 20px 30px;
+        font-weight: 600;
+    }
+    
+    .content-card .card-body {
+        padding: 30px;
+    }
+    
+    .attraction-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 25px;
+    }
+    
+    .attraction-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        text-align: center;
+    }
+    
+    .attraction-item:hover {
+        background: rgba(255, 140, 0, 0.1);
+        transform: translateY(-5px);
+        border-color: #ff8c00;
+        box-shadow: 0 10px 25px rgba(255, 140, 0, 0.2);
+    }
+    
+    .attraction-icon {
+        font-size: 2.5rem;
+        color: #ff8c00;
+        margin-bottom: 15px;
+    }
+    
+    .attraction-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    
+    .attraction-description {
+        color: #6c757d;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .info-highlight {
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(255, 165, 0, 0.1));
+        border: 1px solid rgba(255, 140, 0, 0.2);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    
+    .info-highlight i {
+        font-size: 2rem;
+        color: #ff8c00;
+        margin-bottom: 15px;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(255, 165, 0, 0.1));
+        border: 2px solid #ff8c00;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+    
+    .btn-cta {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+    }
+    
+    .btn-primary-cta {
+        background: linear-gradient(135deg, #ff8c00, #ffa500);
+        color: white;
+    }
+    
+    .btn-primary-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(255, 140, 0, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-cta {
+        border: 2px solid #ff8c00;
+        color: #ff8c00;
+        background: white;
+    }
+    
+    .btn-outline-cta:hover {
+        background: #ff8c00;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(255, 140, 0, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+        
+        .hero-description {
+            font-size: 1rem;
+        }
+        
+        .destination-hero {
+            height: 50vh;
+            min-height: 400px;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn-hero {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style>
+{% endblock %}
+{% load static %}
+{% block content %}
+<!-- Destination Hero -->
+<div class="destination-hero">
+    <img src="{% static 'tour/Mysore.jpg' %}" class="destination-hero-bg" alt="Mysore Palace">
+    <div class="destination-hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">Mysore</h1>
+        <p class="hero-subtitle">City of Palaces</p>
+        <p class="hero-description">Explore the royal heritage, magnificent palaces, and rich cultural traditions of Karnataka's cultural capital</p>
+        <div class="hero-buttons">
+            <a href="{% url 'tour_planner' %}" class="btn-hero btn-hero-primary">
+                <i class="bi bi-calendar-check"></i>
+                <span>Book Your Trip</span>
+            </a>
+            <a href="{% url 'contact_us' %}" class="btn-hero btn-hero-outline">
+                <i class="bi bi-chat-dots"></i>
+                <span>Get Quote</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="container">
+    <div class="content-section">
+        <!-- Overview -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-info-circle me-2"></i>About Mysore</h4>
+            </div>
+            <div class="card-body">
+                <p class="mb-4">Known as the cultural capital of Karnataka, Mysore is a city steeped in royal heritage and architectural grandeur. Famous for its magnificent palaces, vibrant festivals, and traditional arts, it offers a perfect blend of history and modernity.</p>
+                
+                <div class="info-highlight">
+                    <i class="bi bi-building"></i>
+                    <h6>Royal Heritage City</h6>
+                    <p class="mb-0">Former capital of the Kingdom of Mysore, home to the magnificent Mysore Palace and royal traditions</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Attractions -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-camera me-2"></i>Top Attractions</h4>
+            </div>
+            <div class="card-body">
+                <div class="attraction-grid">
+                    <div class="attraction-item">
+                        <i class="bi bi-building attraction-icon"></i>
+                        <h6 class="attraction-title">Mysore Palace</h6>
+                        <p class="attraction-description">Magnificent Indo-Saracenic palace illuminated with 97,000 bulbs during Dussehra festival</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-mountain attraction-icon"></i>
+                        <h6 class="attraction-title">Chamundi Hills</h6>
+                        <p class="attraction-description">Sacred hill with Chamundeshwari Temple and panoramic views of Mysore city</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-flower1 attraction-icon"></i>
+                        <h6 class="attraction-title">Brindavan Gardens</h6>
+                        <p class="attraction-description">Beautiful terraced gardens with musical fountain shows and colorful illumination</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-shop attraction-icon"></i>
+                        <h6 class="attraction-title">Devaraja Market</h6>
+                        <p class="attraction-description">Vibrant traditional market famous for sandalwood, silk, spices, and jasmine flowers</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-building attraction-icon"></i>
+                        <h6 class="attraction-title">Jaganmohan Palace</h6>
+                        <p class="attraction-description">Art gallery and museum housing one of India's largest collections of artifacts</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-tree attraction-icon"></i>
+                        <h6 class="attraction-title">Mysore Zoo</h6>
+                        <p class="attraction-description">One of India's oldest and most well-maintained zoos with diverse wildlife species</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Best Time to Visit -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-calendar-event me-2"></i>Best Time to Visit</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-sun"></i>
+                            <h6>Summer (Mar-May)</h6>
+                            <p class="mb-0">Warm weather, ideal for palace visits and indoor attractions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-cloud-rain"></i>
+                            <h6>Monsoon (Jun-Sep)</h6>
+                            <p class="mb-0">Pleasant weather with lush gardens and beautiful fountain shows</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-star"></i>
+                            <h6>Winter (Oct-Feb)</h6>
+                            <p class="mb-0">Perfect weather and Dussehra festival season - the best time to visit</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h4 class="mb-3"><i class="bi bi-rocket-takeoff me-2"></i>Ready to Explore Mysore?</h4>
+            <p class="text-muted mb-4">Discover the royal heritage and cultural richness of the City of Palaces with our expertly crafted tour packages!</p>
+            <div class="cta-buttons">
+                <a href="{% url 'tour_planner' %}" class="btn-cta btn-primary-cta">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Book Mysore Trip</span>
+                </a>
+                <a href="{% url 'contact_us' %}" class="btn-cta btn-outline-cta">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Get Custom Quote</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

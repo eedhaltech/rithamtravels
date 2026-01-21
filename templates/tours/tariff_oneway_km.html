@@ -1,0 +1,642 @@
+{% extends 'base.html' %}
+
+{% block title %}One Way Tariff - KM Basis - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .sidebar-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: none;
+        margin-bottom: 25px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .sidebar-card .card-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .sidebar-card .card-body {
+        padding: 20px;
+    }
+
+    .sidebar-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar-card li {
+        margin-bottom: 10px;
+    }
+
+    .sidebar-card a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+    }
+
+    .sidebar-card a:hover {
+        color: #764ba2;
+        transform: translateX(5px);
+    }
+
+    .sidebar-card a::before {
+        content: '→';
+        margin-right: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-card a:hover::before {
+        transform: translateX(3px);
+    }
+
+    .testimonial-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-left: 4px solid #667eea;
+    }
+
+    .testimonial-item p {
+        margin-bottom: 8px;
+        font-style: italic;
+        color: #4a5568;
+    }
+
+    .testimonial-author {
+        font-weight: 600;
+        color: #667eea;
+        font-size: 0.9rem;
+    }
+
+    .promotion-item {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+    }
+
+    .promotion-item h6 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .promotion-item p {
+        color: #6c757d;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    /* Main Content Styling */
+    .tariff-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 60px 0;
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        margin-bottom: 30px;
+    }
+
+    .tariff-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .content-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: none;
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    .content-card .card-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 20px 30px;
+        font-weight: 600;
+    }
+
+    .content-card .card-body {
+        padding: 30px;
+    }
+
+    .info-alert {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .info-alert i {
+        color: #667eea;
+        font-size: 1.2rem;
+    }
+
+    .modern-table {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .modern-table thead th {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .modern-table tbody td {
+        padding: 15px;
+        vertical-align: middle;
+        border-bottom: 1px solid #f1f3f4;
+        text-align: center;
+    }
+
+    .modern-table tbody tr:hover {
+        background: rgba(102, 126, 234, 0.05);
+    }
+
+    .vehicle-name {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .price-highlight {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .terms-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .terms-list li {
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f3f4;
+        display: flex;
+        align-items: center;
+    }
+
+    .terms-list li:last-child {
+        border-bottom: none;
+    }
+
+    .terms-list i {
+        color: #28a745;
+        margin-right: 12px;
+        font-size: 1.1rem;
+    }
+
+    .destination-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .destination-item {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+    }
+
+    .destination-item:hover {
+        background: rgba(102, 126, 234, 0.1);
+        transform: translateY(-3px);
+        border-color: #667eea;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+    .btn-modern {
+        padding: 15px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+    }
+
+    .btn-primary-modern {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+    }
+
+    .btn-primary-modern:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+
+    .btn-outline-modern {
+        border: 2px solid #667eea;
+        color: #667eea;
+        background: white;
+    }
+
+    .btn-outline-modern:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="mb-4">One Way Tariff - KM Basis</h2>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>Kilometer Based One Way Service</h5>
+                    <p>Our KM-based one-way service offers flexible pricing for custom routes and destinations not
+                        covered in our fixed-rate plans. Pay only for the actual distance traveled with transparent
+                        per-kilometer pricing.</p>
+
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Note:</strong> One-way KM basis is calculated from pickup point to drop point via the
+                        shortest route. No return journey charges.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>One Way KM Rates</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Vehicle Type</th>
+                                    <th>Rate per KM</th>
+                                    <th>Minimum KM</th>
+                                    <th>Base Charge</th>
+                                    <th>Seating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Swift Dzire (AC)</strong></td>
+                                    <td>₹15/KM</td>
+                                    <td>25 KM</td>
+                                    <td>₹200</td>
+                                    <td>4 + 1 Driver</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Etios (AC)</strong></td>
+                                    <td>₹16/KM</td>
+                                    <td>25 KM</td>
+                                    <td>₹250</td>
+                                    <td>4 + 1 Driver</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Innova (AC)</strong></td>
+                                    <td>₹22/KM</td>
+                                    <td>25 KM</td>
+                                    <td>₹400</td>
+                                    <td>7 + 1 Driver</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Innova Crysta (AC)</strong></td>
+                                    <td>₹25/KM</td>
+                                    <td>25 KM</td>
+                                    <td>₹450</td>
+                                    <td>7 + 1 Driver</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tempo Traveller (AC)</strong></td>
+                                    <td>₹30/KM</td>
+                                    <td>25 KM</td>
+                                    <td>₹600</td>
+                                    <td>12 + 1 Driver</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>Sample Calculations</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Short Distance (Within 50 KM)</h6>
+                            <ul>
+                                <li><strong>Airport (15 KM):</strong> ₹200 + (25×₹15) = ₹575</li>
+                                <li><strong>Railway Station (8 KM):</strong> ₹200 + (25×₹15) = ₹575</li>
+                                <li><strong>Tirupur (50 KM):</strong> ₹200 + (50×₹15) = ₹950</li>
+                                <li><strong>Pollachi (40 KM):</strong> ₹200 + (40×₹15) = ₹800</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Long Distance (50+ KM)</h6>
+                            <ul>
+                                <li><strong>Ooty (90 KM):</strong> ₹200 + (90×₹15) = ₹1,550</li>
+                                <li><strong>Salem (160 KM):</strong> ₹200 + (160×₹15) = ₹2,600</li>
+                                <li><strong>Kodaikanal (180 KM):</strong> ₹200 + (180×₹15) = ₹2,900</li>
+                                <li><strong>Madurai (220 KM):</strong> ₹200 + (220×₹15) = ₹3,500</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <small class="text-muted">*Calculations shown for Swift Dzire. Rates vary by vehicle type.</small>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>When to Choose KM Basis</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>✅ Best For</h6>
+                            <ul>
+                                <li>Custom destinations</li>
+                                <li>Flexible routes</li>
+                                <li>Multiple stops</li>
+                                <li>Remote locations</li>
+                                <li>Business meetings</li>
+                                <li>Medical appointments</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>💡 Advantages</h6>
+                            <ul>
+                                <li>Pay only actual distance</li>
+                                <li>No return journey charges</li>
+                                <li>Flexible pickup/drop points</li>
+                                <li>Transparent pricing</li>
+                                <li>Route customization</li>
+                                <li>Multiple destination stops</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>Additional Services</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Charges</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Waiting Charges</strong></td>
+                                    <td>₹100/hour</td>
+                                    <td>After 30 minutes free waiting</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Multiple Stops</strong></td>
+                                    <td>₹50/stop</td>
+                                    <td>Additional stops beyond destination</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Night Charges</strong></td>
+                                    <td>25% extra</td>
+                                    <td>Between 10 PM to 6 AM</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Luggage Handling</strong></td>
+                                    <td>₹100</td>
+                                    <td>For heavy luggage (>25 kg)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Route Deviation</strong></td>
+                                    <td>Actual KM rate</td>
+                                    <td>For non-standard routes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>Terms & Conditions</h5>
+                    <ul>
+                        <li>Minimum billing: 25 KM even for shorter distances</li>
+                        <li>Distance calculated via Google Maps shortest route</li>
+                        <li>Base charge + (Actual KM × Per KM rate)</li>
+                        <li>Free waiting: 30 minutes, then ₹100 per hour</li>
+                        <li>Toll charges and parking fees are extra</li>
+                        <li>Night charges: 25% extra between 10 PM - 6 AM</li>
+                        <li>Advance booking recommended for better service</li>
+                        <li>Cancellation: Free if cancelled 1 hour before pickup</li>
+                        <li>GPS tracking available for all trips</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="{% url 'tour_planner' %}" class="btn btn-primary btn-lg me-3">
+                    <i class="bi bi-calculator me-2"></i>Calculate Fare
+                </a>
+                <a href="{% url 'contact_us' %}" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-telephone me-2"></i>Get Quote
+                </a>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <!-- Popular Plans -->
+            <div class="sidebar-card">
+                <div class="card-header">
+                    <h5><i class="bi bi-star me-2"></i>Popular Plans</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><a href="{% url 'ooty' %}">Ooty Hill Station Tour</a></li>
+                        <li><a href="{% url 'kodaikanal' %}">Kodaikanal Weekend Package</a></li>
+                        <li><a href="{% url 'munnar' %}">Munnar Tea Garden Tour</a></li>
+                        <li><a href="{% url 'coorg' %}">Coorg Coffee Plantation</a></li>
+                        <li><a href="{% url 'mysore' %}">Mysore Palace Tour</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tour Categories -->
+            <div class="sidebar-card">
+                <div class="card-header">
+                    <h5><i class="bi bi-map me-2"></i>Tour Categories</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><a href="#">One Day Trips</a></li>
+                        <li><a href="#">Weekend Getaways</a></li>
+                        <li><a href="#">Hill Station Tours</a></li>
+                        <li><a href="#">Beach Destinations</a></li>
+                        <li><a href="#">Cultural Tours</a></li>
+                        <li><a href="#">Adventure Packages</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Contact -->
+            <div class="sidebar-card">
+                <div class="card-header">
+                    <h5><i class="bi bi-telephone me-2"></i>Quick Contact</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-whatsapp" style="font-size: 2rem; color: #25D366;"></i>
+                        <h6 class="mt-2">WhatsApp</h6>
+                        <a href="https://wa.me/917373812345" style="color: white;" class="btn btn-success btn-sm">
+                            <i class="bi bi-whatsapp me-1"></i>Chat Now
+                        </a>
+                    </div>
+                    <div class="mb-3">
+                        <i class="bi bi-telephone-fill" style="font-size: 2rem; color: #667eea;"></i>
+                        <h6 class="mt-2">Call Us</h6>
+                        <a href="tel:+917373812345" style="color: white;" class="btn btn-primary btn-sm">
+                            <i class="bi bi-telephone me-1"></i>+91 73738 12345
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Testimonials -->
+            <div class="sidebar-card">
+                <div class="card-header">
+                    <h5><i class="bi bi-chat-quote me-2"></i>What Customers Say</h5>
+                </div>
+                <div class="card-body">
+                    <div class="testimonial-item">
+                        <p>"Excellent service and professional drivers. Highly recommended for family trips!"</p>
+                        <div class="testimonial-author">- Priya Sharma</div>
+                    </div>
+                    <div class="testimonial-item">
+                        <p>"Best tour operator in Coimbatore. Great vehicles and punctual service."</p>
+                        <div class="testimonial-author">- Rajesh Kumar</div>
+                    </div>
+                    <div class="testimonial-item">
+                        <p>"Amazing experience with Ritham Tours. Will definitely book again!"</p>
+                        <div class="testimonial-author">- Meera Nair</div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'testimonials' %}" class="btn btn-outline-primary btn-sm">
+                            View All Reviews
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Offers -->
+            <div class="sidebar-card">
+                <div class="card-header">
+                    <h5><i class="bi bi-gift me-2"></i>Special Offers</h5>
+                </div>
+                <div class="card-body">
+                    <div class="promotion-item">
+                        <h6>🎉 New Year Special</h6>
+                        <p>Get 20% off on all hill station packages. Valid till January 31st!</p>
+                    </div>
+                    <div class="promotion-item">
+                        <h6>🚗 Group Booking Discount</h6>
+                        <p>Book for 5+ people and save up to 15% on your total booking.</p>
+                    </div>
+                    <div class="promotion-item">
+                        <h6>⭐ Early Bird Offer</h6>
+                        <p>Book 15 days in advance and get 10% discount on all packages.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

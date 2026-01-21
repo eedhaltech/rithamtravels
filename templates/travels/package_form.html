@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Package - Travels Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2>{{ action }} Tour Package</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" value="{{ package.name|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control">{{ package.description|default:'' }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Days</label>
+            <select name="days" class="form-select">
+                <option value="1" {% if package.days == 1 %}selected{% endif %}>1 Day(s)</option>
+                <option value="2" {% if package.days == 2 %}selected{% endif %}>2 Day(s)</option>
+                <option value="3" {% if package.days == 3 %}selected{% endif %}>3 Day(s)</option>
+                <option value="4" {% if package.days == 4 %}selected{% endif %}>4 Day(s)</option>
+                <option value="5" {% if package.days == 5 %}selected{% endif %}>5 Day(s)</option>
+                <option value="6" {% if package.days == 6 %}selected{% endif %}>6 Day(s)</option>
+                <option value="7" {% if package.days == 7 %}selected{% endif %}>7 Day(s)</option>
+                <option value="8" {% if package.days == 8 %}selected{% endif %}>8 Day(s)</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Price per Vehicle</label>
+            <input type="text" name="price_per_vehicle" class="form-control" value="{{ package.price_per_vehicle|default:'' }}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Hotel Booking Info (General)</label>
+            <textarea name="hotel_info" id="hotel_info" class="form-control" placeholder="Enter hotel booking notes, voucher info or general hotel details">{{ package.hotel_info|default:'' }}</textarea>
+        </div>
+
+        <hr />
+        <h5>Day-wise Itinerary</h5>
+        <p class="text-muted">Provide detailed plan for each day. Pick number of days above to auto-generate day blocks.</p>
+
+        <div class="mb-3" id="itineraryControls">
+            <button type="button" id="addDayBtn" class="btn btn-sm btn-outline-secondary">Add Day</button>
+            <button type="button" id="clearItineraryBtn" class="btn btn-sm btn-outline-danger">Clear Itinerary</button>
+        </div>
+
+        <div id="itineraryContainer">
+            <!-- Day blocks will be inserted here -->
+        </div>
+
+        <!-- Serialized itinerary JSON (hidden) -->
+        <input type="hidden" name="itinerary_json" id="itinerary_json" value="">
+        <div class="mb-3">
+            <label class="form-label">Cities (select multiple if applicable)</label>
+            <select name="cities" class="form-select" multiple>
+                {% for c in cities %}
+                <option value="{{ c.id }}" {% if package and c in package.cities.all %}selected{% endif %}>{{ c.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" name="is_active" id="is_active" {% if package.is_active %}checked{% endif %}>
+            <label for="is_active" class="form-check-label">Active</label>
+        </div>
+        <button class="btn btn-primary">{{ action }} Package</button>
+    </form>
+</div>
+<script>
+    // Itinerary management script
+    (function(){
+        function createDayBlock(idx, data) {
+            data = data || {};
+            var container = document.createElement('div');
+            container.className = 'card mb-3 day-block';
+            container.dataset.day = idx;
+            container.innerHTML = `
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6>Day ${idx}</h6>
+                        <div>
+                            <button type="button" class="btn btn-sm btn-danger remove-day">Remove</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <label class="form-label">Pickup Time</label>
+                            <input type="time" class="form-control pickup-time" value="${data.pickup_time || ''}">
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="form-label">Hotel (Day)</label>
+                            <input type="text" class="form-control hotel-name" placeholder="Hotel name" value="${(data.hotel && data.hotel.name) || ''}">
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label class="form-label">Hotel Address</label>
+                            <input type="text" class="form-control hotel-address" placeholder="Hotel address" value="${(data.hotel && data.hotel.address) || ''}">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label class="form-label">Places to Visit / Activities</label>
+                            <textarea class="form-control activities" rows="3" placeholder="List places, schedule or activities for the day">${data.activities || ''}</textarea>
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label class="form-label">Notes / Instructions</label>
+                            <textarea class="form-control notes" rows="2" placeholder="Any notes, pickup points, guide info">${data.notes || ''}</textarea>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return container;
+        }
+
+        var itineraryContainer = document.getElementById('itineraryContainer');
+        var addDayBtn = document.getElementById('addDayBtn');
+        var clearBtn = document.getElementById('clearItineraryBtn');
+        var daysSelect = document.querySelector('select[name="days"]');
+        var hiddenInput = document.getElementById('itinerary_json');
+
+        function getNextDayIndex() {
+            var blocks = itineraryContainer.querySelectorAll('.day-block');
+            return blocks.length + 1;
+        }
+
+        function addDay(data) {
+            var idx = getNextDayIndex();
+            var block = createDayBlock(idx, data);
+            itineraryContainer.appendChild(block);
+            block.querySelector('.remove-day').addEventListener('click', function(){
+                block.remove();
+                refreshDayNumbers();
+            });
+        }
+
+        function refreshDayNumbers() {
+            var blocks = itineraryContainer.querySelectorAll('.day-block');
+            blocks.forEach(function(b, i){
+                b.dataset.day = i+1;
+                b.querySelector('h6').textContent = 'Day ' + (i+1);
+            });
+        }
+
+        addDayBtn.addEventListener('click', function(){ addDay(); });
+        clearBtn.addEventListener('click', function(){ if (confirm('Clear entire itinerary?')) { itineraryContainer.innerHTML=''; hiddenInput.value=''; } });
+
+        // Auto-generate day blocks when Days select changes (only when empty)
+        daysSelect && daysSelect.addEventListener('change', function(){
+            var n = parseInt(this.value) || 0;
+            // If there are existing day blocks, don't overwrite unless user confirms
+            if (itineraryContainer.children.length > 0) {
+                if (!confirm('Replace existing itinerary with ' + n + ' day(s)?')) return;
+                itineraryContainer.innerHTML = '';
+            }
+            for (var i=0;i<n;i++) addDay();
+        });
+
+        // Serialize itinerary before submit
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function(e){
+            var blocks = itineraryContainer.querySelectorAll('.day-block');
+            var itinerary = [];
+            blocks.forEach(function(b){
+                itinerary.push({
+                    day: parseInt(b.dataset.day),
+                    pickup_time: b.querySelector('.pickup-time').value,
+                    hotel: {
+                        name: b.querySelector('.hotel-name').value,
+                        address: b.querySelector('.hotel-address').value
+                    },
+                    activities: b.querySelector('.activities').value,
+                    notes: b.querySelector('.notes').value
+                });
+            });
+            hiddenInput.value = JSON.stringify(itinerary);
+        });
+
+        // Prepopulate if editing and package has itinerary
+        try {
+            var existing = {{ package.itinerary|default:'null'|safe }};
+        } catch (e) { var existing = null; }
+        if (existing && Array.isArray(existing)) {
+            itineraryContainer.innerHTML = '';
+            existing.forEach(function(d){ addDay(d); });
+        }
+
+    })();
+</script>
+{% endblock %}

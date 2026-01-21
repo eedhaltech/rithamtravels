@@ -1,0 +1,162 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static "admin/css/changelists.css" %}">
+  {% if cl.formset %}
+    <link rel="stylesheet" href="{% static "admin/css/forms.css" %}">
+  {% endif %}
+  {% if cl.formset or action_form %}
+    <script src="{% url 'admin:jsi18n' %}"></script>
+  {% endif %}
+  {{ media.css }}
+  {% if not actions_on_top and not actions_on_bottom %}
+    <style>
+      #changelist table thead th:first-child {width: inherit}
+    </style>
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+<script src="{% static 'admin/js/filters.js' %}" defer></script>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">{{ cl.opts.app_config.verbose_name }}</a>
+&rsaquo; {{ cl.opts.verbose_name_plural|capfirst }}
+</div>
+{% endblock %}
+{% endif %}
+
+{% block coltype %}{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+    {% block object-tools %}
+        <ul class="object-tools">
+          {% if has_add_permission %}
+          <li>
+            <a href="{% url cl.opts|admin_urlname:'add' %}" class="addlink">
+              {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+    {% endblock %}
+    {% if cl.formset and cl.formset.errors %}
+        <p class="errornote">
+        {% blocktranslate count counter=cl.formset.total_error_count %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+        </p>
+        {{ cl.formset.non_form_errors }}
+    {% endif %}
+    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+      <div class="changelist-form-container">
+        {% block search %}
+        {% if cl.search_fields %}
+        <div id="toolbar"><form id="changelist-search" method="get">
+        <div>
+        <label for="searchbar"><img src="{% static "admin/img/search.svg" %}" alt="Search"></label>
+        <input type="text" size="40" name="q" value="{{ cl.query }}" id="searchbar" autofocus>
+        <input type="submit" value="{% trans 'Search' %}">
+        {% if cl.has_filters %}
+        <button type="button" class="button" id="changelist-filter-toggle" title="{% trans 'Filters' %}">
+          <span>{% trans 'Filter' %}</span>
+        </button>
+        {% endif %}
+        </div>
+        {% for pair in cl.params.items %}
+            {% if pair.0 != "q" %}<input type="hidden" name="{{ pair.0 }}" value="{{ pair.1 }}">{% endif %}
+        {% endfor %}
+        </form></div>
+        {% endif %}
+        {% endblock %}
+        {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
+
+        <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+        {% if cl.formset %}
+          <div>{{ cl.formset.management_form }}</div>
+        {% endif %}
+
+        {% block result_list %}
+          {# Actions at top #}
+          {% if action_form and actions_on_top and cl.show_admin_actions %}
+          <div class="actions">
+            <label>{% trans "Action:" %}: <select name="action" required>
+                <option value="">---------</option>
+                {% for action in action_form.fields.action.choices %}
+                <option value="{{ action.0 }}">{{ action.1 }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="button" title="{% trans 'Run the selected action' %}" name="index" value="0">{% trans "Go" %}</button>
+          </div>
+          {% endif %}
+          
+          {# Result list table #}
+          {% if cl.result_count %}
+          <div class="results">
+            <table id="result_list">
+                <thead>
+                    <tr>
+                        {% for header in result_headers %}
+                        <th scope="col"{{ header.class_attrib }}>
+                            <div class="text">
+                                {% if header.sortable %}
+                                    <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>
+                                {% else %}
+                                    {{ header.text|capfirst }}
+                                {% endif %}
+                            </div>
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>{% for item in result %}{{ item }}{% endfor %}</tr>
+                    {% empty %}
+                    <tr><td colspan="{{ result_headers|length }}">{% trans "No items found" %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+          {% endif %}
+          
+          {# Actions at bottom #}
+          {% if action_form and actions_on_bottom and cl.show_admin_actions %}
+          <div class="actions">
+            <label>{% trans "Action:" %}: <select name="action" required>
+                <option value="">---------</option>
+                {% for action in action_form.fields.action.choices %}
+                <option value="{{ action.0 }}">{{ action.1 }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="button" title="{% trans 'Run the selected action' %}" name="index" value="0">{% trans "Go" %}</button>
+          </div>
+          {% endif %}
+        {% endblock %}
+        {% block pagination %}{% if cl.paginator.num_pages > 1 %}<p class="paginator">{{ cl.result_count }} {% trans "results" %}</p>{% endif %}{% endblock %}
+        </form>
+      </div>
+      {% block filters %}
+        {% if cl.has_filters %}
+          <div id="changelist-filter">
+            <h2>{% translate 'Filter' %}</h2>
+            {% if cl.has_active_filters %}<h3 id="changelist-filter-clear">
+              <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Clear all filters" %}</a>
+            </h3>{% endif %}
+            {# Filters rendered inline to avoid template tag issues #}
+            <div id="changelist-filters"></div>
+          </div>
+        {% endif %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,477 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Details - {{ booking.booking_number }} | Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .booking-details-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    
+    .booking-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+    }
+    
+    .booking-status {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-weight: 600;
+        margin-top: 1rem;
+    }
+    
+    .status-pending { background: #fef3c7; color: #f59e0b; }
+    .status-confirmed { background: #d1fae5; color: #10b981; }
+    .status-cancelled { background: #fee2e2; color: #ef4444; }
+    .status-completed { background: #ede9fe; color: #8b5cf6; }
+    
+    .booking-content {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-top: none;
+        border-radius: 0 0 15px 15px;
+        overflow: hidden;
+    }
+    
+    .detail-section {
+        padding: 2rem;
+        border-bottom: 1px solid #f3f4f6;
+    }
+    
+    .detail-section:last-child {
+        border-bottom: none;
+    }
+    
+    .section-title {
+        color: #2563eb;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+    
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .detail-label {
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.875rem;
+    }
+    
+    .detail-value {
+        color: #1f2937;
+        font-size: 1rem;
+    }
+    
+    .payment-progress {
+        background: #f3f4f6;
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 1rem 0;
+    }
+    
+    .progress-bar {
+        height: 20px;
+        background: linear-gradient(90deg, #10b981, #059669);
+        transition: width 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .payment-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .payment-card {
+        background: #f8fafc;
+        padding: 1rem;
+        border-radius: 10px;
+        text-align: center;
+        border: 2px solid #e2e8f0;
+    }
+    
+    .payment-amount {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0.5rem 0;
+    }
+    
+    .payment-card.total { border-color: #3b82f6; }
+    .payment-card.paid { border-color: #10b981; }
+    .payment-card.remaining { border-color: #f59e0b; }
+    
+    .routes-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .route-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: #f8fafc;
+        margin-bottom: 0.5rem;
+        border-radius: 10px;
+        border-left: 4px solid #3b82f6;
+    }
+    
+    .route-number {
+        background: #3b82f6;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        margin-right: 1rem;
+    }
+    
+    .route-details {
+        flex: 1;
+    }
+    
+    .payments-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    
+    .payments-table th,
+    .payments-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .payments-table th {
+        background: #f8fafc;
+        font-weight: 600;
+        color: #374151;
+    }
+    
+    .payment-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .contact-support {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        padding: 2rem;
+        border-radius: 15px;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    
+    .support-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .support-btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .support-btn.whatsapp {
+        background: #25d366;
+        color: white;
+    }
+    
+    .support-btn.phone {
+        background: #3b82f6;
+        color: white;
+    }
+    
+    .support-btn.email {
+        background: #6b7280;
+        color: white;
+    }
+    
+    .support-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .booking-details-container {
+            margin: 1rem auto;
+            padding: 0 0.5rem;
+        }
+        
+        .booking-header {
+            padding: 1.5rem;
+        }
+        
+        .detail-section {
+            padding: 1.5rem;
+        }
+        
+        .detail-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .support-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .support-btn {
+            width: 100%;
+            max-width: 250px;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="booking-details-container">
+    <!-- Booking Header -->
+    <div class="booking-header">
+        <h1>🚗 Booking Details</h1>
+        <h2>{{ booking.booking_number }}</h2>
+        <div class="booking-status status-{{ booking.status }}">
+            {% if booking.status == 'pending' %}⏳{% elif booking.status == 'confirmed' %}✅{% elif booking.status == 'cancelled' %}❌{% else %}🎉{% endif %}
+            {{ booking.get_status_display }}
+        </div>
+    </div>
+    
+    {% if booking.status == 'pending' %}
+    <div class="alert alert-info" style="margin: 1rem; border-radius: 10px;">
+        <h6><i class="bi bi-info-circle me-2"></i>Booking Status: Pending</h6>
+        <p class="mb-0">Your booking is pending. Our team will contact you shortly. Please wait for confirmation.</p>
+    </div>
+    {% endif %}
+    
+    <div class="booking-content">
+        <!-- Customer Information -->
+        <div class="detail-section">
+            <h3 class="section-title">
+                👤 Customer Information
+            </h3>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Name</span>
+                    <span class="detail-value">{{ booking.name }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">{{ booking.email }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Phone</span>
+                    <span class="detail-value">{{ booking.phone }}</span>
+                </div>
+                {% if booking.flight_train_no %}
+                <div class="detail-item">
+                    <span class="detail-label">Flight/Train Number</span>
+                    <span class="detail-value">{{ booking.flight_train_no }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Trip Information -->
+        <div class="detail-section">
+            <h3 class="section-title">
+                🗺️ Trip Information
+            </h3>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Trip Type</span>
+                    <span class="detail-value">{{ booking.get_trip_type_display }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Pickup Location</span>
+                    <span class="detail-value">{{ booking.pickup_address }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Drop Location</span>
+                    <span class="detail-value">{{ booking.drop_address }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Pickup Date & Time</span>
+                    <span class="detail-value">{{ booking.pickup_date|date:"d M Y" }} at {{ booking.pickup_time|time:"g:i A" }}</span>
+                </div>
+                {% if booking.drop_date %}
+                <div class="detail-item">
+                    <span class="detail-label">Drop Date & Time</span>
+                    <span class="detail-value">{{ booking.drop_date|date:"d M Y" }} at {{ booking.drop_time|time:"g:i A" }}</span>
+                </div>
+                {% endif %}
+                <div class="detail-item">
+                    <span class="detail-label">Total Distance</span>
+                    <span class="detail-value">{{ booking.total_distance }} KM</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Passengers</span>
+                    <span class="detail-value">{{ booking.adults }} Adults{% if booking.children %}, {{ booking.children }} Children{% endif %}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Multi-city Routes -->
+        {% if routes %}
+        <div class="detail-section">
+            <h3 class="section-title">
+                🛣️ Route Details
+            </h3>
+            <ul class="routes-list">
+                {% for route in routes %}
+                <li class="route-item">
+                    <div class="route-number">{{ forloop.counter }}</div>
+                    <div class="route-details">
+                        <strong>{{ route.from_location }} → {{ route.to_location }}</strong><br>
+                        <small>{{ route.date|date:"d M Y" }} • {{ route.distance }} KM</small>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        <!-- Vehicle Information -->
+        {% if booking.vehicle %}
+        <div class="detail-section">
+            <h3 class="section-title">
+                🚙 Vehicle Information
+            </h3>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Vehicle</span>
+                    <span class="detail-value">{{ booking.vehicle.name }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Capacity</span>
+                    <span class="detail-value">{{ booking.vehicle.capacity }} Passengers</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Payment Information -->
+        <div class="detail-section">
+            <h3 class="section-title">
+                💳 Payment Information
+            </h3>
+            
+            <div class="payment-summary">
+                <div class="payment-card total">
+                    <div class="detail-label">Total Amount</div>
+                    <div class="payment-amount">₹{{ booking.total_amount }}</div>
+                </div>
+                <div class="payment-card paid">
+                    <div class="detail-label">Amount Paid</div>
+                    <div class="payment-amount">₹{{ total_paid }}</div>
+                </div>
+                <div class="payment-card remaining">
+                    <div class="detail-label">Remaining</div>
+                    <div class="payment-amount">₹{{ remaining_amount }}</div>
+                </div>
+            </div>
+            
+            <div class="payment-progress">
+                <div class="progress-bar" style="width: {{ payment_percentage }}%">
+                    {{ payment_percentage|floatformat:0 }}% Paid
+                </div>
+            </div>
+            
+            {% if payments %}
+            <table class="payments-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Payment ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>{{ payment.created_at|date:"d M Y, g:i A" }}</td>
+                        <td>₹{{ payment.amount }}</td>
+                        <td>
+                            <span class="payment-status status-{{ payment.status }}">
+                                {{ payment.get_status_display }}
+                            </span>
+                        </td>
+                        <td>{{ payment.razorpay_payment_id|default:"--" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+        
+        <!-- Special Instructions -->
+        {% if booking.special_instructions %}
+        <div class="detail-section">
+            <h3 class="section-title">
+                📝 Special Instructions
+            </h3>
+            <p class="detail-value">{{ booking.special_instructions }}</p>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Contact Support -->
+    <div class="contact-support">
+        <h3>Need Help?</h3>
+        <p>Contact our support team for any questions about your booking.</p>
+        <div class="support-buttons">
+            <a href="https://wa.me/919787110763?text=Hi, I need help with booking {{ booking.booking_number }}" 
+               class="support-btn whatsapp" target="_blank">
+                📱 WhatsApp Support
+            </a>
+            <a href="tel:+919787110763" class="support-btn phone">
+                📞 Call Support
+            </a>
+            <a href="mailto:info@rithamtravels.in?subject=Booking Support - {{ booking.booking_number }}" 
+               class="support-btn email">
+                📧 Email Support
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

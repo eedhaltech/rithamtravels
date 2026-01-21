@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ action }} Vehicle - Ritham Tours{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-car-front me-2"></i>{{ action }} Vehicle</h2>
+        <a href="{% url 'travels_vehicles_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Vehicles
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Vehicle Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="name" value="{{ vehicle.name|default:'' }}" required>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Vehicle Image</label>
+                        <input type="file" class="form-control" name="image" accept="image/*">
+                        {% if vehicle.image %}
+                        <small class="text-muted">Current: <a href="{{ vehicle.image.url }}" target="_blank">View Image</a></small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="description" rows="3">{{ vehicle.description|default:'' }}</textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Max Seats <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" name="max_seats" value="{{ vehicle.max_seats|default:4 }}" min="1" required>
+                        <small class="text-muted">Excluding driver</small>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Luggage Capacity</label>
+                        <input type="text" class="form-control" name="luggage_capacity" value="{{ vehicle.luggage_capacity|default:'' }}" placeholder="e.g., 2 Large + 2 Small">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Fuel Type <span class="text-danger">*</span></label>
+                        <select class="form-select" name="fuel_type" required>
+                            <option value="petrol" {% if vehicle.fuel_type == 'petrol' %}selected{% endif %}>Petrol</option>
+                            <option value="diesel" {% if vehicle.fuel_type == 'diesel' %}selected{% endif %}>Diesel</option>
+                            <option value="cng" {% if vehicle.fuel_type == 'cng' %}selected{% endif %}>CNG</option>
+                            <option value="electric" {% if vehicle.fuel_type == 'electric' %}selected{% endif %}>Electric</option>
+                            <option value="hybrid" {% if vehicle.fuel_type == 'hybrid' %}selected{% endif %}>Hybrid</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">AC Type <span class="text-danger">*</span></label>
+                        <select class="form-select" name="ac_type" required>
+                            <option value="ac" {% if vehicle.ac_type == 'ac' or not vehicle %}selected{% endif %}>AC</option>
+                            <option value="non_ac" {% if vehicle.ac_type == 'non_ac' %}selected{% endif %}>Non-AC</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Fare per KM (₹) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" name="fare_per_km" value="{{ vehicle.fare_per_km|default:0 }}" step="0.01" min="0" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Driver Charge per Day (₹)</label>
+                        <input type="number" class="form-control" name="driver_charge_per_day" value="{{ vehicle.driver_charge_per_day|default:0 }}" step="0.01" min="0">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Vehicle Per Day Fee (₹)</label>
+                        <input type="number" class="form-control" name="per_day_fee" value="{{ vehicle.per_day_fee|default:0 }}" step="0.01" min="0">
+                        <small class="text-muted">Vehicle per day fee</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Min KM per Day</label>
+                        <input type="number" class="form-control" name="min_km_per_day" value="{{ vehicle.min_km_per_day|default:250 }}" min="0">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" name="is_available" id="is_available" {% if vehicle.is_available or not vehicle %}checked{% endif %}>
+                            <label class="form-check-label" for="is_available">
+                                Available for Booking
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" name="is_active" id="is_active" {% if vehicle.is_active or not vehicle %}checked{% endif %}>
+                            <label class="form-check-label" for="is_active">
+                                Show in Listings
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Local Trip Pricing Section -->
+                <div class="card mt-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="bi bi-clock me-2"></i>Local Trip Pricing</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Minimum Hours</label>
+                                <input type="number" class="form-control" name="min_hours_local" value="{{ vehicle.min_hours_local|default:3 }}" min="1">
+                                <small class="text-muted">Minimum booking hours</small>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Min Hours Fee (₹)</label>
+                                <input type="number" class="form-control" name="min_hours_fee_local" value="{{ vehicle.min_hours_fee_local|default:0 }}" step="0.01" min="0">
+                                <small class="text-muted">Fixed fee for minimum hours</small>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Max Distance for Min Hours (KM)</label>
+                                <input type="number" class="form-control" name="max_distance_min_hours" value="{{ vehicle.max_distance_min_hours|default:30 }}" min="0">
+                                <small class="text-muted">Max distance covered in minimum hours</small>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Extra KM Price (₹)</label>
+                                <input type="number" class="form-control" name="fare_per_km_local" value="{{ vehicle.fare_per_km_local|default:0 }}" step="0.01" min="0">
+                                <small class="text-muted">Rate per KM when distance exceeds included KM</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-check-circle me-2"></i>{{ action }} Vehicle
+                    </button>
+                    <a href="{% url 'travels_vehicles_list' %}" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-x-circle me-2"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Tour Package - Test{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ action }} Tour Package</h2>
+    
+    <div class="alert alert-info">
+        <h4>Debug Information:</h4>
+        <p><strong>Action:</strong> {{ action }}</p>
+        <p><strong>Cities Count:</strong> {{ cities.count }}</p>
+        <p><strong>Package Choices Count:</strong> {{ package_choices|length }}</p>
+        <p><strong>Package:</strong> {% if package %}Present{% else %}None{% endif %}</p>
+        {% if package %}
+            <p><strong>Package Name:</strong> {{ package.name }}</p>
+            <p><strong>Package Days:</strong> {{ package.days }}</p>
+            <p><strong>Include Hotel:</strong> {{ package.include_hotel }}</p>
+        {% endif %}
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label class="form-label">Package Name</label>
+            <input type="text" class="form-control" name="name" value="{{ package.name|default:'' }}">
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Duration (Days)</label>
+            <select class="form-select" name="days">
+                <option value="">Select Days</option>
+                {% for value, label in package_choices %}
+                    <option value="{{ value }}" {% if package.days == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Cities</label>
+            {% for city in cities %}
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="cities" value="{{ city.id }}" id="city_{{ city.id }}">
+                    <label class="form-check-label" for="city_{{ city.id }}">{{ city.name }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">{{ action }} Package</button>
+        <a href="{% url 'travels_packages_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+
+{% block title %}Customer Login - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Customer Login</h4>
+                </div>
+                <div class="card-body">
+                    <form id="loginForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" id="forgotPasswordLink" class="text-decoration-none">Forgot Password?</a>
+                    </div>
+                    <hr>
+                    <p class="text-center">
+                        Don't have an account? <a href="{% url 'customer_signup' %}">Sign up here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="forgotPasswordModalLabel">Reset Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Step 1: Enter Email -->
+                <div id="step1" class="reset-step">
+                    <h6>Enter your email address</h6>
+                    <form id="sendOtpForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="resetEmail" name="email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="sendOtpBtn">
+                            <span class="btn-text">Send OTP</span>
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Step 2: Enter OTP and New Password -->
+                <div id="step2" class="reset-step" style="display: none;">
+                    <h6>Enter OTP and New Password</h6>
+                    <p class="text-muted">We've sent a 6-digit OTP to your email address.</p>
+                    <form id="verifyOtpForm">
+                        {% csrf_token %}
+                        <input type="hidden" id="otpEmail" name="email">
+                        <div class="mb-3">
+                            <label class="form-label">OTP</label>
+                            <input type="text" class="form-control text-center" name="otp" maxlength="6" required 
+                                   style="font-size: 18px; letter-spacing: 3px; font-family: monospace;">
+                            <div class="form-text">
+                                <span id="attemptsRemaining" class="text-muted"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control" name="new_password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Reset Password</button>
+                    </form>
+                    <div class="text-center mt-2">
+                        <a href="#" id="resendOtpLink" class="text-decoration-none">Resend OTP</a>
+                        <div id="otpTimer" class="text-muted mt-2" style="display: none;">
+                            <small>Resend available in: <span id="timerDisplay">00:00</span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Login Form
+    $('#loginForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/api/auth/customer/login/',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                localStorage.setItem('access_token', response.access);
+                localStorage.setItem('refresh_token', response.refresh);
+                showPopup('Login successful! Redirecting...', 'success', 'Welcome', function() {
+                    window.location.href = '{% url "customer_dashboard" %}';
+                });
+            },
+            error: function(xhr) {
+                var errorMsg = 'Invalid credentials. Please try again.';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                }
+                showPopup(errorMsg, 'error', 'Login Failed');
+            }
+        });
+    });
+
+    // Forgot Password Modal
+    $('#forgotPasswordLink').on('click', function(e) {
+        e.preventDefault();
+        $('#forgotPasswordModal').modal('show');
+        $('#step1').show();
+        $('#step2').hide();
+    });
+
+    // Global variables for timer
+    let otpTimer = null;
+    let timeRemaining = 0;
+
+    // Send OTP Form
+    $('#sendOtpForm').on('submit', function(e) {
+        e.preventDefault();
+        const email = $('#resetEmail').val();
+        const $btn = $('#sendOtpBtn');
+        const $btnText = $btn.find('.btn-text');
+        const $spinner = $btn.find('.spinner-border');
+        
+        // Show loader and disable button
+        $btn.prop('disabled', true);
+        $btnText.text('Sending...');
+        $spinner.removeClass('d-none');
+        
+        // Add user_type for customer login
+        const formData = $(this).serialize() + '&user_type=customer';
+        
+        $.ajax({
+            url: '/api/auth/forgot-password/send-otp/',
+            method: 'POST',
+            data: formData,
+            success: function(response) {
+                $('#otpEmail').val(email);
+                $('#step1').hide();
+                $('#step2').show();
+                showPopup(response.message, 'success', 'OTP Sent');
+                
+                // Start timer and get OTP status
+                startOtpTimer(email);
+            },
+            error: function(xhr) {
+                var errorMsg = 'Failed to send OTP. Please try again.';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                }
+                showPopup(errorMsg, 'error', 'Error');
+            },
+            complete: function() {
+                // Hide loader and enable button
+                $btn.prop('disabled', false);
+                $btnText.text('Send OTP');
+                $spinner.addClass('d-none');
+            }
+        });
+    });
+
+    // Start OTP timer
+    function startOtpTimer(email) {
+        // Get OTP status
+        $.ajax({
+            url: '/api/auth/forgot-password/otp-status/',
+            method: 'GET',
+            data: { email: email },
+            success: function(response) {
+                if (response.has_active_otp && response.time_remaining > 0) {
+                    timeRemaining = response.time_remaining;
+                    updateAttemptsDisplay(response.attempts_remaining);
+                    startCountdown();
+                }
+            }
+        });
+    }
+
+    // Update attempts remaining display
+    function updateAttemptsDisplay(attempts) {
+        if (attempts > 0) {
+            $('#attemptsRemaining').text(`${attempts} attempts remaining`);
+        } else {
+            $('#attemptsRemaining').text('No attempts remaining').addClass('text-danger');
+        }
+    }
+
+    // Start countdown timer
+    function startCountdown() {
+        if (timeRemaining > 0) {
+            $('#resendOtpLink').addClass('disabled').text('Resend OTP');
+            $('#otpTimer').show();
+            
+            otpTimer = setInterval(function() {
+                timeRemaining--;
+                
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                $('#timerDisplay').text(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(otpTimer);
+                    $('#resendOtpLink').removeClass('disabled');
+                    $('#otpTimer').hide();
+                }
+            }, 1000);
+        }
+    }
+
+    // Verify OTP and Reset Password Form
+    $('#verifyOtpForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const newPassword = $('input[name="new_password"]').val();
+        const confirmPassword = $('#confirmPassword').val();
+        
+        if (newPassword !== confirmPassword) {
+            showPopup('Passwords do not match!', 'error', 'Error');
+            return;
+        }
+        
+        $.ajax({
+            url: '/api/auth/forgot-password/verify-otp/',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#forgotPasswordModal').modal('hide');
+                showPopup(response.message, 'success', 'Password Reset Successful');
+                // Reset form
+                $('#sendOtpForm')[0].reset();
+                $('#verifyOtpForm')[0].reset();
+            },
+            error: function(xhr) {
+                var errorMsg = 'Failed to reset password. Please try again.';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                }
+                showPopup(errorMsg, 'error', 'Error');
+            }
+        });
+    });
+
+    // Resend OTP
+    $('#resendOtpLink').on('click', function(e) {
+        e.preventDefault();
+        
+        if ($(this).hasClass('disabled')) {
+            return;
+        }
+        
+        const email = $('#otpEmail').val();
+        const $link = $(this);
+        
+        // Disable link and show loading text
+        $link.addClass('disabled').text('Sending...');
+        
+        $.ajax({
+            url: '/api/auth/forgot-password/send-otp/',
+            method: 'POST',
+            data: { 
+                email: email, 
+                user_type: 'customer',
+                csrfmiddlewaretoken: $('[name=csrfmiddlewaretoken]').val() 
+            },
+            success: function(response) {
+                showPopup('OTP resent successfully!', 'success', 'OTP Sent');
+                startOtpTimer(email);
+            },
+            error: function(xhr) {
+                var errorMsg = 'Failed to resend OTP. Please try again.';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                }
+                showPopup(errorMsg, 'error', 'Error');
+                $link.removeClass('disabled').text('Resend OTP');
+            }
+        });
+    });
+</script>
+{% endblock %}
+

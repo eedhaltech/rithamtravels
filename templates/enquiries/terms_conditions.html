@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Terms and Conditions - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h1 class="text-center mb-4 text-primary">Terms and Conditions</h1>
+                    <p class="text-muted text-center mb-5">Last updated: {{ "now"|date:"F d, Y" }}</p>
+                    
+                    <div class="policy-content">
+                        <h2>1. Introduction</h2>
+                        <p>Welcome to Ritham Tours & Travels ("we," "our," or "us"). These Terms and Conditions ("Terms") govern your use of our website <a href="https://rithamtravels.in/">https://rithamtravels.in/</a> and our travel services. By accessing our website or using our services, you agree to be bound by these Terms.</p>
+
+                        <h2>2. About Our Services</h2>
+                        <p>Ritham Tours & Travels is a travel and tourism service provider based in Coimbatore, Tamil Nadu, India. We offer:</p>
+                        <ul>
+                            <li>Local and outstation cab services</li>
+                            <li>Tour packages and holiday planning</li>
+                            <li>Vehicle rental services</li>
+                            <li>Travel consultation and booking assistance</li>
+                        </ul>
+
+                        <h2>3. Booking and Payment Terms</h2>
+                        <h3>3.1 Booking Process</h3>
+                        <ul>
+                            <li>All bookings are subject to availability and confirmation</li>
+                            <li>Booking confirmation will be sent via email and SMS</li>
+                            <li>Customers must provide accurate information during booking</li>
+                        </ul>
+
+                        <h3>3.2 Payment Terms</h3>
+                        <ul>
+                            <li>We accept payments through Razorpay payment gateway</li>
+                            <li>All prices are in Indian Rupees (INR) and include applicable taxes</li>
+                            <li>Payment must be made at the time of booking unless otherwise agreed</li>
+                            <li>We reserve the right to cancel bookings for non-payment</li>
+                        </ul>
+
+                        <h2>4. Cancellation and Refund Policy</h2>
+                        <p>Please refer to our detailed <a href="{% url 'cancel_refund_policy' %}">Cancellation & Refund Policy</a> for complete information about cancellations, refunds, and associated charges.</p>
+
+                        <h2>5. Customer Responsibilities</h2>
+                        <ul>
+                            <li>Customers must arrive at the pickup location on time</li>
+                            <li>Valid identification documents must be carried during travel</li>
+                            <li>Customers are responsible for their personal belongings</li>
+                            <li>Any damage to vehicles will be charged to the customer</li>
+                            <li>Smoking and consumption of alcohol in vehicles is prohibited</li>
+                        </ul>
+
+                        <h2>6. Service Limitations</h2>
+                        <ul>
+                            <li>Services are subject to weather conditions and road accessibility</li>
+                            <li>We reserve the right to modify routes due to traffic or safety concerns</li>
+                            <li>Additional charges may apply for waiting time beyond agreed limits</li>
+                            <li>Toll charges, parking fees, and permit fees are additional unless specified</li>
+                        </ul>
+
+                        <h2>7. Liability and Insurance</h2>
+                        <ul>
+                            <li>All our vehicles are insured as per Indian Motor Vehicle Act</li>
+                            <li>Our liability is limited to the amount paid for the service</li>
+                            <li>We are not liable for delays due to circumstances beyond our control</li>
+                            <li>Customers are advised to have their own travel insurance</li>
+                        </ul>
+
+                        <h2>8. Privacy and Data Protection</h2>
+                        <p>Your privacy is important to us. Please review our <a href="{% url 'privacy_policy' %}">Privacy Policy</a> to understand how we collect, use, and protect your personal information.</p>
+
+                        <h2>9. Intellectual Property</h2>
+                        <ul>
+                            <li>All content on our website is owned by Ritham Tours & Travels</li>
+                            <li>You may not reproduce, distribute, or modify our content without permission</li>
+                            <li>Our logo, trademarks, and brand names are protected intellectual property</li>
+                        </ul>
+
+                        <h2>10. Dispute Resolution</h2>
+                        <ul>
+                            <li>Any disputes will be resolved through negotiation and mediation</li>
+                            <li>If unresolved, disputes will be subject to the jurisdiction of Coimbatore courts</li>
+                            <li>These Terms are governed by Indian law</li>
+                        </ul>
+
+                        <h2>11. Force Majeure</h2>
+                        <p>We shall not be liable for any failure to perform our obligations due to circumstances beyond our reasonable control, including but not limited to natural disasters, government actions, strikes, or pandemics.</p>
+
+                        <h2>12. Modifications to Terms</h2>
+                        <p>We reserve the right to modify these Terms at any time. Updated Terms will be posted on our website with the revision date. Continued use of our services constitutes acceptance of modified Terms.</p>
+
+                        <h2>13. Contact Information</h2>
+                        <p>For questions about these Terms and Conditions, please contact us:</p>
+                        <div class="contact-info mt-3">
+                            <p><strong>Ritham Tours & Travels</strong></p>
+                            <p><i class="bi bi-geo-alt-fill text-primary"></i> Coimbatore, Tamil Nadu, India</p>
+                            <p><i class="bi bi-telephone-fill text-primary"></i> <a href="tel:+917373812345">+91 73738 12345</a></p>
+                            <p><i class="bi bi-envelope-fill text-primary"></i> <a href="mailto:info@rithamtravels.in">info@rithamtravels.in</a></p>
+                            <p><i class="bi bi-globe text-primary"></i> <a href="https://rithamtravels.in/">https://rithamtravels.in/</a></p>
+                        </div>
+
+                        <div class="alert alert-info mt-4">
+                            <h5><i class="bi bi-info-circle me-2"></i>Important Note</h5>
+                            <p class="mb-0">By using our services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these Terms, please do not use our services.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.policy-content h2 {
+    color: #2563eb;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.policy-content h3 {
+    color: #1e40af;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.policy-content ul {
+    margin-bottom: 1.5rem;
+}
+
+.policy-content li {
+    margin-bottom: 0.5rem;
+}
+
+.contact-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.contact-info > * {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-info p {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.contact-info p:first-child {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-info i {
+    font-size: 1.2rem;
+    margin-right: 12px;
+    width: 24px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+}
+
+.contact-info a {
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.contact-info a:hover {
+    color: #f0f8ff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transform: translateX(3px);
+}
+</style>
+{% endblock %}

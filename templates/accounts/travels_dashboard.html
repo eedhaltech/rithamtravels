@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Travels Dashboard - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        border-left: 4px solid;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .stat-card.primary { border-left-color: #2563eb; }
+    .stat-card.success { border-left-color: #10b981; }
+    .stat-card.warning { border-left-color: #f59e0b; }
+    .stat-card.danger { border-left-color: #ef4444; }
+    .stat-card.info { border-left-color: #06b6d4; }
+    .stat-card.purple { border-left-color: #8b5cf6; }
+    
+    .stat-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--dark-color);
+        margin: 10px 0;
+    }
+    
+    .stat-label {
+        color: var(--text-color);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .dashboard-section {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .table-responsive {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-sm {
+        padding: 5px 15px;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-speedometer2 me-2"></i>Travels Dashboard</h1>
+    </div>
+    
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="stat-card primary">
+                <div class="stat-label">Total Bookings</div>
+                <div class="stat-value">{{ total_bookings }}</div>
+                <i class="bi bi-calendar-check fs-1 text-primary"></i>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card warning">
+                <div class="stat-label">Pending Bookings</div>
+                <div class="stat-value">{{ pending_bookings }}</div>
+                <i class="bi bi-clock-history fs-1 text-warning"></i>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card success">
+                <div class="stat-label">Confirmed Bookings</div>
+                <div class="stat-value">{{ confirmed_bookings }}</div>
+                <i class="bi bi-check-circle fs-1 text-success"></i>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card info">
+                <div class="stat-label">Total Revenue</div>
+                <div class="stat-value">₹{{ total_revenue|floatformat:0 }}</div>
+                <i class="bi bi-cash-coin fs-1 text-info"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="stat-card purple">
+                <div class="stat-label">Total Vehicles</div>
+                <div class="stat-value">{{ total_vehicles }}</div>
+                <i class="bi bi-car-front fs-1 text-purple"></i>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card success">
+                <div class="stat-label">Active Vehicles</div>
+                <div class="stat-value">{{ active_vehicles }}</div>
+                <i class="bi bi-check-circle fs-1 text-success"></i>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card info">
+                <div class="stat-label">Total Customers</div>
+                <div class="stat-value">{{ total_customers }}</div>
+                <i class="bi bi-people fs-1 text-info"></i>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stat-card primary">
+                <div class="stat-label">Total Cities</div>
+                <div class="stat-value">{{ total_cities }}</div>
+                <i class="bi bi-geo-alt fs-1 text-primary"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="stat-card success">
+                <div class="stat-label">Active Cities</div>
+                <div class="stat-value">{{ active_cities }}</div>
+                <i class="bi bi-check-circle fs-1 text-success"></i>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="stat-card info">
+                <div class="stat-label">Total Local Areas</div>
+                <div class="stat-value">{{ total_local_areas }}</div>
+                <i class="bi bi-list fs-1 text-info"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="dashboard-section">
+        <h4 class="mb-4"><i class="bi bi-lightning-charge me-2"></i>Quick Actions</h4>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'travels_vehicle_add' %}" class="btn btn-primary w-100">
+                    <i class="bi bi-plus-circle me-2"></i>Add Vehicle
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'travels_bookings_list' %}" class="btn btn-success w-100">
+                    <i class="bi bi-calendar-check me-2"></i>View All Bookings
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'travels_payments_list' %}" class="btn btn-info w-100">
+                    <i class="bi bi-cash-coin me-2"></i>View Payments
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'travels_vehicles_list' %}" class="btn btn-warning w-100">
+                    <i class="bi bi-car-front me-2"></i>Manage Vehicles
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'travels_cities_list' %}" class="btn btn-info w-100">
+                    <i class="bi bi-geo-alt me-2"></i>Manage Cities
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'travels_packages_list' %}" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-card-list me-2"></i>Manage Packages
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'travels_package_add' %}" class="btn btn-primary w-100">
+                    <i class="bi bi-plus-circle me-2"></i>Add Package
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'travels_settings' %}" class="btn btn-dark w-100">
+                    <i class="bi bi-gear me-2"></i>System Settings
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pending Bookings Alert -->
+    {% if pending_bookings > 0 %}
+    <div class="dashboard-section alert alert-warning">
+        <h5 class="mb-3"><i class="bi bi-exclamation-triangle me-2"></i>Pending Bookings Requiring Attention</h5>
+        <p>You have <strong>{{ pending_bookings }}</strong> pending booking(s) that need to be reviewed.</p>
+        <a href="{% url 'travels_bookings_list' %}?status=pending" class="btn btn-warning">
+            <i class="bi bi-eye me-2"></i>Review Pending Bookings
+        </a>
+    </div>
+    {% endif %}
+    
+    <!-- Recent Bookings -->
+    <div class="dashboard-section">
+        <h4 class="mb-4"><i class="bi bi-clock-history me-2"></i>Recent Bookings</h4>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Booking #</th>
+                        <th>Customer</th>
+                        <th>Trip Type</th>
+                        <th>Pickup Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in recent_bookings %}
+                    <tr>
+                        <td><strong>{{ booking.booking_number }}</strong></td>
+                        <td>{{ booking.name }}<br><small class="text-muted">{{ booking.email }}</small></td>
+                        <td>{{ booking.get_trip_type_display }}</td>
+                        <td>{{ booking.pickup_date }}<br><small class="text-muted">{{ booking.pickup_time }}</small></td>
+                        <td>₹{{ booking.total_amount|floatformat:2 }}</td>
+                        <td>
+                            {% if booking.status == 'pending' %}
+                            <span class="badge bg-warning">Pending</span>
+                            {% elif booking.status == 'confirmed' %}
+                            <span class="badge bg-success">Confirmed</span>
+                            {% elif booking.status == 'cancelled' %}
+                            <span class="badge bg-danger">Cancelled</span>
+                            {% else %}
+                            <span class="badge bg-secondary">{{ booking.get_status_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{% url 'travels_booking_detail' booking.id %}" class="btn btn-sm btn-primary" title="Edit">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'booking_status' %}?booking_number={{ booking.booking_number }}" class="btn btn-sm btn-info" title="View">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">No bookings found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center mt-3">
+            <a href="{% url 'travels_bookings_list' %}" class="btn btn-primary">View All Bookings</a>
+        </div>
+    </div>
+    
+    <!-- Management Sections -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dashboard-section">
+                <h5 class="mb-3"><i class="bi bi-car-front me-2"></i>Vehicle Management</h5>
+                <p>Manage all vehicles, pricing, and specifications.</p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'travels_vehicles_list' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-list me-2"></i>View All Vehicles
+                    </a>
+                    <a href="{% url 'travels_vehicle_add' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2"></i>Add New Vehicle
+                    </a>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-4">
+                <div class="dashboard-section">
+                    <h5 class="mb-3"><i class="bi bi-card-list me-2"></i>Tour Package Management</h5>
+                    <p>Create and manage tour packages offered from different cities.</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'travels_packages_list' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-list me-2"></i>View All Packages
+                        </a>
+                        <a href="{% url 'travels_package_add' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-2"></i>Add New Package
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-4">
+            <div class="dashboard-section">
+                <h5 class="mb-3"><i class="bi bi-calendar-check me-2"></i>Booking Management</h5>
+                <p>View and manage all customer bookings and payments.</p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'travels_bookings_list' %}" class="btn btn-outline-success">
+                        <i class="bi bi-list me-2"></i>View All Bookings
+                    </a>
+                    <a href="{% url 'travels_payments_list' %}" class="btn btn-success">
+                        <i class="bi bi-cash-coin me-2"></i>View All Payments
+                    </a>
+                    <a href="{% url 'travels_bookings_list' %}?status=pending" class="btn btn-outline-warning">
+                        <i class="bi bi-clock-history me-2"></i>Pending Bookings
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-section">
+                <h5 class="mb-3"><i class="bi bi-geo-alt me-2"></i>City Management</h5>
+                <p>Manage cities and local areas for booking locations.</p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'travels_cities_list' %}" class="btn btn-outline-info">
+                        <i class="bi bi-list me-2"></i>View All Cities
+                    </a>
+                    <a href="{% url 'travels_city_add' %}" class="btn btn-info">
+                        <i class="bi bi-plus-circle me-2"></i>Add New City
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-section">
+                <h5 class="mb-3"><i class="bi bi-gear-fill me-2"></i>System Settings</h5>
+                <p>Configure system-wide settings, payment options, and business preferences.</p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'travels_settings' %}" class="btn btn-outline-dark">
+                        <i class="bi bi-gear me-2"></i>Manage Settings
+                    </a>
+                    <a href="/admin/accounts/systemsettings/" class="btn btn-dark" target="_blank">
+                        <i class="bi bi-tools me-2"></i>Advanced Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

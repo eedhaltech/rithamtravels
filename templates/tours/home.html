@@ -1,0 +1,3388 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/multicity-forms.css' %}">
+<style>
+    .hero-section {
+        background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        /* min-height: 700px; */
+        /* border-radius: 0 0 50px 50px; */
+        /* margin-bottom: 80px; */
+    }
+
+    .search-tabs {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 25px;
+        margin-top: 50px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .search-tabs .nav-tabs {
+        border-bottom: 2px solid #e5e7eb;
+        margin-bottom: 25px;
+    }
+
+    .search-tabs .nav-link {
+        border: none;
+        padding: 12px 20px;
+        margin-right: 8px;
+        border-radius: 10px 10px 0 0;
+        font-weight: 500;
+        color: #374151;
+        transition: all 0.3s ease;
+        flex: 1;
+        text-align: center;
+        min-width: 0;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    /* Ensure distance fields are always readonly */
+    .distance {
+        background-color: #f8f9fa !important;
+        cursor: not-allowed !important;
+    }
+
+    .distance:focus {
+        background-color: #f8f9fa !important;
+        box-shadow: none !important;
+    }
+
+    /* Style for rows that can be deleted */
+    .multicity-row.can-delete {
+        border-left: 3px solid #dc3545;
+        background-color: rgba(220, 53, 69, 0.05);
+    }
+
+    /* Style for disabled remove buttons */
+    .remove-multicity-row:not(:visible) {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .search-tabs .nav-item {
+        flex: 1;
+        display: flex;
+    }
+
+    .search-tabs .nav-link:hover {
+        background: rgba(37, 99, 235, 0.1);
+    }
+
+    .search-tabs .nav-link.active {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+    }
+
+    .tab-pane {
+        min-height: auto;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 8px;
+    }
+
+    /* All search tabs styling */
+    .search-tabs .form-label {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+
+    .search-tabs .form-control,
+    .search-tabs .form-select {
+        font-size: 13px;
+        padding: 6px 10px;
+        height: auto;
+    }
+
+    .search-tabs .form-check-label {
+        font-size: 13px;
+    }
+
+    .search-tabs .btn {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+
+    .search-tabs .multicity-row {
+        padding: 12px;
+    }
+
+    .time-input-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .time-input-group .form-control {
+        flex: 1;
+    }
+
+    .time-input-group .form-select {
+        flex: 0 0 80px;
+    }
+
+    /* Validation Results Styling */
+    #validationResults {
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .route-item {
+        padding: 8px 0;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .route-item:last-child {
+        border-bottom: none;
+    }
+
+    .validation-success {
+        padding: 15px;
+        background: #f0f9ff;
+        border-radius: 8px;
+        border-left: 4px solid #10b981;
+    }
+
+    .route-summary {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        border: 1px solid #e5e7eb;
+    }
+
+    /* Success button animation */
+    #multicitySearchBtn.btn-success {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+    }
+
+    /* Validation overlay CSS removed - no longer needed */
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .multicity-row {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .tour-package-card {
+        transition: transform 0.3s;
+        cursor: pointer;
+    }
+
+    .tour-package-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .package-price {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .tour-package-card:hover .package-price {
+        opacity: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <!-- <div class="hero-overlay"></div> -->
+    <div class=""></div>
+    <div class="container hero-content">
+        <div class="search-tabs">
+            <ul class="nav nav-tabs d-flex" id="searchTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="outstation-tab" data-bs-toggle="tab"
+                        data-bs-target="#outstation" type="button">
+                        Out Station
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="local-tab" data-bs-toggle="tab" data-bs-target="#local" type="button">
+                        Local Trip
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tour-tab" data-bs-toggle="tab" data-bs-target="#tour" type="button">
+                        Tour Packages
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-4" id="searchTabsContent">
+                <!-- Round Trip Tab -->
+                <div class="tab-pane fade show active" id="outstation" role="tabpanel">
+                    <form id="outstationForm" method="GET" action="{% url 'tour_info_default' %}">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="trip_type" id="roundTrip"
+                                        value="round" checked>
+                                    <label class="form-check-label" style="color: black;" for="roundTrip">Round
+                                        Trip</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="trip_type" id="multicity"
+                                        value="multicity">
+                                    <label class="form-check-label" style="color: black;"
+                                        for="multicity">Multicity</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Round Trip Fields -->
+                        <div id="roundTripFields">
+                            <div class="row">
+                                <p style="color: #2563eb;" class="form-label mb-2">Find a Cab - Round Trip</p>
+                                <div class="col-md-6 mb-3">
+                                    <label for="pickup_location" class="form-label">Pickup Location <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="pickup_city" id="pickup_location" required>
+                                        <option value="">Select City</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="trip_basis" class="form-label">Trip Basis <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="trip_basis" id="trip_basis" required>
+                                        <option value="day">Day Basis</option>
+                                        <option value="km">Km Basis</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="pickup_date" class="form-label">Pickup Date <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" name="pickup_date" id="pickup_date"
+                                        required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="drop_date" class="form-label">Drop Date <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" name="drop_date" id="drop_date" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="pickup_time_round" class="form-label">Pickup Time <span
+                                            class="text-danger">*</span></label>
+                                    <div class="time-input-group">
+                                        <input type="time" class="form-control" name="pickup_time"
+                                            id="pickup_time_round" required>
+                                        <select class="form-select" name="pickup_time_period"
+                                            id="pickup_time_period_round">
+                                            <option value="AM">AM</option>
+                                            <option value="PM">PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Multicity Fields -->
+                        <div id="multicityFields" style="display: none;">
+                            <div class="row mb-3">
+                                <p style="color: #2563eb;" class="form-label">Find a Cab - Multicity</p>
+                                <div class="col-md-12">
+                                    <label for="multicity_pickup_city" class="form-label">Select Pickup City <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="pickup_city" id="multicity_pickup_city">
+                                        <option value="">Select City</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="multicityContainer">
+                                <div class="multicity-row" data-row="0">
+                                    <div class="row">
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label">Date <span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control multicity-date"
+                                                name="multicity_date[]">
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label">From <span class="text-danger">*</span></label>
+                                            <select class="form-select from-city" name="multicity_from[]">
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label">To <span class="text-danger">*</span></label>
+                                            <select class="form-select to-city" name="multicity_to[]">
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label class="form-label">Distance (KM)</label>
+                                            <input type="number" class="form-control distance"
+                                                name="multicity_distance[]" step="0.1" readonly>
+                                        </div>
+                                        <div class="col-md-1 mb-3">
+                                            <label class="form-label">&nbsp;</label>
+                                            <button type="button"
+                                                class="btn btn-danger btn-sm remove-multicity-row w-100"
+                                                style="display:none;">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sightseeing Section -->
+                                    <div class="sightseeing-section" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card border-info">
+                                                    <div class="card-header bg-light">
+                                                        <h6 class="mb-0 text-info">
+                                                            <i class="bi bi-camera me-2"></i>
+                                                            <span class="sightseeing-title">Local Sightseeing</span>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="form-check mb-3">
+                                                            <input class="form-check-input sightseeing-checkbox" type="checkbox" 
+                                                                   name="sightseeing_enabled[]" value="1">
+                                                            <label class="form-check-label">
+                                                                <strong>Include Local Sightseeing</strong>
+                                                                <small class="text-muted d-block">Add sightseeing distance to total trip</small>
+                                                            </label>
+                                                        </div>
+                                                        <div class="sightseeing-details" style="display: none;">
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <label class="form-label">Tourist Places:</label>
+                                                                    <div class="tourist-places-list">
+                                                                        <!-- Tourist places will be loaded here -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="form-label">Sightseeing Distance:</label>
+                                                                    <div class="sightseeing-distance-display">
+                                                                        <span class="badge bg-info fs-6">
+                                                                            <span class="sightseeing-km">0</span> KM
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button type="button" class="btn btn-success" id="addMulticityRowBtn">
+                                    <i class="bi bi-plus-circle"></i> Add Row
+                                </button>
+                                <button type="button" class="btn btn-warning" id="validateMulticityBtn">
+                                    <i class="bi bi-check-circle"></i> Validate Route
+                                </button>
+                            </div>
+
+                            <!-- Validation Results -->
+                            <div id="validationResults" class="mt-3" style="display: none;">
+                                <div class="alert alert-info">
+                                    <h6><i class="bi bi-info-circle me-2"></i>Validation Results</h6>
+                                    <div id="validationDetails"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Round Trip Search Button - Always Visible -->
+                        <div class="row mt-4" id="roundTripSearchSection">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-lg w-100" id="roundTripSearchBtn">
+                                    <i class="bi bi-search"></i> Search Cabs
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Multicity Search Button - Hidden Until Validation -->
+                        <div class="row mt-4" id="multicitySearchSection" style="display: none;">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-lg w-100" id="multicitySearchBtn">
+                                    <i class="bi bi-search"></i> Search Cabs
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Local Trip Tab -->
+                <div class="tab-pane fade" id="local" role="tabpanel">
+                    <form id="localForm" method="GET" action="{% url 'tour_info_default' %}">
+                        <p style="color: #2563eb;" class="form-label">Find a Cab - City Local</p>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="local_pickup_city" class="form-label">Pickup City <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" name="pickup_city" id="localCity" required>
+                                    <option value="">Select City</option>
+                                    {% for city in cities %}
+                                    <option value="{{ city.id }}">{{ city.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="local_area" class="form-label">Local Area <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" name="local_area" id="localArea" required disabled>
+                                    <option value="">Select City First</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="local_date" class="form-label">Date <span
+                                        class="text-danger">*</span></label>
+                                <input type="date" class="form-control" name="date" id="local_date" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="local_pickup_time" class="form-label">Pickup Time <span
+                                        class="text-danger">*</span></label>
+                                <div class="time-input-group">
+                                    <input type="time" class="form-control" name="pickup_time" id="local_pickup_time"
+                                        required>
+                                    <select class="form-select" name="pickup_time_period" id="local_pickup_time_period">
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="bi bi-search"></i> Search Cabs
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- One Way Drop Tab -->
+                <div class="tab-pane fade" id="oneway" role="tabpanel">
+                    <form id="onewayForm" method="GET" action="{% url 'tour_info_default' %}">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="oneway_type" id="fixedRate"
+                                        value="fixed" checked>
+                                    <label class="form-check-label" style="color: black;" for="fixedRate">One Way Drop
+                                        Fixed</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="oneway_type" id="kmBasis"
+                                        value="km">
+                                    <label class="form-check-label" style="color: black;" for="kmBasis">One Way Drop KM
+                                        Basis</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fixed Rate Fields -->
+                        <div id="fixedRateFields">
+                            <p style="color: #2563eb;" class="form-label">Find a Cab - Oneway Dropping Fixed</p>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="oneway_from_city" class="form-label">From City <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="from_city" id="fromCity" required>
+                                        <option value="">Select City</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="oneway_to_city" class="form-label">To City <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="to_city" id="toCity" required>
+                                        <option value="">Select City</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="oneway_pickup_date" class="form-label">Pickup Date <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" name="pickup_date" id="oneway_pickup_date"
+                                        required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="oneway_pickup_time" class="form-label">Pickup Time <span
+                                            class="text-danger">*</span></label>
+                                    <div class="time-input-group">
+                                        <input type="time" class="form-control" name="pickup_time"
+                                            id="oneway_pickup_time" required>
+                                        <select class="form-select" name="pickup_time_period"
+                                            id="oneway_pickup_time_period">
+                                            <option value="AM">AM</option>
+                                            <option value="PM">PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                                        <i class="bi bi-search"></i> Search Cabs
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KM Basis Fields -->
+                        <div id="kmBasisFields" style="display:none;">
+                            <p style="color: #2563eb;" class="form-label">Find a Cab - Out Station Oneway Drop Km Basis
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="km_pickup_city" class="form-label">Select Pickup City <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="km_pickup_city" id="km_pickup_city" required>
+                                        <option value="">Select City</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="km_pickup_date" class="form-label">Pick-up Date <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" name="km_pickup_date" id="km_pickup_date"
+                                        required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="oneway_from_city_km" class="form-label">From City <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="from_city" id="fromCityKm" required>
+                                        <option value="">Select City</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="oneway_to_city_km" class="form-label">To City <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" name="to_city" id="toCityKm" required>
+                                        <option value="">Select City</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="oneway_pickup_time_km" class="form-label">Pickup Time <span
+                                            class="text-danger">*</span></label>
+                                    <div class="time-input-group">
+                                        <input type="time" class="form-control" name="pickup_time"
+                                            id="oneway_pickup_time_km" required>
+                                        <select class="form-select" name="pickup_time_period"
+                                            id="oneway_pickup_time_period_km">
+                                            <option value="AM">AM</option>
+                                            <option value="PM">PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                                        <i class="bi bi-search"></i> Search Cabs
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tour Packages Tab -->
+                <div class="tab-pane fade" id="tour" role="tabpanel">
+                    <form id="tourForm" method="GET" action="{% url 'tour_info_default' %}">
+                        <p style="color: #2563eb;" class="form-label">Find a Cab - Tour Packages</p>
+                        
+                        <!-- Package Type Availability Message -->
+                        <div id="packageTypeMessage" class="alert alert-warning" style="display: none;">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            We currently do not provide any tours for this package type. Please use the 
+                            <a href="{% url 'tour_planner' %}" class="alert-link fw-bold">Multicity Tour Plan</a>.
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="tour_pickup_city" class="form-label">Pickup City <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" name="pickup_city" id="tour_pickup_city" required>
+                                    <option value="">Select City</option>
+                                    {% for city in cities %}
+                                    <option value="{{ city.id }}">{{ city.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="tour_pickup_date" class="form-label">Pickup Date <span
+                                        class="text-danger">*</span></label>
+                                <input type="date" class="form-control" name="pickup_date" id="tour_pickup_date"
+                                    required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="tour_package_type_days" class="form-label">Package Type <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" name="package_type_days" id="tour_package_type_days" required>
+                                    <option value="">Select Package Type</option>
+                                    <option value="1">1 Day</option>
+                                    <option value="2">2 Days</option>
+                                    <option value="3">3 Days</option>
+                                    <option value="4">4 Days</option>
+                                    <option value="5">5 Days</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="tour_package_select" class="form-label">Available Packages</label>
+                                <select class="form-select" name="package_type" id="tour_package_select" disabled>
+                                    <option value="">Select Package Type First</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-lg w-100" id="tourSearchBtn" disabled>
+                                    <i class="bi bi-search"></i> Search Cabs
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Top Tour Places -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="section-heading text-center mb-5">
+            <h2>Top Tour Places</h2>
+            <p>Discover the most popular destinations for your next adventure</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'ooty' %}" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-sm tour-package-card">
+                        <!-- <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&w=400&h=250&fit=crop" -->
+                        <img src="{% static 'tour/ooty.jpg' %}"
+                            class="card-img-top" alt="Ooty" style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">Ooty - Queen of Hills</h5>
+                            <p class="card-text text-muted">Experience the beauty of the Nilgiri Hills with tea gardens, lakes, and
+                                pleasant weather.</p>
+                            <div class="text-center">
+                                <span class="btn btn-primary btn-sm">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'kodaikanal' %}" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-sm tour-package-card">
+                        <img src="{% static 'tour/kodaikanal.jpg' %}"
+                            class="card-img-top" alt="Kodaikanal" style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">Kodaikanal - Princess of Hills</h5>
+                            <p class="card-text text-muted">Enjoy the serene lakes, misty mountains, and cool climate of this hill
+                                station.</p>
+                            <div class="text-center">
+                                <span class="btn btn-primary btn-sm">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'munnar' %}" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-sm tour-package-card">
+                        <img src="{% static 'tour/Munnar.jpg' %}"
+                            class="card-img-top" alt="Munnar" style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">Munnar - Tea Garden Paradise</h5>
+                            <p class="card-text text-muted">Explore vast tea plantations, wildlife sanctuaries, and breathtaking
+                                viewpoints.</p>
+                            <div class="text-center">
+                                <span class="btn btn-primary btn-sm">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'coorg' %}" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-sm tour-package-card">
+                        <img src="{% static 'tour/CoorgKarnataka.jpg' %}"
+                            class="card-img-top" alt="Coorg" style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">Coorg - Scotland of India</h5>
+                            <p class="card-text text-muted">Discover coffee plantations, waterfalls, and rich cultural heritage.</p>
+                            <div class="text-center">
+                                <span class="btn btn-primary btn-sm">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'mysore' %}" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-sm tour-package-card">
+                        <img src="{% static 'tour/Mysore.jpg' %}"
+                            class="card-img-top" alt="Mysore" style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">Mysore - City of Palaces</h5>
+                            <p class="card-text text-muted">Visit magnificent palaces, gardens, and experience royal heritage.</p>
+                            <div class="text-center">
+                                <span class="btn btn-primary btn-sm">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'yercaud' %}" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-sm tour-package-card">
+                        <img src="{% static 'tour/yercard.jpg' %}"
+                            class="card-img-top" alt="Yercaud" style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">Yercaud - Jewel of South</h5>
+                            <p class="card-text text-muted">Enjoy orange groves, coffee plantations, and scenic viewpoints.</p>
+                            <div class="text-center">
+                                <span class="btn btn-primary btn-sm">View Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- News & Promotions -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-heading text-center mb-5">
+            <h2>News & Promotions</h2>
+            <p>Stay updated with our latest offers and travel news</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-percent text-primary" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5 class="card-title">Special Offers</h5>
+                        <p class="card-text">Book now and get 10% off on all round trips. Limited time offer!</p>
+                        <a href="#" class="btn btn-primary btn-sm">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-geo-alt text-success" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5 class="card-title">New Routes Added</h5>
+                        <p class="card-text">We've added new routes to popular destinations including Goa and Kerala.
+                        </p>
+                        <a href="#" class="btn btn-primary btn-sm">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-calendar-event text-warning" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5 class="card-title">Seasonal Packages</h5>
+                        <p class="card-text">Check out our special seasonal tour packages with exclusive deals.</p>
+                        <a href="#" class="btn btn-primary btn-sm">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Customer Reviews -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="section-heading text-center mb-5">
+            <h2>What Our Customers Say</h2>
+            <p>Read testimonials from our satisfied customers</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-center mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                        </div>
+                        <p class="card-text">"Excellent service! The driver was professional and the vehicle was clean
+                            and comfortable. Highly recommended!"</p>
+                        <div class="mt-3">
+                            <strong>Rajesh Kumar</strong><br>
+                            <small class="text-muted">Coimbatore</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-center mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                        </div>
+                        <p class="card-text">"Amazing experience with Ritham Tours. The Ooty trip was perfectly
+                            organized and the pricing was very reasonable."</p>
+                        <div class="mt-3">
+                            <strong>Priya Sharma</strong><br>
+                            <small class="text-muted">Chennai</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-center mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                        </div>
+                        <p class="card-text">"Professional service with timely pickup and drop. The vehicle was
+                            well-maintained and the journey was smooth."</p>
+                        <div class="mt-3">
+                            <strong>Arun Patel</strong><br>
+                            <small class="text-muted">Bangalore</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Services -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-heading text-center mb-5">
+            <h2>Our Services</h2>
+            <p>Comprehensive travel solutions for all your needs</p>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-car-front text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="card-title">Local Trips</h5>
+                        <p class="card-text">Hourly basis local transportation for city tours and shopping.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-geo-alt text-success" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="card-title">Round Trip</h5>
+                        <p class="card-text">Day or kilometer basis round trips to nearby cities and hill stations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-arrow-right text-warning" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="card-title">One Way Drop</h5>
+                        <p class="card-text">Airport transfers and one-way transportation services.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-airplane text-info" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="card-title">Tour Packages</h5>
+                        <p class="card-text">Complete tour packages with accommodation and sightseeing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Our Vision, Quality & Reliability -->
+<section class="py-5" style="background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);">
+    <div class="container">
+        <div class="section-heading">
+            <h2>Why Choose Us</h2>
+            <p>Experience the difference with our premium services</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100 border-0 shadow-sm">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <div
+                                style="width: 80px; height: 80px; background: linear-gradient(135deg, #2563eb, #1e40af); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                                <i class="bi bi-eye-fill text-white" style="font-size: 40px;"></i>
+                            </div>
+                        </div>
+                        <h4 class="mb-3">Our Vision</h4>
+                        <p class="text-muted">To be the leading travel and transportation service provider, offering
+                            exceptional experiences to our customers.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100 border-0 shadow-sm">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <div
+                                style="width: 80px; height: 80px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                                <i class="bi bi-star-fill text-white" style="font-size: 40px;"></i>
+                            </div>
+                        </div>
+                        <h4 class="mb-3">Quality & Reliability</h4>
+                        <p class="text-muted">We ensure the highest standards of service quality and reliability in
+                            every journey with us.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center h-100 border-0 shadow-sm">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <div
+                                style="width: 80px; height: 80px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                                <i class="bi bi-headset text-white" style="font-size: 40px;"></i>
+                            </div>
+                        </div>
+                        <h4 class="mb-3">24/7 Support</h4>
+                        <p class="text-muted">Our dedicated support team is available round the clock to assist you with
+                            all your travel needs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Enquiry Form -->
+<section class="py-5" style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h3 class="text-center mb-4 text-white">Have Questions? Get in Touch</h3>
+                <p class="text-center text-white-50 mb-5">Fill out the form below and we'll get back to you as soon as
+                    possible</p>
+                <form id="quickEnquiryForm">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="tel" class="form-control" name="phone" placeholder="Your Phone" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <textarea class="form-control" name="message" rows="3" placeholder="Your Message"
+                                required></textarea>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-light btn-lg px-5 py-3"
+                                style="border-radius: 30px; font-weight: 600;">
+                                <i class="bi bi-send me-2"></i>Submit Enquiry
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Load local areas when city is selected
+    $('#localCity').on('change', function () {
+        var cityId = $(this).val();
+        console.log('Local city changed to:', cityId);
+
+        if (cityId) {
+            $.ajax({
+                url: '/api/local-areas/',
+                data: { city_id: cityId },
+                success: function (data) {
+                    console.log('Local areas API response:', data);
+
+                    var select = $('#localArea');
+                    select.empty().append('<option value="">Select Area</option>');
+
+                    // Handle both response formats
+                    var localAreas = data.local_areas || data || [];
+
+                    if (localAreas && localAreas.length > 0) {
+                        localAreas.forEach(function (area) {
+                            select.append('<option value="' + area.id + '">' + area.name + '</option>');
+                        });
+                        select.prop('disabled', false);
+                        console.log('Populated', localAreas.length, 'local areas');
+                    } else {
+                        select.append('<option value="">No areas available</option>');
+                        select.prop('disabled', false);
+                        console.log('No local areas found for city:', cityId);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error loading local areas:', error);
+                    console.error('Response:', xhr.responseText);
+
+                    var select = $('#localArea');
+                    select.empty().append('<option value="">Error loading areas</option>');
+                    select.prop('disabled', false);
+                }
+            });
+        } else {
+            $('#localArea').empty().append('<option value="">Select City First</option>');
+            $('#localArea').prop('disabled', true);
+        }
+    });
+
+    // Handle trip basis dropdown - redirect to online cab booking for Km Basis
+    $('#trip_basis').on('change', function() {
+        if ($(this).val() === 'km') {
+            window.location.href = '{% url "online_cab_booking" %}';
+        }
+    });
+
+    // Test if JavaScript is working
+    console.log('JavaScript is loading...');
+
+    // Round Trip / Multicity toggle
+    $('input[name="trip_type"]').on('change', function () {
+        console.log('Trip type changed to:', $(this).val());
+
+        if ($(this).val() === 'round') {
+            console.log('Switching to Round Trip');
+            $('#roundTripFields').show();
+            $('#multicityFields').hide();
+            
+            // Show Round Trip search button, hide Multicity search button
+            $('#roundTripSearchSection').show();
+            $('#multicitySearchSection').hide();
+
+            // Set required attributes for round trip
+            $('#pickup_location, #pickup_date, #drop_date, #pickup_time_round, #trip_basis').attr('required', true);
+            // Remove required from multicity fields
+            $('#multicity_pickup_city, .multicity-date, .from-city, .to-city').removeAttr('required');
+        } else {
+            console.log('Switching to Multicity');
+            $('#roundTripFields').hide();
+            $('#multicityFields').show();
+            
+            // Hide Round Trip search button, show Multicity search button (but keep it hidden until validation)
+            $('#roundTripSearchSection').hide();
+            $('#multicitySearchSection').hide(); // Will be shown after validation
+
+            // Set required attributes for multicity
+            $('#multicity_pickup_city, .multicity-date, .from-city, .to-city').attr('required', true);
+            // Remove required from round trip fields
+            $('#pickup_location, #pickup_date, #drop_date, #pickup_time_round, #trip_basis').removeAttr('required');
+        }
+    });
+
+    console.log('Radio button handler attached');
+
+    // Load local areas for pickup city and populate first row
+    $('#multicity_pickup_city').on('change', function () {
+        var pickupCityId = $(this).val();
+        var pickupCityName = $(this).find('option:selected').text();
+
+        if (pickupCityId) {
+            // Load local areas for the selected pickup city
+            $.ajax({
+                url: '/api/local-areas/',
+                data: { city_id: pickupCityId },
+                success: function (data) {
+                    console.log('Local areas data:', data); // Debug log
+
+                    // Populate first row "From" dropdown with local areas of pickup city
+                    var firstRow = $('.multicity-row').first();
+                    var fromDropdown = firstRow.find('.from-city');
+
+                    fromDropdown.empty().append('<option value="">Select Local Area</option>');
+
+                    // Use the correct response format
+                    var localAreas = data.local_areas || [];
+
+                    if (localAreas && localAreas.length > 0) {
+                        localAreas.forEach(function (area) {
+                            fromDropdown.append('<option value="area_' + area.id + '">' + area.name + '</option>');
+                        });
+                    }
+
+                    // Clear other rows
+                    $('.multicity-row:not(:first)').remove();
+
+                    // Clear and reset first row other fields
+                    firstRow.find('.to-city').empty().append('<option value="">Select Destination</option>');
+                    firstRow.find('.multicity-date').val('');
+                    firstRow.find('.distance').val('');
+
+                    // Hide validation results
+                    $('#validationResults').hide();
+
+                    // Hide and reset search button
+                    $('#multicitySearchSection').hide();
+                    $('#multicitySearchBtn').removeClass('btn-success').addClass('btn-primary')
+                        .html('<i class="bi bi-search"></i> Search Cabs');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error loading local areas:', error);
+
+                    // Show empty dropdown on error
+                    var firstRow = $('.multicity-row').first();
+                    var fromDropdown = firstRow.find('.from-city');
+                    fromDropdown.empty().append('<option value="">No local areas available</option>');
+                }
+            });
+        } else {
+            // Clear all dropdowns if no city selected
+            $('.from-city, .to-city').empty().append('<option value="">Select City First</option>');
+            $('#validationResults').hide();
+            // Hide search button when no city selected
+            $('#multicitySearchSection').hide();
+        }
+    });
+
+    // Calculate distance for multicity
+    $(document).on('change', '.from-city, .to-city', function () {
+        var row = $(this).closest('.multicity-row');
+        var fromValue = row.find('.from-city').val();
+        var toValue = row.find('.to-city').val();
+
+        if (fromValue && toValue) {
+            // Show loading indicator
+            row.find('.distance').val('Calculating...');
+
+            // Parse the values to extract city/area IDs
+            var fromData = parseLocationValue(fromValue);
+            var toData = parseLocationValue(toValue);
+
+            var requestData = {};
+
+            // For distance calculation, always use cities (not local areas)
+            // If local area is selected, get its parent city
+            if (fromData.type === 'city') {
+                requestData.from_city_id = fromData.id;
+            } else {
+                // For local areas, get the parent city ID
+                requestData.from_city_id = getAreaParentCityId(fromData.id);
+            }
+
+            if (toData.type === 'city') {
+                requestData.to_city_id = toData.id;
+            } else {
+                // For local areas, get the parent city ID
+                requestData.to_city_id = getAreaParentCityId(toData.id);
+            }
+
+            console.log('Distance calculation request:', requestData);
+            console.log('From data:', fromData, 'To data:', toData);
+
+            $.ajax({
+                url: '/api/route-distance/',
+                data: requestData,
+                success: function (data) {
+                    console.log('Distance calculation response:', data);
+
+                    if (data.distance) {
+                        row.find('.distance').val(data.distance);
+
+                        // Show message based on source
+                        if (data.source === 'calculated') {
+                            safeNotify(`Distance calculated: ${data.distance} km`, 'info');
+                        } else if (data.source === 'database') {
+                            safeNotify(`Distance from database: ${data.distance} km`, 'success');
+                        } else if (data.source === 'estimated') {
+                            safeNotify(`Distance estimated: ${data.distance} km`, 'warning');
+                        }
+                    } else {
+                        row.find('.distance').val('');
+                        if (data.message) {
+                            safeNotify(data.message, 'warning');
+                        }
+                        // Keep distance field readonly - no manual entry allowed
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Distance calculation error:', error);
+                    row.find('.distance').val('');
+                    safeNotify('Error calculating distance.', 'error');
+                    // Keep distance field readonly - no manual entry allowed
+                }
+            });
+        } else {
+            row.find('.distance').val('');
+        }
+    });
+
+    // Helper function to parse location values (city_123 or area_456)
+    function parseLocationValue(value) {
+        if (value.startsWith('city_')) {
+            return {
+                type: 'city',
+                id: value.replace('city_', '')
+            };
+        } else if (value.startsWith('area_')) {
+            return {
+                type: 'area',
+                id: value.replace('area_', '')
+            };
+        }
+        return { type: 'unknown', id: value };
+    }
+
+    // Helper function to get parent city ID for a local area
+    function getAreaParentCityId(areaId) {
+        // For now, return the pickup city as fallback
+        // In a real implementation, you would make an API call to get the parent city
+        var parentCityId = $('#multicity_pickup_city').val();
+        console.log('Area', areaId, 'parent city (fallback):', parentCityId);
+        return parentCityId;
+    }
+
+    // Handle "From" dropdown change - populate "To" dropdown with all cities and local areas (excluding pickup city)
+    $(document).on('change', '.from-city', function () {
+        var currentRow = $(this).closest('.multicity-row');
+        var toDropdown = currentRow.find('.to-city');
+        var pickupCityId = $('#multicity_pickup_city').val();
+
+        // Get row index (0-based)
+        var rowIndex = $('.multicity-row').index(currentRow);
+
+        console.log('From dropdown changed for row', rowIndex, 'pickup city:', pickupCityId);
+
+        // Clear "To" dropdown
+        toDropdown.empty().append('<option value="">Select Destination</option>');
+
+        // Load cities and local areas via AJAX to avoid template syntax issues
+        $.ajax({
+            url: '/api/cities/',
+            success: function (cities) {
+                console.log('Loaded cities:', cities.length);
+
+                // Add all cities EXCEPT the pickup city
+                cities.forEach(function (city) {
+                    if (city.id != pickupCityId) {
+                        toDropdown.append('<option value="city_' + city.id + '">' + city.name + '</option>');
+                    }
+                });
+
+                // Add local areas ONLY for second row onward (rowIndex >= 1)
+                if (rowIndex >= 1) {
+                    console.log('Loading local areas for row', rowIndex);
+
+                    cities.forEach(function (city) {
+                        $.ajax({
+                            url: '/api/local-areas/',
+                            data: { city_id: city.id },
+                            success: function (data) {
+                                var localAreas = data.local_areas || [];
+
+                                if (localAreas && localAreas.length > 0) {
+                                    toDropdown.append('<optgroup label="' + city.name + ' - Local Areas">');
+                                    localAreas.forEach(function (area) {
+                                        toDropdown.append('<option value="area_' + area.id + '">' + area.name + '</option>');
+                                    });
+                                    toDropdown.append('</optgroup>');
+                                }
+                            }
+                        });
+                    });
+                } else {
+                    console.log('Row', rowIndex, 'cities only - Total options:', toDropdown.find('option').length);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Failed to load cities via API:', error);
+
+                // Fallback: Use hardcoded cities list
+                var fallbackCities = [
+                    { id: '1', name: 'Coimbatore' },
+                    { id: '2', name: 'Ooty' },
+                    { id: '3', name: 'Kodaikanal' },
+                    { id: '4', name: 'Munnar' },
+                    { id: '5', name: 'Yercaud' },
+                    { id: '6', name: 'Madurai' },
+                    { id: '7', name: 'Rameshwaram' },
+                    { id: '8', name: 'Kanyakumari' },
+                    { id: '9', name: 'Tanjore' },
+                    { id: '10', name: 'Mysore' },
+                    { id: '11', name: 'Chennai' },
+                    { id: '12', name: 'Ariyalur' }
+                ];
+
+                console.log('Using fallback cities:', fallbackCities.length);
+
+                fallbackCities.forEach(function (city) {
+                    if (city.id != pickupCityId) {
+                        toDropdown.append('<option value="city_' + city.id + '">' + city.name + '</option>');
+                    }
+                });
+
+                // Add local areas for fallback
+                if (rowIndex >= 1) {
+                    fallbackCities.forEach(function (city) {
+                        $.ajax({
+                            url: '/api/local-areas/',
+                            data: { city_id: city.id },
+                            success: function (data) {
+                                var localAreas = data.local_areas || [];
+                                if (localAreas && localAreas.length > 0) {
+                                    toDropdown.append('<optgroup label="' + city.name + ' - Local Areas">');
+                                    localAreas.forEach(function (area) {
+                                        toDropdown.append('<option value="area_' + area.id + '">' + area.name + '</option>');
+                                    });
+                                    toDropdown.append('</optgroup>');
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    });
+
+    // Handle "To" dropdown change - update next row's "From" dropdown
+    $(document).on('change', '.to-city', function () {
+        var currentRow = $(this).closest('.multicity-row');
+        var nextRow = currentRow.next('.multicity-row');
+        var selectedValue = $(this).val();
+        var selectedText = $(this).find('option:selected').text();
+        var currentRowIndex = $('.multicity-row').index(currentRow);
+
+        console.log('To dropdown changed for row', currentRowIndex + 1, '- Selected:', selectedText);
+
+        if (nextRow.length > 0) {
+            var nextFromDropdown = nextRow.find('.from-city');
+            nextFromDropdown.empty().append('<option value="">Select</option>');
+            nextFromDropdown.append('<option value="' + selectedValue + '" selected>' + selectedText + '</option>');
+
+            console.log('Updated next row From dropdown to:', selectedText);
+
+            // Trigger change to populate next row's "To" dropdown
+            nextFromDropdown.trigger('change');
+        }
+    });
+
+    // Add multicity row
+    $('#addMulticityRowBtn').on('click', function () {
+        var lastRow = $('.multicity-row').last();
+        var lastToValue = lastRow.find('.to-city').val();
+        var lastToText = lastRow.find('.to-city option:selected').text();
+
+        if (!lastToValue) {
+            alert('Please complete the current row before adding a new one.');
+            return;
+        }
+
+        var newRow = $('.multicity-row').first().clone();
+        var rowCount = $('.multicity-row').length;
+        newRow.attr('data-row', rowCount);
+
+        // Clear all input values
+        newRow.find('input, select').val('');
+        newRow.find('.distance').val('');
+
+        // Set minimum date based on previous row (allow same day)
+        var previousDate = lastRow.find('.multicity-date').val();
+        if (previousDate) {
+            // Use the same date as minimum (allow same day travel)
+            newRow.find('.multicity-date').attr('min', previousDate);
+        }
+
+        // Ensure required attributes are set for new row
+        newRow.find('.multicity-date, .from-city, .to-city').attr('required', true);
+
+        $('#multicityContainer').append(newRow);
+
+        // Update remove button visibility - only last row can be deleted (after appending)
+        updateRemoveButtonVisibility();
+
+        // Hide search button when form changes (requires re-validation)
+        $('#multicitySearchSection').hide();
+        $('#validationResults').hide();
+
+        // Set "From" of new row to "To" of previous row
+        var fromDropdown = newRow.find('.from-city');
+        fromDropdown.empty().append('<option value="">Select</option>');
+        fromDropdown.append('<option value="' + lastToValue + '" selected>' + lastToText + '</option>');
+
+        // Trigger change to populate "To" dropdown
+        console.log('Triggering from dropdown change for new row');
+        fromDropdown.trigger('change');
+
+        // Wait a bit for AJAX calls to complete, then log the To dropdown options
+        setTimeout(function () {
+            var toOptions = newRow.find('.to-city option').length;
+            console.log('To dropdown populated with', toOptions, 'options');
+        }, 2000);
+    });
+
+    // Remove multicity row
+    $(document).on('click', '.remove-multicity-row', function () {
+        if ($('.multicity-row').length > 1) {
+            var rowToRemove = $(this).closest('.multicity-row');
+            var rowIndex = $('.multicity-row').index(rowToRemove);
+            var dataRowAttr = rowToRemove.attr('data-row');
+
+            console.log('Removing row at index', rowIndex, 'with data-row', dataRowAttr);
+
+            // Store info about adjacent rows before removal
+            var nextRow = rowToRemove.next('.multicity-row');
+            var prevRow = rowToRemove.prev('.multicity-row');
+            var needsContinuityFix = (nextRow.length > 0 && prevRow.length > 0);
+            var prevToValue = null;
+            var prevToText = null;
+
+            if (needsContinuityFix) {
+                prevToValue = prevRow.find('.to-city').val();
+                prevToText = prevRow.find('.to-city option:selected').text();
+                console.log('Will connect previous row ending at', prevToText, 'to next row');
+            }
+
+            // Remove the row first
+            rowToRemove.remove();
+
+            // Now fix continuity after removal
+            if (needsContinuityFix && prevToValue) {
+                // Get the updated next row (now it's the direct next sibling of prevRow)
+                var updatedNextRow = prevRow.next('.multicity-row');
+                if (updatedNextRow.length > 0) {
+                    var nextFromDropdown = updatedNextRow.find('.from-city');
+                    nextFromDropdown.empty().append('<option value="">Select</option>');
+                    nextFromDropdown.append('<option value="' + prevToValue + '" selected>' + prevToText + '</option>');
+
+                    // Clear distance and trigger change to populate To dropdown
+                    updatedNextRow.find('.distance').val('');
+                    nextFromDropdown.trigger('change');
+
+                    console.log('Fixed continuity: Set next row From to', prevToText);
+                }
+            }
+
+            // Update constraints and run full continuity check
+            updateDateConstraints();
+            updateRemoveButtonVisibility(); // Update button visibility after removal
+            
+            // Hide search button when form changes (requires re-validation)
+            $('#multicitySearchSection').hide();
+            $('#validationResults').hide();
+            
+            setTimeout(function () {
+                updateRouteContinuity();
+            }, 500); // Small delay to ensure DOM is updated
+        }
+    });
+
+    // Update remove button visibility - only allow deleting the last row
+    function updateRemoveButtonVisibility() {
+        var rows = $('.multicity-row');
+        var rowCount = rows.length;
+        console.log('Updating remove button visibility for', rowCount, 'rows');
+
+        // First, hide all remove buttons and remove can-delete class
+        $('.multicity-row .remove-multicity-row').css('display', 'none');
+        $('.multicity-row').removeClass('can-delete');
+
+        // Only show remove button on the last row if there's more than 1 row
+        if (rowCount > 1) {
+            var lastRow = rows.eq(rowCount - 1); // Get the last row using eq()
+            var removeBtn = lastRow.find('.remove-multicity-row');
+            removeBtn.css('display', 'inline-block');
+            removeBtn.attr('title', 'Delete this row (only the last row can be deleted)');
+            lastRow.addClass('can-delete'); // Add visual indicator
+            console.log('Showing remove button only on last row (data-row=' + lastRow.attr('data-row') + ')');
+        } else {
+            console.log('Only 1 row exists, hiding all remove buttons');
+        }
+
+        // Add tooltips to hidden buttons explaining why they're disabled
+        rows.not(':last').find('.remove-multicity-row').attr('title', 'Only the last row can be deleted');
+
+        console.log('Remove button visibility updated - only last row can be deleted');
+
+        // Show info message if there are multiple rows
+        if (rows.length > 2) {
+            var infoMsg = 'Note: You can only delete the last row to maintain route continuity.';
+            // You can uncomment the line below to show a subtle notification
+            // safeNotify(infoMsg, 'info');
+        }
+    }
+
+    // Update route continuity for all rows
+    function updateRouteContinuity() {
+        var rows = $('.multicity-row');
+        console.log('=== Updating route continuity for', rows.length, 'rows ===');
+
+        rows.each(function (index) {
+            var currentRow = $(this);
+            var currentDataRow = currentRow.attr('data-row');
+
+            if (index === 0) {
+                console.log('Row', index + 1, '(data-row=' + currentDataRow + ') - First row, skipping continuity check');
+                return; // Skip first row
+            }
+
+            var previousRow = rows.eq(index - 1);
+            var prevDataRow = previousRow.attr('data-row');
+
+            var prevToValue = previousRow.find('.to-city').val();
+            var prevToText = previousRow.find('.to-city option:selected').text();
+            var currentFromValue = currentRow.find('.from-city').val();
+            var currentFromText = currentRow.find('.from-city option:selected').text();
+
+            console.log('Row', index + 1, '(data-row=' + currentDataRow + ') - Previous To:', prevToText, 'Current From:', currentFromText);
+
+            if (prevToValue) {
+                // If current row's "From" doesn't match previous row's "To", fix it
+                if (currentFromValue !== prevToValue) {
+                    console.log('FIXING CONTINUITY: Row', index + 1, 'From should be', prevToText, 'not', currentFromText);
+
+                    var currentFromDropdown = currentRow.find('.from-city');
+                    currentFromDropdown.empty().append('<option value="">Select</option>');
+                    currentFromDropdown.append('<option value="' + prevToValue + '" selected>' + prevToText + '</option>');
+
+                    // Clear distance to force recalculation
+                    currentRow.find('.distance').val('');
+
+                    // Trigger change to populate "To" dropdown
+                    setTimeout(function () {
+                        currentFromDropdown.trigger('change');
+                    }, 100);
+
+                    console.log('Fixed: Row', index + 1, 'From now set to', prevToText);
+                } else {
+                    console.log('Row', index + 1, 'continuity OK');
+                }
+            }
+        });
+
+        console.log('=== Route continuity update complete ===');
+    }
+
+    // Manual function to fix route continuity (can be called from console)
+    window.fixRouteContinuity = function () {
+        console.log('Manually fixing route continuity...');
+        updateRouteContinuity();
+        console.log('Route continuity fixed. Please validate again.');
+    };
+
+    // Manual function to test radio button switching (can be called from console)
+    window.testRadioSwitch = function (type) {
+        console.log('Manually switching to:', type);
+        $('input[name="trip_type"][value="' + type + '"]').prop('checked', true).trigger('change');
+    };
+
+    // Simple test function to check if JavaScript is working
+    window.testJS = function () {
+        console.log('JavaScript is working!');
+        console.log('jQuery version:', $.fn.jquery);
+        return 'JS Test Complete';
+    };
+
+    // Update date constraints for all rows
+    function updateDateConstraints() {
+        $('.multicity-row').each(function (index) {
+            var currentRow = $(this);
+            var dateInput = currentRow.find('.multicity-date');
+
+            if (index === 0) {
+                // First row: minimum date is today
+                var today = new Date().toISOString().split('T')[0];
+                dateInput.attr('min', today);
+            } else {
+                // Subsequent rows: minimum date is same as previous row (allow same day)
+                var previousRow = $('.multicity-row').eq(index - 1);
+                var previousDate = previousRow.find('.multicity-date').val();
+
+                if (previousDate) {
+                    // Use the same date as minimum (allow same day travel)
+                    dateInput.attr('min', previousDate);
+                }
+            }
+        });
+    }
+
+    // Handle date changes to update constraints
+    $(document).on('change', '.multicity-date', function () {
+        updateDateConstraints();
+    });
+
+    // Validate multicity route
+    $('#validateMulticityBtn').on('click', function () {
+        var btn = $(this);
+        var originalText = btn.html();
+
+        // Show loading state
+        btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Calculating distances...');
+
+        // First ensure all distances are calculated
+        console.log('Starting distance calculations for validation...');
+        calculateAllDistances().then(function () {
+            console.log('Distance calculations completed, proceeding with validation...');
+            btn.html('<span class="spinner-border spinner-border-sm me-2"></span>Validating route...');
+
+            setTimeout(function () {
+                validateMulticityRoute();
+
+                // Restore button
+                btn.prop('disabled', false).html(originalText);
+            }, 500);
+        });
+    });
+
+    // Function to calculate distances for all rows that don't have them
+    function calculateAllDistances() {
+        console.log('=== calculateAllDistances function called! ===');
+
+        return new Promise(function (resolve) {
+            try {
+                var rows = $('.multicity-row');
+                console.log('Found', rows.length, 'multicity rows');
+
+                if (rows.length === 0) {
+                    console.log('No multicity rows found, resolving immediately');
+                    resolve();
+                    return;
+                }
+
+                var pendingCalculations = 0;
+                var completedCalculations = 0;
+
+                rows.each(function (index) {
+                    try {
+                        var row = $(this);
+                        var fromValue = row.find('.from-city').val();
+                        var toValue = row.find('.to-city').val();
+                        var distanceFieldValue = row.find('.distance').val();
+
+                        console.log('Row', index, '- From:', fromValue, 'To:', toValue, 'Distance:', distanceFieldValue);
+
+                        // Check if row is complete (has from and to)
+                        if (fromValue && toValue) {
+                            // Check if distance needs calculation
+                            if (!distanceFieldValue || distanceFieldValue === '' || distanceFieldValue === '0') {
+                                console.log('Row', index, 'needs distance calculation');
+                                pendingCalculations++;
+
+                                // Trigger the normal change event to calculate distance
+                                row.find('.to-city').trigger('change');
+
+                                // Wait a bit and check if distance was calculated
+                                setTimeout(function () {
+                                    completedCalculations++;
+                                    console.log('Completed calculation for row', index, 'Distance now:', row.find('.distance').val());
+
+                                    if (completedCalculations >= pendingCalculations) {
+                                        console.log('All calculations completed');
+                                        resolve();
+                                    }
+                                }, 2000); // Wait 2 seconds for each calculation
+                            }
+                        } else {
+                            console.log('Row', index, 'is incomplete - From:', fromValue, 'To:', toValue);
+                        }
+                    } catch (error) {
+                        console.error('Error processing row', index, ':', error);
+                    }
+                });
+
+                // If no calculations needed, resolve immediately
+                if (pendingCalculations === 0) {
+                    console.log('No distance calculations needed, resolving');
+                    resolve();
+                }
+
+            } catch (error) {
+                console.error('Error in calculateAllDistances:', error);
+                resolve(); // Resolve anyway to not block validation
+            }
+        });
+    }
+
+    function validateMulticityRoute() {
+        var pickupCityId = $('#multicity_pickup_city').val();
+        var pickupCityName = $('#multicity_pickup_city option:selected').text();
+
+        if (!pickupCityId) {
+            alert('Please select a pickup city first.');
+            return false;
+        }
+
+        var rows = $('.multicity-row');
+        var errors = [];
+        var routes = [];
+        var firstFromValue = null;
+        var lastToValue = null;
+
+        // Validate each row and check continuity
+        var previousRowToValue = null;
+        var previousRowToText = null;
+        var previousDate = null;
+
+        rows.each(function (index) {
+            var row = $(this);
+            var date = row.find('.multicity-date').val();
+            var fromValue = row.find('.from-city').val();
+            var toValue = row.find('.to-city').val();
+            var fromText = row.find('.from-city option:selected').text();
+            var toText = row.find('.to-city option:selected').text();
+            var dataRowAttr = row.attr('data-row') || index;
+
+            console.log('Validating Row', index + 1, '(data-row=' + dataRowAttr + ') - Date:', date, 'From:', fromValue, 'To:', toValue);
+
+            // Check required fields
+            if (!date) {
+                errors.push(`Row ${index + 1}: Please select a date`);
+                return;
+            }
+            if (!fromValue) {
+                errors.push(`Row ${index + 1}: Please select a from location`);
+                return;
+            }
+            if (!toValue) {
+                errors.push(`Row ${index + 1}: Please select a to location`);
+                return;
+            }
+
+            // Store first "From" and last "To" for circular route check
+            if (index === 0) {
+                firstFromValue = fromValue;
+            }
+            if (index === rows.length - 1) {
+                lastToValue = toValue;
+            }
+
+            // Date sequence validation - allow same day travel
+            if (previousDate) {
+                if (date < previousDate) {
+                    errors.push(`Row ${index + 1}: Date (${date}) cannot be before the previous row's date (${previousDate})`);
+                }
+            }
+
+            // Route continuity validation (except for first row)
+            if (index > 0 && previousRowToValue) {
+                console.log('=== CONTINUITY CHECK ===');
+                console.log('Row', index + 1, 'From:', JSON.stringify(fromValue), '(' + fromText + ')');
+                console.log('Previous Row To:', JSON.stringify(previousRowToValue), '(' + previousRowToText + ')');
+                console.log('Values match:', fromValue === previousRowToValue);
+
+                if (fromValue !== previousRowToValue) {
+                    console.log('🚨 CONTINUITY BREAK DETECTED! 🚨');
+                    errors.push(`Row ${index + 1}: "From" location (${fromText}) must match the previous row's "To" location (${previousRowToText}). Route must be continuous.`);
+                } else {
+                    console.log('✅ Continuity OK for row', index + 1);
+                }
+                console.log('=== END CONTINUITY CHECK ===');
+            } else {
+                console.log('Skipping continuity check for row', index + 1, '- index:', index, 'previousRowToValue:', previousRowToValue);
+            }
+
+            // Update previous row values for next iteration
+            previousRowToValue = toValue;
+            previousRowToText = toText;
+            previousDate = date;
+
+            // Get distance value
+            var distance = parseFloat(row.find('.distance').val()) || 0;
+
+            // If distance is not calculated, trigger calculation
+            if (distance === 0 && fromValue && toValue) {
+                row.find('.from-city, .to-city').trigger('change');
+            }
+
+            routes.push({
+                date: date,
+                from: fromText,
+                to: toText,
+                fromValue: fromValue,
+                toValue: toValue,
+                distance: distance
+            });
+        });
+
+        // Final row selection rule: last "To" should be first "From" for circular route
+        var isCircular = (lastToValue === firstFromValue);
+
+        // Show validation summary
+        console.log('=== VALIDATION SUMMARY ===');
+        console.log('- Total rows:', rows.length);
+        console.log('- Errors found:', errors.length);
+        console.log('- Errors list:', errors);
+        console.log('- Route continuity checked');
+        console.log('- Date sequence checked');
+        console.log('=== END VALIDATION SUMMARY ===');
+
+        if (errors.length > 0) {
+            var errorMessage = 'Route Validation Failed:\n\n' + errors.join('\n\n');
+            errorMessage += '\n\nPlease fix these issues and try again.';
+
+            // Use the popup system instead of alert
+            showPopup('Validation Failed', errorMessage, 'error');
+            $('#validationResults').hide();
+            // Hide search button when validation fails
+            $('#multicitySearchSection').hide();
+            return false;
+        }
+
+        // Auto-complete circular route if not circular
+        if (!isCircular) {
+            autoCompleteCircularRoute(lastToValue, firstFromValue, routes);
+            // Re-validate after adding return row
+            return validateMulticityRoute();
+        }
+
+        // Display validation results
+        var resultHtml = '<div class="validation-success">';
+        resultHtml += '<h6 class="text-success"><i class="bi bi-check-circle me-2"></i>Validation Successful!</h6>';
+        resultHtml += '<div class="route-summary mt-3">';
+        resultHtml += '<strong>Route Summary:</strong><br>';
+
+        routes.forEach(function (route, index) {
+            resultHtml += `<div class="route-item">
+                <strong>Day ${index + 1}:</strong> ${route.from} → ${route.to} 
+                <small class="text-muted">(${route.date})</small>
+            </div>`;
+        });
+
+        resultHtml += '<div class="text-success mt-2"><i class="bi bi-arrow-repeat me-1"></i><strong>Circular Route:</strong> Perfect! Route returns to starting point.</div>';
+
+        resultHtml += '</div></div>';
+
+        $('#validationDetails').html(resultHtml);
+        $('#validationResults').show();
+
+        // Show and update search button to indicate validation passed
+        $('#multicitySearchSection').show();
+        $('#multicitySearchBtn').removeClass('btn-primary').addClass('btn-success')
+            .html('<i class="bi bi-check-circle"></i> Validation Passed - Search Cabs');
+
+        // Show simple success notification
+        safeNotify('Route validation successful! You can now search for cabs.', 'success');
+
+        return true;
+    }
+
+    // Auto-complete circular route by adding return row
+    function autoCompleteCircularRoute(lastToValue, firstFromValue, routes) {
+        // Get the last row's date to calculate next day
+        var lastRow = $('.multicity-row').last();
+        var lastDate = lastRow.find('.multicity-date').val();
+
+        // Calculate next day for return journey
+        var returnDate = new Date(lastDate);
+        returnDate.setDate(returnDate.getDate() + 1);
+        var returnDateStr = returnDate.toISOString().split('T')[0];
+
+        // Clone the first row to create return row
+        var returnRow = $('.multicity-row').first().clone();
+        var newRowIndex = $('.multicity-row').length;
+        returnRow.attr('data-row', newRowIndex);
+
+        // Set return row values
+        returnRow.find('.multicity-date').val(returnDateStr).attr('min', returnDateStr);
+
+        // Set "From" to last destination
+        var fromDropdown = returnRow.find('.from-city');
+        var lastToText = lastRow.find('.to-city option:selected').text();
+        fromDropdown.empty().append('<option value="">Select</option>');
+        fromDropdown.append('<option value="' + lastToValue + '" selected>' + lastToText + '</option>');
+        fromDropdown.val(lastToValue);
+
+        // Populate "To" dropdown but don't auto-select
+        var toDropdown = returnRow.find('.to-city');
+        toDropdown.empty().append('<option value="">Select Destination</option>');
+
+        // Trigger the "From" change to populate "To" dropdown properly
+        fromDropdown.trigger('change');
+
+        // After dropdown is populated, set the value to first row's "From" place
+        setTimeout(function () {
+            var firstFromText = $('.multicity-row').first().find('.from-city option:selected').text();
+
+            // Find and select the matching option in "To" dropdown
+            toDropdown.find('option').each(function () {
+                if ($(this).val() === firstFromValue) {
+                    toDropdown.val(firstFromValue);
+                    return false; // Break the loop
+                }
+            });
+
+            // If not found, add it manually
+            if (!toDropdown.val()) {
+                toDropdown.append('<option value="' + firstFromValue + '">' + firstFromText + '</option>');
+                toDropdown.val(firstFromValue);
+            }
+        }, 500); // Wait for AJAX calls to complete
+
+        // Clear distance for recalculation
+        returnRow.find('.distance').val('');
+
+        // Update remove button visibility after adding return row
+        updateRemoveButtonVisibility();
+
+        // Add the return row to container
+        $('#multicityContainer').append(returnRow);
+
+        // Trigger distance calculation for the new row
+        returnRow.find('.from-city').trigger('change');
+
+        // Use safe notification instead of popup
+        safeNotify('Return journey added automatically to complete circular route!', 'info');
+
+        // Update date constraints
+        updateDateConstraints();
+
+        // Return row added successfully - no overlay needed
+    }
+
+    // Removed dimScreenAndProceed function - no longer needed
+
+    // One way form type toggle
+    $('input[name="oneway_type"]').on('change', function () {
+        if ($(this).val() === 'fixed') {
+            $('#fixedRateFields').show();
+            $('#kmBasisFields').hide();
+            // Make fixed rate fields required
+            $('#fromCity, #toCity, #oneway_pickup_date, #oneway_pickup_time').attr('required', 'required');
+            // Remove required from KM basis fields
+            $('#km_pickup_city, #km_pickup_date, #fromCityKm, #toCityKm, #oneway_pickup_time_km').removeAttr('required');
+        } else {
+            $('#fixedRateFields').hide();
+            $('#kmBasisFields').show();
+            // Remove required from fixed rate fields
+            $('#fromCity, #toCity, #oneway_pickup_date, #oneway_pickup_time').removeAttr('required');
+            // Make KM basis fields required
+            $('#km_pickup_city, #km_pickup_date, #fromCityKm, #toCityKm, #oneway_pickup_time_km').attr('required', 'required');
+        }
+    });
+
+    // Store original cities data when page loads
+    var originalCities = [];
+    $(document).ready(function () {
+        $('#fromCity option').each(function () {
+            if ($(this).val() !== '') {
+                originalCities.push({
+                    id: $(this).val(),
+                    name: $(this).text()
+                });
+            }
+        });
+        console.log('Stored original cities:', originalCities);
+    });
+
+    // Get all cities data from stored original data
+    function getAllCitiesFromDropdown() {
+        return originalCities;
+    }
+
+    // Handle From City change - update To City dropdown to exclude selected from city
+    $('#fromCity').on('change', function () {
+        var selectedFromCityId = $(this).val();
+        var selectedFromCityName = $(this).find('option:selected').text();
+        var toDropdown = $('#toCity');
+        var currentToCityId = toDropdown.val();
+
+        console.log('From city changed to:', selectedFromCityName, '(ID:', selectedFromCityId, ')');
+
+        // Clear and repopulate To City dropdown
+        toDropdown.empty().append('<option value="">Select City</option>');
+
+        // Add all cities except the selected from city
+        var allCities = getAllCitiesFromDropdown();
+        allCities.forEach(function (city) {
+            if (city.id !== selectedFromCityId) {
+                toDropdown.append('<option value="' + city.id + '">' + city.name + '</option>');
+            }
+        });
+
+        // Restore the previously selected to city if it's still valid
+        if (currentToCityId && currentToCityId !== selectedFromCityId) {
+            toDropdown.val(currentToCityId);
+        }
+
+        console.log('Updated To City dropdown, excluded:', selectedFromCityName);
+    });
+
+    // Handle To City change - only clear From City if there's a conflict
+    $('#toCity').on('change', function () {
+        var selectedToCityId = $(this).val();
+        var selectedToCityName = $(this).find('option:selected').text();
+        var fromDropdown = $('#fromCity');
+        var currentFromCityId = fromDropdown.val();
+
+        console.log('To city changed to:', selectedToCityName, '(ID:', selectedToCityId, ')');
+
+        // Only clear From City if the same city is selected in both dropdowns
+        if (selectedToCityId && currentFromCityId === selectedToCityId) {
+            console.log('Conflict detected: clearing From City selection');
+            fromDropdown.val('');
+        }
+
+        console.log('To City change handled, From City preserved');
+    });
+
+    // Quick enquiry form with enhanced loading state
+    $('#quickEnquiryForm').on('submit', function (e) {
+        e.preventDefault();
+        var form = $(this);
+        var submitBtn = form.find('button[type="submit"]');
+        var originalText = submitBtn.html();
+        
+        // Disable button and show loading state
+        submitBtn.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...');
+        submitBtn.prop('disabled', true);
+        submitBtn.removeClass('btn-light').addClass('btn-secondary');
+        
+        // Disable form inputs to prevent changes during submission
+        form.find('input, textarea').prop('disabled', true);
+        
+        // Prepare form data
+        var formData = {
+            name: form.find('input[name="name"]').val(),
+            email: form.find('input[name="email"]').val(),
+            phone: form.find('input[name="phone"]').val(),
+            subject: form.find('input[name="subject"]').val(),
+            message: form.find('textarea[name="message"]').val(),
+            enquiry_type: 'general'
+        };
+        
+        console.log('Submitting enquiry data:', formData); // Debug log
+        
+        $.ajax({
+            url: '/api/enquiries/',
+            method: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+            },
+            timeout: 30000, // 30 second timeout
+            success: function (response) {
+                console.log('Enquiry success:', response); // Debug log
+                // Show success state
+                submitBtn.html('<i class="bi bi-check-circle me-2"></i>Sent Successfully!');
+                submitBtn.removeClass('btn-secondary').addClass('btn-success');
+                
+                // Reset form and button after success
+                setTimeout(function() {
+                    form[0].reset();
+                    form.find('input, textarea').prop('disabled', false);
+                    submitBtn.html(originalText);
+                    submitBtn.removeClass('btn-success').addClass('btn-light');
+                    submitBtn.prop('disabled', false);
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                console.error('Enquiry error:', xhr.responseText, status, error); // Debug log
+                
+                // Show error state
+                var errorMessage = 'Error - Try Again';
+                
+                // Handle specific error cases
+                if (status === 'timeout') {
+                    errorMessage = 'Timeout - Try Again';
+                } else if (xhr.status === 0) {
+                    errorMessage = 'Network Error - Try Again';
+                } else if (xhr.status === 403) {
+                    errorMessage = 'Permission Error - Try Again';
+                } else if (xhr.status === 500) {
+                    errorMessage = 'Server Error - Try Again';
+                }
+                
+                submitBtn.html('<i class="bi bi-x-circle me-2"></i>' + errorMessage);
+                submitBtn.removeClass('btn-secondary').addClass('btn-danger');
+                
+                // Re-enable form after error
+                form.find('input, textarea').prop('disabled', false);
+                
+                // Reset button after delay
+                setTimeout(function() {
+                    submitBtn.html(originalText);
+                    submitBtn.removeClass('btn-danger').addClass('btn-light');
+                    submitBtn.prop('disabled', false);
+                }, 3000);
+            }
+        });
+    });
+
+    // Date validation for Round Trip form
+    $(document).ready(function () {
+        // Ensure all distance fields are always readonly
+        function enforceDistanceReadonly() {
+            $('.distance').prop('readonly', true).removeAttr('placeholder');
+        }
+
+        // Initial enforcement
+        enforceDistanceReadonly();
+
+        // Periodic enforcement every 2 seconds
+        setInterval(enforceDistanceReadonly, 2000);
+
+        // Prevent manual editing of distance fields
+        $(document).on('focus click keydown', '.distance', function (e) {
+            $(this).prop('readonly', true).removeAttr('placeholder');
+            if (e.type === 'keydown') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Set initial remove button visibility
+        updateRemoveButtonVisibility();
+
+        // Debug radio button functionality
+        console.log('=== RADIO BUTTON DEBUG ===');
+        console.log('Page loaded, testing radio buttons...');
+        console.log('Radio buttons found:', $('input[name="trip_type"]').length);
+        console.log('Round trip fields element:', $('#roundTripFields').length);
+        console.log('Multicity fields element:', $('#multicityFields').length);
+        console.log('Current checked radio:', $('input[name="trip_type"]:checked').val());
+
+        // Test if elements are visible
+        console.log('Round trip fields visible:', $('#roundTripFields').is(':visible'));
+        console.log('Multicity fields visible:', $('#multicityFields').is(':visible'));
+
+        console.log('=== END RADIO DEBUG ===');
+
+        // Set minimum date to today for all pickup date fields
+        var today = new Date().toISOString().split('T')[0];
+        $('#pickup_date, #oneway_pickup_date, #km_pickup_date, #tour_pickup_date, #local_date, .multicity-date').attr('min', today);
+
+        // Round Trip date validation
+        $('#pickup_date').on('change', function () {
+            var pickupDate = $(this).val();
+            if (pickupDate) {
+                // Set minimum drop date to pickup date
+                $('#drop_date').attr('min', pickupDate);
+
+                // Clear drop date if it's before pickup date
+                var dropDate = $('#drop_date').val();
+                if (dropDate && dropDate < pickupDate) {
+                    $('#drop_date').val('');
+                    alert('Drop date cannot be before pickup date. Please select a valid drop date.');
+                }
+            }
+        });
+
+        // Validate drop date when changed
+        $('#drop_date').on('change', function () {
+            var dropDate = $(this).val();
+            var pickupDate = $('#pickup_date').val();
+
+            if (dropDate && pickupDate && dropDate < pickupDate) {
+                $(this).val('');
+                alert('Drop date cannot be before pickup date. Please select a valid drop date.');
+                return false;
+            }
+        });
+
+        // Form submission for direct payment navigation
+        $('#outstationForm').on('submit', function (e) {
+            e.preventDefault(); // Always prevent default form submission
+
+            var tripType = $('input[name="trip_type"]:checked').val();
+            console.log('Form submitted with trip type:', tripType);
+
+            var isValid = false;
+            var bookingData = {};
+
+            if (tripType === 'round') {
+                // Round Trip Validation and Data Collection
+                console.log('Validating round trip form...');
+                isValid = validateRoundTripForm();
+                console.log('Round trip validation result:', isValid);
+
+                if (isValid) {
+                    console.log('Creating and submitting form to tour_info...');
+                    // Create a new form with the correct data and submit it
+                    var form = $('<form>', {
+                        'method': 'GET',
+                        'action': '{% url "tour_info_default" %}'
+                    });
+
+                    // Add all the form data
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'trip_type',
+                        'value': 'round'
+                    }));
+
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'pickup_city',
+                        'value': $('#pickup_location').val()
+                    }));
+
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'pickup_date',
+                        'value': $('#pickup_date').val()
+                    }));
+
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'drop_date',
+                        'value': $('#drop_date').val()
+                    }));
+
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'pickup_time',
+                        'value': $('#pickup_time_round').val()
+                    }));
+
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'pickup_time_period',
+                        'value': $('#pickup_time_period_round').val()
+                    }));
+
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'trip_basis',
+                        'value': $('#trip_basis').val()
+                    }));
+
+                    // Append to body and submit
+                    $('body').append(form);
+                    form.submit();
+                    return;
+                }
+            } else if (tripType === 'multicity') {
+                // Multicity Validation - Must pass validation first
+                if (!validateMulticityRoute()) {
+                    alert('Please validate your multicity route first by clicking "Validate Route" button.');
+                    return false;
+                }
+
+                // Check if validation results are visible (validation passed)
+                if (!$('#validationResults').is(':visible')) {
+                    alert('Please validate your multicity route first by clicking "Validate Route" button.');
+                    return false;
+                }
+
+                // Collect multicity data
+                var routes = [];
+                var totalDistance = 0;
+
+                $('.multicity-row').each(function () {
+                    var row = $(this);
+                    var date = row.find('.multicity-date').val();
+                    var fromValue = row.find('.from-city').val();
+                    var toValue = row.find('.to-city').val();
+                    var fromText = row.find('.from-city option:selected').text();
+                    var toText = row.find('.to-city option:selected').text();
+                    var distance = parseFloat(row.find('.distance').val()) || 0;
+
+                    if (date && fromValue && toValue) {
+                        routes.push({
+                            date: date,
+                            from_value: fromValue,
+                            to_value: toValue,
+                            from_text: fromText,
+                            to_text: toText,
+                            distance: distance
+                        });
+                        totalDistance += distance;
+                    }
+                });
+
+                bookingData = {
+                    trip_type: 'multicity',
+                    pickup_city: $('#multicity_pickup_city').val(),
+                    pickup_city_name: $('#multicity_pickup_city option:selected').text(),
+                    routes: routes,
+                    total_distance: totalDistance,
+                    total_days: routes.length
+                };
+
+                // Create form for multicity and submit to tour info
+                var form = $('<form>', {
+                    'method': 'GET',
+                    'action': '{% url "tour_info_default" %}'
+                });
+
+                // Add trip type
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'trip_type',
+                    'value': 'multicity'
+                }));
+
+                // Add pickup city
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'pickup_city',
+                    'value': $('#multicity_pickup_city').val()
+                }));
+
+                // Add route data
+                routes.forEach(function (route, index) {
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'multicity_date[]',
+                        'value': route.date
+                    }));
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'multicity_from[]',
+                        'value': route.from_value
+                    }));
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'multicity_to[]',
+                        'value': route.to_value
+                    }));
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'multicity_distance[]',
+                        'value': route.distance
+                    }));
+                });
+
+                // Submit form
+                $('body').append(form);
+                form.submit();
+
+                isValid = true;
+            }
+
+            if (!isValid && tripType) {
+                console.log('Form validation failed for trip type:', tripType);
+                safeNotify('Please fix the validation errors before proceeding.', 'error');
+            } else if (!tripType) {
+                console.log('No trip type selected');
+                safeNotify('Please select a trip type (Round Trip or Multicity).', 'error');
+            }
+        });
+
+        // Round Trip Form Validation Function
+        function validateRoundTripForm() {
+            var pickupCity = $('#pickup_location').val();
+            var pickupDate = $('#pickup_date').val();
+            var dropDate = $('#drop_date').val();
+            var pickupTime = $('#pickup_time_round').val();
+            var tripBasis = $('#trip_basis').val();
+
+            console.log('Round trip form values:', {
+                pickupCity: pickupCity,
+                pickupDate: pickupDate,
+                dropDate: dropDate,
+                pickupTime: pickupTime,
+                tripBasis: tripBasis
+            });
+
+            var errors = [];
+
+            if (!pickupCity) errors.push('Please select pickup location');
+            if (!pickupDate) errors.push('Please select pickup date');
+            if (!dropDate) errors.push('Please select drop date');
+            if (!pickupTime) errors.push('Please select pickup time');
+            if (!tripBasis) errors.push('Please select trip basis');
+
+            if (errors.length > 0) {
+                alert('Validation Failed:\n' + errors.join('\n'));
+                return false;
+            }
+
+            // Check date validity
+            var today = new Date().toISOString().split('T')[0];
+            if (pickupDate < today) {
+                alert('Pickup date cannot be in the past');
+                $('#pickup_date').focus();
+                return false;
+            }
+
+            if (dropDate < pickupDate) {
+                alert('Drop date must be after pickup date');
+                $('#drop_date').focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        // Apply date validation to multicity date fields
+        $(document).on('change', '.multicity-date', function () {
+            var pickupDate = $(this).val();
+            var today = new Date().toISOString().split('T')[0];
+
+            if (pickupDate && pickupDate < today) {
+                $(this).val('');
+                alert('Date cannot be in the past. Please select today or a future date.');
+            }
+        });
+
+        // Apply same validation to other forms
+        $('#oneway_pickup_date, #km_pickup_date, #tour_pickup_date, #local_date').on('change', function () {
+            var pickupDate = $(this).val();
+            var today = new Date().toISOString().split('T')[0];
+
+            if (pickupDate && pickupDate < today) {
+                $(this).val('');
+                alert('Pickup date cannot be in the past. Please select today or a future date.');
+            }
+        });
+
+        // Initialize multicity date validation
+        var today = new Date().toISOString().split('T')[0];
+        $('.multicity-date').attr('min', today);
+
+        // Initialize date constraints on page load
+        updateDateConstraints();
+
+        // Initialize form based on selected trip type
+        var selectedTripType = $('input[name="trip_type"]:checked').val();
+        if (selectedTripType === 'round') {
+            // Round trip is selected by default
+            $('#roundTripFields').show();
+            $('#multicityFields').hide();
+            $('#pickup_location, #pickup_date, #drop_date, #pickup_time_round, #trip_basis').attr('required', true);
+            $('#multicity_pickup_city, .multicity-date, .from-city, .to-city').removeAttr('required');
+        } else {
+            // Multicity is selected
+            $('#roundTripFields').hide();
+            $('#multicityFields').show();
+            $('#multicity_pickup_city, .multicity-date, .from-city, .to-city').attr('required', true);
+            $('#pickup_location, #pickup_date, #drop_date, #pickup_time_round, #trip_basis').removeAttr('required');
+        }
+
+        // Initialize multicity dropdowns if pickup city is already selected
+        var selectedPickupCity = $('#multicity_pickup_city').val();
+        if (selectedPickupCity) {
+            $('#multicity_pickup_city').trigger('change');
+        }
+
+        // Debug button removed as requested
+
+
+    });
+
+    // Function to populate form from URL parameters (for edit trip functionality)
+    function populateFormFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Check if we have trip parameters (coming from edit trip)
+        const tripType = urlParams.get('trip_type');
+        if (!tripType) return; // No parameters to populate
+
+        // Show loading notification
+        safeNotify('Loading trip details for editing...', 'info');
+
+        // Ensure Outstation tab is active
+        $('#outstation-tab').tab('show');
+
+        // Set trip type radio button
+        if (tripType === 'round' || tripType === 'multicity') {
+            $(`input[name="trip_type"][value="${tripType}"]`).prop('checked', true).trigger('change');
+        }
+
+        // Populate round trip fields
+        if (tripType === 'round') {
+            const pickupCity = urlParams.get('pickup_city');
+            const pickupDate = urlParams.get('pickup_date');
+            const dropDate = urlParams.get('drop_date');
+            const pickupTime = urlParams.get('pickup_time');
+            const pickupTimePeriod = urlParams.get('pickup_time_period');
+            const tripBasis = urlParams.get('trip_basis');
+
+            if (pickupCity) $('#pickup_location').val(pickupCity);
+            if (pickupDate) $('#pickup_date').val(pickupDate);
+            if (dropDate) $('#drop_date').val(dropDate);
+            if (pickupTime) $('#pickup_time_round').val(pickupTime);
+            if (pickupTimePeriod) $('#pickup_time_period_round').val(pickupTimePeriod);
+            if (tripBasis) $('#trip_basis').val(tripBasis);
+        }
+
+        // Populate multicity fields
+        else if (tripType === 'multicity') {
+            const pickupCity = urlParams.get('pickup_city');
+            const dates = urlParams.getAll('multicity_date[]');
+            const fromCities = urlParams.getAll('multicity_from[]');
+            const toCities = urlParams.getAll('multicity_to[]');
+            const distances = urlParams.getAll('multicity_distance[]');
+
+            if (pickupCity) {
+                $('#multicity_pickup_city').val(pickupCity).trigger('change');
+            }
+
+            // Wait for cities to load, then populate routes
+            setTimeout(function () {
+                // Clear existing rows except first
+                $('.multicity-row').not(':first').remove();
+
+                // Populate routes
+                for (let i = 0; i < dates.length; i++) {
+                    let row;
+                    if (i === 0) {
+                        // Use first existing row
+                        row = $('.multicity-row').first();
+                    } else {
+                        // Add new row
+                        $('#addMulticityRowBtn').click();
+                        row = $('.multicity-row').last();
+                    }
+
+                    if (dates[i]) row.find('.multicity-date').val(dates[i]);
+                    if (fromCities[i]) row.find('.from-city').val(fromCities[i]);
+                    if (toCities[i]) row.find('.to-city').val(toCities[i]);
+                    if (distances[i]) row.find('.distance').val(distances[i]);
+                }
+            }, 1000);
+        }
+
+        // Show completion message
+        setTimeout(function () {
+            safeNotify('Trip details loaded successfully! You can now edit and resubmit.', 'success');
+        }, 1500);
+
+        // Clear URL parameters after populating (optional)
+        // window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // Safe notification function to avoid popup conflicts
+    function safeNotify(message, type) {
+        // Remove any existing notifications
+        $('.safe-notification').remove();
+
+        const alertClass = type === 'success' ? 'alert-success' :
+            type === 'error' ? 'alert-danger' :
+                type === 'warning' ? 'alert-warning' : 'alert-info';
+
+        const icon = type === 'success' ? 'bi-check-circle' :
+            type === 'error' ? 'bi-exclamation-triangle' :
+                type === 'warning' ? 'bi-exclamation-triangle' : 'bi-info-circle';
+
+        const notification = $(`
+            <div class="alert ${alertClass} safe-notification position-fixed" 
+                 style="top: 20px; right: 20px; z-index: 9999; max-width: 350px; 
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px;
+                        border: none;">
+                <i class="bi ${icon} me-2"></i>${message}
+                <button type="button" class="btn-close ms-2" style="font-size: 0.8em;"></button>
+            </div>
+        `);
+
+        $('body').append(notification);
+
+        // Auto-hide after 4 seconds
+        setTimeout(function () {
+            notification.fadeOut(300, function () {
+                $(this).remove();
+            });
+        }, 4000);
+
+        // Manual close
+        notification.find('.btn-close').on('click', function () {
+            notification.fadeOut(300, function () {
+                $(this).remove();
+            });
+        });
+    }
+
+    // Local Form Submission Handler
+    $('#localForm').on('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+        
+        console.log('Local form submitted');
+        
+        // Validate local form
+        if (!validateLocalForm()) {
+            return false;
+        }
+        
+        console.log('Local form validation passed, redirecting to tour_info...');
+        
+        // Create form and submit to tour_info
+        var form = $('<form>', {
+            'method': 'GET',
+            'action': '{% url "tour_info_default" %}'
+        });
+        
+        // Add form data
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'trip_type',
+            'value': 'local'
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'pickup_city',
+            'value': $('#localCity').val()
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'local_area',
+            'value': $('#localArea').val()
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'pickup_date',
+            'value': $('#local_date').val()
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'pickup_time',
+            'value': $('#local_pickup_time').val()
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'pickup_time_period',
+            'value': $('#local_pickup_time_period').val()
+        }));
+        
+        // Submit form
+        $('body').append(form);
+        form.submit();
+    });
+    
+    // Local Form Validation Function
+    function validateLocalForm() {
+        var pickupCity = $('#localCity').val();
+        var localArea = $('#localArea').val();
+        var pickupDate = $('#local_date').val();
+        var pickupTime = $('#local_pickup_time').val();
+        
+        console.log('Local form values:', {
+            pickupCity: pickupCity,
+            localArea: localArea,
+            pickupDate: pickupDate,
+            pickupTime: pickupTime
+        });
+        
+        var errors = [];
+        
+        if (!pickupCity) errors.push('Please select pickup city');
+        if (!localArea) errors.push('Please select local area');
+        if (!pickupDate) errors.push('Please select pickup date');
+        if (!pickupTime) errors.push('Please select pickup time');
+        
+        if (errors.length > 0) {
+            alert('Validation Failed:\n' + errors.join('\n'));
+            return false;
+        }
+        
+        // Check date validity
+        var today = new Date().toISOString().split('T')[0];
+        if (pickupDate < today) {
+            alert('Pickup date cannot be in the past');
+            $('#local_date').focus();
+            return false;
+        }
+        
+        return true;
+    }
+
+    // One Way Form Submission Handler
+    $('#onewayForm').on('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+        
+        console.log('One way form submitted');
+        
+        var onewayType = $('input[name="oneway_type"]:checked').val();
+        console.log('One way type:', onewayType);
+        
+        var isValid = false;
+        
+        if (onewayType === 'fixed') {
+            // Fixed Rate Validation
+            isValid = validateOnewayFixedForm();
+            
+            if (isValid) {
+                // Create form for fixed rate one way
+                var form = $('<form>', {
+                    'method': 'GET',
+                    'action': '{% url "tour_info_default" %}'
+                });
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'trip_type',
+                    'value': 'oneway_fixed'
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'from_city',
+                    'value': $('#fromCity').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'to_city',
+                    'value': $('#toCity').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'pickup_date',
+                    'value': $('#oneway_pickup_date').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'pickup_time',
+                    'value': $('#oneway_pickup_time').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'pickup_time_period',
+                    'value': $('#oneway_pickup_time_period').val()
+                }));
+                
+                $('body').append(form);
+                form.submit();
+            }
+        } else if (onewayType === 'km') {
+            // KM Basis Validation
+            isValid = validateOnewayKmForm();
+            
+            if (isValid) {
+                // Create form for KM basis one way
+                var form = $('<form>', {
+                    'method': 'GET',
+                    'action': '{% url "tour_info_default" %}'
+                });
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'trip_type',
+                    'value': 'oneway_km'
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'pickup_city',
+                    'value': $('#km_pickup_city').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'from_city',
+                    'value': $('#fromCityKm').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'to_city',
+                    'value': $('#toCityKm').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'pickup_date',
+                    'value': $('#km_pickup_date').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'pickup_time',
+                    'value': $('#oneway_pickup_time_km').val()
+                }));
+                
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': 'pickup_time_period',
+                    'value': $('#oneway_pickup_time_period_km').val()
+                }));
+                
+                $('body').append(form);
+                form.submit();
+            }
+        }
+        
+        if (!isValid) {
+            console.log('One way form validation failed');
+            safeNotify('Please fix the validation errors before proceeding.', 'error');
+        }
+    });
+    
+    // One Way Fixed Form Validation
+    function validateOnewayFixedForm() {
+        var fromCity = $('#fromCity').val();
+        var toCity = $('#toCity').val();
+        var pickupDate = $('#oneway_pickup_date').val();
+        var pickupTime = $('#oneway_pickup_time').val();
+        
+        console.log('One way fixed form values:', {
+            fromCity: fromCity,
+            toCity: toCity,
+            pickupDate: pickupDate,
+            pickupTime: pickupTime
+        });
+        
+        var errors = [];
+        
+        if (!fromCity) errors.push('Please select from city');
+        if (!toCity) errors.push('Please select to city');
+        if (!pickupDate) errors.push('Please select pickup date');
+        if (!pickupTime) errors.push('Please select pickup time');
+        
+        if (fromCity && toCity && fromCity === toCity) {
+            errors.push('From city and To city cannot be the same');
+        }
+        
+        if (errors.length > 0) {
+            alert('Validation Failed:\n' + errors.join('\n'));
+            return false;
+        }
+        
+        // Check date validity
+        var today = new Date().toISOString().split('T')[0];
+        if (pickupDate < today) {
+            alert('Pickup date cannot be in the past');
+            $('#oneway_pickup_date').focus();
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // One Way KM Form Validation
+    function validateOnewayKmForm() {
+        var pickupCity = $('#km_pickup_city').val();
+        var fromCity = $('#fromCityKm').val();
+        var toCity = $('#toCityKm').val();
+        var pickupDate = $('#km_pickup_date').val();
+        var pickupTime = $('#oneway_pickup_time_km').val();
+        
+        console.log('One way KM form values:', {
+            pickupCity: pickupCity,
+            fromCity: fromCity,
+            toCity: toCity,
+            pickupDate: pickupDate,
+            pickupTime: pickupTime
+        });
+        
+        var errors = [];
+        
+        if (!pickupCity) errors.push('Please select pickup city');
+        if (!fromCity) errors.push('Please select from city');
+        if (!toCity) errors.push('Please select to city');
+        if (!pickupDate) errors.push('Please select pickup date');
+        if (!pickupTime) errors.push('Please select pickup time');
+        
+        if (fromCity && toCity && fromCity === toCity) {
+            errors.push('From city and To city cannot be the same');
+        }
+        
+        if (errors.length > 0) {
+            alert('Validation Failed:\n' + errors.join('\n'));
+            return false;
+        }
+        
+        // Check date validity
+        var today = new Date().toISOString().split('T')[0];
+        if (pickupDate < today) {
+            alert('Pickup date cannot be in the past');
+            $('#km_pickup_date').focus();
+            return false;
+        }
+        
+        return true;
+    }
+
+    // Tour Package Form Submission Handler
+    $('#tourForm').on('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+        
+        console.log('Tour form submitted');
+        
+        // Validate tour form
+        if (!validateTourForm()) {
+            return false;
+        }
+        
+        console.log('Tour form validation passed, redirecting to tour_info...');
+        
+        // Create form and submit to tour_info
+        var form = $('<form>', {
+            'method': 'GET',
+            'action': '{% url "tour_info_default" %}'
+        });
+        
+        // Add form data
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'trip_type',
+            'value': 'tour'
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'pickup_city',
+            'value': $('#tour_pickup_city').val()
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'pickup_date',
+            'value': $('#tour_pickup_date').val()
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'package_type',
+            'value': $('#tour_package_select').val()
+        }));
+        
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'days',
+            'value': $('#tour_package_type_days').val()
+        }));
+        
+        // Submit form
+        $('body').append(form);
+        form.submit();
+    });
+    
+    // Tour Form Validation Function
+    function validateTourForm() {
+        var pickupCity = $('#tour_pickup_city').val();
+        var pickupDate = $('#tour_pickup_date').val();
+        var packageType = $('#tour_package_select').val();
+        var days = $('#tour_package_type_days').val();
+        
+        console.log('Tour form values:', {
+            pickupCity: pickupCity,
+            pickupDate: pickupDate,
+            packageType: packageType,
+            days: days
+        });
+        
+        var errors = [];
+        
+        if (!pickupCity) errors.push('Please select pickup city');
+        if (!pickupDate) errors.push('Please select pickup date');
+        if (!days) errors.push('Please select package type');
+        if (!packageType) errors.push('Please select a specific package');
+        
+        if (errors.length > 0) {
+            alert('Validation Failed:\n' + errors.join('\n'));
+            return false;
+        }
+        
+        // Check date validity
+        var today = new Date().toISOString().split('T')[0];
+        if (pickupDate < today) {
+            alert('Pickup date cannot be in the past');
+            $('#tour_pickup_date').focus();
+            return false;
+        }
+        
+        // Check days validity
+        var daysNum = parseInt(days);
+        if (daysNum < 1 || daysNum > 15) {
+            alert('Number of days must be between 1 and 15');
+            $('#tour_package_type_days').focus();
+            return false;
+        }
+        
+        return true;
+    }
+
+    // Load packages based on selected pickup city
+    $('#tour_pickup_city').on('change', function() {
+        var cityId = $(this).val();
+        var select = $('#tour_package_select');
+        select.empty();
+        select.append($('<option>', { value: '', text: 'Select Package Type First' }));
+        select.prop('disabled', true);
+        $('#tourSearchBtn').prop('disabled', true);
+
+        // Reset package type selection
+        $('#tour_package_type_days').val('');
+        $('#packageTypeMessage').hide();
+    });
+
+    // Handle package type (days) selection
+    $('#tour_package_type_days').on('change', function() {
+        var selectedDays = $(this).val();
+        var packageSelect = $('#tour_package_select');
+        var messageDiv = $('#packageTypeMessage');
+        var searchBtn = $('#tourSearchBtn');
+        
+        if (!selectedDays) {
+            packageSelect.empty().append($('<option>', { value: '', text: 'Select Package Type First' }));
+            packageSelect.prop('disabled', true);
+            searchBtn.prop('disabled', true);
+            messageDiv.hide();
+            return;
+        }
+
+        // Show loading state
+        packageSelect.empty().append($('<option>', { value: '', text: 'Checking availability...' }));
+        packageSelect.prop('disabled', true);
+        searchBtn.prop('disabled', true);
+        messageDiv.hide();
+
+        // Check if packages are available for the selected days across all cities
+        fetch('/api/tour-packages-by-days/?days=' + encodeURIComponent(selectedDays))
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                console.log('Package availability response:', data);
+                
+                if (data && data.packages && data.packages.length > 0) {
+                    // Packages are available
+                    packageSelect.empty();
+                    packageSelect.append($('<option>', { value: '', text: 'Select Package' }));
+                    
+                    data.packages.forEach(function(p) {
+                        packageSelect.append($('<option>', { value: p.id, text: p.name }));
+                    });
+                    
+                    packageSelect.prop('disabled', false);
+                    messageDiv.hide();
+                } else {
+                    // No packages available for this package type
+                    packageSelect.empty();
+                    packageSelect.append($('<option>', { value: '', text: 'No packages available' }));
+                    packageSelect.prop('disabled', true);
+                    messageDiv.show();
+                }
+            })
+            .catch(function(err) {
+                console.error('Failed to check package availability:', err);
+                packageSelect.empty();
+                packageSelect.append($('<option>', { value: '', text: 'Error checking availability' }));
+                packageSelect.prop('disabled', true);
+                messageDiv.hide();
+            });
+    });
+
+    // Enable search button when package is selected
+    $('#tour_package_select').on('change', function() {
+        var packageId = $(this).val();
+        var searchBtn = $('#tourSearchBtn');
+        
+        if (packageId && $('#tour_pickup_city').val() && $('#tour_pickup_date').val()) {
+            searchBtn.prop('disabled', false);
+        } else {
+            searchBtn.prop('disabled', true);
+        }
+    });
+
+    // Also check when other required fields change
+    $('#tour_pickup_city, #tour_pickup_date').on('change', function() {
+        var packageId = $('#tour_package_select').val();
+        var searchBtn = $('#tourSearchBtn');
+        
+        if (packageId && $('#tour_pickup_city').val() && $('#tour_pickup_date').val()) {
+            searchBtn.prop('disabled', false);
+        } else {
+            searchBtn.prop('disabled', true);
+        }
+    });
+
+    // Call populate function on page load
+    $(document).ready(function () {
+        populateFormFromURL();
+    });
+
+</script>
+{% endblock %}
+        return true;
+    }
+
+    // Call populate function on page load
+    $(document).ready(function () {
+        populateFormFromURL();
+    });
+
+    // ===== SIGHTSEEING FUNCTIONALITY =====
+    
+    // Handle city selection change to show/hide sightseeing section
+    $(document).on('change', '.from-city, .to-city', function () {
+        var row = $(this).closest('.multicity-row');
+        var fromValue = row.find('.from-city').val();
+        var toValue = row.find('.to-city').val();
+        var sightseeingSection = row.find('.sightseeing-section');
+        
+        // Show sightseeing section only if both from and to are selected and they are cities (not areas)
+        if (fromValue && toValue) {
+            // Check if either from or to is a city (starts with 'city_' or is a plain number)
+            var fromIsCity = fromValue.startsWith('city_') || !fromValue.startsWith('area_');
+            var toIsCity = toValue.startsWith('city_') || !toValue.startsWith('area_');
+            
+            if (fromIsCity || toIsCity) {
+                // Determine which city to use for sightseeing
+                var cityId = null;
+                var cityName = '';
+                
+                if (fromIsCity) {
+                    cityId = fromValue.startsWith('city_') ? fromValue.replace('city_', '') : fromValue;
+                    cityName = row.find('.from-city option:selected').text();
+                } else if (toIsCity) {
+                    cityId = toValue.startsWith('city_') ? toValue.replace('city_', '') : toValue;
+                    cityName = row.find('.to-city option:selected').text();
+                }
+                
+                if (cityId) {
+                    loadSightseeingData(row, cityId, cityName);
+                    sightseeingSection.show();
+                }
+            } else {
+                sightseeingSection.hide();
+            }
+        } else {
+            sightseeingSection.hide();
+        }
+    });
+    
+    // Handle sightseeing checkbox change
+    $(document).on('change', '.sightseeing-checkbox', function () {
+        var row = $(this).closest('.multicity-row');
+        var sightseeingDetails = row.find('.sightseeing-details');
+        var distanceField = row.find('.distance');
+        var currentDistance = parseFloat(distanceField.val()) || 0;
+        var sightseeingKm = parseFloat(row.find('.sightseeing-km').text()) || 0;
+        
+        if ($(this).is(':checked')) {
+            sightseeingDetails.show();
+            // Add sightseeing kilometers to total distance
+            var newDistance = currentDistance + sightseeingKm;
+            distanceField.val(newDistance.toFixed(1));
+            console.log('Added sightseeing KM:', sightseeingKm, 'New total:', newDistance);
+        } else {
+            sightseeingDetails.hide();
+            // Remove sightseeing kilometers from total distance
+            var newDistance = Math.max(0, currentDistance - sightseeingKm);
+            distanceField.val(newDistance.toFixed(1));
+            console.log('Removed sightseeing KM:', sightseeingKm, 'New total:', newDistance);
+        }
+    });
+    
+    // Function to load sightseeing data for a city
+    function loadSightseeingData(row, cityId, cityName) {
+        var sightseeingTitle = row.find('.sightseeing-title');
+        var touristPlacesList = row.find('.tourist-places-list');
+        var sightseeingKmSpan = row.find('.sightseeing-km');
+        
+        // Update title
+        sightseeingTitle.text(cityName + ' – Local Sightseeing');
+        
+        // Show loading state
+        touristPlacesList.html('<small class="text-muted">Loading tourist places...</small>');
+        sightseeingKmSpan.text('0');
+        
+        // Fetch sightseeing data from API
+        $.ajax({
+            url: '/api/cities/' + cityId + '/sightseeing/',
+            method: 'GET',
+            success: function (data) {
+                console.log('Sightseeing data loaded for city:', cityName, data);
+                
+                // Update tourist places list
+                if (data.tourist_places && data.tourist_places.length > 0) {
+                    var placesHtml = '<ul class="list-unstyled mb-0">';
+                    data.tourist_places.forEach(function (place) {
+                        placesHtml += '<li><small class="text-success">• ' + place + '</small></li>';
+                    });
+                    placesHtml += '</ul>';
+                    touristPlacesList.html(placesHtml);
+                } else {
+                    touristPlacesList.html('<small class="text-muted">No tourist places available</small>');
+                }
+                
+                // Update sightseeing kilometers
+                var sightseeingKm = data.sightseeing_kilometers || 0;
+                sightseeingKmSpan.text(sightseeingKm);
+                
+                // Store the sightseeing KM for later use
+                row.data('sightseeing-km', sightseeingKm);
+                
+            },
+            error: function (xhr, status, error) {
+                console.error('Error loading sightseeing data:', error);
+                touristPlacesList.html('<small class="text-danger">Error loading tourist places</small>');
+                sightseeingKmSpan.text('0');
+            }
+        });
+    }
+    
+    // Update the addMulticityRow function to include sightseeing section
+    function addMulticityRowWithSightseeing() {
+        var newRowIndex = $('.multicity-row').length;
+        var newRow = $('.multicity-row').first().clone();
+        
+        // Reset all values in the new row
+        newRow.attr('data-row', newRowIndex);
+        newRow.find('input, select').val('');
+        newRow.find('.distance').val('');
+        
+        // Reset sightseeing section
+        newRow.find('.sightseeing-section').hide();
+        newRow.find('.sightseeing-checkbox').prop('checked', false);
+        newRow.find('.sightseeing-details').hide();
+        newRow.find('.tourist-places-list').html('');
+        newRow.find('.sightseeing-km').text('0');
+        newRow.find('.sightseeing-title').text('Local Sightseeing');
+        
+        // Add to container
+        $('#multicityContainer').append(newRow);
+        
+        // Update remove button visibility
+        updateRemoveButtonVisibility();
+        
+        // Update date constraints
+        updateDateConstraints();
+        
+        // Hide search button when form changes (requires re-validation)
+        $('#multicitySearchSection').hide();
+        $('#validationResults').hide();
+        
+        console.log('Added new multicity row with sightseeing functionality');
+    }
+    
+    // Override the existing addMulticityRowBtn click handler
+    $('#addMulticityRowBtn').off('click').on('click', function () {
+        addMulticityRowWithSightseeing();
+    });
+
+</script>
+
+<!-- Multicity Validation Libraries -->
+<script src="{% static 'js/multicity-core-validation.js' %}"></script>
+<script src="{% static 'js/multicity-sightseeing.js' %}"></script>
+
+<script>
+// Initialize Multicity Validation with Sightseeing Extension
+$(document).ready(function() {
+    // Remove old event handlers to prevent conflicts
+    $('#addMulticityRowBtn').off('click');
+    $('#validateMulticityBtn').off('click');
+    
+    // Initialize the new validation system
+    window.multicityValidator = new MulticitySightseeingExtension({
+        containerId: 'multicityFields',
+        maxRows: 10,
+        enableContinuityCheck: true,
+        enableCircularRouteCheck: true
+    });
+    
+    console.log('Multicity validation system initialized with sightseeing extension');
+});
+</script>

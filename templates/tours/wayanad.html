@@ -1,0 +1,416 @@
+{% extends 'base.html' %}
+
+{% block title %}Wayanad - Green Paradise - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .destination-hero {
+        background: linear-gradient(135deg, rgba(0, 128, 0, 0.8), rgba(34, 139, 34, 0.8));
+        position: relative;
+        height: 70vh;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .destination-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+    
+    .destination-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 128, 0, 0.7), rgba(34, 139, 34, 0.7));
+        z-index: 2;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        padding: 0 20px;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+    }
+    
+    .hero-description {
+        font-size: 1.2rem;
+        opacity: 0.8;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn-hero {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        font-size: 1.1rem;
+    }
+    
+    .btn-hero-primary {
+        background: white;
+        color: #008000;
+    }
+    
+    .btn-hero-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+        color: #008000;
+    }
+    
+    .btn-hero-outline {
+        border: 2px solid white;
+        color: white;
+        background: transparent;
+    }
+    
+    .btn-hero-outline:hover {
+        background: white;
+        color: #008000;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+    }
+    
+    .content-section {
+        margin-top: -50px;
+        position: relative;
+        z-index: 4;
+    }
+    
+    .content-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .content-card .card-header {
+        background: linear-gradient(135deg, #008000, #228b22);
+        color: white;
+        border: none;
+        padding: 20px 30px;
+        font-weight: 600;
+    }
+    
+    .content-card .card-body {
+        padding: 30px;
+    }
+    
+    .attraction-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 25px;
+    }
+    
+    .attraction-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        text-align: center;
+    }
+    
+    .attraction-item:hover {
+        background: rgba(0, 128, 0, 0.1);
+        transform: translateY(-5px);
+        border-color: #008000;
+        box-shadow: 0 10px 25px rgba(0, 128, 0, 0.2);
+    }
+    
+    .attraction-icon {
+        font-size: 2.5rem;
+        color: #008000;
+        margin-bottom: 15px;
+    }
+    
+    .attraction-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    
+    .attraction-description {
+        color: #6c757d;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .info-highlight {
+        background: linear-gradient(135deg, rgba(0, 128, 0, 0.1), rgba(34, 139, 34, 0.1));
+        border: 1px solid rgba(0, 128, 0, 0.2);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    
+    .info-highlight i {
+        font-size: 2rem;
+        color: #008000;
+        margin-bottom: 15px;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, rgba(0, 128, 0, 0.1), rgba(34, 139, 34, 0.1));
+        border: 2px solid #008000;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+    
+    .btn-cta {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+    }
+    
+    .btn-primary-cta {
+        background: linear-gradient(135deg, #008000, #228b22);
+        color: white;
+    }
+    
+    .btn-primary-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 128, 0, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-cta {
+        border: 2px solid #008000;
+        color: #008000;
+        background: white;
+    }
+    
+    .btn-outline-cta:hover {
+        background: #008000;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 128, 0, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+        
+        .hero-description {
+            font-size: 1rem;
+        }
+        
+        .destination-hero {
+            height: 50vh;
+            min-height: 400px;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn-hero {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Destination Hero -->
+<div class="destination-hero">
+    <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&w=1200&h=800&fit=crop" class="destination-hero-bg" alt="Wayanad Green Hills">
+    <div class="destination-hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">Wayanad</h1>
+        <p class="hero-subtitle">Green Paradise</p>
+        <p class="hero-description">Discover the pristine forests, exotic wildlife, and spice plantations of Kerala's most enchanting hill district</p>
+        <div class="hero-buttons">
+            <a href="{% url 'tour_planner' %}" class="btn-hero btn-hero-primary">
+                <i class="bi bi-calendar-check"></i>
+                <span>Book Your Trip</span>
+            </a>
+            <a href="{% url 'contact_us' %}" class="btn-hero btn-hero-outline">
+                <i class="bi bi-chat-dots"></i>
+                <span>Get Quote</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="container">
+    <div class="content-section">
+        <!-- Overview -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-info-circle me-2"></i>About Wayanad</h4>
+            </div>
+            <div class="card-body">
+                <p class="mb-4">Nestled in the Western Ghats of Kerala, Wayanad is a pristine hill district known for its lush forests, exotic wildlife, and spice plantations. At an altitude of 700-2100 meters, it offers a perfect escape into nature's lap with its rich biodiversity and tribal heritage.</p>
+                
+                <div class="info-highlight">
+                    <i class="bi bi-tree"></i>
+                    <h6>Biodiversity Hotspot</h6>
+                    <p class="mb-0">Part of the Nilgiri Biosphere Reserve with rich flora, fauna, and indigenous tribal communities</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Attractions -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-camera me-2"></i>Top Attractions</h4>
+            </div>
+            <div class="card-body">
+                <div class="attraction-grid">
+                    <div class="attraction-item">
+                        <i class="bi bi-tree attraction-icon"></i>
+                        <h6 class="attraction-title">Banasura Sagar Dam</h6>
+                        <p class="attraction-description">India's largest earthen dam with boating facilities and scenic mountain views</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-water attraction-icon"></i>
+                        <h6 class="attraction-title">Soochipara Falls</h6>
+                        <p class="attraction-description">Three-tiered waterfall perfect for rock climbing and natural pool swimming</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-mountain attraction-icon"></i>
+                        <h6 class="attraction-title">Chembra Peak</h6>
+                        <p class="attraction-description">Highest peak in Wayanad with heart-shaped lake and breathtaking trekking trails</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-tree attraction-icon"></i>
+                        <h6 class="attraction-title">Wayanad Wildlife Sanctuary</h6>
+                        <p class="attraction-description">Rich wildlife sanctuary home to elephants, tigers, leopards, and exotic birds</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-building attraction-icon"></i>
+                        <h6 class="attraction-title">Edakkal Caves</h6>
+                        <p class="attraction-description">Ancient caves with prehistoric petroglyphs dating back to 6000 BC</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-flower1 attraction-icon"></i>
+                        <h6 class="attraction-title">Spice Plantations</h6>
+                        <p class="attraction-description">Aromatic spice gardens with cardamom, pepper, vanilla, and coffee plantations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Best Time to Visit -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-calendar-event me-2"></i>Best Time to Visit</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-sun"></i>
+                            <h6>Summer (Mar-May)</h6>
+                            <p class="mb-0">Pleasant weather ideal for wildlife spotting and outdoor activities</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-cloud-rain"></i>
+                            <h6>Monsoon (Jun-Sep)</h6>
+                            <p class="mb-0">Lush green landscapes and waterfalls at their magnificent best</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-snow"></i>
+                            <h6>Winter (Oct-Feb)</h6>
+                            <p class="mb-0">Perfect weather for trekking, plantation visits, and wildlife safaris</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h4 class="mb-3"><i class="bi bi-rocket-takeoff me-2"></i>Ready to Explore Wayanad?</h4>
+            <p class="text-muted mb-4">Experience the untouched beauty of nature and wildlife with our comprehensive Wayanad tour packages!</p>
+            <div class="cta-buttons">
+                <a href="{% url 'tour_planner' %}" class="btn-cta btn-primary-cta">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Book Wayanad Trip</span>
+                </a>
+                <a href="{% url 'contact_us' %}" class="btn-cta btn-outline-cta">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Get Custom Quote</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

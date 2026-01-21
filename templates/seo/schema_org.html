@@ -1,0 +1,212 @@
+{% load seo_tags static %}
+{% comment %}
+Schema.org Structured Data Template
+Provides rich structured data for search engines
+{% endcomment %}
+
+<!-- Organization Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  "name": "{{ site_seo.company_name }}",
+  "url": "{{ site_seo.site_url }}",
+  "logo": "{% og_image_url site_seo.default_og_image %}",
+  "image": "{% og_image_url site_seo.default_og_image %}",
+  "description": "{% seo_description 'Professional travel agency offering tours, cab bookings, and travel packages across India. Your trusted travel partner for memorable experiences.' %}",
+  "telephone": "{{ site_seo.company_phone }}",
+  "email": "{{ site_seo.company_email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Coimbatore",
+    "addressRegion": "Tamil Nadu",
+    "addressCountry": "India",
+    "streetAddress": "{{ site_seo.company_address }}"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "11.0168",
+    "longitude": "76.9558"
+  },
+  "openingHours": "Mo-Su 00:00-23:59",
+  "priceRange": "$$",
+  "serviceArea": {
+    "@type": "Country",
+    "name": "India"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Travel Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Tour Packages",
+          "description": "Customized tour packages across India"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Cab Booking",
+          "description": "Reliable cab booking services"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Travel Planning",
+          "description": "Complete travel planning and consultation"
+        }
+      }
+    ]
+  },
+  "sameAs": [
+    "https://www.facebook.com/rithamtravels",
+    "https://www.instagram.com/rithamtravels",
+    "https://www.twitter.com/rithamtravels"
+  ]
+}
+</script>
+
+<!-- Website Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ site_seo.site_name }}",
+  "url": "{{ site_seo.site_url }}",
+  "description": "{% seo_description seo.description %}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ site_seo.company_name }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{% og_image_url site_seo.default_og_image %}"
+    }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ site_seo.site_url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+{% if seo.breadcrumbs %}
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {% for breadcrumb in seo.breadcrumbs %}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.counter }},
+      "name": "{{ breadcrumb.name }}",
+      "item": "{% absolute_url breadcrumb.url %}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
+
+{% if seo.page_type == 'article' or seo.page_type == 'blog' %}
+<!-- Article Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{% seo_title seo.title %}",
+  "description": "{% seo_description seo.description %}",
+  "image": "{% og_image_url seo.og_image %}",
+  "author": {
+    "@type": "Organization",
+    "name": "{{ site_seo.company_name }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ site_seo.company_name }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{% og_image_url site_seo.default_og_image %}"
+    }
+  },
+  "url": "{% if seo.canonical_url %}{% absolute_url seo.canonical_url %}{% else %}{% absolute_url request.get_full_path %}{% endif %}",
+  {% if seo.published_time %}
+  "datePublished": "{{ seo.published_time|date:'c' }}",
+  {% endif %}
+  {% if seo.modified_time %}
+  "dateModified": "{{ seo.modified_time|date:'c' }}",
+  {% endif %}
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{% if seo.canonical_url %}{% absolute_url seo.canonical_url %}{% else %}{% absolute_url request.get_full_path %}{% endif %}"
+  }
+}
+</script>
+{% endif %}
+
+{% if seo.page_type == 'product' or seo.page_type == 'tour' %}
+<!-- Product/Tour Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{% if seo.page_type == 'tour' %}TouristTrip{% else %}Product{% endif %}",
+  "name": "{% seo_title seo.title %}",
+  "description": "{% seo_description seo.description %}",
+  "image": "{% og_image_url seo.og_image %}",
+  "url": "{% if seo.canonical_url %}{% absolute_url seo.canonical_url %}{% else %}{% absolute_url request.get_full_path %}{% endif %}",
+  {% if seo.product_price %}
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ seo.product_price }}",
+    "priceCurrency": "INR",
+    "availability": "{% firstof seo.product_availability 'https://schema.org/InStock' %}",
+    "seller": {
+      "@type": "Organization",
+      "name": "{{ site_seo.company_name }}"
+    }
+  },
+  {% endif %}
+  "provider": {
+    "@type": "Organization",
+    "name": "{{ site_seo.company_name }}",
+    "url": "{{ site_seo.site_url }}"
+  }
+}
+</script>
+{% endif %}
+
+{% if seo.page_type == 'contact' %}
+<!-- Contact Page Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact {{ site_seo.company_name }}",
+  "description": "Get in touch with {{ site_seo.company_name }} for travel bookings and inquiries",
+  "url": "{% if seo.canonical_url %}{% absolute_url seo.canonical_url %}{% else %}{% absolute_url request.get_full_path %}{% endif %}",
+  "mainEntity": {
+    "@type": "TravelAgency",
+    "name": "{{ site_seo.company_name }}",
+    "telephone": "{{ site_seo.company_phone }}",
+    "email": "{{ site_seo.company_email }}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Coimbatore",
+      "addressRegion": "Tamil Nadu",
+      "addressCountry": "India"
+    }
+  }
+}
+</script>
+{% endif %}

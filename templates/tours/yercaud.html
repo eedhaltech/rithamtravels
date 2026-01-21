@@ -1,0 +1,416 @@
+{% extends 'base.html' %}
+
+{% block title %}Yercaud - Jewel of South - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .destination-hero {
+        background: linear-gradient(135deg, rgba(75, 0, 130, 0.8), rgba(138, 43, 226, 0.8));
+        position: relative;
+        height: 70vh;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .destination-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+    
+    .destination-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(75, 0, 130, 0.7), rgba(138, 43, 226, 0.7));
+        z-index: 2;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        padding: 0 20px;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+    }
+    
+    .hero-description {
+        font-size: 1.2rem;
+        opacity: 0.8;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn-hero {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        font-size: 1.1rem;
+    }
+    
+    .btn-hero-primary {
+        background: white;
+        color: #4b0082;
+    }
+    
+    .btn-hero-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+        color: #4b0082;
+    }
+    
+    .btn-hero-outline {
+        border: 2px solid white;
+        color: white;
+        background: transparent;
+    }
+    
+    .btn-hero-outline:hover {
+        background: white;
+        color: #4b0082;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 255, 255, 0.3);
+    }
+    
+    .content-section {
+        margin-top: -50px;
+        position: relative;
+        z-index: 4;
+    }
+    
+    .content-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .content-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .content-card .card-header {
+        background: linear-gradient(135deg, #4b0082, #8a2be2);
+        color: white;
+        border: none;
+        padding: 20px 30px;
+        font-weight: 600;
+    }
+    
+    .content-card .card-body {
+        padding: 30px;
+    }
+    
+    .attraction-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 25px;
+    }
+    
+    .attraction-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        text-align: center;
+    }
+    
+    .attraction-item:hover {
+        background: rgba(75, 0, 130, 0.1);
+        transform: translateY(-5px);
+        border-color: #4b0082;
+        box-shadow: 0 10px 25px rgba(75, 0, 130, 0.2);
+    }
+    
+    .attraction-icon {
+        font-size: 2.5rem;
+        color: #4b0082;
+        margin-bottom: 15px;
+    }
+    
+    .attraction-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    
+    .attraction-description {
+        color: #6c757d;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .info-highlight {
+        background: linear-gradient(135deg, rgba(75, 0, 130, 0.1), rgba(138, 43, 226, 0.1));
+        border: 1px solid rgba(75, 0, 130, 0.2);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    
+    .info-highlight i {
+        font-size: 2rem;
+        color: #4b0082;
+        margin-bottom: 15px;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, rgba(75, 0, 130, 0.1), rgba(138, 43, 226, 0.1));
+        border: 2px solid #4b0082;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+    
+    .btn-cta {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+    }
+    
+    .btn-primary-cta {
+        background: linear-gradient(135deg, #4b0082, #8a2be2);
+        color: white;
+    }
+    
+    .btn-primary-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(75, 0, 130, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-cta {
+        border: 2px solid #4b0082;
+        color: #4b0082;
+        background: white;
+    }
+    
+    .btn-outline-cta:hover {
+        background: #4b0082;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(75, 0, 130, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+        
+        .hero-description {
+            font-size: 1rem;
+        }
+        
+        .destination-hero {
+            height: 50vh;
+            min-height: 400px;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn-hero {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style>
+{% endblock %}
+{% load static %}
+{% block content %}
+<!-- Destination Hero -->
+<div class="destination-hero">
+    <img src="{% static 'tour/yercard.jpg' %}" class="destination-hero-bg" alt="Yercaud Hills">
+    <div class="destination-hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">Yercaud</h1>
+        <p class="hero-subtitle">Jewel of South</p>
+        <p class="hero-description">Experience the serene beauty of coffee plantations, orange groves, and misty hills in Tamil Nadu's hidden gem</p>
+        <div class="hero-buttons">
+            <a href="{% url 'tour_planner' %}" class="btn-hero btn-hero-primary">
+                <i class="bi bi-calendar-check"></i>
+                <span>Book Your Trip</span>
+            </a>
+            <a href="{% url 'contact_us' %}" class="btn-hero btn-hero-outline">
+                <i class="bi bi-chat-dots"></i>
+                <span>Get Quote</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="container">
+    <div class="content-section">
+        <!-- Overview -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-info-circle me-2"></i>About Yercaud</h4>
+            </div>
+            <div class="card-body">
+                <p class="mb-4">Nestled in the Shevaroy Hills of Tamil Nadu at 1,515 meters above sea level, Yercaud is a charming hill station known for its coffee plantations, orange groves, and pleasant climate. Often called the "Jewel of South," it offers a perfect retreat from the hustle and bustle of city life.</p>
+                
+                <div class="info-highlight">
+                    <i class="bi bi-cup-hot"></i>
+                    <h6>Coffee & Orange Paradise</h6>
+                    <p class="mb-0">Famous for its aromatic coffee plantations and sweet orange groves spread across the hills</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Attractions -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-camera me-2"></i>Top Attractions</h4>
+            </div>
+            <div class="card-body">
+                <div class="attraction-grid">
+                    <div class="attraction-item">
+                        <i class="bi bi-water attraction-icon"></i>
+                        <h6 class="attraction-title">Yercaud Lake</h6>
+                        <p class="attraction-description">Scenic artificial lake perfect for boating and peaceful walks around its perimeter</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-eye attraction-icon"></i>
+                        <h6 class="attraction-title">Lady's Seat</h6>
+                        <p class="attraction-description">Popular viewpoint offering panoramic views of Salem and surrounding plains</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-mountain attraction-icon"></i>
+                        <h6 class="attraction-title">Pagoda Point</h6>
+                        <p class="attraction-description">Highest point in Yercaud with breathtaking views and ancient Rama temple</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-flower1 attraction-icon"></i>
+                        <h6 class="attraction-title">Botanical Garden</h6>
+                        <p class="attraction-description">Beautiful garden with rare orchids, roses, and diverse plant species</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-water attraction-icon"></i>
+                        <h6 class="attraction-title">Kiliyur Falls</h6>
+                        <p class="attraction-description">Spectacular waterfall cascading from 300 feet height during monsoon season</p>
+                    </div>
+                    <div class="attraction-item">
+                        <i class="bi bi-cup-hot attraction-icon"></i>
+                        <h6 class="attraction-title">Coffee Plantations</h6>
+                        <p class="attraction-description">Aromatic coffee estates offering guided tours and fresh coffee tasting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Best Time to Visit -->
+        <div class="content-card">
+            <div class="card-header">
+                <h4><i class="bi bi-calendar-event me-2"></i>Best Time to Visit</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-sun"></i>
+                            <h6>Summer (Mar-May)</h6>
+                            <p class="mb-0">Pleasant weather perfect for sightseeing and outdoor activities</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-cloud-rain"></i>
+                            <h6>Monsoon (Jun-Sep)</h6>
+                            <p class="mb-0">Lush green landscapes and waterfalls at their spectacular best</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="info-highlight">
+                            <i class="bi bi-snow"></i>
+                            <h6>Winter (Oct-Feb)</h6>
+                            <p class="mb-0">Cool and misty weather, ideal for coffee plantation tours and lake activities</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h4 class="mb-3"><i class="bi bi-rocket-takeoff me-2"></i>Ready to Explore Yercaud?</h4>
+            <p class="text-muted mb-4">Discover the hidden gem of Tamil Nadu with our specially designed Yercaud tour packages!</p>
+            <div class="cta-buttons">
+                <a href="{% url 'tour_planner' %}" class="btn-cta btn-primary-cta">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Book Yercaud Trip</span>
+                </a>
+                <a href="{% url 'contact_us' %}" class="btn-cta btn-outline-cta">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Get Custom Quote</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

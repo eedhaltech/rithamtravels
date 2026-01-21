@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Cities - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-section {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .table-responsive {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-sm {
+        padding: 5px 15px;
+        font-size: 14px;
+    }
+    
+    .city-image {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    
+    .status-active {
+        background-color: #d1fae5;
+        color: #065f46;
+    }
+    
+    .status-inactive {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+    
+    .hill-station-badge {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        color: #92400e;
+        font-weight: 600;
+        border: 1px solid #f59e0b;
+    }
+    
+    .not-hill-station-badge {
+        background-color: #f3f4f6;
+        color: #6b7280;
+        border: 1px solid #d1d5db;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-geo-alt me-2"></i>Manage Cities</h2>
+        <div>
+            <a href="{% url 'travels_dashboard' %}" class="btn btn-secondary me-2">
+                <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+            </a>
+            <a href="{% url 'travels_city_add' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>Add New City
+            </a>
+        </div>
+    </div>
+    
+    <div class="dashboard-section">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="mb-0"><i class="bi bi-list me-2"></i>All Cities ({{ cities.count }})</h5>
+            <div class="d-flex gap-2">
+                <select id="hillStationFilter" class="form-select" style="width: 200px;">
+                    <option value="">All Cities</option>
+                    <option value="hill">Hill Stations Only</option>
+                    <option value="regular">Regular Cities Only</option>
+                </select>
+                <input type="text" id="searchInput" class="form-control" placeholder="Search cities..." style="width: 250px;">
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover" id="citiesTable">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>City Name</th>
+                        <th>Description</th>
+                        <th>Tourist Places</th>
+                        <th>Sightseeing KM</th>
+                        <th>Hill Station Charges</th>
+                        <th>Local Areas</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for city in cities %}
+                    <tr data-city-id="{{ city.id }}">
+                        <td>
+                            {% if city.image %}
+                            <img src="{{ city.image.url }}" alt="{{ city.name }}" class="city-image">
+                            {% else %}
+                            <div class="city-image bg-light d-flex align-items-center justify-content-center">
+                                <i class="bi bi-geo-alt text-muted"></i>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong>{{ city.name }}</strong>
+                        </td>
+                        <td>
+                            {% if city.description %}
+                            <span class="text-muted">{{ city.description|truncatechars:50 }}</span>
+                            {% else %}
+                            <span class="text-muted">No description</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if city.tourist_places %}
+                            <small class="text-success">{{ city.get_tourist_places_list|length }} places</small>
+                            {% else %}
+                            <small class="text-muted">No places</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-info">{{ city.sightseeing_kilometers }} KM</span>
+                        </td>
+                        <td>
+                            {% if city.is_hill_station %}
+                            <span class="badge hill-station-badge">
+                                <i class="bi bi-mountain me-1"></i>₹{{ city.hill_station_charge }}
+                            </span>
+                            {% else %}
+                            <span class="badge not-hill-station-badge">
+                                <i class="bi bi-building me-1"></i>Regular City
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'travels_local_areas_list' city.id %}" class="btn btn-sm btn-outline-info">
+                                <i class="bi bi-list me-1"></i>{{ city.local_areas.count }} Areas
+                            </a>
+                        </td>
+                        <td>
+                            {% if city.is_active %}
+                            <span class="status-badge status-active">Active</span>
+                            {% else %}
+                            <span class="status-badge status-inactive">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{% url 'travels_local_areas_list' city.id %}" class="btn btn-sm btn-info" title="Manage Local Areas">
+                                    <i class="bi bi-list"></i>
+                                </a>
+                                <a href="{% url 'travels_city_edit' city.id %}" class="btn btn-sm btn-primary" title="Edit City">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button class="btn btn-sm btn-danger" onclick="deleteCity({{ city.id }}, '{{ city.name }}')" title="Delete City">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="bi bi-geo-alt fs-1 d-block mb-2"></i>
+                                <p>No cities found. <a href="{% url 'travels_city_add' %}">Add your first city</a></p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        filterTable();
+    });
+    
+    // Hill station filter
+    document.getElementById('hillStationFilter').addEventListener('change', function() {
+        filterTable();
+    });
+    
+    function filterTable() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const hillStationFilter = document.getElementById('hillStationFilter').value;
+        const tableRows = document.querySelectorAll('#citiesTable tbody tr');
+        
+        tableRows.forEach(row => {
+            const cityName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            const description = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+            const hillStationCell = row.querySelector('td:nth-child(6)');
+            const hillStation = hillStationCell ? hillStationCell.textContent.toLowerCase() : '';
+            
+            // Check search term match
+            const searchMatch = cityName.includes(searchTerm) || description.includes(searchTerm) || hillStation.includes(searchTerm);
+            
+            // Check hill station filter
+            let filterMatch = true;
+            if (hillStationFilter === 'hill') {
+                filterMatch = hillStation.includes('₹'); // Hill stations show price
+            } else if (hillStationFilter === 'regular') {
+                filterMatch = hillStation.includes('regular'); // Regular cities show "Regular City"
+            }
+            
+            if (searchMatch && filterMatch) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+    
+    // Delete city function
+    function deleteCity(cityId, cityName) {
+        if (confirm(`Are you sure you want to delete "${cityName}"? This will also delete all local areas in this city.`)) {
+            fetch(`/travels-dashboard/cities/${cityId}/delete/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showPopup(data.message, 'success');
+                    // Remove the row from table
+                    document.querySelector(`tr[data-city-id="${cityId}"]`).remove();
+                } else {
+                    showPopup(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                showPopup('Error deleting city. Please try again.', 'error');
+            });
+        }
+    }
+</script>
+{% endblock %}

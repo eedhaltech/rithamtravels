@@ -1,0 +1,64 @@
+{% load seo_tags static %}
+{% comment %}
+Open Graph Meta Tags Template
+Provides rich social media sharing previews
+{% endcomment %}
+
+<!-- Open Graph Essential Tags -->
+<meta property="og:title" content="{% seo_title seo.title site_seo.site_name %}">
+<meta property="og:description" content="{% seo_description seo.description %}">
+<meta property="og:type" content="{% page_type_to_og_type seo.page_type %}">
+<meta property="og:url" content="{% if seo.canonical_url %}{% absolute_url seo.canonical_url %}{% else %}{% absolute_url request.get_full_path %}{% endif %}">
+<meta property="og:site_name" content="{{ site_seo.site_name }}">
+
+<!-- Open Graph Image -->
+<meta property="og:image" content="{% og_image_url seo.og_image %}">
+<meta property="og:image:alt" content="{% firstof seo.og_image_alt seo.title site_seo.site_name %}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+
+<!-- Open Graph Locale -->
+<meta property="og:locale" content="en_US">
+
+<!-- Open Graph Additional Properties -->
+{% if seo.page_type == 'article' or seo.page_type == 'blog' %}
+<!-- Article-specific Open Graph tags -->
+<meta property="article:author" content="{{ site_seo.company_name }}">
+<meta property="article:publisher" content="{{ site_seo.site_url }}">
+{% if seo.published_time %}
+<meta property="article:published_time" content="{{ seo.published_time|date:'c' }}">
+{% endif %}
+{% if seo.modified_time %}
+<meta property="article:modified_time" content="{{ seo.modified_time|date:'c' }}">
+{% endif %}
+{% if seo.article_section %}
+<meta property="article:section" content="{{ seo.article_section }}">
+{% endif %}
+{% if seo.article_tags %}
+{% for tag in seo.article_tags %}
+<meta property="article:tag" content="{{ tag }}">
+{% endfor %}
+{% endif %}
+{% endif %}
+
+{% if seo.page_type == 'product' or seo.page_type == 'tour' %}
+<!-- Product-specific Open Graph tags -->
+{% if seo.product_price %}
+<meta property="product:price:amount" content="{{ seo.product_price }}">
+<meta property="product:price:currency" content="INR">
+{% endif %}
+{% if seo.product_availability %}
+<meta property="product:availability" content="{{ seo.product_availability }}">
+{% endif %}
+{% endif %}
+
+<!-- Business Information -->
+<meta property="business:contact_data:street_address" content="{{ site_seo.company_address }}">
+<meta property="business:contact_data:locality" content="Coimbatore">
+<meta property="business:contact_data:region" content="Tamil Nadu">
+<meta property="business:contact_data:postal_code" content="">
+<meta property="business:contact_data:country_name" content="India">
+<meta property="business:contact_data:email" content="{{ site_seo.company_email }}">
+<meta property="business:contact_data:phone_number" content="{{ site_seo.company_phone }}">
+<meta property="business:contact_data:website" content="{{ site_seo.site_url }}">

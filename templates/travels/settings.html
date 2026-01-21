@@ -1,0 +1,387 @@
+{% extends 'base.html' %}
+
+{% block title %}System Settings - Travels Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="h3 mb-1">
+                        <i class="bi bi-gear-fill text-primary me-2"></i>System Settings
+                    </h2>
+                    <p class="text-muted mb-0">Configure system-wide settings and preferences</p>
+                </div>
+                <a href="{% url 'travels_dashboard' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+                </a>
+            </div>
+
+            <!-- Settings Form -->
+            <form method="post" class="settings-form">
+                {% csrf_token %}
+                
+                <div class="row g-4">
+                    <!-- Payment Settings -->
+                    <div class="col-lg-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-credit-card me-2"></i>Payment Settings
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="upi_payments_enabled" 
+                                               name="upi_payments_enabled" {% if settings.upi_payments_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="upi_payments_enabled">
+                                            Enable UPI Payments
+                                        </label>
+                                        <div class="form-text">Allow customers to pay via UPI on booking page (Currently OFF - excluded from booking calculations)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="razorpay_enabled" 
+                                               name="razorpay_enabled" {% if settings.razorpay_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="razorpay_enabled">
+                                            Enable Razorpay
+                                        </label>
+                                        <div class="form-text">Enable Razorpay online payment gateway</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="default_payment_method" class="form-label fw-semibold">Default Payment Method</label>
+                                    <select class="form-select" id="default_payment_method" name="default_payment_method">
+                                        <option value="upi" {% if settings.default_payment_method == 'upi' %}selected{% endif %}>UPI Payment</option>
+                                        <option value="driver" {% if settings.default_payment_method == 'driver' %}selected{% endif %}>Pay Driver</option>
+                                        <option value="office" {% if settings.default_payment_method == 'office' %}selected{% endif %}>Pay at Office</option>
+                                    </select>
+                                    <div class="form-text">Default payment method when UPI is disabled</div>
+                                </div>
+                                
+                                <div class="mb-0">
+                                    <label for="advance_payment_percentage" class="form-label fw-semibold">Advance Payment Percentage</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="advance_payment_percentage" 
+                                               name="advance_payment_percentage" value="{{ settings.advance_payment_percentage }}" 
+                                               min="0" max="100" step="0.01">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                    <div class="form-text">Percentage of total amount for advance payment</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Settings -->
+                    <div class="col-lg-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-calendar-check me-2"></i>Booking Settings
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="booking_cancellation_enabled" 
+                                               name="booking_cancellation_enabled" {% if settings.booking_cancellation_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="booking_cancellation_enabled">
+                                            Allow Booking Cancellation
+                                        </label>
+                                        <div class="form-text">Allow customers to cancel their bookings</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="auto_booking_confirmation" 
+                                               name="auto_booking_confirmation" {% if settings.auto_booking_confirmation %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="auto_booking_confirmation">
+                                            Auto Booking Confirmation
+                                        </label>
+                                        <div class="form-text">Automatically confirm bookings without admin approval</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="online_booking_enabled" 
+                                               name="online_booking_enabled" {% if settings.online_booking_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="online_booking_enabled">
+                                            Enable Online Booking
+                                        </label>
+                                        <div class="form-text">Allow online bookings (disable for phone-only bookings)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Communication Settings -->
+                    <div class="col-lg-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-chat-dots me-2"></i>Communication Settings
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="sms_notifications_enabled" 
+                                               name="sms_notifications_enabled" {% if settings.sms_notifications_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="sms_notifications_enabled">
+                                            SMS Notifications
+                                        </label>
+                                        <div class="form-text">Send SMS notifications for booking updates</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="email_notifications_enabled" 
+                                               name="email_notifications_enabled" {% if settings.email_notifications_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="email_notifications_enabled">
+                                            Email Notifications
+                                        </label>
+                                        <div class="form-text">Send email notifications for booking updates</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="whatsapp_notifications_enabled" 
+                                               name="whatsapp_notifications_enabled" {% if settings.whatsapp_notifications_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="whatsapp_notifications_enabled">
+                                            WhatsApp Notifications
+                                        </label>
+                                        <div class="form-text">Send WhatsApp notifications for booking updates</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Settings -->
+                    <div class="col-lg-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-building me-2"></i>Business Settings
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="gst_enabled" 
+                                               name="gst_enabled" {% if settings.gst_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="gst_enabled">
+                                            Apply GST
+                                        </label>
+                                        <div class="form-text">Apply GST to all bookings</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="hill_station_charges_enabled" 
+                                               name="hill_station_charges_enabled" {% if settings.hill_station_charges_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="hill_station_charges_enabled">
+                                            Hill Station Charges
+                                        </label>
+                                        <div class="form-text">Apply hill station charges to applicable destinations</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="dynamic_pricing_enabled" 
+                                               name="dynamic_pricing_enabled" {% if settings.dynamic_pricing_enabled %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="dynamic_pricing_enabled">
+                                            Dynamic Pricing
+                                        </label>
+                                        <div class="form-text">Enable dynamic pricing based on demand and season</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Website Settings -->
+                    <div class="col-lg-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-secondary text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-globe me-2"></i>Website Settings
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="maintenance_mode" 
+                                               name="maintenance_mode" {% if settings.maintenance_mode %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="maintenance_mode">
+                                            Maintenance Mode
+                                        </label>
+                                        <div class="form-text">Put website in maintenance mode</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-0">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="show_vehicle_images" 
+                                               name="show_vehicle_images" {% if settings.show_vehicle_images %}checked{% endif %}>
+                                        <label class="form-check-label fw-semibold" for="show_vehicle_images">
+                                            Show Vehicle Images
+                                        </label>
+                                        <div class="form-text">Display vehicle images on booking page</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="col-lg-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-dark text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-telephone me-2"></i>Contact Information
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="primary_phone" class="form-label fw-semibold">Primary Phone</label>
+                                    <input type="tel" class="form-control" id="primary_phone" name="primary_phone" 
+                                           value="{{ settings.primary_phone }}">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="secondary_phone" class="form-label fw-semibold">Secondary Phone</label>
+                                    <input type="tel" class="form-control" id="secondary_phone" name="secondary_phone" 
+                                           value="{{ settings.secondary_phone }}">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="email_address" class="form-label fw-semibold">Email Address</label>
+                                    <input type="email" class="form-control" id="email_address" name="email_address" 
+                                           value="{{ settings.email_address }}">
+                                </div>
+                                
+                                <div class="mb-0">
+                                    <label for="whatsapp_number" class="form-label fw-semibold">WhatsApp Number</label>
+                                    <input type="tel" class="form-control" id="whatsapp_number" name="whatsapp_number" 
+                                           value="{{ settings.whatsapp_number }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-gradient-primary text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-share me-2"></i>Social Media Links
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="facebook_url" class="form-label fw-semibold">
+                                            <i class="bi bi-facebook text-primary me-2"></i>Facebook URL
+                                        </label>
+                                        <input type="url" class="form-control" id="facebook_url" name="facebook_url" 
+                                               value="{{ settings.facebook_url }}" placeholder="https://facebook.com/...">
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="instagram_url" class="form-label fw-semibold">
+                                            <i class="bi bi-instagram text-danger me-2"></i>Instagram URL
+                                        </label>
+                                        <input type="url" class="form-control" id="instagram_url" name="instagram_url" 
+                                               value="{{ settings.instagram_url }}" placeholder="https://instagram.com/...">
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="youtube_url" class="form-label fw-semibold">
+                                            <i class="bi bi-youtube text-danger me-2"></i>YouTube URL
+                                        </label>
+                                        <input type="url" class="form-control" id="youtube_url" name="youtube_url" 
+                                               value="{{ settings.youtube_url }}" placeholder="https://youtube.com/...">
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="linkedin_url" class="form-label fw-semibold">
+                                            <i class="bi bi-linkedin text-primary me-2"></i>LinkedIn URL
+                                        </label>
+                                        <input type="url" class="form-control" id="linkedin_url" name="linkedin_url" 
+                                               value="{{ settings.linkedin_url }}" placeholder="https://linkedin.com/...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end gap-3">
+                            <a href="{% url 'travels_dashboard' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-x-circle me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-circle me-2"></i>Save Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.settings-form .card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: all 0.15s ease-in-out;
+}
+
+.settings-form .card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.form-switch .form-check-input {
+    width: 2em;
+    margin-left: -2.5em;
+}
+
+.form-switch .form-check-input:focus {
+    border-color: rgba(13, 110, 253, 0.25);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+</style>
+{% endblock %}

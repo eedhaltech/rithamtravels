@@ -1,0 +1,1950 @@
+{% extends 'base.html' %}
+
+{% block title %}Tour Information - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="mb-4">
+                <i class="bi bi-info-circle me-2"></i>{{ trip_title|default:"Trip Information" }}
+            </h2>
+
+            <!-- Trip Overview Card -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-calendar-check me-2"></i>Trip Overview
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <strong>Trip Type:</strong> {{ trip_type_display|default:"Unknown" }}
+                        </div>
+                        {% if pickup_city %}
+                        <div class="col-md-6 mb-3">
+                            <strong>Pickup City:</strong> {{ pickup_city }}
+                        </div>
+                        {% endif %}
+                        {% if local_area %}
+                        <div class="col-md-6 mb-3">
+                            <strong>Local Area:</strong> {{ local_area }}
+                        </div>
+                        {% endif %}
+                        {% if from_city and to_city %}
+                        <div class="col-md-6 mb-3">
+                            <strong>From:</strong> {{ from_city_obj.name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>To:</strong> {{ to_city_obj.name }}
+                        </div>
+                        {% endif %}
+                        {% if start_date_display and end_date_display %}
+                        <div class="col-md-12 mb-3">
+                            <strong>Duration:</strong> {{ start_date_display }} to {{ end_date_display }}
+                        </div>
+                        {% elif pickup_date %}
+                        <div class="col-md-6 mb-3">
+                            <strong>Pickup Date:</strong> {{ pickup_date }}
+                        </div>
+                        {% endif %}
+                        {% if drop_date %}
+                        <div class="col-md-6 mb-3">
+                            <strong>Return Date:</strong> {{ drop_date }}
+                        </div>
+                        {% endif %}
+                        {% if pickup_time %}
+                        <div class="col-md-6 mb-3">
+                            <strong>Pickup Time:</strong> {{ pickup_time }} {{ pickup_time_period }}
+                        </div>
+                        {% endif %}
+                        {% if trip_basis_display %}
+                        <div class="col-md-6 mb-3">
+                            <strong>Trip Basis:</strong> {{ trip_basis_display }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tourist Places Section (for trips with pickup city) -->
+            {% if trip_type == 'multicity' or trip_type == 'local' or trip_type == 'round' or pickup_city %}
+            <div class="card mb-4" id="touristPlacesSection">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-camera me-2"></i>Local Sightseeing Options
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if trip_type == 'multicity' %}
+                    <p class="text-muted mb-3">Select cities where you'd like to include local sightseeing in your tour:</p>
+                    {% else %}
+                    <p class="text-muted mb-3">Select if you'd like to include local sightseeing in {{ pickup_city|default:"your pickup city" }}:</p>
+                    {% endif %}
+                    
+                    <div id="sightseeingOptions">
+                        <!-- Sightseeing options will be loaded here -->
+                        <div class="text-center" id="loadingSpinner">
+                            <div class="spinner-border text-info" role="status">
+                                <span class="visually-hidden">Loading sightseeing options...</span>
+                            </div>
+                            <p class="mt-2 text-muted">Loading available sightseeing options...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 p-3 bg-light rounded" id="sightseeingSummary" style="display: none;">
+                        <h6 class="text-info mb-2">
+                            <i class="bi bi-info-circle me-2"></i>Sightseeing Summary
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted">Selected Cities:</small>
+                                <div id="selectedCitiesCount" class="fw-bold">0 cities</div>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">Additional Distance:</small>
+                                <div id="additionalDistance" class="fw-bold text-success">0 KM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Trip Statistics Card -->
+            {% if total_distance or total_days or total_routes and trip_type != 'local' %}
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-graph-up me-2"></i>Trip Statistics
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        {% if total_distance %}
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-item">
+                                <h3 class="text-primary mb-1">{{ total_distance }}</h3>
+                                <small class="text-muted">Total KM</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if total_days %}
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-item">
+                                <h3 class="text-success mb-1">{{ total_days }}</h3>
+                                <small class="text-muted">Day{{ total_days|pluralize }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if total_routes %}
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-item">
+                                <h3 class="text-info mb-1">{{ total_routes }}</h3>
+                                <small class="text-muted">Route{{ total_routes|pluralize }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if total_locations %}
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-item">
+                                <h3 class="text-warning mb-1">{{ total_locations }}</h3>
+                                <small class="text-muted">Location{{ total_locations|pluralize }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if is_circular %}
+                        <div class="col-md-8 mb-3">
+                            <span class="badge bg-success fs-6">
+                                <i class="bi bi-arrow-repeat me-1"></i>Circular Route - Returns to Starting Point
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Route Details for Multicity -->
+            {% if routes %}
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-map me-2"></i>Detailed Itinerary
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% for route in routes %}
+                    <div class="route-card mb-3 p-3 border rounded">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center">
+                                <div class="day-badge bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+                                    style="width: 50px; height: 50px;">
+                                    <strong>{{ forloop.counter }}</strong>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted">{{ route.date }}</small>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="d-flex align-items-center">
+                                    <div class="location-point">
+                                        <i class="bi bi-geo-alt-fill text-success"></i>
+                                        <strong>{{ route.from_name }}</strong>
+                                    </div>
+                                    <div class="mx-3">
+                                        <i class="bi bi-arrow-right text-primary fs-4"></i>
+                                    </div>
+                                    <div class="location-point">
+                                        <i class="bi bi-geo-alt-fill text-danger"></i>
+                                        <strong>{{ route.to_name }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <div class="distance-badge">
+                                    <h5 class="text-primary mb-0">{{ route.distance }}</h5>
+                                    <small class="text-muted">KM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Action Buttons -->
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="mb-3">Ready to Book?</h5>
+                    <button class="btn btn-primary btn-lg me-2" id="showVehiclesBtn" onclick="showVehicleSelection()">
+                        <i class="bi bi-car-front me-2"></i>Select Vehicle & Continue
+                    </button>
+                    <!-- <button class="btn btn-outline-secondary btn-lg" onclick="window.print()">
+                        <i class="bi bi-printer me-2"></i>Print Details
+                    </button> -->
+                </div>
+            </div>
+
+            <!-- Vehicle Selection Section (Initially Hidden) -->
+            <div id="vehicleSelectionSection" class="card mb-4" style="display: none;">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-car-front-fill me-2"></i>Select Your Vehicle
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th class="border-end">Vehicle Info</th>
+                                    <th class="oneway-km-hidden border-end">Rent / Day</th>
+                                    <th class="local-hidden oneway-km-hidden border-end">Free Kms/Day</th>
+                                    <th class="local-hidden border-end">Total Trip KM</th>
+                                    <th class="local-hidden oneway-km-hidden border-end">Fare/KM(After Free Kms)</th>
+                                    <th class="border-end">Driver/Day</th>
+                                    <th class="border-end">Total Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehicleTableBody">
+                                <!-- Vehicle data will be loaded here -->
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading vehicles...</span>
+                                        </div>
+                                        <p class="mt-2">Loading available vehicles...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <!-- Contact Card -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-telephone me-2"></i>Need Help?
+                    </h5>
+                </div>
+                <div class="card-body text-center">
+                    <p>For immediate assistance or custom requirements:</p>
+                    <a href="tel:+919787110763" class="btn btn-success btn-lg mb-3">
+                        <i class="bi bi-telephone-fill me-2"></i>+91 97871 10763
+                    </a>
+                    <p class="mb-0">
+                        <small class="text-muted">Available 24/7 for your convenience</small>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Trip Summary Card -->
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clipboard-check me-2"></i>Trip Summary
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <strong>Trip Type:</strong> {{ trip_type_display|default:"Unknown" }}
+                        </li>
+                        {% if pickup_city %}
+                        <li class="mb-2">
+                            <i class="bi bi-geo-alt text-primary me-2"></i>
+                            <strong>Starting Point:</strong> {{ pickup_city }}
+                        </li>
+                        {% endif %}
+                        {% if total_distance %}
+                        <li class="mb-2">
+                            <i class="bi bi-speedometer text-info me-2"></i>
+                            <strong>Total Distance:</strong> {{ total_distance }} KM
+                        </li>
+                        {% endif %}
+                        {% if total_days %}
+                        <li class="mb-2">
+                            <i class="bi bi-calendar-event text-warning me-2"></i>
+                            <strong>Duration:</strong> {{ total_days }} Day{{ total_days|pluralize }}
+                        </li>
+                        {% endif %}
+                        {% if visited_locations %}
+                        <li class="mb-0">
+                            <i class="bi bi-pin-map text-danger me-2"></i>
+                            <strong>Locations:</strong> {{ total_locations }} place{{ total_locations|pluralize }}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Popular Plans Card -->
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-star me-2"></i>Popular Plans
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><a href="#" class="text-decoration-none">Ooty Tour Package</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none">Kodaikanal Tour</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none">Munnar Package</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none">Chennai City Tour</a></li>
+                        <li class="mb-0"><a href="#" class="text-decoration-none">Coimbatore Local</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Why Choose Us Card -->
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0" style="color: white;">
+                        <i class="bi bi-shield-check me-2"></i>Why Choose Us?
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            Professional Drivers
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            Well-Maintained Vehicles
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            24/7 Customer Support
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            Competitive Pricing
+                        </li>
+                        <li class="mb-0">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            Safe & Comfortable Journey
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stat-item {
+        padding: 15px;
+        border-radius: 10px;
+        background: rgba(0, 123, 255, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .stat-item:hover {
+        transform: translateY(-2px);
+    }
+
+    .route-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        border: 1px solid #e9ecef !important;
+        transition: all 0.3s ease;
+    }
+
+    .route-card:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .day-badge {
+        font-size: 18px;
+        box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+    }
+
+    .location-point {
+        padding: 8px 12px;
+        background: #f8f9fa;
+        border-radius: 20px;
+        border: 1px solid #e9ecef;
+    }
+
+    .distance-badge {
+        background: rgba(0, 123, 255, 0.1);
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+        border-bottom: none;
+        font-weight: 600;
+    }
+
+    .vehicle-thumb {
+        width: 60px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid #dee2e6;
+    }
+
+    .vehicle-placeholder {
+        width: 60px;
+        height: 40px;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 20px;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    /* Enhanced table borders */
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #dee2e6;
+    }
+    
+    .table-bordered thead th {
+        border-bottom: 2px solid #dee2e6;
+    }
+    
+    /* Enhanced sightseeing options styling */
+    .sightseeing-option {
+        transition: all 0.3s ease;
+        border: 2px solid #e9ecef !important;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .sightseeing-option:hover {
+        border-color: #007bff !important;
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+        transform: translateY(-3px);
+    }
+    
+    .sightseeing-option input[type="checkbox"]:checked ~ label .sightseeing-card {
+        background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 123, 255, 0.02) 100%);
+    }
+    
+    .sightseeing-option input[type="checkbox"]:checked ~ label .sightseeing-card .sightseeing-header {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        color: white;
+    }
+    
+    .sightseeing-option input[type="checkbox"]:checked ~ label .sightseeing-card .sightseeing-header .text-primary {
+        color: white !important;
+    }
+    
+    .sightseeing-option input[type="checkbox"]:checked ~ label .sightseeing-card .sightseeing-header .text-muted {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .sightseeing-option input[type="checkbox"]:checked ~ label .sightseeing-card .sightseeing-header .distance-badge {
+        background: white !important;
+        color: #007bff !important;
+    }
+    
+    .sightseeing-option input[type="checkbox"]:checked ~ label .selection-indicator .bi-circle {
+        display: none !important;
+    }
+    
+    .sightseeing-option input[type="checkbox"]:checked ~ label .selection-indicator .bi-check-circle-fill {
+        display: inline-block !important;
+    }
+    
+    .sightseeing-card {
+        transition: all 0.3s ease;
+    }
+    
+    .sightseeing-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+        transition: all 0.3s ease;
+    }
+    
+    .bg-gradient-light {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+    }
+    
+    .sightseeing-title {
+        transition: all 0.3s ease;
+    }
+    
+    .sightseeing-badge {
+        text-align: center;
+    }
+    
+    .distance-badge {
+        display: inline-block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .place-item {
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+    }
+    
+    .place-item:hover {
+        background: #e3f2fd !important;
+        border-color: #2196f3;
+        transform: translateX(5px);
+    }
+    
+    .places-grid {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    .places-grid::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .places-grid::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    .places-grid::-webkit-scrollbar-thumb {
+        background: #007bff;
+        border-radius: 3px;
+    }
+    
+    .sightseeing-note {
+        border-left: 4px solid #007bff;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+    }
+    
+    .cursor-pointer {
+        cursor: pointer;
+    }
+    
+    .form-check-input:checked {
+        background-color: #007bff;
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .form-check-input:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    
+    .form-check-input {
+        width: 1.5em;
+        height: 1.5em;
+        margin-top: 0;
+    }
+    
+    .selection-indicator {
+        position: relative;
+    }
+    
+    .selection-indicator .bi-check-circle-fill {
+        display: none;
+    }
+    
+    /* Animation for selection */
+    @keyframes selectPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .sightseeing-option input[type="checkbox"]:checked ~ label .sightseeing-card {
+        animation: selectPulse 0.3s ease-out;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .sightseeing-option .col-1 {
+            flex: 0 0 auto;
+            width: 10%;
+        }
+        
+        .sightseeing-option .col-8 {
+            flex: 0 0 auto;
+            width: 60%;
+        }
+        
+        .sightseeing-option .col-3 {
+            flex: 0 0 auto;
+            width: 30%;
+        }
+        
+        .place-item {
+            font-size: 0.85rem;
+        }
+        
+        .distance-badge {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem !important;
+        }
+    }
+
+    #vehicleSelectionSection {
+        animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Booking Confirmation Modal Styles */
+    .modal-content {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        border-radius: 15px 15px 0 0;
+        border-bottom: none;
+        padding: 20px 25px;
+    }
+
+    .modal-body {
+        padding: 25px;
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding: 20px 25px;
+        border-radius: 0 0 15px 15px;
+    }
+
+    .vehicle-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: white;
+        font-size: 2.5rem;
+    }
+
+    .price-display {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 10px;
+        padding: 15px;
+        margin: 15px 0;
+    }
+
+    .booking-details {
+        border: 1px solid #e9ecef;
+    }
+
+    .booking-details .row>div {
+        padding: 8px 12px;
+    }
+
+    .booking-details small {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    #confirmBookingBtn {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    #confirmBookingBtn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+    }
+
+    .modal.fade .modal-dialog {
+        transition: transform 0.4s ease-out;
+        transform: translate(0, -50px);
+    }
+
+    .modal.show .modal-dialog {
+        transform: none;
+    }
+
+    @media print {
+        .col-md-4 {
+            display: none;
+        }
+
+        .col-md-8 {
+            width: 100%;
+        }
+
+        #vehicleSelectionSection {
+            display: none !important;
+        }
+    }
+
+    /* Hide distance-related columns for Local Trips */
+    body[data-trip-type="local"] .local-hidden {
+        display: none !important;
+    }
+
+    /* Hide specific columns for One Way KM Basis */
+    body[data-trip-type="oneway_km"] .oneway-km-hidden {
+        display: none !important;
+    }
+</style>
+
+{{ trip_type|json_script:"trip-type" }}
+{{ trip_basis|json_script:"trip-basis" }}
+{{ total_distance|json_script:"total-distance" }}
+{{ total_days|json_script:"total-days" }}
+{{ pickup_city|json_script:"pickup-city" }}
+{{ pickup_city_id|json_script:"pickup-city-id" }}
+{{ trip_type_display|json_script:"trip-type-display" }}
+{{ routes|json_script:"routes-data" }}
+{{ from_city|json_script:"from-city" }}
+{{ to_city|json_script:"to-city" }}
+{{ from_city_obj|json_script:"from-city-obj" }}
+{{ to_city_obj|json_script:"to-city-obj" }}
+
+
+
+<script>
+    // Trip data from Django template
+    const TRIP_DATA = {
+        trip_type: JSON.parse(document.getElementById('trip-type').textContent) || 'round',
+        trip_basis: (function(){ try { return JSON.parse(document.getElementById('trip-basis').textContent) || null; } catch(e){ return null; } })(),
+        total_distance: JSON.parse(document.getElementById('total-distance').textContent) || 0,
+        total_days: JSON.parse(document.getElementById('total-days').textContent) || 1,
+        pickup_city: JSON.parse(document.getElementById('pickup-city').textContent) || '',
+        pickup_city_id: (function(){ try { return JSON.parse(document.getElementById('pickup-city-id').textContent) || null; } catch(e){ return null; } })(),
+        from_city: JSON.parse(document.getElementById('from-city').textContent) || '',
+        to_city: JSON.parse(document.getElementById('to-city').textContent) || '',
+        from_city_obj: JSON.parse(document.getElementById('from-city-obj').textContent) || null,
+        to_city_obj: JSON.parse(document.getElementById('to-city-obj').textContent) || null,
+        routes: (() => {
+            try {
+                const routesElement = document.getElementById('routes-data');
+                return routesElement ? JSON.parse(routesElement.textContent) : [];
+            } catch (e) {
+                return [];
+            }
+        })()
+    };
+
+    // Store the base distance without sightseeing
+    const BASE_DISTANCE = TRIP_DATA.total_distance;
+
+    // Global variable to store vehicles for price recalculation
+    let STORED_VEHICLES = [];
+
+    // Set trip type on body for CSS targeting
+    document.body.setAttribute('data-trip-type', TRIP_DATA.trip_type);
+
+    // Ensure Total Trip KM column is hidden for Round Trip - Day Basis
+    // We'll control this per-column rather than removing reusable utility classes.
+    function updateTotalTripKmColumnVisibility() {
+        var isRoundDay = (TRIP_DATA.trip_type === 'round' && TRIP_DATA.trip_basis === 'day');
+        var ths = document.querySelectorAll('#vehicleSelectionSection table thead th');
+        var targetIndex = -1;
+        ths.forEach(function(th, idx){
+            if (th.textContent && th.textContent.trim().startsWith('Total Trip KM')) {
+                targetIndex = idx;
+            }
+        });
+
+        if (targetIndex === -1) return;
+
+        // Toggle header
+        ths[targetIndex].style.display = isRoundDay ? 'none' : '';
+
+        // Toggle body cells
+        document.querySelectorAll('#vehicleSelectionSection table tbody tr').forEach(function(row){
+            var cells = row.querySelectorAll('td');
+            if (cells && cells.length > targetIndex) {
+                cells[targetIndex].style.display = isRoundDay ? 'none' : '';
+            }
+        });
+    }
+
+    // Initial update (will also be called after vehicles are rendered)
+    updateTotalTripKmColumnVisibility();
+
+    function showVehicleSelection() {
+
+        // For oneway_km trips, calculate distance first
+        if (TRIP_DATA.trip_type === 'oneway_km') {
+            calculateOnewayKmDistance().then(() => {
+                loadVehiclesAfterDistanceCalculation();
+            }).catch(error => {
+                // Load vehicles anyway with distance = 0
+                loadVehiclesAfterDistanceCalculation();
+            });
+        } else {
+            // For other trip types, load vehicles directly
+            loadVehiclesAfterDistanceCalculation();
+        }
+    }
+
+    // Function to calculate distance for oneway_km trips
+    function calculateOnewayKmDistance() {
+        return new Promise((resolve, reject) => {
+            if (!TRIP_DATA.from_city || !TRIP_DATA.to_city) {
+                reject(new Error('Missing city data'));
+                return;
+            }
+
+            // Make AJAX call to get distance
+            const fromCityId = TRIP_DATA.from_city_obj ? TRIP_DATA.from_city_obj.id : TRIP_DATA.from_city;
+            const toCityId = TRIP_DATA.to_city_obj ? TRIP_DATA.to_city_obj.id : TRIP_DATA.to_city;
+            fetch(`/api/route-distance/?from_city_id=${fromCityId}&to_city_id=${toCityId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.distance) {
+                    TRIP_DATA.total_distance = data.distance;
+                    resolve();
+                } else {
+                    reject(new Error('No distance data'));
+                }
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    function loadVehiclesAfterDistanceCalculation() {
+        // Show the vehicle selection section
+        document.getElementById('vehicleSelectionSection').style.display = 'block';
+
+        // Show/hide hours selection based on trip type
+        if (TRIP_DATA.trip_type === 'local') {
+            // Hours selection removed - using default 3 hours
+        } else {
+            // Hours selection removed
+        }
+
+        // Scroll to the vehicle section
+        document.getElementById('vehicleSelectionSection').scrollIntoView({
+            behavior: 'smooth'
+        });
+
+        // Update button text
+        document.getElementById('showVehiclesBtn').innerHTML = '<i class="bi bi-check-circle me-2"></i>Vehicles Loaded';
+        document.getElementById('showVehiclesBtn').disabled = true;
+
+        // Load vehicle data
+        loadVehicles();
+    }
+
+    function loadVehicles() {
+
+        // Use the global trip data
+        const tripData = TRIP_DATA;
+
+        // Make AJAX call to get vehicles
+        const params = new URLSearchParams(tripData);
+        fetch('/api/vehicles/?' + params.toString(), {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text(); // Get raw text first
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    if (data.vehicles) {
+                        // Transform the raw vehicle data to our expected format
+                        const transformedVehicles = data.vehicles.map(vehicle => ({
+                            id: vehicle.id,
+                            name: vehicle.name,
+                            description: vehicle.description || '',
+                            image: vehicle.image,
+                            seating_info: `${vehicle.max_seats} Seater`,
+                            fuel_type: vehicle.fuel_type.charAt(0).toUpperCase() + vehicle.fuel_type.slice(1),
+                            ac_type: vehicle.ac_type.toUpperCase(),
+                            category: parseFloat(vehicle.fare_per_km) > 20 ? 'Premium' : 'Standard',
+                            min_km_per_day: vehicle.min_km_per_day,
+                            fare_per_km: parseFloat(vehicle.fare_per_km),
+                            driver_charge_per_day: parseFloat(vehicle.driver_charge_per_day),
+                            per_day_fee: parseFloat(vehicle.per_day_fee || 0),
+                            // Include local trip fields
+                            fare_per_hour: vehicle.fare_per_hour,
+                            min_hours_local: vehicle.min_hours_local,
+                            min_hours_fee_local: vehicle.min_hours_fee_local,
+                            max_distance_min_hours: vehicle.max_distance_min_hours,
+                            fare_per_km_local: vehicle.fare_per_km_local,
+                            total_amount: calculateTotalAmount(vehicle, tripData),
+                            calculation_details: getCalculationDetails(vehicle, tripData)
+                        }));
+                        
+                        // Store vehicles for later price recalculation
+                        STORED_VEHICLES = transformedVehicles.map(vehicle => ({
+                            ...vehicle,
+                            original_total_amount: vehicle.total_amount,
+                            // Include local trip fields
+                            fare_per_hour: vehicle.fare_per_hour,
+                            min_hours_local: vehicle.min_hours_local,
+                            min_hours_fee_local: vehicle.min_hours_fee_local,
+                            max_distance_min_hours: vehicle.max_distance_min_hours,
+                            fare_per_km_local: vehicle.fare_per_km_local
+                        }));
+                        
+                        displayVehicles(transformedVehicles);
+                    } else if (data.results) {
+                        // Handle Django REST framework paginated response
+                        // Transform the raw vehicle data to our expected format
+                        const transformedVehicles = data.results.map(vehicle => ({
+                            id: vehicle.id,
+                            name: vehicle.name,
+                            description: vehicle.description || '',
+                            image: vehicle.image,
+                            seating_info: `${vehicle.max_seats} Seater`,
+                            fuel_type: vehicle.fuel_type.charAt(0).toUpperCase() + vehicle.fuel_type.slice(1),
+                            ac_type: vehicle.ac_type.toUpperCase(),
+                            category: parseFloat(vehicle.fare_per_km) > 20 ? 'Premium' : 'Standard',
+                            min_km_per_day: vehicle.min_km_per_day,
+                            fare_per_km: parseFloat(vehicle.fare_per_km),
+                            driver_charge_per_day: parseFloat(vehicle.driver_charge_per_day),
+                            per_day_fee: parseFloat(vehicle.per_day_fee || 0),
+                            // Include local trip fields
+                            fare_per_hour: vehicle.fare_per_hour,
+                            min_hours_local: vehicle.min_hours_local,
+                            min_hours_fee_local: vehicle.min_hours_fee_local,
+                            max_distance_min_hours: vehicle.max_distance_min_hours,
+                            fare_per_km_local: vehicle.fare_per_km_local,
+                            total_amount: calculateTotalAmount(vehicle, tripData),
+                            calculation_details: getCalculationDetails(vehicle, tripData)
+                        }));
+                        
+                        // Store vehicles for later price recalculation
+                        STORED_VEHICLES = transformedVehicles.map(vehicle => ({
+                            ...vehicle,
+                            original_total_amount: vehicle.total_amount,
+                            // Include local trip fields
+                            fare_per_hour: vehicle.fare_per_hour,
+                            min_hours_local: vehicle.min_hours_local,
+                            min_hours_fee_local: vehicle.min_hours_fee_local,
+                            max_distance_min_hours: vehicle.max_distance_min_hours,
+                            fare_per_km_local: vehicle.fare_per_km_local
+                        }));
+                        
+                        displayVehicles(transformedVehicles);
+                    } else {
+                        throw new Error('Invalid response format - no vehicles or results property');
+                    }
+                } catch (parseError) {
+                    throw new Error('Invalid JSON response: ' + parseError.message);
+                }
+            })
+            .catch(error => {
+                document.getElementById('vehicleTableBody').innerHTML = `
+            <tr>
+                <td colspan="9" class="text-center text-danger">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    Error loading vehicles: ${error.message}
+                </td>
+            </tr>
+        `;
+            });
+    }
+
+    function displayVehicles(vehicles) {
+        const tbody = document.getElementById('vehicleTableBody');
+
+        if (!vehicles || vehicles.length === 0) {
+            tbody.innerHTML = `
+            <tr>
+                <td colspan="9" class="text-center text-muted">
+                    <i class="bi bi-info-circle me-2"></i>
+                    No vehicles available for this route.
+                </td>
+            </tr>
+        `;
+            return;
+        }
+
+        tbody.innerHTML = vehicles.map(vehicle => `
+        <tr>
+            <td class="border-end">
+                <div class="d-flex align-items-center">
+                    ${vehicle.image ? `<img src="${vehicle.image}" alt="${vehicle.name}" class="vehicle-thumb me-3">` : '<div class="vehicle-placeholder me-3"><i class="bi bi-car-front"></i></div>'}
+                    <div>
+                        <strong>${vehicle.name}</strong><br>
+                        <small class="text-muted">${vehicle.seating_info} | ${vehicle.fuel_type} | ${vehicle.ac_type}</small>
+                    </div>
+                </div>
+            </td>
+            <td class="oneway-km-hidden border-end">
+                <strong>₹${vehicle.per_day_fee || 0}</strong><br>
+                <small class="text-muted">Vehicle Fee Per Day</small>
+            </td>
+            <td class="local-hidden oneway-km-hidden border-end">
+                <strong>${vehicle.min_km_per_day} KM</strong><br>
+                <small class="text-muted">Per Day</small>
+            </td>
+            <td class="local-hidden border-end">
+                <strong>${TRIP_DATA.total_distance.toFixed(1)} KM</strong><br>
+                <small class="text-muted">Total Trip Distance</small>
+            </td>
+            <td class="local-hidden oneway-km-hidden border-end">
+                <strong>₹${vehicle.fare_per_km}</strong><br>
+                <small class="text-muted">Per KM</small>
+            </td>
+            <td class="border-end">
+                <strong>₹${vehicle.driver_charge_per_day}</strong><br>
+                <small class="text-muted">Per Day</small>
+            </td>
+            <td class="border-end">
+                <div class="text-success">
+                    <strong>₹${vehicle.total_amount}</strong><br>
+                    <small class="text-muted">${vehicle.calculation_details}</small>
+                </div>
+            </td>
+            <td>
+                <button class="btn btn-success btn-sm" onclick="bookVehicle(${vehicle.id}, '${vehicle.name}', ${vehicle.total_amount})">
+                    <i class="bi bi-check-circle me-1"></i>Book Now
+                </button>
+            </td>
+        </tr>
+    `).join('');
+
+        // After rendering vehicles, ensure Total Trip KM column visibility follows the rule:
+        // hide the column when trip_type=round and trip_basis=day
+        try {
+            if (typeof updateTotalTripKmColumnVisibility === 'function') {
+                updateTotalTripKmColumnVisibility();
+            }
+        } catch (e) {
+            console.error('Failed to update Total Trip KM column visibility:', e);
+        }
+    }
+
+    // Function to refresh vehicle prices when distance changes
+    function refreshVehiclePrices() {
+        if (STORED_VEHICLES.length === 0) {
+            return;
+        }
+        
+        // Recalculate prices for stored vehicles
+        const updatedVehicles = STORED_VEHICLES.map(vehicle => ({
+            ...vehicle,
+            total_amount: calculateTotalAmount(vehicle, TRIP_DATA),
+            calculation_details: getCalculationDetails(vehicle, TRIP_DATA)
+        }));
+        
+        // Update stored vehicles with new prices (preserve all existing properties)
+        STORED_VEHICLES = updatedVehicles;
+        
+        // Re-display vehicles with updated prices
+        displayVehicles(updatedVehicles);
+    }
+
+    function bookVehicle(vehicleId, vehicleName, amount) {
+        // Find the vehicle data from stored vehicles
+        const vehicle = STORED_VEHICLES.find(v => v.id === vehicleId);
+        
+        // Populate modal with vehicle and trip information
+        document.getElementById('modalVehicleName').textContent = vehicleName;
+        document.getElementById('modalVehiclePrice').textContent = '₹' + parseFloat(amount).toLocaleString();
+
+        // Get trip data from Django template JSON scripts with error handling
+        function getJsonData(elementId, fallback) {
+            try {
+                const element = document.getElementById(elementId);
+                return element ? JSON.parse(element.textContent) : fallback;
+            } catch (e) {
+                return fallback;
+            }
+        }
+
+        const tripType = getJsonData('trip-type', 'multicity');
+        const totalDistance = getJsonData('total-distance', 0);
+        const totalDays = getJsonData('total-days', 1);
+        const pickupCity = getJsonData('pickup-city', 'Coimbatore');
+        const tripTypeDisplay = getJsonData('trip-type-display', tripType);
+
+        // Fallback: Try to get data from visible elements on the page if JSON data is not available
+        let finalDistance = totalDistance;
+        let finalDays = totalDays;
+        let finalTripType = tripTypeDisplay;
+
+        if (!finalDistance || finalDistance === 0) {
+            // Try to get distance from the Trip Statistics section
+            const distanceElement = document.querySelector('.stat-item h3.text-primary');
+            if (distanceElement) {
+                finalDistance = distanceElement.textContent.trim();
+            }
+        }
+
+        if (!finalDays || finalDays === 0) {
+            // Try to get days from the Trip Statistics section
+            const daysElement = document.querySelector('.stat-item h3.text-success');
+            if (daysElement) {
+                finalDays = daysElement.textContent.trim();
+            }
+        }
+
+        if (!finalTripType) {
+            // Try to get trip type from the Trip Overview section
+            const tripTypeElement = document.querySelector('.card-body .row .col-md-6:first-child');
+            if (tripTypeElement && tripTypeElement.textContent.includes('Trip Type:')) {
+                finalTripType = tripTypeElement.textContent.replace('Trip Type:', '').trim();
+            }
+        }
+
+        // Handle local trip modal differently
+        if (tripType === 'local' && vehicle) {
+            // For local trips, show different information
+            document.getElementById('modalTripType').textContent = 'Local Trip';
+            document.getElementById('modalTotalDistance').textContent = (vehicle.max_distance_min_hours || 30) + ' KM (Included)';
+            document.getElementById('modalTotalDays').textContent = (vehicle.min_hours_local || 4) + ' Hours';
+            document.getElementById('modalPickupCity').textContent = pickupCity || 'Coimbatore';
+            
+            // Add informational message about extra charges for local trips
+            const extraChargeMessage = document.getElementById('extraChargeMessage');
+            if (extraChargeMessage) {
+                extraChargeMessage.innerHTML = `
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Extra Distance Charges:</strong> If the distance exceeds the included KM limit, 
+                        additional charges will apply as: Extra KM × ₹${vehicle.fare_per_km_local || 0}/KM.
+                    </div>
+                `;
+                extraChargeMessage.style.display = 'block';
+            }
+        } else if (tripType === 'round' && TRIP_DATA.trip_basis === 'day') {
+            // For Round Trip - Day Basis, show normal information with special message
+            document.getElementById('modalTripType').textContent = finalTripType || 'Round Trip';
+            document.getElementById('modalTotalDistance').textContent = (finalDistance ? finalDistance.toFixed(1) : 'N/A') + ' KM';
+            document.getElementById('modalTotalDays').textContent = (finalDays || 1) + ' Day' + ((finalDays || 1) > 1 ? 's' : '');
+            document.getElementById('modalPickupCity').textContent = pickupCity || 'Coimbatore';
+            
+            // Add informational message about extra charges for Round Trip - Day Basis
+            const extraChargeMessage = document.getElementById('extraChargeMessage');
+            if (extraChargeMessage) {
+                extraChargeMessage.innerHTML = `
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Additional Distance Charges:</strong> After free kilometers, additional distance will be charged as: Extra KM × Vehicle Fare per KM (After Free KMs).
+                    </div>
+                `;
+                extraChargeMessage.style.display = 'block';
+            }
+        } else {
+            // For other trip types, show normal information
+            document.getElementById('modalTripType').textContent = finalTripType || 'Multi-City';
+            document.getElementById('modalTotalDistance').textContent = (finalDistance ? finalDistance.toFixed(1) : 'N/A') + ' KM';
+            document.getElementById('modalTotalDays').textContent = (finalDays || 1) + ' Day' + ((finalDays || 1) > 1 ? 's' : '');
+            document.getElementById('modalPickupCity').textContent = pickupCity || 'Coimbatore';
+            
+            // Hide extra charge message for other trip types
+            const extraChargeMessage = document.getElementById('extraChargeMessage');
+            if (extraChargeMessage) {
+                extraChargeMessage.style.display = 'none';
+            }
+        }
+
+        // Store booking data for confirmation
+        window.pendingBooking = {
+            vehicleId: vehicleId,
+            vehicleName: vehicleName,
+            amount: amount
+        };
+
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('bookingConfirmModal'));
+        modal.show();
+    }
+
+    // Handle confirm booking button click
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('confirmBookingBtn').addEventListener('click', function () {
+            if (window.pendingBooking) {
+                // Redirect to booking page with vehicle and trip details
+                const params = new URLSearchParams(window.location.search);
+                params.set('vehicle_id', window.pendingBooking.vehicleId);
+                params.set('amount', window.pendingBooking.amount);
+
+                // Add selected sightseeing data
+                const selectedSightseeing = getSelectedSightseeingData();
+                if (selectedSightseeing.length > 0) {
+                    params.set('sightseeing_details', JSON.stringify(selectedSightseeing));
+                }
+
+                // Close modal and redirect
+                const modal = bootstrap.Modal.getInstance(document.getElementById('bookingConfirmModal'));
+                modal.hide();
+
+                // Small delay to allow modal to close gracefully
+                setTimeout(function () {
+                    window.location.href = '/booking/?' + params.toString();
+                }, 300);
+            }
+        });
+    });
+    
+    // Function to get selected sightseeing data
+    function getSelectedSightseeingData() {
+        const selectedCheckboxes = document.querySelectorAll('.sightseeing-radio:checked');
+        const sightseeingData = [];
+        
+        selectedCheckboxes.forEach(function(checkbox) {
+            const cityName = checkbox.dataset.cityName;
+            const sightseeingKm = checkbox.dataset.sightseeingKm;
+            const sightseeingOption = checkbox.closest('.sightseeing-option');
+            
+            if (sightseeingOption) {
+                // Get the tourist places from the option
+                const touristPlacesList = sightseeingOption.querySelectorAll('ul.list-unstyled li');
+                const touristPlaces = [];
+                
+                touristPlacesList.forEach(function(li) {
+                    const placeText = li.textContent.replace('• ', '').trim();
+                    if (placeText) {
+                        touristPlaces.push(placeText);
+                    }
+                });
+                
+                sightseeingData.push({
+                    location: `${cityName} Local Sight Seeing`,
+                    distance: `${sightseeingKm} Kms`,
+                    details: touristPlaces.join(', ')
+                });
+            }
+        });
+        
+        return sightseeingData;
+    }
+
+    // Helper function to calculate total amount
+    function calculateTotalAmount(vehicle, tripData) {
+        const totalDistance = tripData.total_distance || 0;
+        const totalDays = tripData.total_days || 1;
+        const tripType = tripData.trip_type || 'round';
+        const farePerKm = parseFloat(vehicle.fare_per_km);
+        const driverChargePerDay = parseFloat(vehicle.driver_charge_per_day);
+        const perDayFee = parseFloat(vehicle.per_day_fee || 0);
+        const minKmPerDay = vehicle.min_km_per_day;
+
+        // Local Trip calculation: Hour-based pricing with optional distance charges
+        if (tripType === 'local') {
+            const selectedHours = parseInt(tripData.selected_hours || vehicle.min_hours_local || 3);
+            const farePerHour = parseFloat(vehicle.fare_per_hour || 0);
+            const minHours = parseInt(vehicle.min_hours_local || 3);
+            const minHoursFee = parseFloat(vehicle.min_hours_fee_local || 0);
+            const maxIncludedDistance = parseInt(vehicle.max_distance_min_hours || 30);
+            const farePerKmLocal = parseFloat(vehicle.fare_per_km_local || 0);
+            
+            // Calculate hour-based charges
+            let totalAmount = 0;
+            if (selectedHours <= minHours) {
+                // Use minimum hours fee
+                totalAmount = minHoursFee;
+            } else {
+                // Minimum hours fee + additional hours
+                const extraHours = selectedHours - minHours;
+                totalAmount = minHoursFee + (extraHours * farePerHour);
+            }
+            
+            // Add distance-based charges if distance exceeds included KM
+            if (totalDistance > maxIncludedDistance) {
+                const extraDistance = totalDistance - maxIncludedDistance;
+                const extraDistanceCharge = extraDistance * farePerKmLocal;
+                totalAmount += extraDistanceCharge;
+            }
+            
+            return Math.round(totalAmount * 100) / 100;
+        }
+        
+        // One Way Fixed calculation: Distance-based pricing
+        if (tripType === 'oneway_fixed') {
+            const minDistance = minKmPerDay * totalDays;
+            const actualDistance = Math.max(totalDistance, minDistance);
+            const distanceCharge = actualDistance * farePerKm;
+            const driverCharge = totalDays * driverChargePerDay;
+            const vehicleDayCharge = totalDays * perDayFee;
+
+            return Math.round((distanceCharge + driverCharge + vehicleDayCharge) * 100) / 100;
+        }
+        
+        // One Way KM calculation: Simple distance × fare per KM (no free KMs, no per-day limits)
+        if (tripType === 'oneway_km') {
+            const distanceCharge = totalDistance * farePerKm;
+            return Math.round(distanceCharge * 100) / 100;
+        }
+        
+        // Round Trip calculation: Day-based pricing
+        if (tripType === 'round') {
+            const totalVehicleFee = totalDays * perDayFee;
+            const totalDriverFee = totalDays * driverChargePerDay;
+            const totalAmount = totalVehicleFee + totalDriverFee;
+            
+            return Math.round(totalAmount * 100) / 100;
+        }
+        
+        // Multicity calculation: Day-based + Extra KM charges
+        if (tripType === 'multicity') {
+            const totalVehicleFee = totalDays * perDayFee;
+            const totalDriverFee = totalDays * driverChargePerDay;
+            const freeKmTotal = totalDays * minKmPerDay;
+            const chargeableKm = Math.max(0, totalDistance - freeKmTotal);
+            const extraKmCharge = chargeableKm * farePerKm;
+            const totalAmount = totalVehicleFee + totalDriverFee + extraKmCharge;
+            
+            return Math.round(totalAmount * 100) / 100;
+        }
+        
+        // Other trip types: Distance-based calculation
+        const minDistance = minKmPerDay * totalDays;
+        const actualDistance = Math.max(totalDistance, minDistance);
+        const distanceCharge = actualDistance * farePerKm;
+        const driverCharge = totalDays * driverChargePerDay;
+        const vehicleDayCharge = totalDays * perDayFee;
+
+        return Math.round((distanceCharge + driverCharge + vehicleDayCharge) * 100) / 100;
+    }
+
+    // Helper function to get calculation details
+    function getCalculationDetails(vehicle, tripData) {
+        const totalDistance = tripData.total_distance || 0;
+        const totalDays = tripData.total_days || 1;
+        const tripType = tripData.trip_type || 'round';
+        const minKmPerDay = vehicle.min_km_per_day;
+        const minDistance = minKmPerDay * totalDays;
+        const actualDistance = Math.max(totalDistance, minDistance);
+        const perDayFee = parseFloat(vehicle.per_day_fee || 0);
+
+        // Local Trip: Show hour-based calculation details with optional distance charges
+        if (tripType === 'local') {
+            const selectedHours = parseInt(tripData.selected_hours || vehicle.min_hours_local || 3);
+            const minHours = parseInt(vehicle.min_hours_local || 3);
+            const farePerHour = parseFloat(vehicle.fare_per_hour || 0);
+            const maxIncludedDistance = parseInt(vehicle.max_distance_min_hours || 30);
+            
+            let details = '';
+            if (selectedHours <= minHours) {
+                details = `${selectedHours} Hours (Min. Hours Fee)`;
+            } else {
+                const extraHours = selectedHours - minHours;
+                details = `${minHours} Hours (Min. Fee) + ${extraHours} Hours (₹${farePerHour}/hr)`;
+            }
+            
+            // Add distance info if applicable
+            if (totalDistance > maxIncludedDistance) {
+                const extraDistance = totalDistance - maxIncludedDistance;
+                details += ` + ${extraDistance.toFixed(1)} Extra KM`;
+            }
+            
+            return details;
+        }
+
+        // One Way Fixed: Show distance-based calculation details
+        if (tripType === 'oneway_fixed') {
+            let details = `${actualDistance.toFixed(0)} KM + ${totalDays} Day(s)`;
+            if (perDayFee > 0) {
+                details += ` + Vehicle Fee`;
+            }
+            return details;
+        }
+
+        // One Way KM: Show simple distance × fare calculation
+        if (tripType === 'oneway_km') {
+            return `${totalDistance.toFixed(0)} KM × Fare per KM`;
+        }
+
+        // Round Trip: Show day-based calculation details
+        if (tripType === 'round') {
+            let details = `${totalDays} Day(s)`;
+            if (perDayFee > 0) {
+                details += ` (Vehicle Fee + Driver Fee)`;
+            } else {
+                details += ` (Driver Fee Only)`;
+            }
+            return details;
+        }
+
+        // Multicity: Show day-based + extra KM calculation details
+        if (tripType === 'multicity') {
+            const freeKmTotal = totalDays * minKmPerDay;
+            const chargeableKm = Math.max(0, totalDistance - freeKmTotal);
+            
+            let details = `${totalDays} Day(s) + `;
+            if (chargeableKm > 0) {
+                details += `${chargeableKm.toFixed(0)} Extra KM`;
+            } else {
+                details += `No Extra KM`;
+            }
+            
+            if (perDayFee > 0) {
+                details += ` (Vehicle + Driver + KM)`;
+            } else {
+                details += ` (Driver + KM)`;
+            }
+            return details;
+        }
+
+        // Other trip types: Show distance-based calculation details
+        let details = `${actualDistance.toFixed(0)} KM + ${totalDays} Day(s)`;
+        if (perDayFee > 0) {
+            details += ` + Vehicle Fee`;
+        }
+        return details;
+    }
+
+    // Helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // ===== SIGHTSEEING FUNCTIONALITY FOR TOUR INFO PAGE =====
+    
+    // Function to get intermediate cities for sightseeing (exclude start and end cities)
+    function getIntermediateCitiesForSightseeing(routes) {
+        if (!routes || routes.length === 0) {
+            return [];
+        }
+        
+        // Get all unique cities that appear in routes
+        const allCities = new Set();
+        routes.forEach(route => {
+            if (route.from_city_id) allCities.add(route.from_city_id);
+            if (route.to_city_id) allCities.add(route.to_city_id);
+        });
+        
+        // Remove the starting city (first route's from_city)
+        const startCity = routes[0].from_city_id;
+        if (startCity) {
+            allCities.delete(startCity);
+        }
+        
+        // Remove the ending city (last route's to_city) 
+        const endCity = routes[routes.length - 1].to_city_id;
+        if (endCity) {
+            allCities.delete(endCity);
+        }
+        
+        // Convert to array of city objects with id and name
+        const intermediateCities = [];
+        allCities.forEach(cityId => {
+            // Find the city name from routes
+            let cityName = '';
+            routes.forEach(route => {
+                if (route.from_city_id === cityId && route.from_name) {
+                    cityName = route.from_name;
+                } else if (route.to_city_id === cityId && route.to_name) {
+                    cityName = route.to_name;
+                }
+            });
+            
+            if (cityName) {
+                intermediateCities.push({
+                    id: cityId,
+                    name: cityName
+                });
+            }
+        });
+        
+        return intermediateCities;
+    }
+    
+    // Function to get ALL cities for sightseeing (including pickup city and intermediate cities)
+    function getAllCitiesForSightseeing(routes) {
+        if (!routes || routes.length === 0) {
+            return [];
+        }
+        
+        // Get all unique cities that appear in routes
+        const allCities = new Set();
+        routes.forEach(route => {
+            if (route.from_city_id) allCities.add(route.from_city_id);
+            if (route.to_city_id) allCities.add(route.to_city_id);
+        });
+        
+        // Convert to array of city objects with id and name
+        const allCitiesForSightseeing = [];
+        allCities.forEach(cityId => {
+            // Find the city name from routes
+            let cityName = '';
+            routes.forEach(route => {
+                if (route.from_city_id === cityId && route.from_name) {
+                    cityName = route.from_name;
+                } else if (route.to_city_id === cityId && route.to_name) {
+                    cityName = route.to_name;
+                }
+            });
+            
+            if (cityName) {
+                allCitiesForSightseeing.push({
+                    id: cityId,
+                    name: cityName
+                });
+            }
+        });
+        
+        return allCitiesForSightseeing;
+    }
+    
+    // Function to initialize sightseeing when DOM is ready
+    function initializeSightseeing() {
+        // Check if we have a pickup city and should show sightseeing options
+        const hasPickupCity = TRIP_DATA.pickup_city || (TRIP_DATA.routes && TRIP_DATA.routes.length > 0);
+        const shouldShowSightseeing = TRIP_DATA.trip_type === 'multicity' || 
+                                     TRIP_DATA.trip_type === 'local' || 
+                                     TRIP_DATA.trip_type === 'round' || 
+                                     hasPickupCity;
+        
+        if (shouldShowSightseeing) {
+            let citiesToLoad = [];
+            
+            if (TRIP_DATA.trip_type === 'multicity') {
+                // For multicity trips, get all cities for sightseeing (including pickup city and intermediate cities)
+                citiesToLoad = getAllCitiesForSightseeing(TRIP_DATA.routes);
+            } else if (TRIP_DATA.pickup_city_id && TRIP_DATA.pickup_city) {
+                // For other trip types, just load the pickup city
+                citiesToLoad = [{
+                    id: TRIP_DATA.pickup_city_id,
+                    name: TRIP_DATA.pickup_city
+                }];
+            }
+            
+            if (citiesToLoad.length > 0) {
+                loadSightseeingForCities(citiesToLoad);
+            } else {
+                const sightseeingOptionsElement = document.getElementById('sightseeingOptions');
+                if (sightseeingOptionsElement) {
+                    sightseeingOptionsElement.innerHTML = '<p class="text-muted">No sightseeing options available for the selected destinations.</p>';
+                }
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                if (loadingSpinner) {
+                    loadingSpinner.style.display = 'none';
+                }
+            }
+        }
+    }
+    
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeSightseeing();
+    });
+    
+    // Fallback initialization with timeout
+    setTimeout(function() {
+        const hasPickupCity = TRIP_DATA.pickup_city || (TRIP_DATA.routes && TRIP_DATA.routes.length > 0);
+        const shouldShowSightseeing = TRIP_DATA.trip_type === 'multicity' || 
+                                     TRIP_DATA.trip_type === 'local' || 
+                                     TRIP_DATA.trip_type === 'round' || 
+                                     hasPickupCity;
+        
+        if (shouldShowSightseeing) {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            if (loadingSpinner && loadingSpinner.style.display !== 'none') {
+                let citiesToLoad = [];
+                
+                if (TRIP_DATA.trip_type === 'multicity') {
+                    // Get all cities for sightseeing (including pickup city and intermediate cities)
+                    citiesToLoad = getAllCitiesForSightseeing(TRIP_DATA.routes);
+                } else if (TRIP_DATA.pickup_city_id && TRIP_DATA.pickup_city) {
+                    // For other trip types, just load the pickup city
+                    citiesToLoad = [{
+                        id: TRIP_DATA.pickup_city_id,
+                        name: TRIP_DATA.pickup_city
+                    }];
+                }
+                
+                if (citiesToLoad.length > 0) {
+                    loadSightseeingForCities(citiesToLoad);
+                } else {
+                    if (loadingSpinner) {
+                        loadingSpinner.style.display = 'none';
+                    }
+                }
+            }
+        }
+    }, 2000);
+    
+    // Simplified function to load sightseeing for specific cities
+    function loadSightseeingForCities(cities) {
+        let loadedCount = 0;
+        let sightseeingOptionsHtml = '';
+        
+        if (cities.length === 0) {
+            document.getElementById('sightseeingOptions').innerHTML = '<p class="text-muted">No cities available for sightseeing.</p>';
+            return;
+        }
+        
+        // Show loading message
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        if (loadingSpinner) {
+            loadingSpinner.style.display = 'block';
+        }
+        
+        cities.forEach(function(cityInfo, index) {
+            // Use fetch instead of jQuery AJAX
+            fetch('/api/cities/' + cityInfo.id + '/sightseeing/')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.tourist_places && data.tourist_places.length > 0) {
+                        sightseeingOptionsHtml += createSightseeingOptionHtml(data, index);
+                    }
+                    
+                    loadedCount++;
+                    
+                    if (loadedCount === cities.length) {
+                        if (loadingSpinner) {
+                            loadingSpinner.style.display = 'none';
+                        }
+                        
+                        const sightseeingOptionsElement = document.getElementById('sightseeingOptions');
+                        const sightseeingSummaryElement = document.getElementById('sightseeingSummary');
+                        
+                        if (sightseeingOptionsHtml) {
+                            sightseeingOptionsElement.innerHTML = sightseeingOptionsHtml;
+                            if (sightseeingSummaryElement) {
+                                sightseeingSummaryElement.style.display = 'block';
+                            }
+                            updateSightseeingSummary();
+                        } else {
+                            sightseeingOptionsElement.innerHTML = '<p class="text-muted">No sightseeing options available for the selected cities.</p>';
+                        }
+                    }
+                })
+                .catch(error => {
+                    loadedCount++;
+                    if (loadedCount === cities.length) {
+                        if (loadingSpinner) {
+                            loadingSpinner.style.display = 'none';
+                        }
+                        
+                        const sightseeingOptionsElement = document.getElementById('sightseeingOptions');
+                        const sightseeingSummaryElement = document.getElementById('sightseeingSummary');
+                        
+                        if (sightseeingOptionsHtml) {
+                            sightseeingOptionsElement.innerHTML = sightseeingOptionsHtml;
+                            if (sightseeingSummaryElement) {
+                                sightseeingSummaryElement.style.display = 'block';
+                            }
+                            updateSightseeingSummary();
+                        } else {
+                            sightseeingOptionsElement.innerHTML = '<p class="text-danger">Error loading sightseeing options. Please try again.</p>';
+                        }
+                    }
+                });
+        });
+    }
+    
+    // Function to create HTML for sightseeing option
+    function createSightseeingOptionHtml(data, index) {
+        let placesHtml = '';
+        data.tourist_places.forEach(function(place) {
+            placesHtml += '<li class="text-success">• ' + place + '</li>';
+        });
+        
+        return `
+            <div class="sightseeing-option mb-4 border rounded-3 overflow-hidden shadow-sm position-relative" data-city-id="${data.city_id}" data-sightseeing-km="${data.sightseeing_kilometers}">
+                <input class="form-check-input sightseeing-radio position-absolute" type="checkbox" 
+                       id="sightseeing_${data.city_id}" 
+                       value="${data.city_id}"
+                       data-city-name="${data.city_name}"
+                       data-sightseeing-km="${data.sightseeing_kilometers}"
+                       style="top: 15px; left: 15px; width: 20px; height: 20px; z-index: 10;">
+                
+                <label class="form-check-label cursor-pointer w-100 d-block" for="sightseeing_${data.city_id}">
+                    <div class="sightseeing-card">
+                        <div class="sightseeing-header p-4 bg-gradient-light border-bottom">
+                            <div class="row align-items-center">
+                                <div class="col-1">
+                                    <div class="selection-indicator">
+                                        <i class="bi bi-check-circle-fill text-success fs-4" style="display: none;"></i>
+                                        <i class="bi bi-circle text-muted fs-4"></i>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="sightseeing-title">
+                                        <h5 class="text-primary mb-2 fw-bold">
+                                            <i class="bi bi-geo-alt-fill me-2"></i>${data.city_name} Local Sightseeing
+                                        </h5>
+                                        <p class="text-muted mb-0">
+                                            <i class="bi bi-info-circle me-1"></i>
+                                            Include popular tourist attractions in ${data.city_name}
+                                        </p>
+                                    </div>
+                                </label>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <div class="sightseeing-badge">
+                                        <div class="distance-badge bg-primary text-white rounded-pill px-3 py-2 mb-2">
+                                            <i class="bi bi-speedometer me-1"></i>
+                                            <strong>+${data.sightseeing_kilometers} KM</strong>
+                                        </div>
+                                        <div class="small text-muted">Additional Distance</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sightseeing-places p-4 bg-white">
+                            <div class="places-header mb-3">
+                                <h6 class="text-info mb-2 fw-semibold d-flex align-items-center">
+                                    <i class="bi bi-camera me-2"></i>
+                                    <span>Tourist Places Included</span>
+                                    <span class="badge bg-info ms-2">${data.tourist_places.length} Places</span>
+                                </h6>
+                            </div>
+                            <div class="places-grid">
+                                <div class="row">
+                                    ${data.tourist_places.map(place => `
+                                        <div class="col-md-6 mb-2">
+                                            <div class="place-item d-flex align-items-center p-2 bg-light rounded">
+                                                <i class="bi bi-check-circle-fill text-success me-2 flex-shrink-0"></i>
+                                                <span class="text-dark small">${place}</span>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div class="sightseeing-note mt-3 p-3 bg-info bg-opacity-10 border-start border-info border-4 rounded">
+                                <div class="d-flex align-items-start">
+                                    <i class="bi bi-lightbulb-fill text-info me-2 mt-1 flex-shrink-0"></i>
+                                    <div>
+                                        <strong class="text-info">Important:</strong>
+                                        <p class="mb-0 small text-muted">
+                                            Selecting this option adds ${data.sightseeing_kilometers} KM to your trip distance. 
+                                            This may affect the final pricing based on your selected vehicle and trip type.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        `;
+    }
+    
+    // Handle sightseeing checkbox changes using vanilla JavaScript
+    document.addEventListener('change', function(event) {
+        if (event.target.classList.contains('sightseeing-radio')) {
+            updateSightseeingSummary();
+            updateTotalDistance();
+        }
+    });
+    
+    // Function to update sightseeing summary
+    function updateSightseeingSummary() {
+        const selectedCheckboxes = document.querySelectorAll('.sightseeing-radio:checked');
+        const selectedCount = selectedCheckboxes.length;
+        let totalAdditionalKm = 0;
+        
+        selectedCheckboxes.forEach(function(checkbox) {
+            totalAdditionalKm += parseFloat(checkbox.dataset.sightseeingKm) || 0;
+        });
+        
+        const selectedCitiesElement = document.getElementById('selectedCitiesCount');
+        const additionalDistanceElement = document.getElementById('additionalDistance');
+        
+        if (selectedCitiesElement) {
+            selectedCitiesElement.textContent = selectedCount + ' ' + (selectedCount === 1 ? 'city' : 'cities');
+        }
+        if (additionalDistanceElement) {
+            additionalDistanceElement.textContent = totalAdditionalKm + ' KM';
+        }
+    }
+    
+    // Function to update total distance in trip statistics
+    function updateTotalDistance() {
+        const selectedCheckboxes = document.querySelectorAll('.sightseeing-radio:checked');
+        let additionalKm = 0;
+        
+        selectedCheckboxes.forEach(function(checkbox) {
+            additionalKm += parseFloat(checkbox.dataset.sightseeingKm) || 0;
+        });
+        
+        const newTotalDistance = BASE_DISTANCE + additionalKm;
+        
+        // Update the total distance display in trip statistics
+        const distanceElement = document.querySelector('.stat-item h3.text-primary');
+        if (distanceElement) {
+            distanceElement.textContent = newTotalDistance.toFixed(1);
+        }
+        
+        // Update the global trip data for vehicle calculations
+        TRIP_DATA.total_distance = newTotalDistance;
+        
+        // Refresh vehicle prices if vehicles are loaded
+        refreshVehiclePrices();
+    }
+    
+
+
+</script>
+
+<!-- Vehicle Booking Confirmation Modal -->
+<div class="modal fade" id="bookingConfirmModal" tabindex="-1" aria-labelledby="bookingConfirmModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="bookingConfirmModalLabel">
+                    <i class="bi bi-car-front-fill me-2"></i>Confirm Vehicle Booking
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <div class="vehicle-icon mb-3">
+                        <i class="bi bi-car-front text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 id="modalVehicleName" class="text-primary mb-2">Vehicle Name</h4>
+                    <div class="price-display">
+                        <span class="h2 text-success" id="modalVehiclePrice">₹0</span>
+                        <small class="text-muted d-block">Total Amount</small>
+                    </div>
+                </div>
+
+                <div class="booking-details bg-light rounded p-3 mb-3">
+                    <h6 class="mb-3"><i class="bi bi-info-circle me-2"></i>Booking Details</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <small class="text-muted">Trip Type:</small>
+                            <div class="fw-semibold" id="modalTripType">Multi-City</div>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Total Distance:</small>
+                            <div class="fw-semibold" id="modalTotalDistance">0 KM</div>
+                        </div>
+                        <div class="col-6 mt-2">
+                            <small class="text-muted">Duration:</small>
+                            <div class="fw-semibold" id="modalTotalDays">0 Days</div>
+                        </div>
+                        <div class="col-6 mt-2">
+                            <small class="text-muted">Pickup City:</small>
+                            <div class="fw-semibold" id="modalPickupCity">Coimbatore</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="extraChargeMessage" style="display: none;"></div>
+
+                <div class="alert alert-info mb-0">
+                    <i class="bi bi-lightbulb me-2"></i>
+                    <strong>Next Step:</strong> You'll be redirected to complete your booking with guest details and
+                    payment information.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-2"></i>Cancel
+                </button>
+                <button type="button" class="btn btn-success btn-lg" id="confirmBookingBtn">
+                    <i class="bi bi-check-circle me-2"></i>Confirm Booking
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,930 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Online Cab Booking - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .booking-container {
+        padding: 40px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    
+    .booking-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        border-radius: 15px;
+    }
+    
+    .booking-header h1 {
+        color: white;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    
+    .phone-booking {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    
+    .step-indicator {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    
+    .step-indicator::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #e5e7eb;
+        z-index: 0;
+    }
+    
+    .step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        margin: 0 auto 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .step.active .step-number {
+        background: var(--primary-color);
+        color: white;
+    }
+    
+    .step.completed .step-number {
+        background: var(--secondary-color);
+        color: white;
+    }
+    
+    .step-title {
+        font-weight: 600;
+        color: #6b7280;
+    }
+    
+    .step.active .step-title {
+        color: var(--primary-color);
+    }
+    
+    .step-content {
+        display: none;
+    }
+    
+    .step-content.active {
+        display: block;
+    }
+    
+    .vehicle-option {
+        border: 2px solid #e5e7eb;
+        border-radius: 15px;
+        padding: 0;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+        background: white;
+    }
+    
+    .vehicle-option:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+        transform: scale(1.02);
+    }
+    
+    .vehicle-option.selected {
+        border-color: var(--primary-color);
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(30, 64, 175, 0.05));
+    }
+    
+    .vehicle-image-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .vehicle-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .vehicle-option:hover .vehicle-image-container img {
+        transform: scale(1.1);
+    }
+    
+    .vehicle-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(37, 99, 235, 0.85);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .vehicle-option:hover .vehicle-overlay {
+        opacity: 1;
+    }
+    
+    .vehicle-overlay-text {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    
+    .vehicle-details {
+        padding: 20px;
+    }
+    
+    .vehicle-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 10px;
+    }
+    
+    .vehicle-specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: var(--text-color);
+    }
+    
+    .vehicle-spec-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .vehicle-price {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 10px;
+    }
+    
+    .vehicle-option input[type="radio"] {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        transform: scale(1.5);
+        z-index: 10;
+    }
+    
+    .sidebar-widget {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .sidebar-widget h5 {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--primary-color);
+    }
+    
+    .widget-item {
+        padding: 15px;
+        border-bottom: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .widget-item:last-child {
+        border-bottom: none;
+    }
+    
+    .widget-item:hover {
+        background: #f8f9fa;
+        padding-left: 20px;
+    }
+    
+    .widget-item-title {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 5px;
+    }
+    
+    .widget-item-desc {
+        font-size: 14px;
+        color: var(--text-color);
+    }
+    
+    .time-input-group {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .time-input-group .form-control {
+        flex: 1;
+    }
+    
+    .time-input-group .form-select {
+        flex: 0 0 80px;
+    }
+    
+    .btn-nav {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        color: white;
+    }
+    
+    .btn-nav-secondary {
+        background: white;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-nav-secondary:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+    
+    /* Phone number validation feedback */
+    .form-control.is-valid {
+        border-color: #28a745;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='m2.3 6.73.94-.94 1.38 1.38 3.68-3.68.94.94-4.62 4.62z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+    
+    .form-control.is-invalid {
+        border-color: #dc3545;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 4.6 1.4 1.4M7.2 7.4 5.8 6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+    
+    /* Vehicle selection validation highlight */
+    .vehicle-selection-required {
+        border: 2px solid #dc3545 !important;
+        border-radius: 10px !important;
+        padding: 10px !important;
+        animation: pulse-red 1s ease-in-out 3;
+    }
+    
+    @keyframes pulse-red {
+        0% { border-color: #dc3545; }
+        50% { border-color: #ff6b7a; }
+        100% { border-color: #dc3545; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="booking-container">
+        <div class="booking-header">
+            <h1><i class="bi bi-car-front"></i> Online Cab Booking</h1>
+            <div class="phone-booking">
+                <i class="bi bi-telephone-fill me-2"></i> FOR PHONE BOOKING - CALL ON <strong>+91 97871 10763</strong>
+            </div>
+            <p class="mt-3 mb-0">Please fill the below form for online Cab booking</p>
+        </div>
+        
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" id="step1-indicator">
+                <div class="step-number">1</div>
+                <div class="step-title">Travel Guest Details</div>
+            </div>
+            <div class="step" id="step2-indicator">
+                <div class="step-number">2</div>
+                <div class="step-title">Trip & Tariff Details</div>
+            </div>
+            <div class="step" id="step3-indicator">
+                <div class="step-number">3</div>
+                <div class="step-title">Payment Preference</div>
+            </div>
+        </div>
+        
+        <div id="alertContainer"></div>
+        
+        <form id="onlineBookingForm">
+            {% csrf_token %}
+            
+            <!-- Step 1: Travel Guest Details -->
+            <div class="step-content active" id="step1">
+                <h4 class="mb-4">Step 1 of 3 - Travel Guest Details</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="phone" class="form-label">Phone (10 digits) <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" id="phone" name="phone" required pattern="[0-9]{10}" maxlength="10" minlength="10" placeholder="Enter 10-digit phone number">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="flight_train" class="form-label">Flight/Train No. OR Landmark</label>
+                        <input type="text" class="form-control" id="flight_train" name="flight_train_no" placeholder="Enter flight/train number or landmark">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="adults" class="form-label">Travellers – Adults <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="adults" name="adults" min="1" value="1" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="children" class="form-label">Travellers – Children</label>
+                        <input type="number" class="form-control" id="children" name="children" min="0" value="0">
+                    </div>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="button" class="btn btn-nav" onclick="nextStep(2)">
+                        Next <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Trip & Tariff Details -->
+            <div class="step-content" id="step2">
+                <h4 class="mb-4">Step 2 of 3 - Trip & Tariff Details</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="pickup_address" class="form-label">Pickup Location / Address <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="pickup_address" name="pickup_address" rows="3" required></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="drop_address" class="form-label">Final Dropping Location <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="drop_address" name="drop_address" rows="3" required></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="pickup_date" class="form-label">Pickup Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="pickup_date" name="pickup_date" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="pickup_city" class="form-label">Pickup City <span class="text-danger">*</span></label>
+                        <select class="form-select" id="pickup_city" name="pickup_city" required>
+                            <option value="">Select City</option>
+                            {% for city in cities %}
+                            <option value="{{ city.id }}">{{ city.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="pickup_time" class="form-label">Pickup Time <span class="text-danger">*</span></label>
+                        <div class="time-input-group">
+                            <input type="time" class="form-control" id="pickup_time" name="pickup_time" required>
+                            <select class="form-select" name="pickup_time_period" id="pickup_time_period">
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Vehicle Selection <span class="text-danger">*</span></label>
+                        <div id="vehicleOptions" class="row">
+                            {% for vehicle in vehicles %}
+                            <div class="col-md-6 mb-3">
+                                <div class="vehicle-option" onclick="selectVehicle({{ vehicle.id }})">
+                                    <input type="radio" name="vehicle_id" id="vehicle_{{ vehicle.id }}" value="{{ vehicle.id }}" required>
+                                    <div class="vehicle-image-container">
+                                        {% if vehicle.image %}
+                                        <img src="{{ vehicle.image.url }}" alt="{{ vehicle.name }}">
+                                        {% else %}
+                                        <img src="https://via.placeholder.com/400x200?text={{ vehicle.name }}" alt="{{ vehicle.name }}">
+                                        {% endif %}
+                                        <div class="vehicle-overlay">
+                                            <div class="vehicle-overlay-text">Click to Select Vehicle</div>
+                                            <div style="font-size: 14px;">Seating: {{ vehicle.seating_info }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="vehicle-details">
+                                        <div class="vehicle-name">{{ vehicle.display_name }}</div>
+                                        <div class="vehicle-specs">
+                                            <div class="vehicle-spec-item">
+                                                <i class="bi bi-people"></i>
+                                                <span>Seating: {{ vehicle.seating_info }}</span>
+                                            </div>
+                                            {% if vehicle.luggage_capacity %}
+                                            <div class="vehicle-spec-item">
+                                                <i class="bi bi-bag"></i>
+                                                <span>{{ vehicle.luggage_capacity }}</span>
+                                            </div>
+                                            {% endif %}
+                                            <div class="vehicle-spec-item">
+                                                <i class="bi bi-fuel-pump"></i>
+                                                <span>{{ vehicle.get_fuel_type_display }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="vehicle-price">Rs {{ vehicle.fare_per_km }}/km</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <div class="alert alert-warning">No vehicles available</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="button" class="btn btn-nav-secondary" onclick="prevStep(1)">
+                        <i class="bi bi-arrow-left me-2"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-nav" onclick="nextStep(3)">
+                        Next <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Payment Mode -->
+            <div class="step-content" id="step3">
+                <h4 class="mb-4">Step 3 of 3 - Payment Preference</h4>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Payment Preference <span class="text-danger">*</span></label>
+                        <p class="text-muted small">Select your preferred payment method. Final fare will be calculated and confirmed by our team.</p>
+                        <!-- <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="payment_type" id="payment_online" value="upi" required>
+                            <label class="form-check-label" for="payment_online">Online Payment</label>
+                        </div> -->
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="payment_type" id="payment_driver" value="driver" required>
+                            <label class="form-check-label" for="payment_driver">Pay to Driver</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="payment_type" id="payment_office" value="office" required>
+                            <label class="form-check-label" for="payment_office">Pay at Office</label>
+                        </div>
+                    </div>
+                    
+
+                    
+                    <div class="col-md-12 mb-3">
+                        <label for="instructions" class="form-label">Any Specific Instructions</label>
+                        <textarea class="form-control" id="instructions" name="special_instructions" rows="3" placeholder="Enter any special instructions"></textarea>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Enter Code (Captcha) <span class="text-danger">*</span></label>
+                        <div class="captcha-box mb-2" style="background: #f3f4f6; padding: 15px; border-radius: 10px; text-align: center; font-size: 24px; font-weight: bold; color: var(--primary-color); letter-spacing: 5px; border: 2px dashed var(--primary-color);">
+                            <span id="captchaCode"></span>
+                        </div>
+                        <input type="text" class="form-control" id="captcha" name="captcha" required placeholder="Enter the code shown above" maxlength="4">
+                        <button type="button" class="btn btn-link p-0 mt-2" onclick="generateCaptcha()">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh Code
+                        </button>
+                    </div>
+                    
+                    <div class="col-md-12 mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                            <label class="form-check-label" for="terms">
+                                I understand and agree with the rules & restrictions, Cancellation Policy, and Terms & Conditions of Ritham Tours & Travels.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="button" class="btn btn-nav-secondary" onclick="prevStep(2)">
+                        <i class="bi bi-arrow-left me-2"></i> Previous
+                    </button>
+                    <button type="submit" class="btn btn-nav">
+                        <i class="bi bi-check-circle me-2"></i> Submit Booking Request
+                    </button>
+                </div>
+            </div>
+        </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Razorpay Checkout Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+let captchaCode = '';
+let selectedVehicle = null;
+let totalAmount = 0;
+
+// Generate captcha
+function generateCaptcha() {
+    captchaCode = Math.floor(1000 + Math.random() * 9000).toString();
+    document.getElementById('captchaCode').textContent = captchaCode;
+}
+
+// Initialize captcha and set date constraints
+generateCaptcha();
+
+// Set minimum date to today for pickup date
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date().toISOString().split('T')[0];
+    const pickupDateInput = document.getElementById('pickup_date');
+    if (pickupDateInput) {
+        pickupDateInput.setAttribute('min', today);
+        console.log('Set pickup date minimum to:', today);
+    }
+    
+    // Add phone number validation
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            // Remove any non-digit characters
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Limit to 10 digits
+            if (value.length > 10) {
+                value = value.substring(0, 10);
+            }
+            
+            e.target.value = value;
+            
+            // Add validation feedback
+            if (value.length === 10) {
+                e.target.classList.remove('is-invalid');
+                e.target.classList.add('is-valid');
+            } else {
+                e.target.classList.remove('is-valid');
+                if (value.length > 0) {
+                    e.target.classList.add('is-invalid');
+                }
+            }
+        });
+        
+        // Prevent non-numeric input
+        phoneInput.addEventListener('keypress', function(e) {
+            if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+        
+        console.log('Phone number validation initialized');
+    }
+});
+
+// Debug: Add direct click listener to submit button
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded');
+    
+    const submitBtn = document.querySelector('button[type="submit"]');
+    if (submitBtn) {
+        console.log('Submit button found:', submitBtn);
+        submitBtn.addEventListener('click', function(e) {
+            console.log('Submit button clicked directly');
+        });
+    } else {
+        console.error('Submit button not found!');
+    }
+    
+    // Test API endpoint availability
+    console.log('Testing API endpoint...');
+    fetch('/api/bookings/online-booking/', {
+        method: 'OPTIONS'
+    })
+    .then(response => {
+        console.log('API endpoint test - Status:', response.status);
+        console.log('API endpoint test - Headers:', response.headers);
+    })
+    .catch(error => {
+        console.error('API endpoint test failed:', error);
+    });
+    
+    // Check CSRF token
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+    if (csrfToken) {
+        console.log('CSRF token found:', csrfToken.value.substring(0, 10) + '...');
+    } else {
+        console.error('CSRF token not found!');
+    }
+});
+
+// Step navigation
+function nextStep(step) {
+    console.log('Attempting to go to step:', step);
+    
+    // Validate current step
+    const currentStep = step - 1;
+    const form = document.getElementById('onlineBookingForm');
+    const currentStepContent = document.getElementById(`step${currentStep}`);
+    
+    if (!currentStepContent) {
+        console.error('Current step content not found:', `step${currentStep}`);
+        return;
+    }
+    
+    const inputs = currentStepContent.querySelectorAll('input[required], select[required], textarea[required]');
+    console.log('Validating inputs in step', currentStep, ':', inputs.length, 'required fields');
+    
+    let isValid = true;
+    let invalidFields = [];
+    
+    inputs.forEach(input => {
+        if (input.type === 'radio') {
+            // For radio buttons, check if any in the group is selected
+            const radioGroup = document.querySelectorAll(`input[name="${input.name}"]`);
+            const isRadioSelected = Array.from(radioGroup).some(radio => radio.checked);
+            if (!isRadioSelected) {
+                isValid = false;
+                invalidFields.push(input.name);
+                console.log('Radio group not selected:', input.name);
+            }
+        } else if (input.type === 'tel' && input.name === 'phone') {
+            // Special validation for phone number (exactly 10 digits)
+            const phoneValue = input.value.replace(/\D/g, '');
+            if (phoneValue.length !== 10) {
+                isValid = false;
+                invalidFields.push('phone (must be exactly 10 digits)');
+                input.classList.add('is-invalid');
+                console.log('Invalid phone number:', phoneValue, 'length:', phoneValue.length);
+            } else {
+                input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
+            }
+        } else if (!input.value.trim()) {
+            isValid = false;
+            invalidFields.push(input.name || input.id);
+            input.classList.add('is-invalid');
+            console.log('Invalid field:', input.name || input.id, 'value:', input.value);
+        } else {
+            input.classList.remove('is-invalid');
+        }
+    });
+    
+    // Special validation for step 2 (vehicle selection)
+    if (currentStep === 2) {
+        const vehicleSelected = document.querySelector('input[name="vehicle_id"]:checked');
+        if (!vehicleSelected) {
+            isValid = false;
+            invalidFields.push('vehicle selection');
+            showAlert('Please select a vehicle to proceed', 'warning');
+            console.log('No vehicle selected');
+            
+            // Highlight vehicle selection area
+            const vehicleOptionsContainer = document.getElementById('vehicleOptions');
+            if (vehicleOptionsContainer) {
+                vehicleOptionsContainer.style.border = '2px solid #dc3545';
+                vehicleOptionsContainer.style.borderRadius = '10px';
+                vehicleOptionsContainer.style.padding = '10px';
+                
+                // Remove highlight after 3 seconds
+                setTimeout(() => {
+                    vehicleOptionsContainer.style.border = '';
+                    vehicleOptionsContainer.style.padding = '';
+                }, 3000);
+            }
+            return;
+        } else {
+            console.log('Vehicle selected:', vehicleSelected.value);
+            // Remove any previous highlighting
+            const vehicleOptionsContainer = document.getElementById('vehicleOptions');
+            if (vehicleOptionsContainer) {
+                vehicleOptionsContainer.style.border = '';
+                vehicleOptionsContainer.style.padding = '';
+            }
+        }
+    }
+    
+    if (!isValid) {
+        console.log('Validation failed for fields:', invalidFields);
+        showAlert(`Please fill all required fields: ${invalidFields.join(', ')}`, 'danger');
+        return;
+    }
+    
+    console.log('Step validation passed, moving to step:', step);
+    
+    // Hide current step
+    document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    
+    // Show next step
+    const nextStepContent = document.getElementById(`step${step}`);
+    const nextStepIndicator = document.getElementById(`step${step}-indicator`);
+    
+    if (nextStepContent && nextStepIndicator) {
+        nextStepContent.classList.add('active');
+        nextStepIndicator.classList.add('active');
+        console.log('Successfully moved to step:', step);
+    } else {
+        console.error('Next step elements not found:', `step${step}`, `step${step}-indicator`);
+    }
+    
+    // Mark previous steps as completed
+    for (let i = 1; i < step; i++) {
+        const stepIndicator = document.getElementById(`step${i}-indicator`);
+        if (stepIndicator) {
+            stepIndicator.classList.add('completed');
+        }
+    }
+    
+    // Scroll to top of form
+    document.querySelector('.booking-container').scrollIntoView({ behavior: 'smooth' });
+}
+
+function prevStep(step) {
+    document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    
+    document.getElementById(`step${step}`).classList.add('active');
+    document.getElementById(`step${step}-indicator`).classList.add('active');
+}
+
+// Vehicle selection
+function selectVehicle(vehicleId) {
+    console.log('Selecting vehicle:', vehicleId);
+    selectedVehicle = vehicleId;
+    
+    // Remove selection from all vehicles
+    document.querySelectorAll('.vehicle-option').forEach(opt => opt.classList.remove('selected'));
+    
+    // Add selection to clicked vehicle
+    const vehicleOption = document.querySelector(`#vehicle_${vehicleId}`).closest('.vehicle-option');
+    if (vehicleOption) {
+        vehicleOption.classList.add('selected');
+        console.log('Vehicle option selected visually');
+    } else {
+        console.error('Vehicle option not found for ID:', vehicleId);
+    }
+    
+    // Check the radio button
+    const radioButton = document.getElementById(`vehicle_${vehicleId}`);
+    if (radioButton) {
+        radioButton.checked = true;
+        console.log('Radio button checked for vehicle:', vehicleId);
+    } else {
+        console.error('Radio button not found for vehicle:', vehicleId);
+    }
+}
+
+// Payment type change - simplified for online cab booking
+document.querySelectorAll('input[name="payment_type"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        // For online cab booking, no online payment calculation needed
+        console.log('Payment type selected:', this.value);
+    });
+});
+
+// Form submission
+document.getElementById('onlineBookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    console.log('Form submission started');
+    
+    // Check if we're on step 3
+    const currentStep = document.querySelector('.step-content.active');
+    if (!currentStep || currentStep.id !== 'step3') {
+        console.log('Not on step 3, current step:', currentStep ? currentStep.id : 'none');
+        showAlert('Please complete all steps before submitting', 'warning');
+        return;
+    }
+    
+    // Validate captcha
+    const captcha = document.getElementById('captcha').value.trim();
+    console.log('Captcha entered:', captcha, 'Expected:', captchaCode);
+    
+    if (captcha !== captchaCode) {
+        showAlert('Invalid captcha code. Please try again.', 'danger');
+        generateCaptcha();
+        document.getElementById('captcha').value = '';
+        return;
+    }
+    
+    // Validate terms
+    if (!document.getElementById('terms').checked) {
+        showAlert('Please accept the terms and conditions', 'danger');
+        return;
+    }
+    
+    // Validate payment type selection
+    const paymentType = document.querySelector('input[name="payment_type"]:checked');
+    if (!paymentType) {
+        showAlert('Please select a payment option', 'danger');
+        return;
+    }
+    
+    console.log('Validation passed, collecting form data');
+    
+    // Collect form data
+    const formData = new FormData(this);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    
+    console.log('Form data collected:', data);
+    
+    // For online cab booking, we don't calculate or show total amount
+    // Just set a placeholder value for backend processing
+    data.total_amount = '0.00';
+    console.log('Online cab booking - no amount calculation needed');
+    
+    // Submit booking
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+    
+    console.log('Submitting booking data:', data);
+    
+    fetch('/api/bookings/online-booking/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log('Response data:', data);
+        if (data.error) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            showAlert(data.error, 'danger');
+        } else {
+            // For online cab booking, always redirect to confirmation
+            // No online payment processing needed
+            showAlert(data.message, 'success');
+            setTimeout(() => {
+                window.location.href = `/booking-confirmation/${data.booking_number}/`;
+            }, 2000);
+        }
+    })
+    .catch(error => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        showAlert('An error occurred. Please try again.', 'danger');
+        console.error('Fetch error:', error);
+    });
+});
+
+function showAlert(message, type) {
+    const alertContainer = document.getElementById('alertContainer');
+    alertContainer.innerHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+}
+</script>
+{% endblock %}
+

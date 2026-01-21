@@ -1,0 +1,3184 @@
+{% extends 'base.html' %}
+
+{% block title %}Complete Your Booking - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<!-- Booking Header -->
+<div class="booking-header bg-gradient-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-6 mb-2">
+                    <i class="bi bi-calendar-check me-3"></i>Complete Your Booking
+                </h1>
+                <p class="lead mb-0">Just a few steps to confirm your travel reservation</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="booking-progress">
+                    <div class="progress-circle active" data-step="1">
+                        <i class="bi bi-person-fill"></i>
+                        <span>Guest</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-circle" data-step="2">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span>Address</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-circle" data-step="3">
+                        <i class="bi bi-credit-card-fill"></i>
+                        <span>Payment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <!-- Booking Summary Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="booking-summary-card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0 text-center" id="tripTypeHeader">
+                        <i class="bi bi-map me-2"></i><span id="tripTypeDisplay">BOOKING SUMMARY</span>
+                    </h4>
+                </div>
+                <div class="card-body p-0">
+                    <!-- Trip Overview Table -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0">
+                            <thead class="table-light">
+                                <tr class="text-center">
+                                    <th>DAYS</th>
+                                    <th>FROM</th>
+                                    <th>TO</th>
+                                    <th>DISTANCE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tripOverviewTable">
+                                <!-- Dynamic content will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Sightseeing Details -->
+                    <div class="sightseeing-section p-3">
+                        <div id="sightseeingDetails">
+                            <!-- Dynamic sightseeing content will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Trip Summary -->
+                    <div class="trip-summary bg-light p-3">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <strong>PICK-UP CITY</strong>
+                                <div id="pickupCityDisplay">Bengaluru</div>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>TOTAL DAYS</strong>
+                                <div id="totalDaysDisplay">9 Days</div>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>TOTAL DISTANCE</strong>
+                                <div id="totalDistanceDisplay">1700 Kms</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tariff Details -->
+                    <div class="tariff-section p-3">
+                        <h6 class="text-center mb-3"><strong>TARIFF DETAILS (DAY BASIS)</strong></h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-secondary">
+                                    <tr class="text-center">
+                                        <th>SELECTED CAR</th>
+                                        <th>RENT / DAY</th>
+                                        <th>FREE KMs / DAY</th>
+                                        <th>FARE / KM<br>(After Free Km)</th>
+                                        <th>DRIVER / DAY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="text-center">
+                                        <td id="selectedCarDisplay">Swift Dzire A/c</td>
+                                        <td id="rentPerDayDisplay">Rs. 2300.0</td>
+                                        <td id="freeKmsDisplay">100 Kms</td>
+                                        <td id="farePerKmDisplay">Rs. 13.0</td>
+                                        <td id="driverPerDayDisplay">Rs. 500.0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Calculation Details -->
+                    <div class="calculation-section p-3">
+                        <h6 class="text-center mb-3"><strong>Tariff Details (Calculation)</strong></h6>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-sm">
+                                    <tr id="calcTotalDaysRow">
+                                        <td id="calcTotalDaysLabel">Total Day(s)</td>
+                                        <td class="text-end" id="calcTotalDays">-</td>
+                                    </tr>
+                                    <tr id="calcFreeKmsRow">
+                                        <td id="calcFreeKmsLabel">Total Free Kms</td>
+                                        <td class="text-end" id="calcFreeKms">-</td>
+                                    </tr>
+                                    <tr id="calcTotalRentRow">
+                                        <td id="calcTotalRentLabel">Total Rent</td>
+                                        <td class="text-end" id="calcTotalRent">-</td>
+                                    </tr>
+                                    <tr id="calcExtraKmsRow">
+                                        <td id="calcExtraKmsLabel">Extra Kms Fare</td>
+                                        <td class="text-end" id="calcExtraKms">-</td>
+                                    </tr>
+                                    <tr id="calcDriverAllowanceRow">
+                                        <td id="calcDriverAllowanceLabel">Driver Allowance</td>
+                                        <td class="text-end" id="calcDriverAllowance">-</td>
+                                    </tr>
+                                    <tr id="calcHillChargesRow">
+                                        <td id="calcHillChargesLabel">Hill Station Charges</td>
+                                        <td class="text-end" id="calcHillCharges">-</td>
+                                    </tr>
+                                    {% if system_settings.gst_enabled %}
+                                    <tr class="table-info" id="calcGstRow">
+                                        <td id="calcGstLabel"><strong>GST</strong></td>
+                                        <td class="text-end"><strong id="calcGstAmount">-</strong></td>
+                                    </tr>
+                                    {% endif %}
+                                    <tr class="table-warning">
+                                        <td><strong>Total Amount</strong></td>
+                                        <td class="text-end"><strong id="calcTotalAmount">-</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Important Notes -->
+                    <div class="notes-section p-3 bg-light">
+                        <h6 class="text-danger mb-3"><strong>Note:</strong></h6>
+                        <ol class="small">
+                            <li>Driver Allowance will be extra if the driver drives after 10.00 pm and before 6.00 am.</li>
+                            <li>Total Km and Time will be calculated from the office.</li>
+                            <li>Air-conditioning will not function in hill areas (upward journey) or when the vehicle is parked.</li>
+                            <li>For one-way outstation trips, the customer must bear Toll, Parking, State Tax, Driver Allowance, and Overnight Charges incurred by the driver to return to the original garage location.</li>
+                            <li>Parking, Toll and Inter-State Permit Charges are excluded from the above tariff and will be charged separately as per actual.</li>
+                            <li>This fare is for your charge and may vary based on specific requirements and seasonal demand.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Modern Step Indicator -->
+            <div class="step-indicator mb-5">
+                <div class="step-item active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h6>Guest Details</h6>
+                        <small>Personal Information</small>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-item" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h6>Addresses</h6>
+                        <small>Pickup & Drop Location</small>
+                    </div>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-item" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h6>Payment</h6>
+                        <small>Complete Booking</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <form id="bookingForm" class="booking-wizard">
+                {% csrf_token %}
+                <input type="hidden" id="vehicleId" name="vehicle_id">
+                
+                <!-- Hidden fields for date/time information -->
+                <input type="hidden" id="pickupDate" name="pickup_date">
+                <input type="hidden" id="pickupTime" name="pickup_time">
+                <input type="hidden" id="dropDate" name="drop_date">
+                <input type="hidden" id="dropTime" name="drop_time">
+
+                <!-- Step 1: Guest Details -->
+                <div class="step-content active" id="step1">
+                    <div class="booking-card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="step-icon me-3">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <div>
+                                    <h4 class="mb-1">Guest Details</h4>
+                                    <p class="text-muted mb-0">Tell us about the travelers</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="guestName" name="name" placeholder="Full Name" required>
+                                        <label for="guestName">
+                                            <i class="bi bi-person me-2"></i>Full Name *
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="guestEmail" name="email" placeholder="Email Address" required>
+                                        <label for="guestEmail">
+                                            <i class="bi bi-envelope me-2"></i>Email Address *
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="guestPhone" name="phone" placeholder="Phone Number" required>
+                                        <label for="guestPhone">
+                                            <i class="bi bi-telephone me-2"></i>Phone Number *
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="flightTrain" name="flight_train_no" placeholder="Flight/Train Number">
+                                        <label for="flightTrain">
+                                            <i class="bi bi-airplane me-2"></i>Flight/Train Number
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="landmark" name="landmark" placeholder="Landmark">
+                                        <label for="landmark">
+                                            <i class="bi bi-signpost me-2"></i>Landmark (Optional)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        <i class="bi bi-people me-2"></i>Number of Adults *
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="btn-decrease" onclick="changeNumber('adults', -1)">-</button>
+                                        <input type="number" class="form-control text-center" name="adults" id="adults" value="1" min="1" required readonly>
+                                        <button type="button" class="btn-increase" onclick="changeNumber('adults', 1)">+</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        <i class="bi bi-person-hearts me-2"></i>Number of Children
+                                    </label>
+                                    <div class="number-input">
+                                        <button type="button" class="btn-decrease" onclick="changeNumber('children', -1)">-</button>
+                                        <input type="number" class="form-control text-center" name="children" id="children" value="0" min="0" readonly>
+                                        <button type="button" class="btn-increase" onclick="changeNumber('children', 1)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Seating Capacity Info -->
+                            <div class="row mt-3" id="seatingCapacityInfo" style="display: none;">
+                                <div class="col-12">
+                                    <div class="alert alert-info mb-0" role="alert">
+                                        <i class="bi bi-info-circle me-2"></i>
+                                        <strong>Vehicle Seating Capacity:</strong> <span id="capacityDisplay">Loading...</span> passengers
+                                        <span class="ms-3">
+                                            <strong>Selected:</strong> <span id="selectedPassengers">1</span> passengers
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary btn-lg px-5" onclick="nextStep(2)">
+                                    Continue <i class="bi bi-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Addresses -->
+                <div class="step-content" id="step2">
+                    <div class="booking-card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="step-icon me-3">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                                <div>
+                                    <h4 class="mb-1">Pickup & Drop Locations</h4>
+                                    <p class="text-muted mb-0">Where should we pick you up and drop you off?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <div class="address-card pickup-card">
+                                        <div class="address-header">
+                                            <div class="address-icon pickup">
+                                                <i class="bi bi-geo-alt-fill"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">Pickup Location</h6>
+                                                <small class="text-muted">Where should we pick you up?</small>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating mt-3">
+                                            <textarea class="form-control" id="pickupAddress" name="pickup_address" 
+                                                placeholder="Enter pickup address" rows="3" required></textarea>
+                                            <label for="pickupAddress">
+                                                <i class="bi bi-house-door me-2"></i>Pickup Address *
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="address-card drop-card">
+                                        <div class="address-header">
+                                            <div class="address-icon drop">
+                                                <i class="bi bi-flag-fill"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">Drop Location</h6>
+                                                <small class="text-muted">Where should we drop you off?</small>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating mt-3">
+                                            <textarea class="form-control" id="dropAddress" name="drop_address" 
+                                                placeholder="Enter drop address" rows="3" required></textarea>
+                                            <label for="dropAddress">
+                                                <i class="bi bi-geo me-2"></i>Drop Address *
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="nextStep(1)">
+                                    <i class="bi bi-arrow-left me-2"></i>Back
+                                </button>
+                                <button type="button" class="btn btn-primary btn-lg px-5" onclick="nextStep(3)">
+                                    Continue <i class="bi bi-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Payment -->
+                <div class="step-content" id="step3">
+                    <div class="booking-card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="step-icon me-3">
+                                    <i class="bi bi-credit-card-fill"></i>
+                                </div>
+                                <div>
+                                    <h4 class="mb-1">Payment & Confirmation</h4>
+                                    <p class="text-muted mb-0">Choose your payment method and complete booking</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Booking Summary -->
+                            <div class="booking-summary mb-4">
+                                <h6 class="fw-bold mb-3">
+                                    <i class="bi bi-receipt me-2"></i>Booking Summary
+                                </h6>
+                                <div class="summary-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-semibold">Total Amount:</span>
+                                        <span class="h5 text-primary mb-0" id="totalAmount">₹0.0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment Methods -->
+                            <div class="payment-methods mb-4">
+                                <h6 class="fw-bold mb-3">
+                                    <i class="bi bi-wallet2 me-2"></i>Payment Method
+                                </h6>
+                                <div class="row g-3">
+                                    {% if system_settings.upi_payments_enabled %}
+                                    <div class="col-md-4">
+                                        <div class="payment-option">
+                                            <input type="radio" class="btn-check" name="payment_type" id="upi" value="upi" 
+                                                   {% if system_settings.default_payment_method == 'upi' %}checked{% endif %}>
+                                            <label class="btn payment-btn" for="upi">
+                                                <i class="bi bi-phone-fill mb-2"></i>
+                                                <div>UPI Payment</div>
+                                                <small>Pay Online</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    {% else %}
+                                    <div class="col-md-6">
+                                    {% endif %}
+                                        <div class="payment-option">
+                                            <input type="radio" class="btn-check" name="payment_type" id="driver" value="driver"
+                                                   {% if system_settings.default_payment_method == 'driver' or not system_settings.upi_payments_enabled %}checked{% endif %}>
+                                            <label class="btn payment-btn" for="driver">
+                                                <i class="bi bi-person-fill mb-2"></i>
+                                                <div>Pay Driver</div>
+                                                <small>Cash Payment</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% if system_settings.upi_payments_enabled %}
+                                    <div class="col-md-4">
+                                    {% else %}
+                                    <div class="col-md-6">
+                                    {% endif %}
+                                        <div class="payment-option">
+                                            <input type="radio" class="btn-check" name="payment_type" id="office" value="office"
+                                                   {% if system_settings.default_payment_method == 'office' %}checked{% endif %}>
+                                            <label class="btn payment-btn" for="office">
+                                                <i class="bi bi-building mb-2"></i>
+                                                <div>Pay at Office</div>
+                                                <small>Visit Office</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- UPI Options -->
+                            {% if system_settings.upi_payments_enabled %}
+                            <div id="upiOptions" class="payment-options mb-4" {% if system_settings.default_payment_method != 'upi' %}style="display: none;"{% endif %}>
+                                <h6 class="fw-bold mb-3">Payment Options</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="option-card">
+                                            <input type="radio" class="btn-check" name="payment_option" id="fullPayment" value="full" checked>
+                                            <label class="btn option-btn" for="fullPayment">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="bi bi-check-circle-fill text-success me-3"></i>
+                                                    <div>
+                                                        <div class="fw-semibold">Full Payment</div>
+                                                        <small class="text-muted">Pay complete amount now</small>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="option-card">
+                                            <input type="radio" class="btn-check" name="payment_option" id="advancePayment" value="advance">
+                                            <label class="btn option-btn" for="advancePayment">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="bi bi-clock-fill text-warning me-3"></i>
+                                                    <div>
+                                                        <div class="fw-semibold">{{ system_settings.advance_payment_percentage|floatformat:0 }}% Advance</div>
+                                                        <small class="text-muted">Pay remaining to driver</small>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="advance-amount mt-3" id="advanceAmountDiv" style="display:none;">
+                                    <div class="alert alert-info">
+                                        <strong>Advance Amount: </strong>
+                                        <span id="advanceAmount" class="fw-bold">₹0.0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <!-- Special Instructions -->
+                            <div id="driverOfficeOptions" class="payment-options mt-3 mb-4" style="display:none;">
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="specialInstructions" name="special_instructions" 
+                                        placeholder="Any special instructions" rows="3"></textarea>
+                                    <label for="specialInstructions">
+                                        <i class="bi bi-chat-text me-2"></i>Special Instructions (Optional)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Terms & Conditions -->
+                            <div class="terms-section mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="terms" required>
+                                    <label class="form-check-label" for="terms">
+                                        I agree to the <a href="{% url 'terms_conditions' %}" class="text-decoration-none">Terms & Conditions</a> 
+                                        and <a href="{% url 'privacy_policy' %}" class="text-decoration-none">Privacy Policy</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex mb-4 justify-content-between align-items-center">
+                                <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="nextStep(2)">
+                                    <i class="bi bi-arrow-left me-2"></i>Back
+                                </button>
+                                <button type="submit" class="btn btn-success btn-lg px-5">
+                                    <i class="bi bi-check-circle me-2"></i>Complete Booking
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modern Booking Styles -->
+<style>
+    /* Hide scrollbar from address input fields but keep scroll functionality and resize */
+    #pickupAddress, #dropAddress {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer 10+ */
+        width: 100% !important; /* Ensure full width */
+        box-sizing: border-box; /* Include padding and border in width */
+        resize: vertical; /* Allow vertical resizing */
+        min-height: 80px; /* Minimum height */
+    }
+    
+    /* Hide scrollbar for WebKit browsers and fix width */
+    #pickupAddress::-webkit-scrollbar, #dropAddress::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+        display: none;
+    }
+    
+    /* Booking Summary Card */
+    .booking-summary-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        border: none;
+        margin-bottom: 30px;
+        display: none; /* Initially hidden */
+    }
+    
+    .booking-summary-card .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 20px;
+    }
+    
+    .booking-summary-card .table {
+        margin-bottom: 0;
+    }
+    
+    .booking-summary-card .table th,
+    .booking-summary-card .table td {
+        padding: 12px 8px;
+        vertical-align: middle;
+        border-color: #dee2e6;
+    }
+    
+    .booking-summary-card .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    .sightseeing-section {
+        background: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .sightseeing-location {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: white;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+    }
+    
+    .sightseeing-location h6 {
+        color: #667eea;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .sightseeing-location .distance {
+        color: #dc3545;
+        font-weight: 600;
+        float: right;
+    }
+    
+    .trip-summary {
+        border-top: 1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .trip-summary div {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-top: 5px;
+    }
+    
+    .tariff-section {
+        background: white;
+    }
+    
+    .calculation-section {
+        background: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+    
+    .calculation-section .table td {
+        padding: 8px 12px;
+        border: none;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .notes-section {
+        border-top: 1px solid #dee2e6;
+    }
+    
+    .notes-section ol {
+        margin-bottom: 0;
+        padding-left: 20px;
+    }
+    
+    .notes-section li {
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    /* Booking Header */
+    .booking-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .booking-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .booking-progress {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .progress-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        transition: all 0.3s ease;
+    }
+    
+    .progress-circle.active {
+        background: white;
+        color: #667eea;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    
+    .progress-circle i {
+        font-size: 18px;
+        margin-bottom: 2px;
+    }
+    
+    .progress-line {
+        width: 40px;
+        height: 2px;
+        background: rgba(255,255,255,0.3);
+    }
+    
+    /* Step Indicator */
+    .step-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    
+    .step-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        border-radius: 15px;
+        background: #f8f9fa;
+        transition: all 0.3s ease;
+        /* min-width: 200px; */
+    }
+    
+    .step-item.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+    
+    .step-item.completed {
+        background: #28a745;
+        color: white;
+    }
+    
+    .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    .step-item.active .step-number {
+        background: white;
+        color: #667eea;
+    }
+    
+    .step-connector {
+        width: 80px;
+        height: 3px;
+        background: #dee2e6;
+        position: relative;
+    }
+    
+    .step-connector.active {
+        background: #667eea;
+    }
+    
+    /* Booking Cards */
+    .booking-wizard {
+        position: relative;
+    }
+    
+    .step-content {
+        display: none;
+        animation: fadeInUp 0.5s ease;
+    }
+    
+    .step-content.active {
+        display: block;
+    }
+    
+    .booking-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        border: none;
+    }
+    
+    .booking-card .card-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: none;
+        padding: 30px;
+    }
+    
+    .step-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+    }
+    
+    .booking-card .card-body {
+        padding: 40px;
+    }
+    
+    .booking-card .card-footer {
+        background: #f8f9fa;
+        border: none;
+        padding: 30px;
+    }
+    
+    /* Form Elements */
+    .form-floating > label {
+        font-weight: 500;
+        color: #6c757d;
+    }
+    
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 12px 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    /* Number Input */
+    .number-input {
+        display: flex;
+        align-items: center;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    
+    .number-input .btn-decrease,
+    .number-input .btn-increase {
+        width: 45px;
+        height: 45px;
+        border: none;
+        background: #f8f9fa;
+        color: #667eea;
+        font-weight: bold;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+    
+    .number-input .btn-decrease:hover,
+    .number-input .btn-increase:hover {
+        background: #667eea;
+        color: white;
+    }
+    
+    .number-input .form-control {
+        border: none;
+        border-radius: 0;
+        flex: 1;
+    }
+    
+    /* Address Cards */
+    .address-card {
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .address-card:hover {
+        border-color: #667eea;
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1);
+    }
+    
+    .address-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .address-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+    }
+    
+    .address-icon.pickup {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    }
+    
+    .address-icon.drop {
+        background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+    }
+    
+    /* Payment Methods */
+    .payment-methods .payment-option {
+        height: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .payment-btn {
+        width: 100%;
+        height: 120px;
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transition: all 0.3s ease;
+        background: white;
+        color: #6c757d;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .payment-btn:hover {
+        border-color: #667eea;
+        color: #667eea;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    }
+    
+    .btn-check:checked + .payment-btn {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .payment-btn i {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+    
+    .payment-btn div {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    
+    .payment-btn small {
+        font-size: 12px;
+        opacity: 0.8;
+    }
+    
+    /* Payment Options */
+    .payment-options {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+    }
+    
+    .option-card {
+        height: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .option-btn {
+        width: 100%;
+        min-height: 80px;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        transition: all 0.3s ease;
+        background: white;
+        color: #495057;
+    }
+    
+    .option-btn:hover {
+        border-color: #667eea;
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+    }
+    
+    .btn-check:checked + .option-btn {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+    }
+    
+    /* Driver/Office Options */
+    #driverOfficeOptions {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+    }
+    
+    /* Advance Amount Display */
+    .advance-amount {
+        animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .payment-btn {
+            height: 100px;
+        }
+        
+        .payment-btn i {
+            font-size: 24px;
+        }
+        
+        .payment-btn div {
+            font-size: 14px;
+        }
+        
+        .option-btn {
+            min-height: 70px;
+            padding: 12px 15px;
+        }
+    }
+    
+    /* Payment Options */
+    .option-card {
+        height: 100%;
+    }
+    
+    .option-btn {
+        width: 100%;
+        height: 80px;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        transition: all 0.3s ease;
+        background: white;
+        color: #6c757d;
+    }
+    
+    .option-btn:hover {
+        border-color: #667eea;
+        color: #667eea;
+    }
+    
+    .btn-check:checked + .option-btn {
+        border-color: #667eea;
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+    }
+    
+    /* Booking Summary */
+    .booking-summary {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        padding: 20px;
+    }
+    
+    .summary-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    /* Buttons */
+    .btn-lg {
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+    }
+    
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+    }
+    
+    .btn-outline-secondary {
+        border: 2px solid #6c757d;
+        color: #6c757d;
+        border-radius: 12px;
+    }
+    
+    .btn-outline-secondary:hover {
+        background: #6c757d;
+        border-color: #6c757d;
+        transform: translateY(-2px);
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .booking-progress {
+            display: none;
+        }
+        
+        .step-indicator {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .step-connector {
+            width: 3px;
+            height: 30px;
+        }
+        
+        .step-item {
+            min-width: auto;
+            width: 100%;
+        }
+        
+        .booking-card .card-header,
+        .booking-card .card-body,
+        .booking-card .card-footer {
+            padding: 20px;
+        }
+    }
+    
+    /* Validation styling */
+    .is-valid {
+        border-color: #28a745 !important;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='m2.3 6.73.94-.94 1.38 1.38 3.68-3.68.94.94-4.62 4.62z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+    
+    .is-invalid {
+        border-color: #dc3545 !important;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 4.6 1.4 1.4M7.2 7.4 5.8 6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+    
+    .step-validation-error {
+        border-left: 4px solid #dc3545;
+        animation: slideInDown 0.3s ease-out;
+    }
+    
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Step indicator enhancements */
+    .step-item {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .step-item:hover:not(.active) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    }
+    
+    .step-item.completed {
+        background: #28a745;
+        color: white;
+    }
+    
+    .step-item.completed .step-number {
+        background: white;
+        color: #28a745;
+    }
+    
+    /* Passenger warning styling */
+    .passenger-warning {
+        border-left: 4px solid #dc3545;
+        animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Seating capacity info styling */
+    #seatingCapacityInfo .alert-info {
+        border-left: 4px solid #0dcaf0;
+    }
+    
+    .text-success {
+        color: #198754 !important;
+        font-weight: 600;
+    }
+    
+    .text-danger {
+        color: #dc3545 !important;
+        font-weight: 600;
+    }
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    $(document).ready(function () {
+        // Populate booking summary first
+        populateBookingSummary();
+        
+        // Get URL parameters
+        var urlParams = new URLSearchParams(window.location.search);
+
+        // Check for tour planner booking data
+        var tourPlannerData = sessionStorage.getItem('tourPlannerBooking');
+        if (tourPlannerData) {
+            try {
+                var bookingData = JSON.parse(tourPlannerData);
+
+                // Set vehicle and amount
+                $('#vehicleId').val(bookingData.vehicleId);
+                // Get vehicle seating capacity
+                getVehicleInfo(bookingData.vehicleId);
+                console.log('Setting amount from tour planner:', bookingData.amount);
+                updateTotalAmount('₹' + parseFloat(bookingData.amount).toFixed(1));
+
+                // Pre-populate pickup address with city name
+                if (bookingData.pickupCityName) {
+                    $('textarea[name="pickup_address"]').val(bookingData.pickupCityName);
+                }
+
+                // Pre-populate drop address with route information
+                if (bookingData.routes && bookingData.routes.length > 0) {
+                    var routeDesc = bookingData.routes.map(function (route) {
+                        return route.from_name + ' → ' + route.to_name + ' (' + route.date + ')';
+                    }).join('\n');
+                    $('textarea[name="drop_address"]').val('Multi-city tour:\n' + routeDesc);
+                }
+
+                // Date/time fields removed from Step 2
+
+                // Show booking summary
+                showBookingSummary(bookingData);
+
+            } catch (e) {
+                console.error('Error parsing tour planner data:', e);
+            }
+        } else {
+            // Fallback to old session storage method
+            var bookingAmount = sessionStorage.getItem('bookingAmount');
+            console.log('Session storage booking amount:', bookingAmount);
+            if (bookingAmount) {
+                console.log('Setting amount from session storage:', bookingAmount);
+                updateTotalAmount('₹' + parseFloat(bookingAmount).toFixed(1));
+            } else {
+                console.log('No amount in session storage, setting to ₹0.0');
+                updateTotalAmount('₹0.0');
+                // Show info message for direct booking
+                showDirectBookingInfo();
+            }
+
+            var vehicleId = sessionStorage.getItem('bookingVehicleId');
+            if (vehicleId) {
+                $('#vehicleId').val(vehicleId);
+                // Get vehicle seating capacity
+                getVehicleInfo(vehicleId);
+            }
+        }
+
+        // Date/time fields have been removed from Step 2
+
+        // Extract vehicle and amount from URL parameters
+        var vehicleIdFromUrl = urlParams.get('vehicle_id');
+        var amountFromUrl = urlParams.get('amount');
+
+        if (vehicleIdFromUrl) {
+            $('#vehicleId').val(vehicleIdFromUrl);
+            // Get vehicle seating capacity
+            getVehicleInfo(vehicleIdFromUrl);
+        }
+
+        if (amountFromUrl) {
+            console.log('Setting amount from URL:', amountFromUrl);
+            updateTotalAmount('₹' + parseFloat(amountFromUrl).toFixed(1));
+        } else {
+            console.log('No amount found in URL parameters');
+        }
+
+        // Populate hidden date/time fields from URL parameters
+        populateDateTimeFields(urlParams, tourPlannerData);
+        
+        // Additional safeguard: Clear any empty hidden fields
+        setTimeout(function() {
+            ['#pickupDate', '#pickupTime', '#dropDate', '#dropTime'].forEach(function(selector) {
+                var element = $(selector);
+                if (element.val() === '') {
+                    element.removeAttr('value');
+                    console.log('Cleared empty value from', selector);
+                }
+            });
+        }, 100);
+
+        // Extract pickup city information
+        var pickupCity = urlParams.get('pickup_city');
+        if (pickupCity && !tourPlannerData) {
+            // Map pickup city ID to name (you may need to adjust this mapping)
+            var cityNames = {
+                '1': 'Coimbatore',
+                '2': 'Chennai',
+                '3': 'Bangalore',
+                '4': 'Madurai',
+                '5': 'Trichy'
+            };
+            var cityName = cityNames[pickupCity] || 'Coimbatore';
+            $('textarea[name="pickup_address"]').val(cityName);
+        }
+
+        // Extract trip type information for better context
+        var tripType = urlParams.get('trip_type');
+        if (tripType === 'multicity' && !tourPlannerData) {
+            var multicityFrom = urlParams.getAll('multicity_from[]');
+            var multicityTo = urlParams.getAll('multicity_to[]');
+            var multicityDates = urlParams.getAll('multicity_date[]');
+
+            if (multicityFrom.length > 0 && multicityTo.length > 0) {
+                // Collect all unique location IDs
+                var allLocationIds = [...new Set([...multicityFrom, ...multicityTo])];
+                
+                // Fetch city names from database
+                fetchCityNames(allLocationIds).then(function(cityNames) {
+                    var routeInfo = 'Multi-city tour:\n';
+                    for (var i = 0; i < multicityFrom.length && i < multicityTo.length; i++) {
+                        var date = multicityDates[i] || '';
+                        var fromName = cityNames[multicityFrom[i]] || multicityFrom[i];
+                        var toName = cityNames[multicityTo[i]] || multicityTo[i];
+                        routeInfo += `${fromName} → ${toName}`;
+                        if (date) routeInfo += ` (${date})`;
+                        routeInfo += '\n';
+                    }
+                    $('textarea[name="drop_address"]').val(routeInfo.trim());
+                }).catch(function(error) {
+                    console.error('Error fetching city names:', error);
+                    // Fallback to showing IDs
+                    var routeInfo = 'Multi-city tour:\n';
+                    for (var i = 0; i < multicityFrom.length && i < multicityTo.length; i++) {
+                        var date = multicityDates[i] || '';
+                        routeInfo += `${multicityFrom[i]} → ${multicityTo[i]}`;
+                        if (date) routeInfo += ` (${date})`;
+                        routeInfo += '\n';
+                    }
+                    $('textarea[name="drop_address"]').val(routeInfo.trim());
+                });
+            }
+        }
+
+        // Hide advance payment option for local trips
+        if (tripType === 'local') {
+            $('input[name="payment_option"][value="advance"]').closest('.col-md-6').hide();
+        }
+
+        // Calculate advance amount when payment option changes
+        $('input[name="payment_option"]').on('change', function () {
+            if ($(this).val() === 'advance') {
+                var totalStr = $('#totalAmount').text().toString();
+                var total = parseFloat(totalStr.replace('₹', '').replace(/,/g, '')) || 0;
+                var advance = total * 0.2;
+                $('#advanceAmount').text('₹' + advance.toFixed(1));
+                $('#advanceAmountDiv').show();
+            } else {
+                $('#advanceAmountDiv').hide();
+            }
+        });
+
+        // Also trigger when payment type changes to UPI
+        $('input[name="payment_type"]').on('change', function () {
+            {% if system_settings.upi_payments_enabled %}
+            if ($(this).val() === 'upi') {
+                $('#upiOptions').show();
+                $('#driverOfficeOptions').hide();
+                // Recalculate advance if needed
+                if ($('input[name="payment_option"]:checked').val() === 'advance') {
+                    $('input[name="payment_option"]:checked').trigger('change');
+                }
+            } else {
+                $('#upiOptions').hide();
+                $('#driverOfficeOptions').show();
+            }
+            {% endif %}
+        });
+    });
+
+    function showBookingSummary(bookingData) {
+        // Add a booking summary section at the top of the form
+        // Get pickup date from the first route
+        var pickupDateHtml = '';
+        if (bookingData.routes && bookingData.routes.length > 0) {
+            var firstDate = bookingData.routes[0].date;
+            var dateObj = new Date(firstDate);
+            var formattedDate = dateObj.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            pickupDateHtml = `<p class="mb-2 text-muted"><i class="bi bi-calendar-event me-2"></i><strong>Pickup Date:</strong> ${formattedDate}</p>`;
+        }
+        
+        var summaryHtml = `
+            <div class="alert alert-info mb-4" id="bookingSummary">
+                <h5><i class="bi bi-info-circle"></i> Booking Summary from Tour Planner</h5>
+                ${pickupDateHtml}
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Trip Type:</strong> ${bookingData.tripTitle}<br>
+                        <strong>Pickup City:</strong> ${bookingData.pickupCityName}<br>
+                        <strong>Total Distance:</strong> ${(bookingData.totalDistance + calculateSightseeingDistance()).toFixed(1)} KM
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Total Days:</strong> ${bookingData.totalDays}<br>
+                        <strong>Routes:</strong> ${bookingData.routes.length}<br>
+                        <strong>Total Amount:</strong> ₹${parseFloat(bookingData.amount).toFixed(1)}
+                    </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="toggleRouteDetails()">
+                    <i class="bi bi-eye"></i> View Route Details
+                </button>
+                <div id="routeDetails" style="display:none;" class="mt-3">
+                    <h6>Route Details:</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Distance</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${bookingData.routes.map(function (route, index) {
+            return `<tr>
+                                        <td>${index + 1}</td>
+                                        <td>${route.from_name}</td>
+                                        <td>${route.to_name}</td>
+                                        <td>${route.distance} KM</td>
+                                        <td>${route.date}</td>
+                                    </tr>`;
+        }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Insert summary before the form
+        $('#bookingForm').before(summaryHtml);
+    }
+
+    function toggleRouteDetails() {
+        var details = $('#routeDetails');
+        var btn = details.prev().find('button');
+        if (details.is(':visible')) {
+            details.hide();
+            btn.html('<i class="bi bi-eye"></i> View Route Details');
+        } else {
+            details.show();
+            btn.html('<i class="bi bi-eye-slash"></i> Hide Route Details');
+        }
+    }
+
+    function showDirectBookingInfo() {
+        // Get the current total amount, try URL first, then session storage
+        var urlParams = new URLSearchParams(window.location.search);
+        var amountFromUrl = urlParams.get('amount');
+        var bookingAmount = sessionStorage.getItem('bookingAmount');
+        var totalAmount = '₹0.0';
+        var tripType = urlParams.get('trip_type');
+        var tripBasis = urlParams.get('trip_basis');
+        
+        if (amountFromUrl) {
+            totalAmount = '₹' + parseFloat(amountFromUrl).toFixed(1);
+        } else if (bookingAmount) {
+            totalAmount = '₹' + parseFloat(bookingAmount).toFixed(1);
+        } else {
+            totalAmount = $('#totalAmount').text() || '₹0.0';
+        }
+        
+        // Get pickup date from URL parameters
+        var pickupDate = urlParams.get('pickup_date');
+        var pickupDateHtml = '';
+        
+        if (pickupDate) {
+            // Format the date nicely
+            var dateObj = new Date(pickupDate);
+            var formattedDate = dateObj.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            pickupDateHtml = `<p class="mb-2 text-muted"><i class="bi bi-calendar-event me-2"></i><strong>Pickup Date:</strong> ${formattedDate}</p>`;
+        }
+        
+        var message = tripType === 'local' 
+            ? "You're making a local trip booking. Pricing is calculated based on selected hours and vehicle details."
+            : "You're making a direct booking. For multi-city tour planning with automatic pricing, use our Tour Planner.";
+        
+        // Add Round Trip - Day Basis specific message
+        var roundTripDayBasisMessage = '';
+        if (tripType === 'round' && tripBasis === 'day') {
+            roundTripDayBasisMessage = `
+                <div class="alert alert-info mt-3 mb-0">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Additional Distance Charges:</strong> After free kilometers, additional distance will be charged as: Extra KM × Vehicle Fare per KM (After Free KMs).
+                </div>
+            `;
+        }
+        
+        var infoHtml = `
+            <div class="alert alert-info mb-4" id="directBookingInfo">
+                <h5><i class="bi bi-info-circle"></i> Direct Booking</h5>
+                ${pickupDateHtml}
+                <p class="mb-2">${message}</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <span class="fw-semibold">Total Amount:</span>
+                    <span class="h5 text-primary mb-0">${totalAmount}</span>
+                </div>
+                ${roundTripDayBasisMessage}
+            </div>
+        `;
+        $('#bookingForm').before(infoHtml);
+    }
+
+    // Function to fetch city names from database
+    function fetchCityNames(locationIds) {
+        return new Promise(function(resolve, reject) {
+            if (!locationIds || locationIds.length === 0) {
+                resolve({});
+                return;
+            }
+            
+            // Try to use existing cities data if available (from tour planner or other pages)
+            try {
+                var citiesData = JSON.parse(document.getElementById('cities-data').textContent);
+                var cityNames = {};
+                
+                locationIds.forEach(function(locationId) {
+                    // Find matching city/area in the data
+                    var found = false;
+                    
+                    // Check cities
+                    if (citiesData.cities) {
+                        citiesData.cities.forEach(function(city) {
+                            if (city.id == locationId.replace('city_', '') || 'city_' + city.id == locationId) {
+                                cityNames[locationId] = city.name;
+                                found = true;
+                            }
+                        });
+                    }
+                    
+                    // Check areas
+                    if (!found && citiesData.areas) {
+                        citiesData.areas.forEach(function(area) {
+                            if (area.id == locationId.replace('area_', '') || 'area_' + area.id == locationId) {
+                                cityNames[locationId] = area.name;
+                                found = true;
+                            }
+                        });
+                    }
+                    
+                    // If not found, use a comprehensive fallback mapping
+                    if (!found) {
+                        var fallbackMap = {
+                            'area_1': 'Coimbatore Airport',
+                            'area_2': 'Coimbatore Railway Station',
+                            'area_3': 'Coimbatore Bus Stand',
+                            'city_1': 'Coimbatore',
+                            'city_2': 'Chennai',
+                            'city_3': 'Bangalore',
+                            'city_4': 'Madurai',
+                            'city_5': 'Trichy',
+                            'city_6': 'Salem',
+                            'city_7': 'Erode',
+                            'city_8': 'Tirupur',
+                            'city_9': 'Ooty',
+                            'city_10': 'Kodaikanal',
+                            'city_11': 'Munnar',
+                            'city_12': 'Mysore',
+                            'city_13': 'Kochi',
+                            'city_14': 'Calicut',
+                            'city_15': 'Palakkad'
+                        };
+                        cityNames[locationId] = fallbackMap[locationId] || locationId.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    }
+                });
+                
+                resolve(cityNames);
+            } catch (e) {
+                console.log('Cities data not available, using fallback API call');
+                
+                // Fallback to API call if cities data is not available
+                $.ajax({
+                    url: '/api/cities/names/',
+                    method: 'GET',
+                    data: {
+                        'ids': locationIds.join(',')
+                    },
+                    success: function(response) {
+                        resolve(response.city_names || {});
+                    },
+                    error: function(xhr) {
+                        console.error('Failed to fetch city names:', xhr);
+                        // Final fallback - return mapped city names
+                        var fallbackNames = {};
+                        var fallbackMap = {
+                            'area_1': 'Coimbatore Airport',
+                            'area_2': 'Coimbatore Railway Station',
+                            'area_3': 'Coimbatore Bus Stand',
+                            'city_1': 'Coimbatore',
+                            'city_2': 'Chennai',
+                            'city_3': 'Bangalore',
+                            'city_4': 'Madurai',
+                            'city_5': 'Trichy',
+                            'city_6': 'Salem',
+                            'city_7': 'Erode',
+                            'city_8': 'Tirupur',
+                            'city_9': 'Ooty',
+                            'city_10': 'Kodaikanal',
+                            'city_11': 'Munnar',
+                            'city_12': 'Mysore',
+                            'city_13': 'Kochi',
+                            'city_14': 'Calicut',
+                            'city_15': 'Palakkad'
+                        };
+                        locationIds.forEach(function(id) {
+                            fallbackNames[id] = fallbackMap[id] || id.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        });
+                        resolve(fallbackNames);
+                    }
+                });
+            }
+        });
+    }
+
+    // Function to convert 12-hour time to 24-hour format
+    function convertTo24Hour(time, period) {
+        if (!time || !period) return time;
+        
+        var parts = time.split(':');
+        if (parts.length !== 2) return time;
+        
+        var hours = parseInt(parts[0]);
+        var minutes = parts[1];
+        
+        if (period.toUpperCase() === 'AM') {
+            if (hours === 12) hours = 0; // 12 AM = 00:xx
+        } else if (period.toUpperCase() === 'PM') {
+            if (hours !== 12) hours += 12; // Add 12 for PM (except 12 PM stays 12)
+        }
+        
+        // Ensure hours is always 2 digits
+        hours = hours.toString().padStart(2, '0');
+        
+        return hours + ':' + minutes;
+    }
+
+    // Function to populate date/time hidden fields
+    function populateDateTimeFields(urlParams, tourPlannerData) {
+        console.log('Populating date/time fields...');
+        
+        // Get pickup date
+        var pickupDate = '';
+        if (tourPlannerData) {
+            // From tour planner data - use first route date
+            try {
+                var bookingData = JSON.parse(tourPlannerData);
+                if (bookingData.routes && bookingData.routes.length > 0) {
+                    pickupDate = bookingData.routes[0].date;
+                    console.log('Pickup date from tour planner:', pickupDate);
+                }
+            } catch (e) {
+                console.error('Error parsing tour planner data:', e);
+            }
+        }
+        
+        // If no tour planner data, try URL parameters
+        if (!pickupDate) {
+            pickupDate = urlParams.get('pickup_date');
+            if (!pickupDate) {
+                // Try multicity dates
+                var multicityDates = urlParams.getAll('multicity_date[]');
+                if (multicityDates && multicityDates.length > 0) {
+                    pickupDate = multicityDates[0];
+                }
+            }
+            console.log('Pickup date from URL:', pickupDate);
+        }
+        
+        // Get pickup time and handle AM/PM conversion
+        var pickupTime = urlParams.get('pickup_time') || '09:00';
+        var pickupTimePeriod = urlParams.get('pickup_time_period');
+        
+        // Convert 12-hour format to 24-hour format if needed
+        if (pickupTimePeriod && pickupTime) {
+            pickupTime = convertTo24Hour(pickupTime, pickupTimePeriod);
+        }
+        
+        console.log('Pickup time:', pickupTime, 'Period:', pickupTimePeriod);
+        
+        // Get drop date
+        var dropDate = urlParams.get('drop_date');
+        if (!dropDate && tourPlannerData) {
+            // From tour planner - use last route date
+            try {
+                var bookingData = JSON.parse(tourPlannerData);
+                if (bookingData.routes && bookingData.routes.length > 1) {
+                    dropDate = bookingData.routes[bookingData.routes.length - 1].date;
+                }
+            } catch (e) {
+                console.error('Error parsing tour planner data:', e);
+            }
+        }
+        if (!dropDate) {
+            // Try multicity dates - use last date
+            var multicityDates = urlParams.getAll('multicity_date[]');
+            if (multicityDates && multicityDates.length > 1) {
+                dropDate = multicityDates[multicityDates.length - 1];
+            }
+        }
+        console.log('Drop date:', dropDate);
+        
+        // Get drop time
+        var dropTime = urlParams.get('drop_time'); // Don't default to empty string
+        console.log('Drop time:', dropTime);
+        
+        // Set the hidden fields with defaults if needed
+        $('#pickupDate').val(pickupDate || new Date().toISOString().split('T')[0]); // Default to today
+        $('#pickupTime').val(pickupTime || '09:00'); // Default to 9 AM
+        
+        // Only set drop fields if they have actual values, otherwise leave them empty (not set)
+        if (dropDate && dropDate.trim() !== '') {
+            $('#dropDate').val(dropDate);
+        }
+        if (dropTime && dropTime.trim() !== '') {
+            $('#dropTime').val(dropTime);
+        }
+        
+        console.log('Final values set:');
+        console.log('pickup_date:', $('#pickupDate').val());
+        console.log('pickup_time:', $('#pickupTime').val());
+        console.log('drop_date:', $('#dropDate').val());
+        console.log('drop_time:', $('#dropTime').val());
+    }
+
+    // Function to populate booking summary with dynamic data
+    function populateBookingSummary() {
+        // Get URL parameters
+        var urlParams = new URLSearchParams(window.location.search);
+        
+        // Check if we have the required parameters for dynamic data
+        var tripType = urlParams.get('trip_type');
+        var vehicleId = urlParams.get('vehicle_id');
+        var amount = urlParams.get('amount');
+        
+        if (tripType && vehicleId && amount) {
+            // Fetch dynamic data from API
+            fetchDynamicBookingSummary(urlParams);
+        } else {
+            // Check for tour planner data
+            var tourPlannerData = sessionStorage.getItem('tourPlannerBooking');
+            if (tourPlannerData) {
+                try {
+                    var bookingData = JSON.parse(tourPlannerData);
+                    populateFromTourPlanner(bookingData);
+                } catch (e) {
+                    console.error('Error parsing tour planner data:', e);
+                    hideBookingSummary();
+                }
+            } else {
+                // Hide booking summary if no data available
+                hideBookingSummary();
+            }
+        }
+    }
+    
+    function fetchDynamicBookingSummary(urlParams) {
+        // Build API URL with parameters
+        var apiUrl = '/api/bookings/summary/?' + urlParams.toString();
+        
+        $.ajax({
+            url: apiUrl,
+            method: 'GET',
+            success: function(data) {
+                console.log('Booking summary data:', data);
+                populateFromApiData(data);
+            },
+            error: function(xhr) {
+                console.error('Error fetching booking summary:', xhr);
+                hideBookingSummary();
+            }
+        });
+    }
+    
+    function populateFromApiData(data) {
+        // Show the booking summary section
+        $('.booking-summary-card').show();
+        
+        // Set the trip type header
+        var tripTypeText = getTripTypeDisplayText(data.trip_type, data.trip_basis);
+        $('#tripTypeDisplay').text(tripTypeText);
+        
+        // Populate trip overview table
+        var tableHtml = '';
+        if (data.routes && data.routes.length > 0) {
+            // Group routes by day to handle same-day multiple routes
+            var routesByDay = {};
+            data.routes.forEach(function(route) {
+                if (!routesByDay[route.day]) {
+                    routesByDay[route.day] = [];
+                }
+                routesByDay[route.day].push(route);
+            });
+            
+            // Display routes grouped by day
+            Object.keys(routesByDay).forEach(function(day) {
+                var dayRoutes = routesByDay[day];
+                var dayNum = parseInt(day);
+                var dayText = dayNum === 1 ? '1st Day' : dayNum === 2 ? '2nd Day' : dayNum === 3 ? '3rd Day' : dayNum + 'th Day';
+                
+                if (dayRoutes.length === 1) {
+                    // Single route for this day
+                    var route = dayRoutes[0];
+                    tableHtml += `
+                        <tr class="text-center">
+                            <td><strong>${dayText}</strong></td>
+                            <td>${route.from_name}</td>
+                            <td>${route.to_name}</td>
+                            <td><span class="text-danger fw-bold">${route.distance || 'TBD'} Kms</span></td>
+                        </tr>
+                    `;
+                } else {
+                    // Multiple routes for same day (round trip)
+                    dayRoutes.forEach(function(route, index) {
+                        var routeLabel = index === 0 ? dayText : '';
+                        var totalDistance = dayRoutes.reduce((sum, r) => sum + (parseFloat(r.distance) || 0), 0);
+                        var distanceText = index === 0 ? `${totalDistance.toFixed(1)} Kms` : `${route.distance || 'TBD'} Kms`;
+                        
+                        tableHtml += `
+                            <tr class="text-center">
+                                <td><strong>${routeLabel}</strong></td>
+                                <td>${route.from_name}</td>
+                                <td>${route.to_name}</td>
+                                <td><span class="text-danger fw-bold">${route.distance || 'TBD'} Kms</span></td>
+                            </tr>
+                        `;
+                    });
+                }
+            });
+        } else {
+            // For round trips without specific routes
+            var pickupCity = data.pickup_city ? data.pickup_city.name : 'Pickup Location';
+            var totalDays = data.total_days || 1;
+            
+            tableHtml = `
+                <tr class="text-center">
+                    <td><strong>Day 1 - ${totalDays}</strong></td>
+                    <td>${pickupCity}</td>
+                    <td>Round Trip Destination</td>
+                    <td><span class="text-danger fw-bold">TBD</span></td>
+                </tr>
+            `;
+        }
+        $('#tripOverviewTable').html(tableHtml);
+        
+        // Populate sightseeing details - only show if sightseeing options were selected
+        var sightseeingHtml = '';
+        var urlParams = new URLSearchParams(window.location.search);
+        var sightseeingDetailsParam = urlParams.get('sightseeing_details');
+        
+        if (sightseeingDetailsParam) {
+            try {
+                var sightseeingDetails = JSON.parse(sightseeingDetailsParam);
+                if (sightseeingDetails && sightseeingDetails.length > 0) {
+                    sightseeingDetails.forEach(function(sight) {
+                        sightseeingHtml += `
+                            <div class="sightseeing-location">
+                                <h6>${sight.location} <span class="distance">${sight.distance}</span></h6>
+                                <p class="small mb-0">${sight.details}</p>
+                            </div>
+                        `;
+                    });
+                }
+            } catch (e) {
+                console.error('Error parsing sightseeing details:', e);
+            }
+        } else if (data.sightseeing && data.sightseeing.length > 0) {
+            data.sightseeing.forEach(function(sight) {
+                sightseeingHtml += `
+                    <div class="sightseeing-location">
+                        <h6>${sight.location} <span class="distance">${sight.distance}</span></h6>
+                        <p class="small mb-0">${sight.details}</p>
+                    </div>
+                `;
+            });
+        } else if (data.pickup_city && data.pickup_city.tourist_places && data.pickup_city.tourist_places.length > 0) {
+            // Only show default sightseeing if no specific sightseeing was selected
+            // This section is now commented out to ensure sightseeing only shows when explicitly selected
+            /*
+            sightseeingHtml = `
+                <div class="sightseeing-location">
+                    <h6>${data.pickup_city.name} Local Sight Seeing <span class="distance">${data.pickup_city.sightseeing_km} Kms</span></h6>
+                    <p class="small mb-0">${data.pickup_city.tourist_places.join(', ')}</p>
+                </div>
+            `;
+            */
+        }
+        
+        if (sightseeingHtml) {
+            $('#sightseeingDetails').html(sightseeingHtml);
+            $('.sightseeing-section').show();
+        } else {
+            $('.sightseeing-section').hide();
+        }
+        
+        // Populate trip summary
+        $('#pickupCityDisplay').text(data.pickup_city ? data.pickup_city.name : 'Pickup City');
+        $('#totalDaysDisplay').text((data.total_days || 1) + ' Days');
+        
+        // Calculate total distance from calculation details
+        var totalDistance = 0;
+        if (data.calculation_details && data.calculation_details.total_distance) {
+            totalDistance = data.calculation_details.total_distance;
+        }
+        
+        // Add sightseeing distance to total distance
+        var sightseeingDistance = calculateSightseeingDistance();
+        totalDistance += sightseeingDistance;
+        
+        $('#totalDistanceDisplay').text(totalDistance.toFixed(1) + ' Kms');
+        
+        // Populate vehicle and tariff details
+        if (data.vehicle_details && Object.keys(data.vehicle_details).length > 0) {
+            var vehicle = data.vehicle_details;
+            $('#selectedCarDisplay').text(vehicle.name || 'Selected Vehicle');
+            
+            if (data.trip_basis === 'day') {
+                $('#rentPerDayDisplay').text('Rs. ' + vehicle.per_day_fee.toFixed(1));
+                $('#freeKmsDisplay').text(vehicle.min_km_per_day + ' Kms');
+                $('#farePerKmDisplay').text('Rs. ' + vehicle.fare_per_km.toFixed(1));
+                $('#driverPerDayDisplay').text('Rs. ' + vehicle.driver_charge_per_day.toFixed(1));
+            } else {
+                // Hour basis
+                $('#rentPerDayDisplay').text('Rs. ' + vehicle.fare_per_hour.toFixed(1) + '/hr');
+                $('#freeKmsDisplay').text(vehicle.min_hours_local + ' hrs min');
+                $('#farePerKmDisplay').text('Rs. ' + vehicle.fare_per_km.toFixed(1));
+                $('#driverPerDayDisplay').text('Rs. ' + vehicle.driver_charge_per_day.toFixed(1));
+            }
+        }
+        
+        // Populate calculation details
+        if (data.calculation_details && Object.keys(data.calculation_details).length > 0) {
+            var calc = data.calculation_details;
+            
+            // Add sightseeing distance to calculations
+            var sightseeingDistance = calculateSightseeingDistance();
+            var originalTotalDistance = calc.total_distance || 0;
+            var adjustedTotalDistance = originalTotalDistance + sightseeingDistance;
+            
+            if (calc.trip_basis === 'local') {
+                // Local trip calculation - sightseeing affects extra km calculation
+                $('#calcTotalDaysLabel').text('Total Hours');
+                $('#calcTotalDays').text(calc.total_hours + ' Hour(s)');
+                
+                $('#calcFreeKmsLabel').text(`Minimum Hours Fee (${calc.min_hours} Hours)`);
+                $('#calcFreeKms').text('Rs. ' + calc.min_hours_fee.toFixed(1));
+                
+                $('#calcTotalRentLabel').text(`Included Distance (${calc.max_distance_min_hours} Kms)`);
+                $('#calcTotalRent').text('Included');
+                
+                // Recalculate extra km with sightseeing distance
+                var adjustedExtraKm = Math.max(0, adjustedTotalDistance - calc.max_distance_min_hours);
+                var adjustedExtraKmCost = adjustedExtraKm * calc.fare_per_km_local;
+                
+                if (adjustedExtraKm > 0) {
+                    var extraKmLabel = `Extra Kms Fare (${adjustedExtraKm.toFixed(1)} Kms x Rs.${calc.fare_per_km_local.toFixed(1)})`;
+                    if (sightseeingDistance > 0) {
+                        extraKmLabel += ` [Includes ${sightseeingDistance} KM sightseeing]`;
+                    }
+                    $('#calcExtraKmsLabel').text(extraKmLabel);
+                    $('#calcExtraKms').text('Rs. ' + adjustedExtraKmCost.toFixed(1));
+                } else {
+                    $('#calcExtraKmsLabel').text('Extra Kms Fare');
+                    $('#calcExtraKms').text('Rs. 0.0');
+                }
+                
+                $('#calcDriverAllowanceLabel').text('Driver Allowance');
+                $('#calcDriverAllowance').text('Included');
+                
+                $('#calcHillChargesLabel').text('Hill Station Charges');
+                $('#calcHillCharges').text('Rs. 0.0');
+                
+            } else if (calc.trip_basis === 'multicity') {
+                // Multicity trip calculation - sightseeing affects extra km calculation
+                $('#calcTotalDaysLabel').text('Total Day(s)');
+                $('#calcTotalDays').text(calc.total_days + ' Day(s)');
+                
+                $('#calcFreeKmsLabel').text(`Total Free Kms (${calc.total_days} Day(s) x ${calc.free_km_per_day} Kms)`);
+                $('#calcFreeKms').text(calc.total_free_km.toFixed(0) + ' Kms');
+                
+                $('#calcTotalRentLabel').text(`Total Rent (${calc.total_days} Day(s) x Rs.${calc.per_day_rent.toFixed(1)})`);
+                $('#calcTotalRent').text('Rs. ' + calc.total_rent.toFixed(1));
+                
+                // Recalculate extra km with sightseeing distance
+                var adjustedExtraKm = Math.max(0, adjustedTotalDistance - calc.total_free_km);
+                var adjustedExtraKmCost = adjustedExtraKm * calc.fare_per_km;
+                
+                if (adjustedExtraKm > 0) {
+                    var extraKmLabel = `Extra Kms Fare (${adjustedExtraKm.toFixed(1)} Kms x Rs.${calc.fare_per_km.toFixed(1)})`;
+                    if (sightseeingDistance > 0) {
+                        extraKmLabel += ` [Includes ${sightseeingDistance} KM sightseeing]`;
+                    }
+                    $('#calcExtraKmsLabel').text(extraKmLabel);
+                    $('#calcExtraKms').text('Rs. ' + adjustedExtraKmCost.toFixed(1));
+                } else {
+                    $('#calcExtraKmsLabel').text('Extra Kms Fare');
+                    $('#calcExtraKms').text('Rs. 0.0');
+                }
+                
+                $('#calcDriverAllowanceLabel').text(`Driver Allowance (${calc.total_days} Day(s) x Rs.${calc.driver_per_day.toFixed(1)})`);
+                $('#calcDriverAllowance').text('Rs. ' + calc.total_driver.toFixed(1));
+                
+                $('#calcHillChargesLabel').text('Hill Station Charges');
+                if (calc.hill_charges > 0 && calc.hill_stations_visited && calc.hill_stations_visited.length > 0) {
+                    $('#calcHillChargesLabel').text(`Hill Station Charges (${calc.hill_stations_visited.join(', ')})`);
+                    $('#calcHillCharges').text('Rs. ' + calc.hill_charges.toFixed(1));
+                } else {
+                    $('#calcHillCharges').text('Rs. 0.0');
+                }
+                
+            } else if (calc.trip_basis === 'hour') {
+                // Hour basis calculation - sightseeing affects extra charges
+                $('#calcTotalDaysLabel').text('Total Hours');
+                $('#calcTotalDays').text(calc.total_hours + ' Hour(s)');
+                
+                $('#calcFreeKmsLabel').text(`Minimum Hours (${calc.min_hours} Hours)`);
+                $('#calcFreeKms').text(calc.min_hours + ' Hours');
+                
+                $('#calcTotalRentLabel').text(`Hour Cost (${calc.total_hours} Hours x Rs.${calc.fare_per_hour.toFixed(1)})`);
+                $('#calcTotalRent').text('Rs. ' + calc.hour_cost.toFixed(1));
+                
+                // For hour basis, sightseeing might add extra charges
+                if (sightseeingDistance > 0) {
+                    $('#calcExtraKmsLabel').text(`Sightseeing Distance (${sightseeingDistance} KM)`);
+                    $('#calcExtraKms').text('Included in hourly rate');
+                } else {
+                    $('#calcExtraKmsLabel').text('Extra Charges');
+                    $('#calcExtraKms').text('Rs. 0.0');
+                }
+                
+                $('#calcDriverAllowanceLabel').text('Driver Charges');
+                $('#calcDriverAllowance').text('Rs. ' + calc.driver_charges.toFixed(1));
+                
+                $('#calcHillChargesLabel').text('Hill Station Charges');
+                $('#calcHillCharges').text('Rs. 0.0');
+                
+            } else {
+                // Day basis calculation (default) - sightseeing affects extra km calculation
+                $('#calcTotalDaysLabel').text('Total Day(s)');
+                $('#calcTotalDays').text(calc.total_days + ' Day(s)');
+                
+                $('#calcFreeKmsLabel').text(`Total Free Kms (${calc.total_days} Day(s) x ${calc.free_km_per_day} Kms)`);
+                $('#calcFreeKms').text(calc.total_free_km.toFixed(0) + ' Kms');
+                
+                $('#calcTotalRentLabel').text(`Total Rent (${calc.total_days} Day(s) x Rs.${calc.per_day_rent.toFixed(1)})`);
+                $('#calcTotalRent').text('Rs. ' + calc.total_rent.toFixed(1));
+                
+                // Recalculate extra km with sightseeing distance
+                var adjustedExtraKm = Math.max(0, adjustedTotalDistance - calc.total_free_km);
+                var adjustedExtraKmCost = adjustedExtraKm * calc.fare_per_km;
+                
+                if (adjustedExtraKm > 0) {
+                    var extraKmLabel = `Extra Kms Fare (${adjustedExtraKm.toFixed(1)} Kms x Rs.${calc.fare_per_km.toFixed(1)})`;
+                    if (sightseeingDistance > 0) {
+                        extraKmLabel += ` [Includes ${sightseeingDistance} KM sightseeing]`;
+                    }
+                    $('#calcExtraKmsLabel').text(extraKmLabel);
+                    $('#calcExtraKms').text('Rs. ' + adjustedExtraKmCost.toFixed(1));
+                } else {
+                    $('#calcExtraKmsLabel').text('Extra Kms Fare');
+                    $('#calcExtraKms').text('Rs. 0.0');
+                }
+                
+                $('#calcDriverAllowanceLabel').text(`Driver Allowance (${calc.total_days} Day(s) x Rs.${calc.driver_per_day.toFixed(1)})`);
+                $('#calcDriverAllowance').text('Rs. ' + calc.total_driver.toFixed(1));
+                
+                if (calc.hill_charges > 0 && calc.hill_stations_visited && calc.hill_stations_visited.length > 0) {
+                    $('#calcHillChargesLabel').text(`Hill Station Charges (${calc.hill_stations_visited.join(', ')})`);
+                    $('#calcHillCharges').text('Rs. ' + calc.hill_charges.toFixed(1));
+                } else {
+                    $('#calcHillChargesLabel').text('Hill Station Charges');
+                    $('#calcHillCharges').text('Rs. 0.0');
+                }
+            }
+            
+            // Calculate adjusted total amount including sightseeing charges and hill charges
+            var adjustedTotalAmount = calc.total_amount;
+            var sightseeingExtraCharges = 0;
+            
+            // Calculate additional charges from sightseeing distance
+            if (sightseeingDistance > 0) {
+                if (calc.trip_basis === 'local') {
+                    var adjustedExtraKm = Math.max(0, adjustedTotalDistance - calc.max_distance_min_hours);
+                    var originalExtraKm = Math.max(0, originalTotalDistance - calc.max_distance_min_hours);
+                    sightseeingExtraCharges = (adjustedExtraKm - originalExtraKm) * calc.fare_per_km_local;
+                } else if (calc.trip_basis === 'multicity' || calc.trip_basis === 'day') {
+                    var adjustedExtraKm = Math.max(0, adjustedTotalDistance - calc.total_free_km);
+                    var originalExtraKm = Math.max(0, originalTotalDistance - calc.total_free_km);
+                    sightseeingExtraCharges = (adjustedExtraKm - originalExtraKm) * calc.fare_per_km;
+                }
+                // For hour basis, sightseeing is typically included in hourly rate
+                
+                adjustedTotalAmount += sightseeingExtraCharges;
+            }
+            
+            // Note: Hill station charges are already included in calc.total_amount from backend
+            // We only need to add sightseeing extra charges here
+            
+            // Update GST row (only if GST is enabled in system settings)
+            {% if system_settings.gst_enabled %}
+            if (calc.gst_amount !== undefined && calc.gst_rate !== undefined) {
+                // Recalculate GST based on adjusted total (including sightseeing and hill charges)
+                var baseAmountForGst = adjustedTotalAmount;
+                var adjustedGstAmount = (baseAmountForGst * calc.gst_rate) / (100 + calc.gst_rate);
+                var finalTotalWithGst = baseAmountForGst;
+                
+                $('#calcGstLabel').text(`GST (${calc.gst_rate}%)`);
+                $('#calcGstAmount').text('Rs. ' + adjustedGstAmount.toFixed(1));
+                
+                // Update final total amount display
+                $('#calcTotalAmount').text('Rs. ' + finalTotalWithGst.toFixed(1));
+                updateTotalAmount('₹' + finalTotalWithGst.toFixed(1));
+            } else {
+                $('#calcGstLabel').text('GST');
+                $('#calcGstAmount').text('Rs. 0.0');
+                
+                // Update total amount without GST
+                $('#calcTotalAmount').text('Rs. ' + adjustedTotalAmount.toFixed(1));
+                updateTotalAmount('₹' + adjustedTotalAmount.toFixed(1));
+            }
+            {% else %}
+            // GST is disabled, just update total amount
+            $('#calcTotalAmount').text('Rs. ' + adjustedTotalAmount.toFixed(1));
+            updateTotalAmount('₹' + adjustedTotalAmount.toFixed(1));
+            {% endif %}
+            
+            // Hide rows with zero amounts
+            hideZeroAmountRows();
+        } else {
+            // Use the amount from URL
+            var amount = parseFloat(data.amount || 0);
+            $('#calcTotalAmount').text('Rs. ' + amount.toFixed(1));
+            updateTotalAmount('₹' + amount.toFixed(1));
+            
+            // Hide calculation details if no breakdown available
+            if (amount === 0) {
+                $('.calculation-section').hide();
+            }
+        }
+    }
+    
+    function getTripTypeDisplayText(tripType, tripBasis) {
+        if (!tripType) return 'BOOKING SUMMARY';
+        
+        switch(tripType.toLowerCase()) {
+            case 'round':
+                if (tripBasis === 'day') {
+                    return 'ROUND TRIP - DAY BASIS';
+                } else if (tripBasis === 'hour') {
+                    return 'ROUND TRIP - HOUR BASIS';
+                } else {
+                    return 'ROUND TRIP';
+                }
+            case 'oneway':
+                return 'ONE WAY TRIP';
+            case 'local':
+                return 'LOCAL TRIP';
+            case 'multicity':
+                return 'MULTI-CITY ROUND TRIP';
+            case 'outstation':
+                return 'OUTSTATION TRIP';
+            default:
+                return tripType.toUpperCase() + ' TRIP';
+        }
+    }
+
+    function hideBookingSummary() {
+        $('.booking-summary-card').hide();
+        $('.sightseeing-section').hide(); // Also hide sightseeing section when no booking data
+    }
+    
+    function populateFromTourPlanner(bookingData) {
+        // Show the booking summary section
+        $('.booking-summary-card').show();
+        
+        // Set the trip type header for tour planner (usually multi-city)
+        $('#tripTypeDisplay').text('MULTI-CITY ROUND TRIP');
+        
+        // Populate trip overview table
+        var tableHtml = '';
+        bookingData.routes.forEach(function(route, index) {
+            var dayText = index === 0 ? '1st Day' : 
+                         index === 1 ? '3rd Day' : 
+                         index === 2 ? '6th Day' : 
+                         index === 3 ? '8th Day' : 
+                         index === 4 ? '9th Day' : (index + 1) + 'th Day';
+            
+            tableHtml += `
+                <tr class="text-center">
+                    <td><strong>${dayText}</strong></td>
+                    <td>${route.from_name}</td>
+                    <td>${route.to_name}</td>
+                    <td><span class="text-danger fw-bold">${route.distance} Kms</span></td>
+                </tr>
+            `;
+        });
+        $('#tripOverviewTable').html(tableHtml);
+        
+        // Populate sightseeing details - only show if sightseeing options were selected
+        var sightseeingHtml = '';
+        var urlParams = new URLSearchParams(window.location.search);
+        var sightseeingDetailsParam = urlParams.get('sightseeing_details');
+        
+        if (sightseeingDetailsParam) {
+            try {
+                var sightseeingDetails = JSON.parse(sightseeingDetailsParam);
+                if (sightseeingDetails && sightseeingDetails.length > 0) {
+                    sightseeingDetails.forEach(function(sight) {
+                        sightseeingHtml += `
+                            <div class="sightseeing-location">
+                                <h6>${sight.location} <span class="distance">${sight.distance}</span></h6>
+                                <p class="small mb-0">${sight.details}</p>
+                            </div>
+                        `;
+                    });
+                }
+            } catch (e) {
+                console.error('Error parsing sightseeing details:', e);
+            }
+        }
+        // Note: Removed hardcoded sightseeing data - only show when explicitly selected
+        
+        if (sightseeingHtml) {
+            $('#sightseeingDetails').html(sightseeingHtml);
+            $('.sightseeing-section').show();
+        } else {
+            $('.sightseeing-section').hide();
+        }
+        
+        // Populate trip summary
+        $('#pickupCityDisplay').text(bookingData.pickupCityName || 'Bengaluru');
+        $('#totalDaysDisplay').text(bookingData.totalDays + ' Days');
+        
+        // Add sightseeing distance to total distance
+        var totalDistance = bookingData.totalDistance;
+        var sightseeingDistance = calculateSightseeingDistance();
+        totalDistance += sightseeingDistance;
+        
+        $('#totalDistanceDisplay').text(totalDistance.toFixed(1) + ' Kms');
+        
+        // Populate tariff details (you can get this from vehicle data)
+        populateDefaultTariffDetails();
+        
+        // Update total amount - need to check if hill charges should be added
+        var baseAmount = parseFloat(bookingData.amount);
+        var adjustedAmount = baseAmount;
+        
+        // Add sightseeing charges if any (this would need to be calculated based on distance)
+        // Note: This is a simplified approach - in a real scenario, you'd need the calculation details
+        // to properly add sightseeing and hill charges
+        
+        $('#calcTotalAmount').text('Rs. ' + adjustedAmount.toFixed(1));
+        
+        // Hide rows with zero amounts
+        hideZeroAmountRows();
+        
+        updateTotalAmount('₹' + adjustedAmount.toFixed(1));
+    }
+    
+    function populateDefaultTariffDetails() {
+        $('#selectedCarDisplay').text('Swift Dzire A/c');
+        $('#rentPerDayDisplay').text('Rs. 2300.0');
+        $('#freeKmsDisplay').text('100 Kms');
+        $('#farePerKmDisplay').text('Rs. 13.0');
+        $('#driverPerDayDisplay').text('Rs. 500.0');
+        
+        // Calculation details
+        $('#calcTotalDays').text('9 Day(s)');
+        $('#calcFreeKms').text('900 Kms');
+        $('#calcTotalRent').text('Rs. 20,700.00');
+        $('#calcExtraKms').text('Rs. 10,504.00');
+        $('#calcDriverAllowance').text('Rs. 4,500.00');
+        $('#calcHillCharges').text('Rs. 1,500.00');
+        $('#calcTotalAmount').text('Rs. 40,004.00');
+        
+        // Hide rows with zero amounts
+        hideZeroAmountRows();
+    }
+
+    // Function to update total amount display
+    function updateTotalAmount(amount) {
+        console.log('Updating total amount to:', amount);
+        $('#totalAmount').text(amount);
+        
+        // Update advance amount if advance payment is selected
+        if ($('input[name="payment_option"]:checked').val() === 'advance') {
+            var total = parseFloat(amount.replace('₹', '').replace(/,/g, '')) || 0;
+            var advance = total * 0.2;
+            $('#advanceAmount').text('₹' + advance.toFixed(1));
+        }
+    }
+
+    // Function to hide rows with zero amounts in calculation table
+    function hideZeroAmountRows() {
+        const rowsToCheck = [
+            { row: '#calcExtraKmsRow', amount: '#calcExtraKms' },
+            { row: '#calcHillChargesRow', amount: '#calcHillCharges' },
+            { row: '#calcDriverAllowanceRow', amount: '#calcDriverAllowance' }
+        ];
+        
+        rowsToCheck.forEach(function(item) {
+            const amountText = $(item.amount).text();
+            const amount = parseFloat(amountText.replace('Rs. ', '').replace(',', '')) || 0;
+            
+            if (amount === 0 || amountText === 'Rs. 0.0' || amountText === 'Included') {
+                // Don't hide if it says "Included" - that's valid information
+                if (amountText !== 'Included') {
+                    $(item.row).hide();
+                } else {
+                    $(item.row).show();
+                }
+            } else {
+                $(item.row).show();
+            }
+        });
+        
+        // Special handling for GST row (only if GST is enabled)
+        {% if system_settings.gst_enabled %}
+        const gstAmountText = $('#calcGstAmount').text();
+        const gstAmount = parseFloat(gstAmountText.replace('Rs. ', '').replace(',', '')) || 0;
+        if (gstAmount === 0 || gstAmountText === 'Rs. 0.0') {
+            $('#calcGstRow').hide();
+        } else {
+            $('#calcGstRow').show();
+        }
+        {% endif %}
+    }
+
+    // Function to calculate total sightseeing distance from URL parameters
+    function calculateSightseeingDistance() {
+        var totalSightseeingDistance = 0;
+        var urlParams = new URLSearchParams(window.location.search);
+        var sightseeingDetailsParam = urlParams.get('sightseeing_details');
+        
+        if (sightseeingDetailsParam) {
+            try {
+                var sightseeingDetails = JSON.parse(sightseeingDetailsParam);
+                if (sightseeingDetails && sightseeingDetails.length > 0) {
+                    sightseeingDetails.forEach(function(sight) {
+                        // Extract distance from sight.distance (e.g., "100 Kms" -> 100)
+                        if (sight.distance) {
+                            var distanceMatch = sight.distance.match(/(\d+(?:\.\d+)?)/);
+                            if (distanceMatch) {
+                                totalSightseeingDistance += parseFloat(distanceMatch[1]);
+                            }
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error('Error parsing sightseeing details for distance calculation:', e);
+            }
+        }
+        
+        console.log('Total sightseeing distance:', totalSightseeingDistance, 'KM');
+        return totalSightseeingDistance;
+    }
+
+    // Enhanced step navigation with validation
+    function nextStep(step) {
+        console.log('Attempting to move to step:', step);
+        
+        // Validate current step before moving forward
+        const currentStep = getCurrentActiveStep();
+        console.log('Current active step:', currentStep);
+        
+        // Only validate if moving forward
+        if (step > currentStep) {
+            if (!validateCurrentStep(currentStep)) {
+                console.log('Validation failed for step:', currentStep);
+                return false; // Don't proceed if validation fails
+            }
+        }
+        
+        // Hide all steps
+        document.querySelectorAll('.step-content').forEach(function(content) {
+            content.classList.remove('active');
+        });
+        
+        // Show target step
+        const targetStepElement = document.getElementById('step' + step);
+        if (targetStepElement) {
+            targetStepElement.classList.add('active');
+        } else {
+            console.error('Target step element not found:', 'step' + step);
+            return false;
+        }
+        
+        // Update step indicators
+        updateStepIndicators(step);
+        
+        // If moving to step 3 (payment), ensure amount is displayed
+        if (step === 3) {
+            var currentAmount = $('#totalAmount').text();
+            if (!currentAmount || currentAmount === '₹0.0') {
+                // Try to get amount from URL or session storage again
+                var urlParams = new URLSearchParams(window.location.search);
+                var amountFromUrl = urlParams.get('amount');
+                var bookingAmount = sessionStorage.getItem('bookingAmount');
+                
+                if (amountFromUrl) {
+                    updateTotalAmount('₹' + parseFloat(amountFromUrl).toFixed(1));
+                } else if (bookingAmount) {
+                    updateTotalAmount('₹' + parseFloat(bookingAmount).toFixed(1));
+                }
+            }
+        }
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        console.log('Successfully moved to step:', step);
+        return true;
+    }
+    
+    // Function to get the currently active step
+    function getCurrentActiveStep() {
+        const activeStepContent = document.querySelector('.step-content.active');
+        if (activeStepContent) {
+            const stepId = activeStepContent.id;
+            return parseInt(stepId.replace('step', ''));
+        }
+        return 1; // Default to step 1
+    }
+    
+    // Function to validate the current step
+    function validateCurrentStep(stepNumber) {
+        console.log('Validating step:', stepNumber);
+        
+        const stepElement = document.getElementById('step' + stepNumber);
+        if (!stepElement) {
+            console.error('Step element not found:', stepNumber);
+            return false;
+        }
+        
+        // Get all required fields in the current step
+        const requiredFields = stepElement.querySelectorAll('input[required], select[required], textarea[required]');
+        console.log('Found required fields:', requiredFields.length);
+        
+        let isValid = true;
+        let invalidFields = [];
+        
+        // Validate each required field
+        requiredFields.forEach(function(field) {
+            const fieldName = field.name || field.id || 'unnamed field';
+            let fieldValid = true;
+            
+            if (field.type === 'email') {
+                // Email validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                fieldValid = field.value.trim() !== '' && emailPattern.test(field.value.trim());
+                if (!fieldValid) {
+                    invalidFields.push(fieldName + ' (invalid email format)');
+                }
+            } else if (field.type === 'tel') {
+                // Phone validation (10 digits)
+                const phonePattern = /^\d{10}$/;
+                fieldValid = phonePattern.test(field.value.replace(/\D/g, ''));
+                if (!fieldValid) {
+                    invalidFields.push(fieldName + ' (must be 10 digits)');
+                }
+            } else if (field.type === 'checkbox' || field.type === 'radio') {
+                // For checkboxes and radio buttons, check if any in the group is selected
+                const groupName = field.name;
+                const checkedInGroup = stepElement.querySelectorAll(`input[name="${groupName}"]:checked`);
+                fieldValid = checkedInGroup.length > 0;
+                if (!fieldValid) {
+                    invalidFields.push(fieldName + ' (selection required)');
+                }
+            } else {
+                // General validation for text, textarea, select, etc.
+                fieldValid = field.value.trim() !== '';
+                if (!fieldValid) {
+                    invalidFields.push(fieldName);
+                }
+            }
+            
+            // Add visual feedback
+            if (fieldValid) {
+                field.classList.remove('is-invalid');
+                field.classList.add('is-valid');
+            } else {
+                field.classList.remove('is-valid');
+                field.classList.add('is-invalid');
+                isValid = false;
+            }
+        });
+        
+        // Additional step-specific validations
+        if (stepNumber === 1) {
+            // Step 1: Guest Details - validate passenger count against vehicle capacity
+            if (!validatePassengerCount()) {
+                isValid = false;
+                invalidFields.push('passenger count (exceeds vehicle capacity)');
+            }
+        } else if (stepNumber === 2) {
+            // Step 2: Addresses - no additional validation needed
+        } else if (stepNumber === 3) {
+            // Step 3: Payment - validate terms acceptance
+            const termsCheckbox = stepElement.querySelector('#terms');
+            if (termsCheckbox && !termsCheckbox.checked) {
+                isValid = false;
+                invalidFields.push('terms and conditions acceptance');
+                termsCheckbox.classList.add('is-invalid');
+            }
+        }
+        
+        // Show validation feedback
+        if (!isValid) {
+            showValidationError(invalidFields, stepNumber);
+        } else {
+            hideValidationError();
+        }
+        
+        console.log('Step', stepNumber, 'validation result:', isValid);
+        return isValid;
+    }
+    
+    // Function to show validation error message
+    function showValidationError(invalidFields, stepNumber) {
+        // Remove existing error message
+        const existingError = document.querySelector('.step-validation-error');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        // Create error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'alert alert-danger step-validation-error mt-3';
+        errorDiv.innerHTML = `
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            <strong>Please complete all required fields in Step ${stepNumber}:</strong>
+            <ul class="mb-0 mt-2">
+                ${invalidFields.map(field => `<li>${field}</li>`).join('')}
+            </ul>
+        `;
+        
+        // Insert error message at the top of the current step
+        const currentStepElement = document.getElementById('step' + stepNumber);
+        if (currentStepElement) {
+            const cardBody = currentStepElement.querySelector('.card-body');
+            if (cardBody) {
+                cardBody.insertBefore(errorDiv, cardBody.firstChild);
+            }
+        }
+        
+        // Scroll to error message
+        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // Function to hide validation error message
+    function hideValidationError() {
+        const existingError = document.querySelector('.step-validation-error');
+        if (existingError) {
+            existingError.remove();
+        }
+    }
+    
+    // Add click handlers to step indicators
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.step-item').forEach(function(stepItem) {
+            stepItem.addEventListener('click', function() {
+                const targetStep = parseInt(this.getAttribute('data-step'));
+                const currentStep = getCurrentActiveStep();
+                
+                // Only allow clicking on current step, previous steps, or next step (with validation)
+                if (targetStep <= currentStep || (targetStep === currentStep + 1)) {
+                    nextStep(targetStep);
+                } else {
+                    // Show message that user needs to complete previous steps
+                    showValidationError(['Complete previous steps first'], currentStep);
+                }
+            });
+        });
+    });
+    
+    function updateStepIndicators(currentStep) {
+        // Update main step indicator
+        document.querySelectorAll('.step-item').forEach(function(item, index) {
+            const stepNumber = index + 1;
+            item.classList.remove('active', 'completed');
+            
+            if (stepNumber === currentStep) {
+                item.classList.add('active');
+            } else if (stepNumber < currentStep) {
+                item.classList.add('completed');
+            }
+        });
+        
+        // Update progress circles in header
+        document.querySelectorAll('.progress-circle').forEach(function(circle, index) {
+            const stepNumber = index + 1;
+            circle.classList.remove('active');
+            
+            if (stepNumber === currentStep) {
+                circle.classList.add('active');
+            }
+        });
+        
+        // Update connectors
+        document.querySelectorAll('.step-connector').forEach(function(connector, index) {
+            const stepNumber = index + 1;
+            connector.classList.remove('active');
+            
+            if (stepNumber < currentStep) {
+                connector.classList.add('active');
+            }
+        });
+    }
+    
+    // Global variable to store vehicle seating capacity
+    var vehicleSeatingCapacity = 0;
+
+    // Function to get vehicle information and set seating capacity
+    function getVehicleInfo(vehicleId) {
+        if (!vehicleId) return;
+        
+        $.ajax({
+            url: '/api/vehicles/' + vehicleId + '/',
+            method: 'GET',
+            success: function(vehicle) {
+                vehicleSeatingCapacity = vehicle.max_seats || 0;
+                console.log('Vehicle seating capacity set to:', vehicleSeatingCapacity);
+                
+                // Update seating capacity display
+                updateSeatingCapacityDisplay();
+                
+                // Validate current passenger count
+                validatePassengerCount();
+            },
+            error: function(xhr) {
+                console.error('Failed to get vehicle info:', xhr);
+                // Set a default capacity if API fails
+                vehicleSeatingCapacity = 4;
+                updateSeatingCapacityDisplay();
+            }
+        });
+    }
+
+    // Function to update seating capacity display
+    function updateSeatingCapacityDisplay() {
+        if (vehicleSeatingCapacity > 0) {
+            $('#capacityDisplay').text(vehicleSeatingCapacity);
+            $('#seatingCapacityInfo').show();
+            updateSelectedPassengersDisplay();
+        }
+    }
+
+    // Function to update selected passengers display
+    function updateSelectedPassengersDisplay() {
+        var adults = parseInt($('#adults').val()) || 1;
+        var children = parseInt($('#children').val()) || 0;
+        var totalPassengers = adults + children;
+        $('#selectedPassengers').text(totalPassengers);
+        
+        // Update color based on capacity
+        var selectedSpan = $('#selectedPassengers');
+        if (totalPassengers > vehicleSeatingCapacity) {
+            selectedSpan.removeClass('text-success').addClass('text-danger');
+        } else {
+            selectedSpan.removeClass('text-danger').addClass('text-success');
+        }
+    }
+
+    // Function to validate total passenger count against vehicle capacity
+    function validatePassengerCount() {
+        if (vehicleSeatingCapacity === 0) return true;
+        
+        var adults = parseInt($('#adults').val()) || 1;
+        var children = parseInt($('#children').val()) || 0;
+        var totalPassengers = adults + children;
+        
+        // Update display
+        updateSelectedPassengersDisplay();
+        
+        if (totalPassengers > vehicleSeatingCapacity) {
+            // Show warning message
+            showPassengerWarning(totalPassengers, vehicleSeatingCapacity);
+            return false;
+        } else {
+            // Hide warning message if it exists
+            hidePassengerWarning();
+            return true;
+        }
+    }
+
+    // Function to show passenger count warning
+    function showPassengerWarning(totalPassengers, capacity) {
+        // Remove existing warning
+        $('.passenger-warning').remove();
+        
+        // Create warning message
+        var warningHtml = `
+            <div class="alert alert-warning passenger-warning mt-2" role="alert">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                <strong>Seating Capacity Exceeded!</strong><br>
+                Total passengers (${totalPassengers}) exceeds vehicle capacity (${capacity} seats).
+                Please reduce the number of passengers or select a larger vehicle.
+            </div>
+        `;
+        
+        // Insert warning after the passenger selection section
+        $('.number-input').last().closest('.col-md-6').after('<div class="col-12">' + warningHtml + '</div>');
+    }
+
+    // Function to hide passenger count warning
+    function hidePassengerWarning() {
+        $('.passenger-warning').closest('.col-12').remove();
+    }
+
+    // Number input controls
+    function changeNumber(fieldName, change) {
+        const input = document.getElementById(fieldName);
+        let currentValue = parseInt(input.value) || 0;
+        let newValue = currentValue + change;
+        
+        // Set minimum values
+        if (fieldName === 'adults' && newValue < 1) newValue = 1;
+        if (fieldName === 'children' && newValue < 0) newValue = 0;
+        
+        // Check seating capacity before allowing the change
+        var adults = fieldName === 'adults' ? newValue : parseInt($('#adults').val()) || 1;
+        var children = fieldName === 'children' ? newValue : parseInt($('#children').val()) || 0;
+        var totalPassengers = adults + children;
+        
+        if (vehicleSeatingCapacity > 0 && totalPassengers > vehicleSeatingCapacity) {
+            // Don't allow the change if it exceeds capacity
+            showPassengerWarning(totalPassengers, vehicleSeatingCapacity);
+            return;
+        }
+        
+        input.value = newValue;
+        
+        // Update selected passengers display
+        updateSelectedPassengersDisplay();
+        
+        // Validate after change
+        validatePassengerCount();
+    }
+
+    $('input[name="payment_type"]').on('change', function () {
+        {% if system_settings.upi_payments_enabled %}
+        if ($(this).val() === 'upi') {
+            $('#upiOptions').show();
+            $('#driverOfficeOptions').hide();
+        } else {
+            $('#upiOptions').hide();
+            $('#driverOfficeOptions').show();
+        }
+        {% endif %}
+    });
+
+    $('input[name="payment_option"]').on('change', function () {
+        if ($(this).val() === 'advance') {
+            var total = parseFloat($('#totalAmount').val().replace('₹', '').replace(',', ''));
+            var advancePercentage = {{ system_settings.advance_payment_percentage|default:20 }} / 100;
+            var advance = total * advancePercentage;
+            $('#advanceAmount').val('₹' + advance.toFixed(1));
+            $('#advanceAmountDiv').show();
+        } else {
+            $('#advanceAmountDiv').hide();
+        }
+    });
+
+    // Get vehicle ID from session storage if available
+    var vehicleId = sessionStorage.getItem('bookingVehicleId') || $('#vehicleId').val();
+    if (vehicleId) {
+        $('#vehicleId').val(vehicleId);
+        // Get vehicle seating capacity
+        getVehicleInfo(vehicleId);
+    }
+
+    $('#bookingForm').on('submit', function (e) {
+        e.preventDefault();
+
+        // Get the submit button and prevent multiple submissions
+        var submitBtn = $(this).find('button[type="submit"]');
+        var originalBtnText = submitBtn.html();
+        
+        // Check if already submitting
+        if (submitBtn.prop('disabled')) {
+            return false;
+        }
+
+        // Validate required fields
+        var requiredFields = ['name', 'email', 'phone', 'pickup_address', 'drop_address'];
+        var isValid = true;
+        requiredFields.forEach(function (field) {
+            var value = '';
+            if (field === 'pickup_address' || field === 'drop_address') {
+                value = $('textarea[name="' + field + '"]').val();
+            } else {
+                value = $('input[name="' + field + '"]').val();
+            }
+            if (!value || value.trim() === '') {
+                alert('Please fill in all required fields');
+                isValid = false;
+                return false;
+            }
+        });
+
+        if (!isValid) {
+            // Restore submit button state
+            submitBtn.prop('disabled', false);
+            submitBtn.html(originalBtnText);
+            return;
+        }
+
+        // Validate passenger count against vehicle seating capacity
+        if (!validatePassengerCount()) {
+            alert('Total number of passengers exceeds vehicle seating capacity. Please reduce the number of passengers or select a larger vehicle.');
+            // Restore submit button state
+            submitBtn.prop('disabled', false);
+            submitBtn.html(originalBtnText);
+            return;
+        }
+
+        if (!$('#terms').is(':checked')) {
+            alert('Please accept the Terms & Conditions');
+            // Restore submit button state
+            submitBtn.prop('disabled', false);
+            submitBtn.html(originalBtnText);
+            return;
+        }
+
+        var totalAmount = $('#totalAmount').text();
+        if (!totalAmount || totalAmount === '' || totalAmount === '₹0.0') {
+            alert('Total amount is missing. Please go back and select a vehicle.');
+            // Restore submit button state
+            submitBtn.prop('disabled', false);
+            submitBtn.html(originalBtnText);
+            return;
+        }
+
+        // Disable submit button and show loading state
+        submitBtn.prop('disabled', true);
+        submitBtn.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Creating Booking...');
+
+        // Get tour planner data if available
+        var tourPlannerData = sessionStorage.getItem('tourPlannerBooking');
+        var bookingData = null;
+        if (tourPlannerData) {
+            try {
+                bookingData = JSON.parse(tourPlannerData);
+            } catch (e) {
+                console.error('Error parsing tour planner data:', e);
+            }
+        }
+
+        // Helper function to get value or null (not empty string)
+        function getValueOrNull(selector) {
+            var element = $(selector);
+            if (element.length === 0) {
+                return null; // Element doesn't exist
+            }
+            var value = element.val();
+            return (value && value.trim() !== '') ? value.trim() : null;
+        }
+
+        // Create form data with safe date/time handling
+        var formData = {
+            vehicle_id: $('#vehicleId').val() || sessionStorage.getItem('bookingVehicleId'),
+            name: $('input[name="name"]').val(),
+            email: $('input[name="email"]').val(),
+            phone: $('input[name="phone"]').val(),
+            flight_train_no: $('input[name="flight_train_no"]').val() || '',
+            landmark: $('input[name="landmark"]').val() || '',
+            adults: parseInt($('input[name="adults"]').val()) || 1,
+            children: parseInt($('input[name="children"]').val()) || 0,
+            pickup_address: $('textarea[name="pickup_address"]').val(),
+            drop_address: $('textarea[name="drop_address"]').val(),
+            pickup_city: bookingData ? bookingData.pickupCityName : 'Coimbatore',
+            trip_type: bookingData ? bookingData.bookingType : (sessionStorage.getItem('bookingType') || 'outstation'),
+            total_days: bookingData ? bookingData.totalDays : 1,
+            total_distance: bookingData ? bookingData.totalDistance : 0,
+            payment_type: $('input[name="payment_type"]:checked').val(),
+            total_amount: parseFloat(totalAmount.toString().replace('₹', '').replace(/,/g, '')) || 0,
+            advance_amount: ($('input[name="payment_option"]:checked').val() === 'advance' && $('#advanceAmount').text()) ?
+                parseFloat($('#advanceAmount').text().toString().replace('₹', '').replace(/,/g, '')) || 0 : 0,
+            special_instructions: $('textarea[name="special_instructions"]').val() || '',
+            // Include route data if available
+            routes: bookingData ? bookingData.routes : [],
+            multicity_routes: bookingData ? bookingData.routes : []
+        };
+
+        // Add date/time fields ONLY if they have valid values
+        var pickupDate = getValueOrNull('#pickupDate');
+        var pickupTime = getValueOrNull('#pickupTime');
+        var dropDate = getValueOrNull('#dropDate');
+        var dropTime = getValueOrNull('#dropTime');
+
+        // Only add date fields if they exist and are valid
+        if (pickupDate && pickupDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            formData.pickup_date = pickupDate;
+        }
+        
+        if (pickupTime && pickupTime.match(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)) {
+            formData.pickup_time = pickupTime;
+        }
+        
+        if (dropDate && dropDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            formData.drop_date = dropDate;
+        }
+        
+        if (dropTime && dropTime.match(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)) {
+            formData.drop_time = dropTime;
+        }
+
+        console.log('Submitting booking data:', formData);
+
+        $.ajax({
+            url: '/api/bookings/',
+            method: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+            },
+            success: function (response) {
+                // Clear session storage after successful booking
+                sessionStorage.removeItem('tourPlannerBooking');
+                sessionStorage.removeItem('bookingVehicleId');
+                sessionStorage.removeItem('bookingAmount');
+                sessionStorage.removeItem('bookingType');
+
+                if (formData.payment_type === 'upi') {
+                    var amount = formData.advance_amount > 0 ? formData.advance_amount : formData.total_amount;
+                    if (amount > 0) {
+                        initRazorpayPayment(response.booking_number, amount);
+                    } else {
+                        // If amount is 0 or Razorpay not configured, redirect to confirmation
+                        window.location.href = '/booking-confirmation/' + response.booking_number + '/';
+                    }
+                } else {
+                    window.location.href = '/booking-confirmation/' + response.booking_number + '/';
+                }
+            },
+            error: function (xhr) {
+                console.error('=== BOOKING ERROR DEBUG ===');
+                console.error('Status:', xhr.status);
+                console.error('Response Text:', xhr.responseText);
+                console.error('Response JSON:', xhr.responseJSON);
+                console.error('Form data that was sent:', formData);
+                
+                var error = xhr.responseJSON;
+                var errorMsg = 'Booking failed. Please try again.';
+                
+                // Enhanced error parsing
+                if (error) {
+                    if (error.error) {
+                        errorMsg = error.error;
+                    } else if (error.non_field_errors) {
+                        errorMsg = error.non_field_errors.join(', ');
+                    } else if (typeof error === 'object') {
+                        // Handle field-specific errors
+                        var fieldErrors = [];
+                        Object.keys(error).forEach(function(field) {
+                            if (Array.isArray(error[field])) {
+                                fieldErrors.push(field + ': ' + error[field].join(', '));
+                            } else {
+                                fieldErrors.push(field + ': ' + error[field]);
+                            }
+                        });
+                        if (fieldErrors.length > 0) {
+                            errorMsg = fieldErrors.join('\n');
+                        }
+                    }
+                } else if (xhr.responseText) {
+                    try {
+                        var parsed = JSON.parse(xhr.responseText);
+                        errorMsg = parsed.error || parsed.message || errorMsg;
+                    } catch (e) {
+                        errorMsg = xhr.responseText || errorMsg;
+                    }
+                }
+                
+                console.error('Final error message:', errorMsg);
+                alert('Booking Error:\n' + errorMsg);
+                console.error('=== END ERROR DEBUG ===');
+                
+                // Restore submit button state
+                submitBtn.prop('disabled', false);
+                submitBtn.html(originalBtnText);
+            }
+        });
+    });
+
+    function initRazorpayPayment(bookingNumber, amount) {
+        $.ajax({
+            url: '/api/razorpay/order/',
+            method: 'POST',
+            data: {
+                amount: amount,
+                booking_number: bookingNumber
+            },
+            headers: {
+                'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+            },
+            success: function (order) {
+                var razorpayKey = '{{ RAZORPAY_KEY_ID }}';
+                if (!razorpayKey || razorpayKey === '') {
+                    alert('Razorpay is not configured. Redirecting to booking confirmation...');
+                    window.location.href = '/booking-confirmation/' + bookingNumber + '/';
+                    return;
+                }
+
+                var options = {
+                    key: razorpayKey,
+                    amount: order.amount,
+                    currency: order.currency,
+                    name: 'Ritham Tours & Travels',
+                    description: 'Booking Payment',
+                    order_id: order.order_id,
+                    handler: function (response) {
+                        $.ajax({
+                            url: '/api/razorpay/callback/',
+                            method: 'POST',
+                            data: {
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature,
+                                booking_number: bookingNumber
+                            },
+                            headers: {
+                                'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+                            },
+                            success: function () {
+                                // Clear session storage after successful payment
+                                sessionStorage.removeItem('tourPlannerBooking');
+                                sessionStorage.removeItem('bookingVehicleId');
+                                sessionStorage.removeItem('bookingAmount');
+                                sessionStorage.removeItem('bookingType');
+                                window.location.href = '/booking-confirmation/' + bookingNumber + '/';
+                            },
+                            error: function () {
+                                alert('Payment verification failed. Please contact support with booking number: ' + bookingNumber);
+                                window.location.href = '/booking-confirmation/' + bookingNumber + '/';
+                            }
+                        });
+                    },
+                    modal: {
+                        ondismiss: function () {
+                            // Clear session storage and redirect to confirmation
+                            sessionStorage.removeItem('tourPlannerBooking');
+                            sessionStorage.removeItem('bookingVehicleId');
+                            sessionStorage.removeItem('bookingAmount');
+                            sessionStorage.removeItem('bookingType');
+                            window.location.href = '/booking-confirmation/' + bookingNumber + '/';
+                        }
+                    }
+                };
+                var rzp = new Razorpay(options);
+                rzp.open();
+            },
+            error: function (xhr) {
+                console.error('Razorpay order creation failed:', xhr);
+                // If Razorpay fails, still redirect to confirmation page
+                alert('Payment gateway is currently unavailable. Your booking has been created. You can pay later. Booking Number: ' + bookingNumber);
+                window.location.href = '/booking-confirmation/' + bookingNumber + '/';
+            }
+        });
+    }
+
+    // Payment method change handlers
+    $('input[name="payment_type"]').on('change', function () {
+        {% if system_settings.upi_payments_enabled %}
+        if ($(this).val() === 'upi') {
+            $('#upiOptions').show();
+            $('#driverOfficeOptions').hide();
+        } else {
+            $('#upiOptions').hide();
+            $('#driverOfficeOptions').show();
+        }
+        {% endif %}
+    });
+
+    $('input[name="payment_option"]').on('change', function () {
+        if ($(this).val() === 'advance') {
+            var totalStr = $('#totalAmount').text() || $('#totalAmount').val() || '₹0';
+            var total = parseFloat(totalStr.replace('₹', '').replace(/,/g, '')) || 0;
+            var advancePercentage = {{ system_settings.advance_payment_percentage|default:20 }} / 100;
+            var advance = total * advancePercentage;
+            $('#advanceAmount').text('₹' + advance.toFixed(1));
+            $('#advanceAmountDiv').show();
+        } else {
+            $('#advanceAmountDiv').hide();
+        }
+    });
+
+    // Initialize the first step
+    nextStep(1);
+</script>
+{% endblock %}

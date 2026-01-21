@@ -1,0 +1,719 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+    
+    .hero-content h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    
+    .hero-content p {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .contact-section {
+        margin-top: -50px;
+        position: relative;
+        z-index: 3;
+    }
+    
+    .contact-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .contact-card .card-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 20px 30px;
+        font-weight: 600;
+    }
+    
+    .contact-card .card-body {
+        padding: 30px;
+    }
+    
+    .contact-info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-info-item:hover {
+        background: #e9ecef;
+        transform: translateX(5px);
+    }
+    
+    .contact-info-item i {
+        font-size: 1.5rem;
+        color: #667eea;
+        margin-right: 15px;
+        width: 30px;
+        text-align: center;
+    }
+    
+    .contact-info-item .info-content h6 {
+        margin: 0;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .contact-info-item .info-content p {
+        margin: 0;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        padding: 12px 20px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+    
+    .btn-send {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .btn-send:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    
+    .video-container {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .map-container {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        height: 400px;
+    }
+    
+    .map-container iframe {
+        border-radius: 20px;
+    }
+    
+    .bank-details {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 15px;
+    }
+    
+    .bank-details p {
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .bank-details strong {
+        color: #2c3e50;
+    }
+    
+    .sidebar-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: none;
+        margin-bottom: 25px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .sidebar-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+    
+    .sidebar-card .card-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    
+    .sidebar-card .card-body {
+        padding: 20px;
+    }
+    
+    .sidebar-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .sidebar-card li {
+        margin-bottom: 10px;
+    }
+    
+    .sidebar-card a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+    }
+    
+    .sidebar-card a:hover {
+        color: #764ba2;
+        transform: translateX(5px);
+    }
+    
+    .sidebar-card a::before {
+        content: '→';
+        margin-right: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .sidebar-card a:hover::before {
+        transform: translateX(3px);
+    }
+    
+    .testimonial-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-left: 4px solid #667eea;
+    }
+    
+    .testimonial-item p {
+        margin-bottom: 8px;
+        font-style: italic;
+        color: #4a5568;
+    }
+    
+    .testimonial-author {
+        font-weight: 600;
+        color: #667eea;
+        font-size: 0.9rem;
+    }
+    
+    .promotion-item {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+    }
+    
+    .promotion-item h6 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    
+    .promotion-item p {
+        color: #6c757d;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.1rem;
+        }
+        
+        .contact-hero {
+            padding: 60px 0;
+        }
+        
+        .contact-card .card-body,
+        .sidebar-card .card-body {
+            padding: 20px;
+        }
+        
+        .contact-info-item {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .contact-info-item i {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Contact Hero -->
+<div class="contact-hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Get in Touch</h1>
+            <p>We're here to help you plan your perfect journey. Reach out to us anytime!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="container">
+    <div class="contact-section">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Company Details -->
+                <div class="contact-card mb-4">
+                    <div class="card-header">
+                        <h5><i class="bi bi-building me-2"></i>Company Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="contact-info-item">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                    <div class="info-content">
+                                        <h6>Address</h6>
+                                        <p>Coimbatore, Tamil Nadu, India</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="contact-info-item">
+                                    <i class="bi bi-telephone-fill"></i>
+                                    <div class="info-content">
+                                        <h6>Phone</h6>
+                                        <p>+91 97871 10763</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                    <div class="contact-info-item">
+                                        <i class="bi bi-envelope-fill"></i>
+                                        <div class="info-content">
+                                            <h6>Email</h6>
+                                            <p>info@rithamtravels.in</p>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="contact-info-item">
+                                    <i class="bi bi-clock-fill"></i>
+                                    <div class="info-content">
+                                        <h6>Working Hours</h6>
+                                        <p>24/7 Customer Support</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Contact Form -->
+                <div class="contact-card mb-4">
+                    <div class="card-header">
+                        <h5><i class="bi bi-chat-dots me-2"></i>Send us a Message</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="contactForm">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Enter your full name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" name="phone" placeholder="Enter your phone number" required>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Subject</label>
+                                    <select class="form-control" name="subject" required>
+                                        <option value="">Select a subject</option>
+                                        <option value="General Inquiry">General Inquiry</option>
+                                        <option value="Booking Support">Booking Support</option>
+                                        <option value="Tour Package">Tour Package Information</option>
+                                        <option value="Complaint">Complaint</option>
+                                        <option value="Feedback">Feedback</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mb-4">
+                                    <label class="form-label">Message</label>
+                                    <textarea class="form-control" name="message" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn-send">
+                                        <i class="bi bi-send"></i>
+                                        <span>Send Message</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+                <!-- Video Reviews -->
+                <div class="contact-card mb-4">
+                    <div class="card-header">
+                        <h5><i class="bi bi-play-circle me-2"></i>Customer Reviews</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="video-container">
+                            <div class="ratio ratio-16x9">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/B-ChvuyivuQ?si=AcAAF3prBiWeqGeV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bank Details -->
+                <div class="contact-card mb-4">
+                    <div class="card-header">
+                        <h5><i class="bi bi-bank me-2"></i>Payment Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-3">For direct bank transfers and advance payments</p>
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#bankDetails">
+                            <i class="bi bi-eye me-2"></i>View Bank Details
+                        </button>
+                        <div class="collapse mt-3" id="bankDetails">
+                            <div class="bank-details">
+                                <p><strong>Account Name:</strong> <span>Ritham Tours & Travels</span></p>
+                                <p><strong>Account Number:</strong> <span>506 150050 800255</span></p>
+                                <p><strong>IFSC Code:</strong> <span>TMBL0000506</span></p>
+                                <p><strong>Bank Name:</strong> <span>TAMILNADU MERCANTILE BANK</span></p>
+                                <p><strong>Branch:</strong> <span>PEELAMEDU, COIMBATORE</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Location Map -->
+                <div class="contact-card mb-4">
+                    <div class="card-header">
+                        <h5><i class="bi bi-geo-alt me-2"></i>Find Us</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d17020.655721329433!2d76.99961716066458!3d11.016974753092255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8578050000001%3A0x26f84a6a7a1868e7!2sRitham%20Tours%20%26%20Travels!5e0!3m2!1sen!2sin!4v1767113179355!5m2!1sen!2sin" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Popular Plans -->
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <h5><i class="bi bi-star me-2"></i>Popular Plans</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><a href="{% url 'ooty' %}">Ooty Hill Station Tour</a></li>
+                            <li><a href="{% url 'kodaikanal' %}">Kodaikanal Weekend Package</a></li>
+                            <li><a href="{% url 'munnar' %}">Munnar Tea Garden Tour</a></li>
+                            <li><a href="{% url 'coorg' %}">Coorg Coffee Plantation</a></li>
+                            <li><a href="{% url 'mysore' %}">Mysore Palace Tour</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tour Categories -->
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <h5><i class="bi bi-map me-2"></i>Tour Categories</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><a href="#">One Day Trips</a></li>
+                            <li><a href="#">Weekend Getaways</a></li>
+                            <li><a href="#">Hill Station Tours</a></li>
+                            <li><a href="#">Beach Destinations</a></li>
+                            <li><a href="#">Cultural Tours</a></li>
+                            <li><a href="#">Adventure Packages</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Quick Contact -->
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <h5><i class="bi bi-telephone me-2"></i>Quick Contact</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="bi bi-whatsapp" style="font-size: 2rem; color: #25D366;"></i>
+                            <h6 class="mt-2">WhatsApp</h6>
+                            <a href="https://wa.me/919787110763" style="color: white;" class="btn btn-success btn-sm">
+                                <i class="bi bi-whatsapp me-1"></i>Chat Now
+                            </a>
+                        </div>
+                        <div class="mb-3">
+                            <i class="bi bi-telephone-fill" style="font-size: 2rem; color: #667eea;"></i>
+                            <h6 class="mt-2">Call Us</h6>
+                            <a href="tel:+919787110763" style="color: white;" class="btn btn-primary btn-sm">
+                                <i class="bi bi-telephone me-1"></i>+91 97871 10763
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Customer Testimonials -->
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <h5><i class="bi bi-chat-quote me-2"></i>What Customers Say</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="testimonial-item">
+                            <p>"Excellent service and professional drivers. Highly recommended for family trips!"</p>
+                            <div class="testimonial-author">- Priya Sharma</div>
+                        </div>
+                        <div class="testimonial-item">
+                            <p>"Best tour operator in Coimbatore. Great vehicles and punctual service."</p>
+                            <div class="testimonial-author">- Rajesh Kumar</div>
+                        </div>
+                        <div class="testimonial-item">
+                            <p>"Amazing experience with Ritham Tours. Will definitely book again!"</p>
+                            <div class="testimonial-author">- Meera Nair</div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="{% url 'testimonials' %}" class="btn btn-outline-primary btn-sm">
+                                View All Reviews
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Special Offers -->
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <h5><i class="bi bi-gift me-2"></i>Special Offers</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="promotion-item">
+                            <h6>🎉 New Year Special</h6>
+                            <p>Get 20% off on all hill station packages. Valid till January 31st!</p>
+                        </div>
+                        <div class="promotion-item">
+                            <h6>🚗 Group Booking Discount</h6>
+                            <p>Book for 5+ people and save up to 15% on your total booking.</p>
+                        </div>
+                        <div class="promotion-item">
+                            <h6>⭐ Early Bird Offer</h6>
+                            <p>Book 15 days in advance and get 10% discount on all packages.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Enhanced form submission with better UX
+    $('#contactForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const submitBtn = $(this).find('button[type="submit"]');
+        const originalText = submitBtn.html();
+        
+        // Show loading state
+        submitBtn.html('<span class="spinner-border spinner-border-sm me-2"></span>Sending...');
+        submitBtn.prop('disabled', true);
+        
+        $.ajax({
+            url: '/api/enquiries/',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                // Show success message
+                showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+                $('#contactForm')[0].reset();
+            },
+            error: function(xhr) {
+                // Show error message
+                let errorMessage = 'Error sending message. Please try again.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                showNotification(errorMessage, 'error');
+            },
+            complete: function() {
+                // Restore button state
+                submitBtn.html(originalText);
+                submitBtn.prop('disabled', false);
+            }
+        });
+    });
+    
+    // Notification function
+    function showNotification(message, type) {
+        const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+        const icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle';
+        
+        const notification = $(`
+            <div class="alert ${alertClass} alert-dismissible fade show position-fixed" 
+                 style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;">
+                <i class="bi ${icon} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `);
+        
+        $('body').append(notification);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(function() {
+            notification.alert('close');
+        }, 5000);
+    }
+    
+    // Form validation enhancements
+    $('.form-control').on('blur', function() {
+        const field = $(this);
+        const value = field.val().trim();
+        
+        // Remove existing validation classes
+        field.removeClass('is-valid is-invalid');
+        
+        if (field.prop('required') && !value) {
+            field.addClass('is-invalid');
+        } else if (value) {
+            // Email validation
+            if (field.attr('type') === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(value)) {
+                    field.addClass('is-valid');
+                } else {
+                    field.addClass('is-invalid');
+                }
+            }
+            // Phone validation
+            else if (field.attr('type') === 'tel') {
+                const phoneRegex = /^[+]?[\d\s\-\(\)]{10,}$/;
+                if (phoneRegex.test(value)) {
+                    field.addClass('is-valid');
+                } else {
+                    field.addClass('is-invalid');
+                }
+            }
+            // Other fields
+            else {
+                field.addClass('is-valid');
+            }
+        }
+    });
+    
+    // Smooth scroll for anchor links
+    $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
+        const target = $($(this).attr('href'));
+        if (target.length) {
+            $('html, body').animate({
+                scrollTop: target.offset().top - 100
+            }, 800);
+        }
+    });
+    
+    // Add animation on scroll
+    $(window).on('scroll', function() {
+        $('.contact-card, .sidebar-card').each(function() {
+            const elementTop = $(this).offset().top;
+            const elementBottom = elementTop + $(this).outerHeight();
+            const viewportTop = $(window).scrollTop();
+            const viewportBottom = viewportTop + $(window).height();
+            
+            if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                $(this).addClass('animate__animated animate__fadeInUp');
+            }
+        });
+    });
+</script>
+{% endblock %}
+

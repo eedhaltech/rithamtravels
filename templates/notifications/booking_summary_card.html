@@ -1,0 +1,659 @@
+<!-- Booking Summary Card Component -->
+<div class="booking-summary-card" style="
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: white;
+">
+    <!-- Header -->
+    <div class="card-header" style="
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 25px;
+        text-align: center;
+    ">
+        <h2 style="
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        ">
+            <span style="margin-right: 10px;">🚗</span>
+            {{ company_name }}
+        </h2>
+        <p style="
+            margin: 8px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        ">Your Trusted Travel Partner</p>
+    </div>
+
+    <!-- Status Banner -->
+    <div class="status-banner" style="
+        background: {{ status_style.bg }};
+        color: {{ status_style.color }};
+        padding: 20px;
+        text-align: center;
+        border-left: 5px solid {{ status_style.color }};
+    ">
+        <h3 style="
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        ">
+            {{ status_style.icon }} Booking {{ booking.get_status_display }}
+        </h3>
+        {% if message %}
+        <p style="margin: 8px 0 0 0; font-size: 14px;">{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Booking Details -->
+    <div class="card-body" style="padding: 0;">
+        
+        <!-- Basic Information -->
+        <div style="padding: 25px;">
+            <h4 style="
+                color: #2563eb;
+                margin: 0 0 20px 0;
+                font-size: 18px;
+                border-bottom: 2px solid #e5e7eb;
+                padding-bottom: 10px;
+            ">Booking Details</h4>
+            
+            <table style="
+                width: 100%;
+                border-collapse: collapse;
+                margin: 15px 0;
+            ">
+                <tr>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        font-weight: 600;
+                        color: #374151;
+                        width: 40%;
+                    ">
+                        👤 Customer Name:
+                    </td>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        color: #1f2937;
+                    ">
+                        {{ booking.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        font-weight: 600;
+                        color: #374151;
+                    ">
+                        🆔 Booking ID:
+                    </td>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        color: #1f2937;
+                        font-family: monospace;
+                        font-weight: 600;
+                    ">
+                        {{ booking.booking_number }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        font-weight: 600;
+                        color: #374151;
+                    ">
+                        📊 Status:
+                    </td>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                    ">
+                        <span style="
+                            background: {{ status_style.bg }};
+                            color: {{ status_style.color }};
+                            padding: 6px 12px;
+                            border-radius: 20px;
+                            font-weight: 600;
+                            font-size: 14px;
+                        ">
+                            {{ status_style.icon }} {{ booking.get_status_display }}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        font-weight: 600;
+                        color: #374151;
+                    ">
+                        📍 Pickup Location:
+                    </td>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        color: #1f2937;
+                    ">
+                        {{ booking.pickup_city }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        font-weight: 600;
+                        color: #374151;
+                    ">
+                        📍 Drop Location:
+                    </td>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        color: #1f2937;
+                    ">
+                        {{ booking.pickup_city }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        font-weight: 600;
+                        color: #374151;
+                    ">
+                        📅 Travel Date:
+                    </td>
+                    <td style="
+                        padding: 12px 0;
+                        border-bottom: 1px solid #f3f4f6;
+                        color: #1f2937;
+                        font-weight: 600;
+                    ">
+                        {{ formatted_pickup_date }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                        padding: 12px 0;
+                        font-weight: 600;
+                        color: #374151;
+                    ">
+                        🕐 Pickup Time:
+                    </td>
+                    <td style="
+                        padding: 12px 0;
+                        color: #1f2937;
+                        font-weight: 600;
+                    ">
+                        {{ formatted_pickup_time }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Trip Overview Table -->
+        {% if booking.trip_type != 'local' %}
+        <div style="padding: 0 25px;">
+            <h4 style="
+                color: #2563eb;
+                margin: 0 0 15px 0;
+                font-size: 18px;
+            ">Trip Overview</h4>
+            
+            <div style="overflow-x: auto;">
+                <table style="
+                    width: 100%;
+                    border-collapse: collapse;
+                    border: 1px solid #e5e7eb;
+                    margin-bottom: 20px;
+                ">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">DAYS</th>
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">FROM</th>
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">TO</th>
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">DISTANCE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                            ">{{ booking.total_days }}</td>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                            ">{{ booking.pickup_city }}</td>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                            ">{{ booking.pickup_city }}</td>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                            ">{{ booking.total_distance }} Kms</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Vehicle and Pricing Information -->
+        {% if booking.vehicle %}
+        <div style="padding: 0 25px;">
+            <h4 style="
+                color: #2563eb;
+                margin: 0 0 15px 0;
+                font-size: 18px;
+            ">Vehicle & Pricing Details</h4>
+            
+            <div style="overflow-x: auto;">
+                <table style="
+                    width: 100%;
+                    border-collapse: collapse;
+                    border: 1px solid #e5e7eb;
+                    margin-bottom: 20px;
+                ">
+                    <thead>
+                        <tr style="background: #f1f5f9;">
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">SELECTED CAR</th>
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">RENT / DAY</th>
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">FREE KMs / DAY</th>
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">FARE / KM</th>
+                            <th style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                font-weight: 600;
+                                color: #374151;
+                            ">DRIVER / DAY</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                                font-weight: 600;
+                            ">{{ booking.vehicle.name }}</td>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                            ">₹{{ booking.vehicle.per_day_fee }}</td>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                            ">{{ booking.vehicle.min_km_per_day }} Kms</td>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                            ">₹{{ booking.vehicle.fare_per_km }}</td>
+                            <td style="
+                                padding: 12px;
+                                text-align: center;
+                                border: 1px solid #e5e7eb;
+                                color: #1f2937;
+                            ">₹{{ booking.vehicle.driver_charge_per_day }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Payment Summary -->
+        <div style="padding: 0 25px 25px 25px;">
+            <h4 style="
+                color: #2563eb;
+                margin: 0 0 15px 0;
+                font-size: 18px;
+            ">Payment Summary</h4>
+            
+            <table style="
+                width: 100%;
+                border-collapse: collapse;
+            ">
+                {% if final_bill %}
+                    <!-- Final Bill Details -->
+                    <tr>
+                        <td style="
+                            padding: 8px 0;
+                            color: #374151;
+                        ">Original Amount</td>
+                        <td style="
+                            padding: 8px 0;
+                            text-align: right;
+                            color: #1f2937;
+                        ">₹{{ final_bill.original_amount }}</td>
+                    </tr>
+                    <tr>
+                        <td style="
+                            padding: 8px 0;
+                            color: #374151;
+                        ">Advance Paid</td>
+                        <td style="
+                            padding: 8px 0;
+                            text-align: right;
+                            color: #10b981;
+                        ">₹{{ final_bill.advance_paid }}</td>
+                    </tr>
+                    {% if final_bill.extra_amount > 0 %}
+                    <tr>
+                        <td style="
+                            padding: 8px 0;
+                            color: #374151;
+                        ">Extra Charges</td>
+                        <td style="
+                            padding: 8px 0;
+                            text-align: right;
+                            color: #f59e0b;
+                        ">₹{{ final_bill.extra_amount }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if system_settings.gst_enabled and final_bill.gst_amount > 0 %}
+                    <tr>
+                        <td style="
+                            padding: 8px 0;
+                            color: #374151;
+                        ">GST ({{ final_bill.gst_rate }}%)</td>
+                        <td style="
+                            padding: 8px 0;
+                            text-align: right;
+                            color: #1f2937;
+                        ">₹{{ final_bill.gst_amount|floatformat:2 }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr style="
+                        border-top: 2px solid #e5e7eb;
+                        background: #fef3c7;
+                    ">
+                        <td style="
+                            padding: 12px 0;
+                            font-weight: 700;
+                            color: #92400e;
+                        ">Total Amount</td>
+                        <td style="
+                            padding: 12px 0;
+                            text-align: right;
+                            font-weight: 700;
+                            color: #92400e;
+                            font-size: 18px;
+                        ">₹{{ final_bill.final_total }}</td>
+                    </tr>
+                    {% if final_bill.outstanding_balance > 0 %}
+                    <tr style="background: #fee2e2;">
+                        <td style="
+                            padding: 12px 0;
+                            font-weight: 700;
+                            color: #dc2626;
+                        ">Outstanding Balance</td>
+                        <td style="
+                            padding: 12px 0;
+                            text-align: right;
+                            font-weight: 700;
+                            color: #dc2626;
+                            font-size: 18px;
+                        ">₹{{ final_bill.outstanding_balance }}</td>
+                    </tr>
+                    {% endif %}
+                {% else %}
+                    <!-- Regular Booking Details -->
+                    <tr>
+                        <td style="
+                            padding: 8px 0;
+                            color: #374151;
+                        ">Total Amount</td>
+                        <td style="
+                            padding: 8px 0;
+                            text-align: right;
+                            color: #1f2937;
+                        ">₹{{ booking.total_amount }}</td>
+                    </tr>
+                    {% if booking.advance_amount > 0 %}
+                    <tr>
+                        <td style="
+                            padding: 8px 0;
+                            color: #374151;
+                        ">Advance Amount</td>
+                        <td style="
+                            padding: 8px 0;
+                            text-align: right;
+                            color: #10b981;
+                        ">₹{{ booking.advance_amount }}</td>
+                    </tr>
+                    <tr>
+                        <td style="
+                            padding: 8px 0;
+                            color: #374151;
+                        ">Remaining Amount</td>
+                        <td style="
+                            padding: 8px 0;
+                            text-align: right;
+                            color: #f59e0b;
+                        ">₹{{ booking.total_amount|add:booking.advance_amount|add:"-"|add:booking.advance_amount }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td style="
+                            padding: 8px 0;
+                            color: #374151;
+                        ">Payment Method</td>
+                        <td style="
+                            padding: 8px 0;
+                            text-align: right;
+                            color: #1f2937;
+                        ">{{ booking.get_payment_type_display }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <!-- Action Button -->
+        {% if show_admin_actions %}
+        <div style="
+            text-align: center;
+            padding: 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #e5e7eb;
+        ">
+            <a href="{{ admin_url }}" style="
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 15px 30px;
+                text-decoration: none;
+                border-radius: 25px;
+                font-weight: 600;
+                font-size: 16px;
+                display: inline-block;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            ">
+                🔗 {{ management_text }}
+            </a>
+        </div>
+        {% elif not is_completed %}
+        <div style="
+            text-align: center;
+            padding: 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #e5e7eb;
+        ">
+            <a href="{{ website_url }}/booking/{{ booking.id }}/" style="
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 15px 30px;
+                text-decoration: none;
+                border-radius: 25px;
+                font-weight: 600;
+                font-size: 16px;
+                display: inline-block;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            ">
+                🔗 View Booking Details
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- Important Notes -->
+        {% if not is_completed %}
+        <div style="
+            padding: 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #e5e7eb;
+        ">
+            <h6 style="
+                color: #dc2626;
+                margin: 0 0 15px 0;
+                font-size: 16px;
+                font-weight: 600;
+            ">Important Notes:</h6>
+            <ol style="
+                margin: 0;
+                padding-left: 20px;
+                color: #374151;
+                font-size: 14px;
+                line-height: 1.6;
+            ">
+                <li>Driver Allowance will be extra if the driver drives after 10:00 PM and before 6:00 AM.</li>
+                <li>Total Km and Time will be calculated from the office.</li>
+                <li>Air-conditioning will not function in hill areas (upward journey) or when the vehicle is parked.</li>
+                <li>Parking, Toll and Inter-State Permit Charges are excluded from the above tariff and will be charged separately as per actual.</li>
+                <li>This fare is for your reference and may vary based on specific requirements and seasonal demand.</li>
+            </ol>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <div style="
+        background: #f8f9fa;
+        padding: 25px;
+        text-align: center;
+        border-top: 3px solid #667eea;
+    ">
+        <p style="
+            margin: 0 0 15px 0;
+            color: #6b7280;
+            font-size: 14px;
+        ">
+            Thank you for choosing {{ company_name }}!
+        </p>
+        
+        <div style="margin: 15px 0;">
+            <p style="
+                margin: 5px 0;
+                color: #374151;
+                font-weight: 600;
+            ">
+                📞 24/7 Support: <a href="tel:{{ company_phone }}" style="
+                    color: #2563eb;
+                    text-decoration: none;
+                ">{{ company_phone }}</a>
+            </p>
+            <p style="
+                margin: 5px 0;
+                color: #374151;
+                font-weight: 600;
+            ">
+                📧 Email: <a href="mailto:{{ company_email }}" style="
+                    color: #2563eb;
+                    text-decoration: none;
+                ">{{ company_email }}</a>
+            </p>
+            <p style="
+                margin: 5px 0;
+                color: #374151;
+                font-weight: 600;
+            ">
+                🌐 Website: <a href="{{ website_url }}" style="
+                    color: #2563eb;
+                    text-decoration: none;
+                ">{{ website_url|slice:"8:" }}</a>
+            </p>
+        </div>
+        
+        <p style="
+            margin: 15px 0 0 0;
+            color: #9ca3af;
+            font-size: 12px;
+        ">
+            This is an automated message. Please do not reply to this email.
+        </p>
+    </div>
+</div>

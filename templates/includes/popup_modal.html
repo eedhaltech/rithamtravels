@@ -1,0 +1,163 @@
+<!-- Unified Popup Modal Template -->
+<div class="modal fade" id="unifiedPopupModal" tabindex="-1" aria-labelledby="unifiedPopupModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden;">
+            <div class="modal-header" id="popupModalHeader" style="border: none; padding: 25px 25px 15px;">
+                <h5 class="modal-title d-flex align-items-center" id="unifiedPopupModalLabel">
+                    <i class="bi me-2" id="popupModalIcon"></i>
+                    <span id="popupModalTitle">Notification</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="popupModalBody" style="padding: 15px 25px 25px; font-size: 16px;">
+                <!-- Message content will be inserted here -->
+            </div>
+            <div class="modal-footer" id="popupModalFooter" style="border: none; padding: 0 25px 25px; justify-content: center;">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="popupModalButton">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Unified Popup Modal Styles */
+    #unifiedPopupModal .modal-content {
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    
+    #unifiedPopupModal .modal-header.success {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+    }
+    
+    #unifiedPopupModal .modal-header.error {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+    }
+    
+    #unifiedPopupModal .modal-header.warning {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+    }
+    
+    #unifiedPopupModal .modal-header.info {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+    }
+    
+    #unifiedPopupModal .modal-header.success .btn-close,
+    #unifiedPopupModal .modal-header.error .btn-close,
+    #unifiedPopupModal .modal-header.warning .btn-close,
+    #unifiedPopupModal .modal-header.info .btn-close {
+        filter: brightness(0) invert(1);
+    }
+    
+    #unifiedPopupModal .modal-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 20px;
+    }
+    
+    #unifiedPopupModal .modal-title i {
+        font-size: 24px;
+    }
+    
+    #unifiedPopupModal .modal-body {
+        color: #374151;
+        line-height: 1.6;
+    }
+    
+    #unifiedPopupModal .btn-primary {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        border: none;
+        padding: 10px 30px;
+        border-radius: 25px;
+        font-weight: 500;
+        min-width: 100px;
+    }
+    
+    #unifiedPopupModal .btn-primary:hover {
+        background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+</style>
+
+<script>
+/**
+ * Unified Popup System
+ * Usage: showPopup('Your message here', 'success|error|warning|info', 'Optional Title', callbackFunction)
+ */
+function showPopup(message, type = 'info', title = null, callback = null) {
+    const modal = document.getElementById('unifiedPopupModal');
+    const modalHeader = document.getElementById('popupModalHeader');
+    const modalTitle = document.getElementById('popupModalTitle');
+    const modalIcon = document.getElementById('popupModalIcon');
+    const modalBody = document.getElementById('popupModalBody');
+    const modalButton = document.getElementById('popupModalButton');
+    
+    // Remove all type classes
+    modalHeader.classList.remove('success', 'error', 'warning', 'info');
+    
+    // Set icon and title based on type
+    let iconClass = '';
+    let defaultTitle = '';
+    
+    switch(type) {
+        case 'success':
+            iconClass = 'bi-check-circle-fill';
+            defaultTitle = 'Success';
+            modalHeader.classList.add('success');
+            modalButton.className = 'btn btn-success';
+            break;
+        case 'error':
+            iconClass = 'bi-x-circle-fill';
+            defaultTitle = 'Error';
+            modalHeader.classList.add('error');
+            modalButton.className = 'btn btn-danger';
+            break;
+        case 'warning':
+            iconClass = 'bi-exclamation-triangle-fill';
+            defaultTitle = 'Warning';
+            modalHeader.classList.add('warning');
+            modalButton.className = 'btn btn-warning';
+            break;
+        case 'info':
+        default:
+            iconClass = 'bi-info-circle-fill';
+            defaultTitle = 'Information';
+            modalHeader.classList.add('info');
+            modalButton.className = 'btn btn-primary';
+            break;
+    }
+    
+    // Set icon
+    modalIcon.className = 'bi ' + iconClass + ' me-2';
+    
+    // Set title
+    modalTitle.textContent = title || defaultTitle;
+    
+    // Set message
+    modalBody.innerHTML = message;
+    
+    // Handle callback
+    if (callback && typeof callback === 'function') {
+        modalButton.onclick = function() {
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            bsModal.hide();
+            callback();
+        };
+    } else {
+        modalButton.onclick = null;
+    }
+    
+    // Show modal
+    const bsModal = new bootstrap.Modal(modal);
+    bsModal.show();
+}
+
+// Backward compatibility - replace alert() function
+window.alert = function(message) {
+    showPopup(message, 'info');
+};
+</script>

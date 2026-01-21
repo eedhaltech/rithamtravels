@@ -1,0 +1,818 @@
+{% extends 'base.html' %}
+
+{% block title %}Tariff - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .tariff-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .tariff-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+    
+    .hero-content h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    
+    .hero-content p {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .tariff-section {
+        margin-top: -50px;
+        position: relative;
+        z-index: 3;
+    }
+    
+    .tariff-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .tariff-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .tariff-card .card-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 20px 30px;
+        font-weight: 600;
+    }
+    
+    .tariff-card .card-body {
+        padding: 30px;
+    }
+    
+    .tariff-tabs {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .nav-tabs {
+        border: none;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .nav-tabs .nav-link {
+        border: none;
+        background: #f8f9fa;
+        color: #667eea;
+        font-weight: 600;
+        padding: 15px 30px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .nav-tabs .nav-link:hover {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+    }
+    
+    .nav-tabs .nav-link.active {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        transform: translateY(-3px);
+    }
+    
+    .vehicle-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+        margin-bottom: 25px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .vehicle-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        border-color: #667eea;
+    }
+    
+    .vehicle-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    
+    .vehicle-info {
+        padding: 25px;
+    }
+    
+    .vehicle-name {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .vehicle-name i {
+        color: #667eea;
+        font-size: 1.2rem;
+    }
+    
+    .price-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .price-item {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        padding: 12px 20px;
+        border-radius: 15px;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+    }
+    
+    .price-label {
+        font-size: 0.8rem;
+        color: #6c757d;
+        font-weight: 500;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .price-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #667eea;
+    }
+    
+    .vehicle-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .feature-badge {
+        background: #f8f9fa;
+        color: #495057;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: 1px solid #e9ecef;
+    }
+    
+    .vehicle-description {
+        color: #6c757d;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+    
+    .book-now-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .book-now-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    
+    .no-tariffs {
+        text-align: center;
+        padding: 80px 20px;
+        color: #6c757d;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    .no-tariffs i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #dee2e6;
+    }
+    
+    .info-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        margin-bottom: 30px;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+    
+    .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    }
+    
+    .info-card-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    
+    .info-card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: block;
+    }
+    
+    .info-card h5 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .info-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .info-list li {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #f1f3f4;
+        transition: all 0.3s ease;
+    }
+    
+    .info-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .info-list li:hover {
+        background: rgba(102, 126, 234, 0.05);
+        padding-left: 10px;
+        border-radius: 8px;
+    }
+    
+    .info-list i {
+        margin-right: 12px;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .contact-info {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+    
+    .contact-item:last-child {
+        margin-bottom: 0;
+    }
+    
+    .contact-item i {
+        margin-right: 12px;
+        font-size: 1.2rem;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        border: 2px solid #667eea;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+    
+    .btn-cta {
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+    }
+    
+    .btn-primary-cta {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+    }
+    
+    .btn-primary-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    
+    .btn-outline-cta {
+        border: 2px solid #667eea;
+        color: #667eea;
+        background: white;
+    }
+    
+    .btn-outline-cta:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-success-cta {
+        background: #28a745;
+        color: white;
+    }
+    
+    .btn-success-cta:hover {
+        background: #218838;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
+        color: white;
+    }
+    
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.1rem;
+        }
+        
+        .tariff-hero {
+            padding: 60px 0;
+        }
+        
+        .tariff-tabs,
+        .tariff-table-container,
+        .tariff-features {
+            padding: 20px;
+        }
+        
+        .nav-tabs .nav-link {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+        
+        .custom-table thead th,
+        .custom-table tbody td {
+            padding: 15px 10px;
+            font-size: 0.9rem;
+        }
+        
+        .feature-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Tariff Hero -->
+<div class="tariff-hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Our Tariff Plans</h1>
+            <p>Transparent pricing for all your travel needs. Choose the plan that suits you best!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tariff Section -->
+<div class="container">
+    <div class="tariff-section">
+        <!-- Tariff Tabs -->
+        <div class="tariff-tabs">
+            <div class="text-center mb-4">
+                <h3><i class="bi bi-list-check me-2"></i>Choose Your Tariff Plan</h3>
+                <p class="text-muted">Select the pricing option that best suits your travel needs</p>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link {% if tariff_type == 'local_hour' %}active{% endif %}" href="?type=local_hour">
+                        <i class="bi bi-clock"></i>
+                        <span>Local - Hour Basis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if tariff_type == 'outstation_day' %}active{% endif %}" href="?type=outstation_day">
+                        <i class="bi bi-calendar-day"></i>
+                        <span>Outstation - Day Basis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if tariff_type == 'outstation_km' %}active{% endif %}" href="?type=outstation_km">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Outstation - KM Basis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if tariff_type == 'oneway_fixed' %}active{% endif %}" href="?type=oneway_fixed">
+                        <i class="bi bi-arrow-right"></i>
+                        <span>One Way - Fixed</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if tariff_type == 'oneway_km' %}active{% endif %}" href="?type=oneway_km">
+                        <i class="bi bi-geo-alt"></i>
+                        <span>One Way - KM Basis</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Vehicle Cards -->
+        <div class="tariff-card mb-4">
+            <div class="card-header">
+                <h4>
+                    {% if tariff_type == 'local_hour' %}
+                        <i class="bi bi-clock me-2"></i>Local Hour Basis Tariff
+                    {% elif tariff_type == 'outstation_day' %}
+                        <i class="bi bi-calendar-day me-2"></i>Outstation Day Basis Tariff
+                    {% elif tariff_type == 'outstation_km' %}
+                        <i class="bi bi-speedometer2 me-2"></i>Outstation KM Basis Tariff
+                    {% elif tariff_type == 'oneway_fixed' %}
+                        <i class="bi bi-arrow-right me-2"></i>One Way Fixed Tariff
+                    {% elif tariff_type == 'oneway_km' %}
+                        <i class="bi bi-geo-alt me-2"></i>One Way KM Basis Tariff
+                    {% else %}
+                        <i class="bi bi-car-front me-2"></i>Vehicle Tariff Information
+                    {% endif %}
+                </h4>
+                <p class="mb-0">All prices are inclusive of fuel and driver charges</p>
+            </div>
+            <div class="card-body">
+                {% if tariffs %}
+                <div class="row">
+                    {% for tariff in tariffs %}
+                    <div class="col-lg-6 col-xl-4 mb-4">
+                        <div class="vehicle-card">
+                            <div class="vehicle-info">
+                                <div class="vehicle-name">
+                                    <i class="bi bi-car-front"></i>
+                                    {{ tariff.vehicle.name }}
+                                </div>
+                                
+                                <div class="price-section">
+                                    <div class="price-item">
+                                        <div class="price-label">Base Price</div>
+                                        <div class="price-value">₹{{ tariff.base_price }}</div>
+                                    </div>
+                                    {% if tariff.price_per_hour %}
+                                    <div class="price-item">
+                                        <div class="price-label">Per Hour</div>
+                                        <div class="price-value">₹{{ tariff.price_per_hour }}</div>
+                                    </div>
+                                    {% endif %}
+                                    {% if tariff.min_hours %}
+                                    <div class="price-item">
+                                        <div class="price-label">Min Hours</div>
+                                        <div class="price-value">{{ tariff.min_hours }}h</div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="vehicle-features">
+                                    <span class="feature-badge"><i class="bi bi-snow me-1"></i>AC</span>
+                                    <span class="feature-badge"><i class="bi bi-fuel-pump me-1"></i>Fuel Included</span>
+                                    <span class="feature-badge"><i class="bi bi-person-check me-1"></i>Driver</span>
+                                    <span class="feature-badge"><i class="bi bi-shield-check me-1"></i>Insured</span>
+                                </div>
+                                
+                                <div class="vehicle-description">
+                                    {{ tariff.description|default:"Professional service with experienced driver, fuel included, and comprehensive insurance coverage for your safety and comfort." }}
+                                </div>
+                                
+                                <a href="{% url 'home' %}" class="book-now-btn">
+                                    <i class="bi bi-calendar-check"></i>
+                                    <span>Book Now</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="no-tariffs">
+                    <i class="bi bi-exclamation-circle"></i>
+                    <h4>No Tariffs Available</h4>
+                    <p>We're updating our pricing for this category. Please contact us directly for current rates and availability.</p>
+                    <a href="{% url 'contact_us' %}" class="btn btn-primary mt-3">
+                        <i class="bi bi-telephone me-2"></i>Contact Us for Rates
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Service Features -->
+        <div class="info-card">
+            <div class="text-center mb-4">
+                <h4><i class="bi bi-check-circle-fill me-2" style="color: #28a745;"></i>What's Included in Our Tariff</h4>
+                <p class="text-muted">Comprehensive packages with no hidden costs</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                        <i class="bi bi-fuel-pump text-primary me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="mb-1">Fuel Included</h6>
+                            <small class="text-muted">All fuel costs covered</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                        <i class="bi bi-person-check text-success me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="mb-1">Professional Driver</h6>
+                            <small class="text-muted">Experienced & licensed</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                        <i class="bi bi-shield-check text-info me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="mb-1">Insurance Coverage</h6>
+                            <small class="text-muted">Comprehensive protection</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                        <i class="bi bi-telephone text-warning me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="mb-1">24/7 Support</h6>
+                            <small class="text-muted">Round-the-clock assistance</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                        <i class="bi bi-geo-alt text-danger me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="mb-1">GPS Tracking</h6>
+                            <small class="text-muted">Real-time monitoring</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                        <i class="bi bi-cash text-success me-3" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="mb-1">No Hidden Charges</h6>
+                            <small class="text-muted">Transparent pricing</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Information Cards -->
+        <div class="row mb-4">
+            <div class="col-lg-4 mb-3">
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="bi bi-info-circle-fill info-card-icon" style="color: #667eea;"></i>
+                        <h5>Important Notes</h5>
+                    </div>
+                    <ul class="info-list">
+                        <li><i class="bi bi-check text-success"></i>Toll charges extra (if applicable)</li>
+                        <li><i class="bi bi-check text-success"></i>Driver allowance included</li>
+                        <li><i class="bi bi-check text-success"></i>Parking charges extra</li>
+                        <li><i class="bi bi-check text-success"></i>AC available in all vehicles</li>
+                        <li><i class="bi bi-check text-success"></i>Clean and well-maintained cars</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="bi bi-clock-fill info-card-icon" style="color: #28a745;"></i>
+                        <h5>Booking Information</h5>
+                    </div>
+                    <ul class="info-list">
+                        <li><i class="bi bi-telephone text-primary"></i>Call: +91 97871 10763</li>
+                        <li><i class="bi bi-whatsapp text-success"></i>WhatsApp available</li>
+                        <li><i class="bi bi-clock text-info"></i>24/7 booking support</li>
+                        <li><i class="bi bi-calendar text-warning"></i>Advance booking recommended</li>
+                        <li><i class="bi bi-credit-card text-danger"></i>Multiple payment options</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="bi bi-star-fill info-card-icon" style="color: #ffc107;"></i>
+                        <h5>Why Choose Us</h5>
+                    </div>
+                    <ul class="info-list">
+                        <li><i class="bi bi-award text-warning"></i>10+ years experience</li>
+                        <li><i class="bi bi-people text-primary"></i>1000+ satisfied customers</li>
+                        <li><i class="bi bi-geo text-success"></i>All South India coverage</li>
+                        <li><i class="bi bi-shield text-info"></i>Licensed & insured</li>
+                        <li><i class="bi bi-heart text-danger"></i>Customer satisfaction guaranteed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="info-card mb-4">
+            <div class="text-center mb-4">
+                <h4><i class="bi bi-question-circle-fill me-2" style="color: #667eea;"></i>Frequently Asked Questions</h4>
+                <p class="text-muted">Common questions about our tariff and services</p>
+            </div>
+            <div class="accordion" id="tariffFAQ">
+                <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="background: #f8f9fa; font-weight: 600;">
+                            <i class="bi bi-question-circle me-2 text-primary"></i>
+                            Are toll charges included in the tariff?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#tariffFAQ">
+                        <div class="accordion-body">
+                            No, toll charges are not included in the base tariff. Customers need to pay toll charges separately during the journey. However, all fuel costs and driver charges are included.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" style="background: #f8f9fa; font-weight: 600;">
+                            <i class="bi bi-question-circle me-2 text-primary"></i>
+                            Can I modify my booking after confirmation?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#tariffFAQ">
+                        <div class="accordion-body">
+                            Yes, you can modify your booking up to 24 hours before the scheduled pickup time. Please contact our customer support team for modifications. Changes may be subject to availability and additional charges.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" style="background: #f8f9fa; font-weight: 600;">
+                            <i class="bi bi-question-circle me-2 text-primary"></i>
+                            What payment methods do you accept?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#tariffFAQ">
+                        <div class="accordion-body">
+                            We accept multiple payment methods including cash, credit/debit cards, UPI, net banking, and digital wallets. Advance payment can be made online, and the remaining amount can be paid after the trip.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" style="background: #f8f9fa; font-weight: 600;">
+                            <i class="bi bi-question-circle me-2 text-primary"></i>
+                            Is there a cancellation policy?
+                        </button>
+                    </h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#tariffFAQ">
+                        <div class="accordion-body">
+                            Yes, we have a flexible cancellation policy. Cancellations made 48 hours before the trip are eligible for full refund. Cancellations within 24-48 hours will incur 50% charges, and cancellations within 24 hours will incur 100% charges.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" style="border: none; margin-bottom: 15px; border-radius: 15px; overflow: hidden;">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" style="background: #f8f9fa; font-weight: 600;">
+                            <i class="bi bi-question-circle me-2 text-primary"></i>
+                            Are your vehicles air-conditioned?
+                        </button>
+                    </h2>
+                    <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#tariffFAQ">
+                        <div class="accordion-body">
+                            Yes, all our vehicles are air-conditioned and well-maintained. We ensure regular servicing and cleaning to provide you with a comfortable and safe journey.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta-section mb-5">
+            <h4 class="mb-3"><i class="bi bi-rocket-takeoff me-2"></i>Ready to Book Your Trip?</h4>
+            <p class="text-muted mb-4">Get instant quotes and book your preferred vehicle now! Our team is available 24/7 to assist you.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'home' %}" class="btn-cta btn-primary-cta">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Book Now</span>
+                </a>
+                <a href="{% url 'contact_us' %}" class="btn-cta btn-outline-cta">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Get Quote</span>
+                </a>
+                <a href="tel:+919787110763" class="btn-cta btn-success-cta">
+                    <i class="bi bi-telephone"></i>
+                    <span>Call Now</span>
+                </a>
+            </div>
+            <div class="contact-info mt-4">
+                <div class="contact-item">
+                    <i class="bi bi-telephone-fill text-primary"></i>
+                    <span><strong>Phone:</strong> +91 97871 10763</span>
+                </div>
+                <div class="contact-item">
+                    <i class="bi bi-whatsapp text-success"></i>
+                    <span><strong>WhatsApp:</strong> +91 97871 10763</span>
+                </div>
+                <div class="contact-item">
+                    <i class="bi bi-envelope-fill text-danger"></i>
+                    <span><strong>Email:</strong> info@rithamtours.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

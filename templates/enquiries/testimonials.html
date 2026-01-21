@@ -1,0 +1,1973 @@
+{% extends 'base.html' %}
+
+{% block title %}Testimonials - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .testimonials-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .testimonials-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,0 1000,0 1000,100 0,80"/></svg>');
+        background-size: cover;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .hero-stats {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        margin-top: 40px;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(45deg, #ffd700, #ffed4e);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .stat-label {
+        font-size: 1rem;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+    
+    .testimonial-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .testimonial-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .testimonial-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .customer-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+    
+    .customer-info h5 {
+        margin: 0;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    
+    .customer-location {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        margin: 5px 0;
+    }
+    
+    .rating-stars {
+        display: flex;
+        gap: 2px;
+    }
+    
+    .star {
+        color: #ffd700;
+        font-size: 1.2rem;
+        transition: all 0.2s ease;
+    }
+    
+    .star.empty {
+        color: #e0e0e0;
+    }
+    
+    .testimonial-content {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #34495e;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    
+    .testimonial-content::before {
+        content: '"';
+        font-size: 4rem;
+        color: #667eea;
+        position: absolute;
+        top: -20px;
+        left: -10px;
+        font-family: Georgia, serif;
+        opacity: 0.3;
+    }
+    
+    .testimonial-date {
+        color: #95a5a6;
+        font-size: 0.9rem;
+        font-style: italic;
+    }
+    
+    .write-review-section {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 60px 0;
+        margin: 80px 0;
+        border-radius: 30px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .write-review-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .btn-write-review {
+        background: white;
+        color: #f5576c;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 2;
+    }
+    
+    .btn-write-review:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        color: #f5576c;
+    }
+    
+    .user-review-card {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 40px;
+        /* border-radius: 25px; */
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        /* box-shadow: 0 20px 60px rgba(245, 87, 108, 0.3); */
+        margin-bottom: 40px;
+    }
+    
+    .user-review-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    .user-review-card > * {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .review-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .review-status-badge i {
+        color: white;
+        font-size: 1.1rem;
+    }
+    
+    .user-review-card h4 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: white;
+    }
+    
+    .user-review-card p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        line-height: 1.6;
+        max-width: 500px;
+        margin: 0 auto 30px;
+    }
+    
+    .review-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn-edit-review,
+    .btn-view-review {
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-edit-review {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .btn-view-review {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .btn-edit-review:hover,
+    .btn-view-review:hover {
+        background: rgba(255, 255, 255, 0.3);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .btn-edit-review::before,
+    .btn-view-review::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn-edit-review:hover::before,
+    .btn-view-review:hover::before {
+        left: 100%;
+    }
+    
+    .social-proof-section {
+        background: #f8f9fa;
+        border-radius: 30px;
+        padding: 60px 40px;
+        margin: 60px 0;
+    }
+    
+    .google-summary-card {
+        background: white;
+        border-radius: 25px;
+        padding: 40px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+        border: none;
+        text-align: center;
+    }
+    
+    .google-header {
+        margin-bottom: 30px;
+    }
+    
+    .google-icon {
+        font-size: 4rem;
+        color: #4285f4;
+        margin-bottom: 15px;
+        display: block;
+    }
+    
+    .google-header h3 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin: 0;
+    }
+    
+    .google-stats {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    
+    .overall-rating {
+        text-align: center;
+    }
+    
+    .rating-number {
+        font-size: 4rem;
+        font-weight: 700;
+        color: #4285f4;
+        margin-bottom: 10px;
+    }
+    
+    .overall-rating .rating-stars {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        margin-bottom: 15px;
+    }
+    
+    .overall-rating .rating-stars i {
+        color: #ffd700;
+        font-size: 1.5rem;
+    }
+    
+    .rating-text {
+        color: #6c757d;
+        font-size: 1rem;
+    }
+    
+
+    
+    .google-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn-google-view,
+    .btn-google-write {
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .btn-google-view {
+        background: linear-gradient(135deg, #4285f4, #34a853);
+        color: white;
+    }
+    
+    .btn-google-write {
+        background: white;
+        color: #4285f4;
+        border: 2px solid #4285f4;
+    }
+    
+    .btn-google-view:hover,
+    .btn-google-write:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(66, 133, 244, 0.3);
+    }
+    
+    .btn-google-view:hover {
+        color: white;
+    }
+    
+    .btn-google-write:hover {
+        background: #4285f4;
+        color: white;
+    }
+    
+    .recent-reviews-showcase {
+        margin-top: 50px;
+        padding-top: 50px;
+        border-top: 2px solid #e9ecef;
+    }
+    
+    .google-review-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+        height: 100%;
+    }
+    
+    .review-header {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+        gap: 15px;
+    }
+    
+    .reviewer-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+    
+    .reviewer-info {
+        flex: 1;
+    }
+    
+    .reviewer-info h6 {
+        margin: 0 0 5px 0;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    
+    .review-stars {
+        display: flex;
+        gap: 2px;
+        margin-bottom: 5px;
+    }
+    
+    .review-stars i {
+        color: #ffd700;
+        font-size: 0.9rem;
+    }
+    
+    .google-badge {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #4285f4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8rem;
+    }
+    
+    .review-content {
+        font-style: italic;
+        color: #555;
+        line-height: 1.5;
+    }
+    
+    .trust-badges {
+        padding-top: 40px;
+        border-top: 2px solid #e9ecef;
+    }
+    
+    .trust-badge {
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .trust-badge:hover {
+        transform: translateY(-5px);
+    }
+    
+    .trust-icon {
+        font-size: 2.5rem;
+        color: #667eea;
+        margin-bottom: 15px;
+        display: block;
+    }
+    
+    .trust-text {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 0.9rem;
+    }
+    
+    .filter-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+    }
+    
+    .filter-tab {
+        padding: 10px 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 25px;
+        background: white;
+        color: #666;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .filter-tab.active,
+    .filter-tab:hover {
+        border-color: #667eea;
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+    
+    .load-more-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        margin: 40px auto;
+        display: block;
+        transition: all 0.3s ease;
+    }
+    
+    .load-more-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    
+    .modal-content {
+        border-radius: 20px;
+        border: none;
+        overflow: hidden;
+    }
+    
+    .modal-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 25px 30px;
+    }
+    
+    .modal-body {
+        padding: 40px 30px;
+    }
+    
+    .form-control {
+        border-radius: 15px;
+        border: 2px solid #e1e5e9;
+        padding: 12px 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .rating-input {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    
+    .rating-star {
+        font-size: 2rem;
+        color: #e0e0e0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .rating-star:hover,
+    .rating-star.active {
+        color: #ffd700;
+        transform: scale(1.1);
+    }
+    
+    .btn-submit-review {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-submit-review:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    
+    @media (max-width: 768px) {
+        .testimonials-hero {
+            padding: 60px 0;
+        }
+        
+        .hero-stats {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+        }
+        
+        .testimonials-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .testimonial-card {
+            padding: 20px;
+        }
+        
+        .write-review-section {
+            padding: 40px 20px;
+            margin: 40px 0;
+        }
+        
+        .google-summary-card {
+            padding: 30px 20px;
+        }
+        
+        .google-stats {
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .rating-number {
+            font-size: 3rem;
+        }
+        
+        .google-actions {
+            flex-direction: column;
+        }
+        
+        .btn-google-view,
+        .btn-google-write {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .user-review-card {
+            padding: 30px 20px;
+            margin-bottom: 30px;
+        }
+        
+        .user-review-card h4 {
+            font-size: 1.5rem;
+        }
+        
+        .user-review-card p {
+            font-size: 1rem;
+        }
+        
+        .review-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn-edit-review,
+        .btn-view-review {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="testimonials-hero">
+    <div class="container">
+        <div class="hero-content text-center">
+            <h1 class="display-4 fw-bold mb-3">What Our Customers Say</h1>
+            <p class="lead mb-4">Real experiences from real travelers who chose Ritham Tours & Travels</p>
+            
+            <!-- Statistics -->
+            <div class="hero-stats">
+                <div class="row">
+                    {% if show_customer_count %}
+                        <!-- Show all 4 stats when we have enough reviews -->
+                        <div class="col-md-3 col-6">
+                            <div class="stat-item">
+                                <div class="stat-number">{{ average_rating|floatformat:1 }}</div>
+                                <div class="stat-label">Average Rating</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-item">
+                                <div class="stat-number">{{ happy_customers }}+</div>
+                                <div class="stat-label">Happy Customers</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-item">
+                                <div class="stat-number">{{ total_reviews }}+</div>
+                                <div class="stat-label">Customer Reviews</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-item">
+                                <div class="stat-number">{{ high_rating_percentage }}%</div>
+                                <div class="stat-label">4 & 5 Star Reviews</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <!-- Show only 3 stats when we have fewer reviews -->
+                        <div class="col-md-4 col-6">
+                            <div class="stat-item">
+                                <div class="stat-number">{{ average_rating|floatformat:1 }}</div>
+                                <div class="stat-label">Average Rating</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <div class="stat-item">
+                                <div class="stat-number">{{ total_reviews }}+</div>
+                                <div class="stat-label">Customer Reviews</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <div class="stat-item">
+                                <div class="stat-number">{{ high_rating_percentage }}%</div>
+                                <div class="stat-label">4 & 5 Star Reviews</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="container mt-5">
+    <div class="filter-tabs">
+        <a href="#" class="filter-tab active" data-filter="all">All Reviews</a>
+        <a href="#" class="filter-tab" data-filter="5">5 Stars</a>
+        <a href="#" class="filter-tab" data-filter="4">4 Stars</a>
+        <a href="#" class="filter-tab" data-filter="recent">Most Recent</a>
+        <a href="#" class="filter-tab" data-filter="verified">Verified</a>
+    </div>
+</div>
+
+<!-- Testimonials Grid -->
+<div class="container">
+    <div class="testimonials-grid" id="testimonialsGrid">
+        {% for testimonial in testimonials %}
+        <div class="testimonial-card" data-rating="{{ testimonial.rating }}">
+            <div class="testimonial-header">
+                <div class="customer-avatar">
+                    {{ testimonial.name|first|upper }}
+                </div>
+                <div class="customer-info">
+                    <h5>{{ testimonial.name }}</h5>
+                    <div class="customer-location">
+                        <i class="bi bi-geo-alt me-1"></i>{{ testimonial.location|default:"India" }}
+                    </div>
+                    <div class="rating-stars">
+                        {% for i in "12345" %}
+                        <i class="bi bi-star-fill star {% if forloop.counter > testimonial.rating %}empty{% endif %}"></i>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-content">
+                {{ testimonial.review }}
+            </div>
+            <div class="testimonial-date">
+                <i class="bi bi-calendar3 me-1"></i>{{ testimonial.created_at|date:"F d, Y" }}
+            </div>
+        </div>
+        {% empty %}
+        <!-- Sample testimonials if none exist -->
+        <div class="testimonial-card" data-rating="5">
+            <div class="testimonial-header">
+                <div class="customer-avatar">R</div>
+                <div class="customer-info">
+                    <h5>Rajesh Kumar</h5>
+                    <div class="customer-location">
+                        <i class="bi bi-geo-alt me-1"></i>Coimbatore
+                    </div>
+                    <div class="rating-stars">
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-content">
+                Excellent service! The driver was professional and the vehicle was clean and comfortable. Our trip to Ooty was perfectly organized. Highly recommended for family trips!
+            </div>
+            <div class="testimonial-date">
+                <i class="bi bi-calendar3 me-1"></i>December 15, 2024
+            </div>
+        </div>
+        
+        <div class="testimonial-card" data-rating="5">
+            <div class="testimonial-header">
+                <div class="customer-avatar">P</div>
+                <div class="customer-info">
+                    <h5>Priya Sharma</h5>
+                    <div class="customer-location">
+                        <i class="bi bi-geo-alt me-1"></i>Chennai
+                    </div>
+                    <div class="rating-stars">
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-content">
+                Amazing experience with Ritham Tours. The Kodaikanal trip was perfectly organized and the pricing was very reasonable. The team was responsive and helpful throughout.
+            </div>
+            <div class="testimonial-date">
+                <i class="bi bi-calendar3 me-1"></i>December 10, 2024
+            </div>
+        </div>
+        
+        <div class="testimonial-card" data-rating="4">
+            <div class="testimonial-header">
+                <div class="customer-avatar">A</div>
+                <div class="customer-info">
+                    <h5>Arun Patel</h5>
+                    <div class="customer-location">
+                        <i class="bi bi-geo-alt me-1"></i>Bangalore
+                    </div>
+                    <div class="rating-stars">
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star"></i>
+                        <i class="bi bi-star-fill star empty"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-content">
+                Professional service with timely pickup and drop. The vehicle was well-maintained and the journey was smooth. Good value for money.
+            </div>
+            <div class="testimonial-date">
+                <i class="bi bi-calendar3 me-1"></i>December 8, 2024
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <button class="load-more-btn" id="loadMoreBtn">
+        <i class="bi bi-arrow-down-circle me-2"></i>Load More Reviews
+    </button>
+</div>
+
+<!-- Write Review Section -->
+<div class="container">
+    <div class="write-review-section">
+        <h2 class="mb-3">Share Your Experience</h2>
+        <p class="mb-4">Help others discover the joy of traveling with us</p>
+        {% if user.is_authenticated %}
+            {% if user_can_review %}
+                <button class="btn btn-write-review" data-bs-toggle="modal" data-bs-target="#testimonialModal">
+                    <i class="bi bi-pencil-square me-2"></i>Write Your Review
+                </button>
+            {% else %}
+                <div class="user-review-card">
+                    <div class="review-status-badge">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Review Submitted</span>
+                    </div>
+                    <h4 class="mb-3">Thank You for Your Feedback!</h4>
+                    <p class="mb-4">Your review helps others make informed decisions and helps us improve our services.</p>
+                    <div class="review-actions">
+                        <button class="btn btn-edit-review" data-bs-toggle="modal" data-bs-target="#testimonialModal" id="editReviewBtn">
+                            <i class="bi bi-pencil-square me-2"></i>Edit Your Review
+                        </button>
+                        <a href="#testimonialsGrid" class="btn btn-view-review">
+                            <i class="bi bi-eye me-2"></i>View Your Review
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'customer_login' %}" class="btn btn-write-review">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Login to Write Review
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Social Proof & Reviews Section -->
+<div class="container">
+    <div class="social-proof-section">
+        <h3 class="text-center mb-5">Find Us Across Platforms</h3>
+        
+        <!-- Google Reviews Summary -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                <div class="google-summary-card">
+                    <div class="google-header">
+                        <i class="bi bi-google google-icon"></i>
+                        <h3>Google Reviews</h3>
+                    </div>
+                    <div class="google-stats">
+                        <div class="overall-rating">
+                            <div class="rating-number" id="googleRating">4.9</div>
+                            <div class="rating-stars">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                            <div class="rating-text">Based on <span id="reviewCount">190+</span> Google reviews</div>
+                        </div>
+
+                    </div>
+                    <div class="google-actions">
+                        <a href="https://www.google.com/search?q=Ritham+Tours+%26+Travels+review&zx=1766125006115&no_sw_cr=1#lrd=0x3ba8597cd4bb998d:0x82207f711d5a3a48,1,,,," 
+                           class="btn btn-google-view" target="_blank">
+                            <i class="bi bi-google me-2"></i>View All Reviews
+                        </a>
+                        <a href="https://www.google.com/search?q=Ritham+Tours+%26+Travels+review&zx=1766125006115&no_sw_cr=1#lrd=0x3ba8597cd4bb998d:0x82207f711d5a3a48,3,,,," 
+                           class="btn btn-google-write" target="_blank">
+                            <i class="bi bi-pencil-square me-2"></i>Write Review
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Live Google Reviews -->
+        <div class="live-google-reviews">
+            <h4 class="text-center mb-4">Latest Google Reviews</h4>
+            
+
+            
+            <!-- Real Google Reviews (Manual) -->
+            <div id="realGoogleReviews" class="row g-4">
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">R</div>
+                            <div class="reviewer-info">
+                                <h6>Roshan</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">3 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Very very safe and securely arranged the tour thanks for Rhythm tours 🤍"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">M</div>
+                            <div class="reviewer-info">
+                                <h6>Maunika M</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">4 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "My first trip to other state I enjoyed it very much and all the places are so beautiful and your co-operation satisfied me once again. I enjoy this trip very well. Thank you Rhythm Tours ☺️🙏🏻"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">B</div>
+                            <div class="reviewer-info">
+                                <h6>Balaji M</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">4 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Thanks for Rhythm Tours and special thanks to Sambath anna & Nimalsha anna..!"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">R</div>
+                            <div class="reviewer-info">
+                                <h6>Ravi S</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">6 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "🌟 Review for Rhythm Tours 🌟 I recently went on a 3-day trip to Coorg, Chikmagalur, and Wonderla arranged by Rhythm Tours. ❤️"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">V</div>
+                            <div class="reviewer-info">
+                                <h6>Varnikhaa19</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">4 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Best travel experience. Coordinators are friendly and supportive for every plan. Food was good."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">V</div>
+                            <div class="reviewer-info">
+                                <h6>Vrushaalei</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">1 year ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Had an unforgettable experience! The guides were fantastic—friendly, funny, and ensured safety throughout the trip. Highly recommend."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">D</div>
+                            <div class="reviewer-info">
+                                <h6>D A R A N</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">3 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Best tour experience. Everything was beyond our expectation. Driver Anna Nimalsha organized very well."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">S</div>
+                            <div class="reviewer-info">
+                                <h6>SANJAY CREATIONS</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">2 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "One of the best travel agencies I have seen. Dedicated guide and full enjoyment guaranteed ⚡"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">S</div>
+                            <div class="reviewer-info">
+                                <h6>Sumanth</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">4 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Had a great experience with Rhythm Tours. Good coordination and organization."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">A</div>
+                            <div class="reviewer-info">
+                                <h6>Akilan P</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">3 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Travelling was good. Driver treated us friendly. Guide was great."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">P</div>
+                            <div class="reviewer-info">
+                                <h6>Preethi Kumar</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">1 year ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Had an incredible experience with Rhythm Tours. Everything was planned to perfection. Highly recommended."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">N</div>
+                            <div class="reviewer-info">
+                                <h6>Nasreen Begam</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">1 year ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Sampath anna was very friendly and patient. Budget was affordable and moments were unforgettable. ❤️🙏"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">T</div>
+                            <div class="reviewer-info">
+                                <h6>Thennarasu</h6>
+                                <div class="review-stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">3 months ago</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "Everything was good, beyond our expectations ✨"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="https://www.google.com/search?q=Ritham+Tours+%26+Travels+review&zx=1766125006115&no_sw_cr=1#lrd=0x3ba8597cd4bb998d:0x82207f711d5a3a48,1,,,," 
+                   class="btn btn-outline-primary" target="_blank">
+                    <i class="bi bi-arrow-right me-2"></i>View All Google Reviews
+                </a>
+            </div>
+        </div>
+        
+        <!-- Trust Badges -->
+        <div class="trust-badges mt-5">
+            <h5 class="text-center mb-4">Trusted by Travelers</h5>
+            <div class="row text-center">
+                <div class="col-6 col-md-3">
+                    <div class="trust-badge">
+                        <i class="bi bi-shield-check trust-icon"></i>
+                        <div class="trust-text">Verified Business</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="trust-badge">
+                        <i class="bi bi-award trust-icon"></i>
+                        <div class="trust-text">5+ Years Experience</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="trust-badge">
+                        <i class="bi bi-people trust-icon"></i>
+                        <div class="trust-text">1000+ Happy Customers</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="trust-badge">
+                        <i class="bi bi-telephone trust-icon"></i>
+                        <div class="trust-text">24/7 Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Testimonial Modal -->
+<div class="modal fade" id="testimonialModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">
+                    <i class="bi bi-star-fill me-2"></i>Share Your Experience
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="testimonialForm">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-person-circle me-2"></i>
+                        Submitting as: <strong>{{ user.get_full_name|default:user.username }}</strong>
+                        {% if user.email %}({{ user.email }}){% endif %}
+                    </div>
+                    {% endif %}
+                    
+
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Rating *</label>
+                        <div class="rating-input">
+                            <i class="bi bi-star-fill rating-star" data-rating="1"></i>
+                            <i class="bi bi-star-fill rating-star" data-rating="2"></i>
+                            <i class="bi bi-star-fill rating-star" data-rating="3"></i>
+                            <i class="bi bi-star-fill rating-star" data-rating="4"></i>
+                            <i class="bi bi-star-fill rating-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" name="rating" id="selectedRating" required>
+                        <div class="text-center mt-2">
+                            <small class="text-muted" id="ratingText">Click stars to rate your experience</small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Your Review *</label>
+                        <textarea class="form-control" name="review" rows="5" 
+                                  placeholder="Tell us about your experience with Ritham Tours & Travels..." required></textarea>
+                        <div class="form-text">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Share details about the service, driver, vehicle, and overall experience
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-submit-review">
+                            <i class="bi bi-send me-2"></i>Submit Review
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize page
+        console.log('Testimonials page loaded');
+        
+        // Track if we're in edit mode
+        let isEditMode = false;
+        let currentTestimonialId = null;
+        
+        // Handle edit review button click
+        $('#editReviewBtn').on('click', function() {
+            isEditMode = true;
+            $('#modalTitle').html('<i class="bi bi-pencil me-2"></i>Edit Your Review');
+            $('.btn-submit-review').html('<i class="bi bi-check-lg me-2"></i>Update Review');
+            
+            // Load existing review data
+            loadUserReview();
+        });
+        
+        // Handle write new review button click
+        $('[data-bs-target="#testimonialModal"]:not(#editReviewBtn)').on('click', function() {
+            isEditMode = false;
+            currentTestimonialId = null;
+            $('#modalTitle').html('<i class="bi bi-star-fill me-2"></i>Share Your Experience');
+            $('.btn-submit-review').html('<i class="bi bi-send me-2"></i>Submit Review');
+            
+            // Clear form
+            $('#testimonialForm')[0].reset();
+            $('#selectedRating').val('');
+            $('.rating-star').removeClass('active');
+            $('#ratingText').text('Click stars to rate your experience');
+        });
+        
+        // Load user's existing review for editing
+        function loadUserReview() {
+            $.ajax({
+                url: '/api/testimonials/my-review/',
+                method: 'GET',
+                success: function(response) {
+                    const testimonial = response.testimonial;
+                    currentTestimonialId = testimonial.id;
+                    
+                    // Populate form with existing data
+                    $('#selectedRating').val(testimonial.rating);
+                    $('textarea[name="review"]').val(testimonial.review);
+                    
+                    // Update star display
+                    $('.rating-star').each(function(index) {
+                        if (index < testimonial.rating) {
+                            $(this).removeClass('empty').addClass('active');
+                        } else {
+                            $(this).removeClass('active').addClass('empty');
+                        }
+                    });
+                    
+                    // Update rating text
+                    const ratingTexts = {
+                        1: 'Poor - We\'ll work to improve',
+                        2: 'Fair - Room for improvement',
+                        3: 'Good - Satisfactory experience',
+                        4: 'Very Good - Great experience',
+                        5: 'Excellent - Outstanding service!'
+                    };
+                    $('#ratingText').text(ratingTexts[testimonial.rating]);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading user review:', error);
+                    showNotification('Error loading your review. Please try again.', 'error');
+                }
+            });
+        }
+        
+        // Rating stars interaction
+        $('.rating-star').on('click', function() {
+            const rating = $(this).data('rating');
+            $('#selectedRating').val(rating);
+            
+            // Update star display
+            $('.rating-star').each(function(index) {
+                if (index < rating) {
+                    $(this).removeClass('empty').addClass('active');
+                } else {
+                    $(this).removeClass('active').addClass('empty');
+                }
+            });
+            
+            // Update rating text
+            const ratingTexts = {
+                1: 'Poor - We\'ll work to improve',
+                2: 'Fair - Room for improvement',
+                3: 'Good - Satisfactory experience',
+                4: 'Very Good - Great experience',
+                5: 'Excellent - Outstanding service!'
+            };
+            $('#ratingText').text(ratingTexts[rating]);
+        });
+        
+        // Rating stars hover effect
+        $('.rating-star').on('mouseenter', function() {
+            const rating = $(this).data('rating');
+            $('.rating-star').each(function(index) {
+                if (index < rating) {
+                    $(this).addClass('active');
+                } else {
+                    $(this).removeClass('active');
+                }
+            });
+        });
+        
+        $('.rating-input').on('mouseleave', function() {
+            const selectedRating = $('#selectedRating').val();
+            $('.rating-star').each(function(index) {
+                if (index < selectedRating) {
+                    $(this).addClass('active');
+                } else {
+                    $(this).removeClass('active');
+                }
+            });
+        });
+        
+        // Filter functionality
+        $('.filter-tab').on('click', function(e) {
+            e.preventDefault();
+            
+            // Don't do anything if already active
+            if ($(this).hasClass('active')) {
+                return;
+            }
+            
+            // Update active tab
+            $('.filter-tab').removeClass('active');
+            $(this).addClass('active');
+            
+            const filter = $(this).data('filter');
+            
+            // Add loading effect
+            const originalText = $(this).text();
+            $(this).text('Loading...');
+            
+            setTimeout(() => {
+                filterTestimonials(filter);
+                // Restore original text (updateFilterCount will modify it if needed)
+                if (!$(this).text().includes('(')) {
+                    $(this).text(originalText);
+                }
+            }, 200);
+        });
+        
+        function filterTestimonials(filter) {
+            // Filter both database testimonials and Google reviews
+            const dbCards = $('.testimonial-card');
+            const googleCards = $('.google-review-card');
+            const allCards = dbCards.add(googleCards);
+            
+            allCards.each(function() {
+                const card = $(this);
+                let rating = card.data('rating');
+                
+                // For Google reviews, all are 5-star (since they're all positive)
+                if (card.hasClass('google-review-card')) {
+                    rating = 5;
+                }
+                
+                let show = true;
+                
+                if (filter === 'all') {
+                    show = true;
+                } else if (filter === '5') {
+                    show = (rating == 5);
+                } else if (filter === '4') {
+                    show = (rating == 4);
+                } else if (filter === 'recent') {
+                    // Show reviews from the last 6 months (for Google reviews, show all)
+                    if (card.hasClass('google-review-card')) {
+                        show = true; // All Google reviews are considered recent
+                    } else {
+                        // For database reviews, you could add date filtering here
+                        show = true; // For now, show all
+                    }
+                } else if (filter === 'verified') {
+                    // Show only Google reviews as "verified"
+                    show = card.hasClass('google-review-card');
+                }
+                
+                if (show) {
+                    card.fadeIn(300);
+                } else {
+                    card.fadeOut(300);
+                }
+            });
+            
+            // Update filter count and show/hide no results message
+            const visibleCards = allCards.filter(':visible').length;
+            updateFilterCount(filter, visibleCards);
+            
+            // Show/hide no results message
+            if (visibleCards === 0) {
+                showNoResultsMessage(filter);
+            } else {
+                hideNoResultsMessage();
+            }
+        }
+        
+        function updateFilterCount(filter, count) {
+            // Update the active tab text to show count
+            const activeTab = $('.filter-tab.active');
+            const originalText = activeTab.text().split(' (')[0]; // Remove existing count
+            
+            if (filter === 'all') {
+                activeTab.text(originalText);
+            } else {
+                activeTab.text(originalText + ` (${count})`);
+            }
+        }
+        
+        function showNoResultsMessage(filter) {
+            hideNoResultsMessage(); // Remove any existing message
+            
+            const filterName = $('.filter-tab.active').text().split(' (')[0];
+            const message = `
+                <div id="noResultsMessage" class="text-center py-5">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>
+                        No reviews found for "${filterName}". Try selecting a different filter.
+                    </div>
+                </div>
+            `;
+            
+            $('#testimonialsGrid').after(message);
+        }
+        
+        function hideNoResultsMessage() {
+            $('#noResultsMessage').remove();
+        }
+        
+        // Load more functionality
+        let currentPage = 1;
+        $('#loadMoreBtn').on('click', function() {
+            const btn = $(this);
+            const originalText = btn.html();
+            
+            btn.html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
+            btn.prop('disabled', true);
+            
+            // Simulate loading more reviews
+            setTimeout(function() {
+                // In a real implementation, you would make an AJAX call here
+                // For now, we'll just hide the button after a few clicks
+                currentPage++;
+                
+                if (currentPage >= 3) {
+                    btn.fadeOut(300);
+                } else {
+                    btn.html(originalText);
+                    btn.prop('disabled', false);
+                }
+            }, 1500);
+        });
+        
+        // Form submission with enhanced UX
+        $('#testimonialForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            const form = $(this);
+            const submitBtn = form.find('button[type="submit"]');
+            const originalText = submitBtn.html();
+            
+            // Validation
+            if (!$('#selectedRating').val()) {
+                showNotification('Please select a rating', 'error');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.html('<span class="spinner-border spinner-border-sm me-2"></span>Submitting...');
+            submitBtn.prop('disabled', true);
+            
+            // Get form data
+            const rating = $('#selectedRating').val();
+            const review = form.find('textarea[name="review"]').val().trim();
+            
+            // Validate required fields
+            if (!review) {
+                showNotification('Please write a review', 'error');
+                return;
+            }
+            
+            console.log('Submitting testimonial:', {rating, review, isEditMode});
+            
+            // Use FormData for better compatibility
+            const formData = new FormData();
+            formData.append('rating', rating);
+            formData.append('review', review);
+            formData.append('csrfmiddlewaretoken', form.find('[name=csrfmiddlewaretoken]').val());
+            
+            // Determine URL and method based on edit mode
+            const url = isEditMode ? '/api/testimonials/update/' : '/api/testimonials/';
+            
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(response) {
+                    const message = isEditMode ? 
+                        'Your review has been updated successfully!' : 
+                        'Thank you for your review! It has been published successfully.';
+                    
+                    showNotification(message, 'success');
+                    $('#testimonialModal').modal('hide');
+                    form[0].reset();
+                    $('#selectedRating').val('');
+                    $('.rating-star').removeClass('active');
+                    $('#ratingText').text('Click stars to rate your experience');
+                    
+                    // Reset edit mode
+                    isEditMode = false;
+                    currentTestimonialId = null;
+                    
+                    // Refresh the page after 2 seconds to show the updated review
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
+                },
+                error: function(xhr, status, error) {
+                    let errorMessage = 'Error submitting review. Please try again.';
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMessage = xhr.responseJSON.error;
+                    } else if (xhr.status === 401) {
+                        errorMessage = 'You must be logged in to submit a review.';
+                        // Redirect to login after showing error
+                        setTimeout(function() {
+                            window.location.href = '/customer-login/';
+                        }, 2000);
+                    } else if (xhr.status === 400) {
+                        errorMessage = 'Please fill in all required fields correctly.';
+                    } else if (xhr.status === 500) {
+                        errorMessage = 'Server error. Please try again later.';
+                    }
+                    
+                    showNotification(errorMessage, 'error');
+                    console.error('Testimonial submission error:', xhr.responseText);
+                },
+                complete: function() {
+                    submitBtn.html(originalText);
+                    submitBtn.prop('disabled', false);
+                }
+            });
+        });
+        
+        // Notification system
+        function showNotification(message, type) {
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            const icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle';
+            
+            const notification = $(`
+                <div class="alert ${alertClass} alert-dismissible fade show position-fixed" 
+                     style="top: 20px; right: 20px; z-index: 9999; max-width: 350px;">
+                    <i class="${icon} me-2"></i>${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `);
+            
+            $('body').append(notification);
+            
+            setTimeout(function() {
+                notification.alert('close');
+            }, 5000);
+        }
+        
+        // Animate testimonial cards on scroll
+        function animateOnScroll() {
+            $('.testimonial-card, .platform-card, .google-review-card').each(function() {
+                const card = $(this);
+                const cardTop = card.offset().top;
+                const cardBottom = cardTop + card.outerHeight();
+                const windowTop = $(window).scrollTop();
+                const windowBottom = windowTop + $(window).height();
+                
+                if (cardBottom > windowTop && cardTop < windowBottom) {
+                    card.addClass('animate__animated animate__fadeInUp');
+                }
+            });
+        }
+        
+        // Google reviews are shown directly (no loading needed)
+        
+        function fetchGoogleReviewsFromAPI() {
+            $.ajax({
+                url: '/api/google-reviews/',
+                method: 'GET',
+                success: function(data) {
+                    if (data.reviews && data.reviews.length > 0) {
+                        displayGoogleReviews(data.reviews);
+                        updateGoogleStats(data.rating, data.total_reviews, data.rating_breakdown);
+                    } else {
+                        showFallbackReviews();
+                    }
+                },
+                error: function() {
+                    console.log('Failed to load Google reviews, showing fallback');
+                    showFallbackReviews();
+                }
+            });
+        }
+        
+        function displayGoogleReviews(reviews) {
+            const container = $('#googleReviewsContainer');
+            container.empty();
+            
+            reviews.slice(0, 6).forEach(function(review) {
+                const reviewHtml = createReviewCard(review);
+                container.append(reviewHtml);
+            });
+            
+            container.show();
+        }
+        
+        function createReviewCard(review) {
+            const stars = generateStars(review.rating);
+            const timeAgo = formatTimeAgo(review.time);
+            const avatar = review.author_name.charAt(0).toUpperCase();
+            
+            return `
+                <div class="col-md-6">
+                    <div class="google-review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">${avatar}</div>
+                            <div class="reviewer-info">
+                                <h6>${review.author_name}</h6>
+                                <div class="review-stars">${stars}</div>
+                                <small class="text-muted">${timeAgo}</small>
+                            </div>
+                            <div class="google-badge">
+                                <i class="bi bi-google"></i>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            "${review.text}"
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="bi bi-star-fill"></i>';
+                } else {
+                    stars += '<i class="bi bi-star"></i>';
+                }
+            }
+            return stars;
+        }
+        
+        function formatTimeAgo(timestamp) {
+            const now = new Date();
+            const reviewDate = new Date(timestamp * 1000);
+            const diffTime = Math.abs(now - reviewDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) return '1 day ago';
+            if (diffDays < 7) return `${diffDays} days ago`;
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+            return `${Math.floor(diffDays / 30)} months ago`;
+        }
+        
+        function updateGoogleStats(rating, totalReviews, breakdown) {
+            $('#googleRating').text(rating.toFixed(1));
+            $('#reviewCount').text(totalReviews + '+');
+            
+            if (breakdown) {
+                updateRatingBreakdown(breakdown);
+            }
+        }
+        
+
+        
+
+        
+        // Trust badge hover effects
+        $('.trust-badge').on('mouseenter', function() {
+            $(this).find('.trust-icon').addClass('animate__animated animate__bounceIn');
+        });
+        
+        $('.trust-badge').on('mouseleave', function() {
+            $(this).find('.trust-icon').removeClass('animate__animated animate__bounceIn');
+        });
+        
+        // Simulate real-time review updates
+        function updateReviewCounts() {
+            const platforms = [
+                { selector: '.google-card .rating-count', baseCount: 150 },
+                { selector: '.facebook-card .rating-count', baseCount: 85 },
+                { selector: '.tripadvisor-card .rating-count', baseCount: 45 }
+            ];
+            
+            platforms.forEach(platform => {
+                const element = $(platform.selector);
+                const currentCount = platform.baseCount + Math.floor(Math.random() * 5);
+                element.text(currentCount + '+ Reviews');
+            });
+        }
+        
+        // Update counts every 30 seconds
+        setInterval(updateReviewCounts, 30000);
+        
+        // Add click tracking for platform buttons
+        $('.btn-platform, .btn-outline-platform').on('click', function() {
+            const platform = $(this).closest('.platform-card').find('h5').text();
+            const action = $(this).text().trim();
+            
+            // You can add analytics tracking here
+            console.log(`User clicked: ${action} on ${platform}`);
+            
+            // Show a brief loading state
+            const btn = $(this);
+            const originalText = btn.html();
+            btn.html('<span class="spinner-border spinner-border-sm me-2"></span>Opening...');
+            
+            setTimeout(() => {
+                btn.html(originalText);
+            }, 1000);
+        });
+        
+        // Trigger animation on scroll
+        $(window).on('scroll', animateOnScroll);
+        animateOnScroll(); // Initial check
+    });
+</script>
+{% endblock %}
+

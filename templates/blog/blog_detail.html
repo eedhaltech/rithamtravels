@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .article-hero {
+        position: relative;
+        height: 60vh;
+        min-height: 400px;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .article-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+    
+    .article-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7));
+        z-index: 2;
+    }
+    
+    .article-hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        padding: 0 20px;
+    }
+    
+    .article-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    
+    .article-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+    
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    
+    .article-content {
+        background: white;
+        margin-top: -30px;
+        position: relative;
+        z-index: 4;
+        border-radius: 30px 30px 0 0;
+        padding: 60px 40px 40px;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .content-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .article-content h1,
+    .article-content h2,
+    .article-content h3 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+    
+    .article-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #4a5568;
+        margin-bottom: 20px;
+    }
+    
+    .article-content ul,
+    .article-content ol {
+        margin-bottom: 20px;
+        padding-left: 30px;
+    }
+    
+    .article-content li {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #4a5568;
+        margin-bottom: 8px;
+    }
+    
+    .article-actions {
+        background: #f8f9fa;
+        padding: 40px;
+        border-radius: 20px;
+        margin-top: 40px;
+        text-align: center;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+    
+    .btn-back,
+    .btn-share {
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .btn-back {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+    }
+    
+    .btn-share {
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+    }
+    
+    .btn-back:hover,
+    .btn-share:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-back:hover {
+        color: white;
+    }
+    
+    .btn-share:hover {
+        background: #667eea;
+        color: white;
+    }
+    
+    .related-posts {
+        margin-top: 60px;
+        padding-top: 40px;
+        border-top: 2px solid #e9ecef;
+    }
+    
+    .related-post-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        height: 100%;
+    }
+    
+    .related-post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .related-post-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+    
+    .related-post-excerpt {
+        font-size: 0.9rem;
+        color: #6c757d;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    
+    .related-post-link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    .related-post-link:hover {
+        color: #764ba2;
+    }
+    
+    @media (max-width: 768px) {
+        .article-title {
+            font-size: 2rem;
+        }
+        
+        .article-meta {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .article-content {
+            padding: 40px 20px 20px;
+        }
+        
+        .article-actions {
+            padding: 30px 20px;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn-back,
+        .btn-share {
+            width: 100%;
+            max-width: 250px;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+{% load static %}
+{% block content %}
+<!-- Article Hero -->
+<div class="article-hero">
+    {% if post.image %}
+    <img src="{% static 'bolgs_images/' %}{{ post.image }}" class="article-hero-bg" alt="{{ post.title }}">
+    {% else %}
+    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&w=1200&h=600&fit=crop" class="article-hero-bg" alt="{{ post.title }}">
+    {% endif %}
+    <div class="article-hero-overlay"></div>
+    <div class="article-hero-content">
+        <h1 class="article-title">{{ post.title }}</h1>
+        <div class="article-meta">
+            <div class="meta-item">
+                <i class="bi bi-calendar3"></i>
+                <span>{{ post.created_at|date:"F d, Y" }}</span>
+            </div>
+            <div class="meta-item">
+                <i class="bi bi-person"></i>
+                <span>
+                    {% if post.author %}
+                        {{ post.author.get_full_name|default:post.author.username }}
+                    {% else %}
+                        Admin
+                    {% endif %}
+                </span>
+            </div>
+            <div class="meta-item">
+                <i class="bi bi-eye"></i>
+                <span>{{ post.views }} views</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Article Content -->
+<div class="article-content">
+    <div class="content-wrapper">
+        <div class="article-body">
+            {{ post.content|linebreaks }}
+        </div>
+        
+        <!-- Article Actions -->
+        <div class="article-actions">
+            <h5 class="mb-3">Enjoyed this article?</h5>
+            <p class="text-muted">Share it with your friends or explore more travel stories</p>
+            <div class="action-buttons">
+                <a href="{% url 'blog_list' %}" class="btn-back">
+                    <i class="bi bi-arrow-left"></i>
+                    <span>Back to Blog</span>
+                </a>
+                <button class="btn-share" onclick="shareArticle()">
+                    <i class="bi bi-share"></i>
+                    <span>Share Article</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Related Posts -->
+        <div class="related-posts">
+            <h4 class="mb-4">You Might Also Like</h4>
+            <div class="row">
+                {% for related_post in related_posts|slice:":4" %}
+                <div class="col-md-6 mb-3">
+                    <div class="related-post-card">
+                        <h6 class="related-post-title">{{ related_post.title|truncatewords:8 }}</h6>
+                        <p class="related-post-excerpt">{{ related_post.excerpt|default:related_post.content|truncatewords:15 }}</p>
+                        <a href="{% url 'blog_detail' related_post.slug %}" class="related-post-link">Read More →</a>
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Fallback content if no related posts -->
+                <div class="col-md-6 mb-3">
+                    <div class="related-post-card">
+                        <h6 class="related-post-title">Explore More Travel Guides</h6>
+                        <p class="related-post-excerpt">Discover amazing destinations and travel tips on our blog...</p>
+                        <a href="{% url 'blog_list' %}" class="related-post-link">View All Posts →</a>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="related-post-card">
+                        <h6 class="related-post-title">Plan Your Next Trip</h6>
+                        <p class="related-post-excerpt">Contact us for customized tour packages and travel planning...</p>
+                        <a href="{% url 'contact_us' %}" class="related-post-link">Contact Us →</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- View All Posts Button -->
+            {% if related_posts %}
+            <div class="text-center mt-4">
+                <a href="{% url 'blog_list' %}" class="btn btn-outline-primary">
+                    <i class="bi bi-journal-text me-2"></i>View All Blog Posts
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% csrf_token %}
+<script>
+    // Share functionality
+    function shareArticle() {
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ post.title }}',
+                text: '{{ post.excerpt|default:post.content|truncatewords:20 }}',
+                url: window.location.href
+            });
+        } else {
+            // Fallback: Copy to clipboard
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                alert('Article link copied to clipboard!');
+            });
+        }
+    }
+    
+    // Update view count
+    $(document).ready(function() {
+        // Increment view count after 5 seconds (to avoid bots)
+        setTimeout(function() {
+            $.ajax({
+                url: '/api/blog/{{ post.slug }}/view/',
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+                },
+                success: function() {
+                    console.log('View count updated');
+                }
+            });
+        }, 5000);
+    });
+</script>
+{% endblock %}
+

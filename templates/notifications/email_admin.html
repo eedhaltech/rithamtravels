@@ -1,0 +1,11 @@
+{% extends "notifications/email_base.html" %}
+
+{% block title %}New Booking Alert - {{ booking.booking_number }} | Admin Panel{% endblock %}
+
+{% block content %}
+<tr>
+    <td style="padding: 0;">
+        {% include "notifications/booking_summary_card.html" %}
+    </td>
+</tr>
+{% endblock %}

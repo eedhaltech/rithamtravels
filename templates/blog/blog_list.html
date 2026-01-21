@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+
+{% block title %}Travel Blog - Ritham Tours & Travels{% endblock %}
+
+{% block extra_css %}
+<style>
+    .blog-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .blog-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+    
+    .hero-content h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    
+    .hero-content p {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .blog-grid {
+        margin-top: -50px;
+        position: relative;
+        z-index: 3;
+    }
+    
+    .blog-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: none;
+        margin-bottom: 30px;
+        height: 100%;
+    }
+    
+    .blog-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .blog-image {
+        position: relative;
+        overflow: hidden;
+        height: 250px;
+    }
+    
+    .blog-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .blog-card:hover .blog-image img {
+        transform: scale(1.05);
+    }
+    
+    .blog-date-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 8px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #667eea;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .blog-content {
+        padding: 30px;
+    }
+    
+    .blog-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .blog-excerpt {
+        color: #6c757d;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .blog-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        color: #8e9aaf;
+    }
+    
+    .blog-author {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .blog-views {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .read-more-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .read-more-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    
+    .pagination-wrapper {
+        margin-top: 60px;
+        text-align: center;
+    }
+    
+    .pagination {
+        display: inline-flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .page-item .page-link {
+        border: none;
+        padding: 12px 18px;
+        border-radius: 15px;
+        color: #667eea;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .page-item.active .page-link {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .page-item .page-link:hover {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+        transform: translateY(-2px);
+    }
+    
+    .no-posts {
+        text-align: center;
+        padding: 80px 20px;
+        color: #6c757d;
+    }
+    
+    .no-posts i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #dee2e6;
+    }
+    
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.1rem;
+        }
+        
+        .blog-hero {
+            padding: 60px 0;
+        }
+        
+        .blog-content {
+            padding: 20px;
+        }
+        
+        .blog-title {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+{% endblock %}
+{% load static %}
+{% block content %}
+<!-- Hero Section -->
+<div class="blog-hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Travel Stories & Tips</h1>
+            <p>Discover amazing destinations, travel tips, and inspiring stories from our adventures around India</p>
+        </div>
+    </div>
+</div>
+
+<!-- Blog Grid -->
+<div class="container">
+    <div class="blog-grid">
+        {% if posts %}
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <article class="blog-card">
+                    <div class="blog-image">
+                        {% if post.image %}
+                        <img src="{% static 'bolgs_images/' %}{{ post.image }}" alt="{{ post.title }}">
+                        <!-- <img src="{{ post.image.url }}" alt="{{ post.title }}"> -->
+                        {% else %}
+                        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&w=400&h=250&fit=crop" alt="{{ post.title }}">
+                        {% endif %}
+                        <div class="blog-date-badge">
+                            {{ post.created_at|date:"M d, Y" }}
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <div class="blog-author">
+                                <i class="bi bi-person-circle"></i>
+                                <span>
+                                    {% if post.author %}
+                                        {{ post.author.get_full_name|default:post.author.username }}
+                                    {% else %}
+                                        Admin
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="blog-views">
+                                <i class="bi bi-eye"></i>
+                                <span>{{ post.views|default:0 }}</span>
+                            </div>
+                        </div>
+                        <h2 class="blog-title">{{ post.title }}</h2>
+                        <p class="blog-excerpt">{{ post.excerpt|default:post.content|truncatewords:25 }}</p>
+                        <a href="{% url 'blog_detail' post.slug %}" class="read-more-btn">
+                            <span>Read More</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-posts">
+            <i class="bi bi-journal-text"></i>
+            <h3>No Blog Posts Yet</h3>
+            <p>We're working on some amazing travel stories. Check back soon!</p>
+        </div>
+        {% endif %}
+        
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="pagination-wrapper">
+            <nav aria-label="Blog pagination">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                            <i class="bi bi-chevron-left me-1"></i>Previous
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                            Next<i class="bi bi-chevron-right ms-1"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,2 @@
+# Requirements for deployment script
+paramiko>=2.7.0

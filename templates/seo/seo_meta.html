@@ -1,0 +1,52 @@
+{% load seo_tags static %}
+{% comment %}
+Main SEO Meta Tags Template
+Includes all essential meta tags for SEO optimization
+{% endcomment %}
+
+<!-- Essential Meta Tags -->
+<meta name="description" content="{% seo_description seo.description %}">
+<meta name="keywords" content="{% seo_keywords seo.keywords %}">
+<meta name="author" content="{{ site_seo.company_name }}">
+<meta name="robots" content="{% firstof seo.robots 'index, follow' %}">
+
+<!-- Canonical URL -->
+{% if seo.canonical_url %}
+<link rel="canonical" href="{% absolute_url seo.canonical_url %}">
+{% else %}
+<link rel="canonical" href="{% absolute_url request.get_full_path %}">
+{% endif %}
+
+<!-- Open Graph Tags -->
+{% include 'seo/og_tags.html' %}
+
+<!-- Twitter Card Tags -->
+{% include 'seo/twitter_tags.html' %}
+
+<!-- Schema.org Structured Data -->
+{% include 'seo/schema_org.html' %}
+
+<!-- Additional Meta Tags -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#2563eb">
+<meta name="msapplication-TileColor" content="#2563eb">
+
+<!-- Favicon and Icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'admin/img/logo/logo_ritham.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'admin/img/logo/logo_ritham.png' %}">
+<link rel="apple-touch-icon" href="{% static 'admin/img/logo/logo_ritham.png' %}">
+
+<!-- Verification Meta Tags -->
+{% if site_seo.google_site_verification %}
+<meta name="google-site-verification" content="{{ site_seo.google_site_verification }}">
+{% endif %}
+
+{% if site_seo.facebook_app_id %}
+<meta property="fb:app_id" content="{{ site_seo.facebook_app_id }}">
+{% endif %}
+
+<!-- Additional SEO Meta Tags -->
+<meta name="rating" content="General">
+<meta name="distribution" content="Global">
+<meta name="revisit-after" content="7 days">
+<meta name="expires" content="never">

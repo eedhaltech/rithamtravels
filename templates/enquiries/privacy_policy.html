@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h1 class="text-center mb-4 text-primary">Privacy Policy</h1>
+                    <p class="text-muted text-center mb-5">Last updated: {{ "now"|date:"F d, Y" }}</p>
+                    
+                    <div class="policy-content">
+                        <div class="alert alert-info">
+                            <h5><i class="bi bi-shield-check me-2"></i>Your Privacy Matters</h5>
+                            <p class="mb-0">Ritham Tours & Travels is committed to protecting your privacy and personal information. This policy explains how we collect, use, and safeguard your data.</p>
+                        </div>
+
+                        <h2>1. Information We Collect</h2>
+                        
+                        <h3>1.1 Personal Information</h3>
+                        <ul>
+                            <li><strong>Contact Details:</strong> Name, email address, phone number, address</li>
+                            <li><strong>Identification:</strong> Government ID details (for verification purposes)</li>
+                            <li><strong>Travel Preferences:</strong> Pickup locations, destinations, travel dates</li>
+                            <li><strong>Payment Information:</strong> Processed securely through Razorpay (we don't store card details)</li>
+                        </ul>
+
+                        <h3>1.2 Automatically Collected Information</h3>
+                        <ul>
+                            <li><strong>Website Usage:</strong> IP address, browser type, device information</li>
+                            <li><strong>Cookies:</strong> Session cookies for website functionality</li>
+                            <li><strong>Location Data:</strong> GPS coordinates (with your permission) for pickup services</li>
+                            <li><strong>Communication Records:</strong> Call logs, chat transcripts, email correspondence</li>
+                        </ul>
+
+                        <h3>1.3 Third-Party Information</h3>
+                        <ul>
+                            <li>Information from social media platforms (if you choose to login via social media)</li>
+                            <li>Reviews and ratings from Google, Facebook, or other platforms</li>
+                            <li>Referral information from partners or affiliates</li>
+                        </ul>
+
+                        <h2>2. How We Use Your Information</h2>
+                        
+                        <h3>2.1 Service Delivery</h3>
+                        <ul>
+                            <li>Process and confirm your bookings</li>
+                            <li>Assign drivers and vehicles for your trips</li>
+                            <li>Send booking confirmations, updates, and receipts</li>
+                            <li>Provide customer support and assistance</li>
+                        </ul>
+
+                        <h3>2.2 Communication</h3>
+                        <ul>
+                            <li>Send trip-related notifications via SMS, email, or WhatsApp</li>
+                            <li>Share driver and vehicle details before your trip</li>
+                            <li>Provide emergency assistance and support</li>
+                            <li>Send promotional offers and travel deals (with your consent)</li>
+                        </ul>
+
+                        <h3>2.3 Business Operations</h3>
+                        <ul>
+                            <li>Improve our services and website functionality</li>
+                            <li>Analyze usage patterns and customer preferences</li>
+                            <li>Prevent fraud and ensure security</li>
+                            <li>Comply with legal and regulatory requirements</li>
+                        </ul>
+
+                        <h2>3. Information Sharing and Disclosure</h2>
+                        
+                        <h3>3.1 Service Providers</h3>
+                        <ul>
+                            <li><strong>Drivers:</strong> Share necessary trip details for service delivery</li>
+                            <li><strong>Payment Processors:</strong> Razorpay for secure payment processing</li>
+                            <li><strong>SMS/Email Services:</strong> For sending notifications and confirmations</li>
+                            <li><strong>Technology Partners:</strong> For website hosting and maintenance</li>
+                        </ul>
+
+                        <h3>3.2 Legal Requirements</h3>
+                        <ul>
+                            <li>Comply with court orders, legal processes, or government requests</li>
+                            <li>Protect our rights, property, or safety</li>
+                            <li>Investigate fraud or security incidents</li>
+                            <li>Enforce our terms and conditions</li>
+                        </ul>
+
+                        <h3>3.3 Business Transfers</h3>
+                        <p>In the event of a merger, acquisition, or sale of assets, your information may be transferred to the new entity, subject to the same privacy protections.</p>
+
+                        <h2>4. Data Security</h2>
+                        
+                        <h3>4.1 Security Measures</h3>
+                        <ul>
+                            <li><strong>Encryption:</strong> All sensitive data encrypted in transit and at rest</li>
+                            <li><strong>Access Controls:</strong> Limited access to authorized personnel only</li>
+                            <li><strong>Regular Audits:</strong> Periodic security assessments and updates</li>
+                            <li><strong>Secure Hosting:</strong> Data stored on secure, monitored servers</li>
+                        </ul>
+
+                        <h3>4.2 Payment Security</h3>
+                        <ul>
+                            <li>All payments processed through Razorpay's secure gateway</li>
+                            <li>We do not store credit card or banking information</li>
+                            <li>PCI DSS compliant payment processing</li>
+                            <li>Two-factor authentication for sensitive operations</li>
+                        </ul>
+
+                        <h2>5. Your Rights and Choices</h2>
+                        
+                        <h3>5.1 Access and Control</h3>
+                        <ul>
+                            <li><strong>Access:</strong> Request a copy of your personal information</li>
+                            <li><strong>Update:</strong> Modify or correct your personal details</li>
+                            <li><strong>Delete:</strong> Request deletion of your account and data</li>
+                            <li><strong>Portability:</strong> Receive your data in a portable format</li>
+                        </ul>
+
+                        <h3>5.2 Communication Preferences</h3>
+                        <ul>
+                            <li>Opt-out of promotional emails and SMS</li>
+                            <li>Choose preferred communication channels</li>
+                            <li>Manage notification settings</li>
+                            <li>Unsubscribe from marketing communications</li>
+                        </ul>
+
+                        <h3>5.3 Cookie Management</h3>
+                        <ul>
+                            <li>Control cookie preferences through browser settings</li>
+                            <li>Opt-out of non-essential cookies</li>
+                            <li>Clear existing cookies from your device</li>
+                        </ul>
+
+                        <h2>6. Data Retention</h2>
+                        <ul>
+                            <li><strong>Active Accounts:</strong> Data retained while account is active</li>
+                            <li><strong>Booking Records:</strong> Maintained for 7 years for tax and legal purposes</li>
+                            <li><strong>Communication Logs:</strong> Kept for 2 years for quality assurance</li>
+                            <li><strong>Marketing Data:</strong> Deleted upon unsubscribe request</li>
+                        </ul>
+
+                        <h2>7. Children's Privacy</h2>
+                        <p>Our services are not directed to children under 18. We do not knowingly collect personal information from children. If we become aware of such collection, we will delete the information immediately.</p>
+
+                        <h2>8. International Data Transfers</h2>
+                        <p>Your data is primarily stored and processed in India. If we transfer data internationally, we ensure appropriate safeguards are in place to protect your information.</p>
+
+                        <h2>9. Third-Party Links</h2>
+                        <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices of these external sites. Please review their privacy policies before providing any information.</p>
+
+                        <h2>10. Updates to This Policy</h2>
+                        <ul>
+                            <li>We may update this privacy policy periodically</li>
+                            <li>Changes will be posted on our website with the updated date</li>
+                            <li>Significant changes will be communicated via email</li>
+                            <li>Continued use of our services constitutes acceptance of updates</li>
+                        </ul>
+
+                        <h2>11. Contact Us</h2>
+                        <p>For questions about this Privacy Policy or to exercise your rights, contact us:</p>
+                        
+                        <div class="contact-info mt-3">
+                            <p><strong>Ritham Tours & Travels - Privacy Officer</strong></p>
+                            <p><i class="bi bi-geo-alt-fill text-primary"></i> Coimbatore, Tamil Nadu, India</p>
+                            <p><i class="bi bi-telephone-fill text-primary"></i> <a href="tel:+917373812345">+91 73738 12345</a></p>
+                            <p><i class="bi bi-envelope-fill text-primary"></i> <a href="mailto:info@rithamtravels.in">info@rithamtravels.in</a></p>
+                            <p><i class="bi bi-globe text-primary"></i> <a href="https://rithamtravels.in/">https://rithamtravels.in/</a></p>
+                        </div>
+
+                        <h2>12. Razorpay Privacy</h2>
+                        <p>For payment-related privacy information, please also review the <a href="{% url 'razorpay_privacy_policy' %}">Razorpay Privacy Policy</a> which governs the processing of your payment information.</p>
+
+                        <div class="alert alert-success mt-4">
+                            <h5><i class="bi bi-check-circle me-2"></i>Our Commitment</h5>
+                            <p class="mb-0">We are committed to maintaining the highest standards of data protection and privacy. Your trust is important to us, and we continuously work to safeguard your personal information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.policy-content h2 {
+    color: #2563eb;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.policy-content h3 {
+    color: #1e40af;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.policy-content ul, .policy-content ol {
+    margin-bottom: 1.5rem;
+}
+
+.policy-content li {
+    margin-bottom: 0.5rem;
+}
+
+.contact-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.contact-info > * {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-info p {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.contact-info p:first-child {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-info i {
+    font-size: 1.2rem;
+    margin-right: 12px;
+    width: 24px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+}
+
+.contact-info a {
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.contact-info a:hover {
+    color: #f0f8ff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transform: translateX(3px);
+}
+</style>
+{% endblock %}

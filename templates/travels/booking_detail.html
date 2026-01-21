@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Details - {{ booking.booking_number }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-calendar-check me-2"></i>Booking Details</h2>
+        <a href="{% url 'travels_bookings_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Bookings
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Booking #{{ booking.booking_number }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6>Customer Information</h6>
+                            <p class="mb-1"><strong>Name:</strong> {{ booking.name }}</p>
+                            <p class="mb-1"><strong>Email:</strong> {{ booking.email }}</p>
+                            <p class="mb-1"><strong>Phone:</strong> {{ booking.phone }}</p>
+                            <p class="mb-1"><strong>Adults:</strong> {{ booking.adults }} | <strong>Children:</strong> {{ booking.children }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Trip Information</h6>
+                            <p class="mb-1"><strong>Trip Type:</strong> {{ booking.get_trip_type_display }}</p>
+                            <p class="mb-1"><strong>Vehicle:</strong> {{ booking.vehicle.name|default:"Not Assigned" }}</p>
+                            <p class="mb-1"><strong>Total Days:</strong> {{ booking.total_days }}</p>
+                            <p class="mb-1"><strong>Distance:</strong> {{ booking.total_distance }} km</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6>Pickup Details</h6>
+                            <p class="mb-1"><strong>Date:</strong> {{ booking.pickup_date }}</p>
+                            <p class="mb-1"><strong>Time:</strong> {{ booking.pickup_time }}</p>
+                            <p class="mb-1"><strong>Address:</strong> {{ booking.pickup_address }}</p>
+                            <p class="mb-1"><strong>City:</strong> {{ booking.pickup_city }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Drop Details</h6>
+                            <p class="mb-1"><strong>Date:</strong> {{ booking.drop_date|default:"N/A" }}</p>
+                            <p class="mb-1"><strong>Time:</strong> {{ booking.drop_time|default:"N/A" }}</p>
+                            <p class="mb-1"><strong>Address:</strong> {{ booking.drop_address }}</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6>Payment Information</h6>
+                            <p class="mb-1"><strong>Payment Type:</strong> {{ booking.get_payment_type_display }}</p>
+                            <p class="mb-1"><strong>Total Amount:</strong> ₹{{ booking.total_amount|floatformat:2 }}</p>
+                            <p class="mb-1"><strong>Advance Paid:</strong> ₹{{ booking.advance_amount|floatformat:2 }}</p>
+                            <p class="mb-1"><strong>Balance:</strong> ₹{{ booking.total_amount|add:"-"|add:booking.advance_amount|floatformat:2 }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Additional Information</h6>
+                            {% if booking.flight_train_no %}
+                            <p class="mb-1"><strong>Flight/Train:</strong> {{ booking.flight_train_no }}</p>
+                            {% endif %}
+                            {% if booking.landmark %}
+                            <p class="mb-1"><strong>Landmark:</strong> {{ booking.landmark }}</p>
+                            {% endif %}
+                            <p class="mb-1"><strong>Created:</strong> {{ booking.created_at|date:"d M Y, h:i A" }}</p>
+                        </div>
+                    </div>
+
+                    {% if booking.special_instructions %}
+                    <hr>
+                    <h6>Special Instructions</h6>
+                    <p>{{ booking.special_instructions }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Update Booking</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" name="status" required>
+                                <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                                <option value="completed" {% if booking.status == 'completed' %}selected{% endif %}>Completed</option>
+                                <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Special Instructions</label>
+                            <textarea class="form-control" name="special_instructions" rows="4">{{ booking.special_instructions|default:'' }}</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-check-circle me-2"></i>Update Booking
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h6 class="mb-0">Quick Actions</h6>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'booking_status' %}?booking_number={{ booking.booking_number }}" class="btn btn-info w-100 mb-2" target="_blank">
+                        <i class="bi bi-eye me-2"></i>View Public Page
+                    </a>
+                    <a href="{% url 'travels_payments_list' %}" class="btn btn-primary w-100">
+                        <i class="bi bi-cash-coin me-2"></i>View Payments
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

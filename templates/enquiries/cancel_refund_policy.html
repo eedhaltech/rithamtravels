@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cancellation & Refund Policy - Ritham Tours & Travels{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h1 class="text-center mb-4 text-primary">Cancellation & Refund Policy</h1>
+                    <p class="text-muted text-center mb-5">Last updated: {{ "now"|date:"F d, Y" }}</p>
+                    
+                    <div class="policy-content">
+                        <div class="alert alert-info">
+                            <h5><i class="bi bi-info-circle me-2"></i>Important Information</h5>
+                            <p class="mb-0">This policy applies to all bookings made through Ritham Tours & Travels. Please read carefully before making a booking.</p>
+                        </div>
+
+                        <h2>1. Cancellation Policy</h2>
+                        
+                        <h3>1.1 Customer-Initiated Cancellations</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Cancellation Time</th>
+                                        <th>Cancellation Charges</th>
+                                        <th>Refund Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>More than 24 hours before trip</td>
+                                        <td>10% of total amount</td>
+                                        <td>90% refund</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12-24 hours before trip</td>
+                                        <td>25% of total amount</td>
+                                        <td>75% refund</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6-12 hours before trip</td>
+                                        <td>50% of total amount</td>
+                                        <td>50% refund</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Less than 6 hours before trip</td>
+                                        <td>100% of total amount</td>
+                                        <td>No refund</td>
+                                    </tr>
+                                    <tr>
+                                        <td>No-show</td>
+                                        <td>100% of total amount</td>
+                                        <td>No refund</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>1.2 Company-Initiated Cancellations</h3>
+                        <ul>
+                            <li><strong>Full Refund:</strong> If we cancel your booking due to vehicle breakdown, driver unavailability, or other operational issues</li>
+                            <li><strong>Alternative Service:</strong> We will try to provide an alternative vehicle or reschedule your trip</li>
+                            <li><strong>Force Majeure:</strong> In case of natural disasters, government restrictions, or other uncontrollable circumstances, we will provide full refund or rescheduling options</li>
+                        </ul>
+
+                        <h2>2. Refund Policy</h2>
+                        
+                        <h3>2.1 Refund Processing</h3>
+                        <ul>
+                            <li>Refunds will be processed within 5-7 business days after cancellation approval</li>
+                            <li>Refunds will be credited to the original payment method used for booking</li>
+                            <li>For online payments, refunds will be processed through Razorpay payment gateway</li>
+                            <li>Bank processing time may take additional 3-5 business days</li>
+                        </ul>
+
+                        <h3>2.2 Refund Calculation</h3>
+                        <p><strong>Refund Amount = Total Paid Amount - Cancellation Charges - Payment Gateway Charges (if applicable)</strong></p>
+                        
+                        <div class="alert alert-warning">
+                            <h6><i class="bi bi-exclamation-triangle me-2"></i>Note on Payment Gateway Charges</h6>
+                            <p class="mb-0">Payment gateway charges (typically 2-3% of transaction amount) are non-refundable as per Razorpay policy and will be deducted from the refund amount.</p>
+                        </div>
+
+                        <h2>3. Modification Policy</h2>
+                        
+                        <h3>3.1 Trip Modifications</h3>
+                        <ul>
+                            <li><strong>Date/Time Changes:</strong> Allowed up to 12 hours before trip start time (subject to availability)</li>
+                            <li><strong>Route Changes:</strong> Additional charges may apply based on distance and duration</li>
+                            <li><strong>Vehicle Upgrade:</strong> Price difference must be paid at the time of modification</li>
+                            <li><strong>Vehicle Downgrade:</strong> Difference amount will be refunded as per refund policy</li>
+                        </ul>
+
+                        <h3>3.2 Modification Charges</h3>
+                        <ul>
+                            <li>First modification: Free (if done 24+ hours before trip)</li>
+                            <li>Subsequent modifications: ₹100 per modification</li>
+                            <li>Modifications within 24 hours: ₹200 per modification</li>
+                        </ul>
+
+                        <h2>4. Special Circumstances</h2>
+                        
+                        <h3>4.1 Weather-Related Cancellations</h3>
+                        <ul>
+                            <li>Heavy rain, floods, or extreme weather conditions</li>
+                            <li>Government advisories against travel</li>
+                            <li>Road closures due to weather</li>
+                            <li><strong>Policy:</strong> Full refund or free rescheduling</li>
+                        </ul>
+
+                        <h3>4.2 Medical Emergencies</h3>
+                        <ul>
+                            <li>Customer illness or medical emergency</li>
+                            <li>Family emergency requiring immediate attention</li>
+                            <li><strong>Policy:</strong> Reduced cancellation charges (50% of standard charges) with valid medical certificate</li>
+                        </ul>
+
+                        <h3>4.3 Vehicle Breakdown During Trip</h3>
+                        <ul>
+                            <li>Immediate replacement vehicle will be arranged</li>
+                            <li>If replacement not possible, proportionate refund for unused portion</li>
+                            <li>No additional charges for breakdown-related delays</li>
+                        </ul>
+
+                        <h2>5. How to Cancel or Modify</h2>
+                        
+                        <h3>5.1 Cancellation Process</h3>
+                        <ol>
+                            <li>Visit our <a href="{% url 'cancellation' %}">Cancellation Page</a></li>
+                            <li>Enter your booking number and contact details</li>
+                            <li>Select cancellation reason</li>
+                            <li>Submit cancellation request</li>
+                            <li>Receive confirmation email with refund details</li>
+                        </ol>
+
+                        <h3>5.2 Alternative Contact Methods</h3>
+                        <ul>
+                            <li><strong>Phone:</strong> <a href="tel:+917373812345">+91 73738 12345</a> (24/7 support)</li>
+                            <li><strong>Email:</strong> <a href="mailto:info@rithamtravels.in">info@rithamtravels.in</a></li>
+                            <li><strong>WhatsApp:</strong> +91 73738 12345</li>
+                        </ul>
+
+                        <h2>6. Refund Status Tracking</h2>
+                        <ul>
+                            <li>Check refund status on our <a href="{% url 'booking_status' %}">Booking Status</a> page</li>
+                            <li>Refund confirmation will be sent via email and SMS</li>
+                            <li>For queries, contact our customer support team</li>
+                        </ul>
+
+                        <h2>7. Dispute Resolution</h2>
+                        <ul>
+                            <li>All refund disputes will be reviewed within 48 hours</li>
+                            <li>Customers can escalate unresolved issues to management</li>
+                            <li>Final decisions will be communicated within 5 business days</li>
+                        </ul>
+
+                        <h2>8. Contact Information</h2>
+                        <div class="contact-info mt-3">
+                            <p><strong>Ritham Tours & Travels</strong></p>
+                            <p><i class="bi bi-geo-alt-fill text-primary"></i> Coimbatore, Tamil Nadu, India</p>
+                            <p><i class="bi bi-telephone-fill text-primary"></i> <a href="tel:+917373812345">+91 73738 12345</a></p>
+                            <p><i class="bi bi-envelope-fill text-primary"></i> <a href="mailto:info@rithamtravels.in">info@rithamtravels.in</a></p>
+                            <p><i class="bi bi-globe text-primary"></i> <a href="https://rithamtravels.in/">https://rithamtravels.in/</a></p>
+                        </div>
+
+                        <div class="alert alert-success mt-4">
+                            <h5><i class="bi bi-check-circle me-2"></i>Our Commitment</h5>
+                            <p class="mb-0">We are committed to providing fair and transparent cancellation and refund policies. Our goal is to ensure customer satisfaction while maintaining operational efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.policy-content h2 {
+    color: #2563eb;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.policy-content h3 {
+    color: #1e40af;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.policy-content ul, .policy-content ol {
+    margin-bottom: 1.5rem;
+}
+
+.policy-content li {
+    margin-bottom: 0.5rem;
+}
+
+.contact-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.contact-info > * {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-info p {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.contact-info p:first-child {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-info i {
+    font-size: 1.2rem;
+    margin-right: 12px;
+    width: 24px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+}
+
+.contact-info a {
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.contact-info a:hover {
+    color: #f0f8ff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transform: translateX(3px);
+}
+
+.table th {
+    font-weight: 600;
+}
+</style>
+{% endblock %}
