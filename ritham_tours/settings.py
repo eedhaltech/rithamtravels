@@ -100,9 +100,12 @@ WSGI_APPLICATION = 'ritham_tours.wsgi.application'
 #     }
 # }
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://72.61.244.169',
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://rithamtravels.in",
+    "https://www.rithamtravels.in",
+    "https://*.onrender.com",
+]
+
 
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -179,6 +182,9 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -213,9 +219,18 @@ SIMPLE_JWT = {
 
 # CORS Settings
 CORS_ALLOWED_ORIGINS = [
+    # Local dev
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+
+    # Production
+    "https://rithamtravels.in",
+    "https://www.rithamtravels.in",
+    "https://rithamtravels.onrender.com",
 ]
+
+
+
 
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 
