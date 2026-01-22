@@ -1,0 +1,262 @@
+/**
+ * Multicity Forms - Consistent Styling
+ * Provides consistent styling for multicity forms across the application
+ */
+
+/* Multicity Form Container */
+.multicity-form-container {
+    position: relative;
+}
+
+/* Multicity Row Styling */
+.multicity-row {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fafafa;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.multicity-row:hover {
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+}
+
+/* Form Group Styling */
+.multicity-row .form-group {
+    margin-bottom: 15px;
+}
+
+/* Required Field Indicator */
+.form-label.required::after,
+.form-label .text-danger {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Error Styling */
+.form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    display: block !important;
+}
+
+/* Button Styling */
+.multicity-row .remove-multicity-row {
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#addMulticityRowBtn,
+#validateMulticityBtn {
+    min-width: 140px;
+    font-weight: 500;
+}
+
+#addMulticityRowBtn:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+#validateMulticityBtn:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+/* Validation Results Styling */
+#validationResults {
+    margin-top: 20px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.validation-success {
+    border-left: 4px solid #28a745;
+    padding-left: 15px;
+}
+
+.route-summary {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.route-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.route-item:last-child {
+    border-bottom: none;
+}
+
+/* Sightseeing Section Styling */
+.sightseeing-section {
+    margin-top: 15px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; max-height: 0; }
+    to { opacity: 1; max-height: 500px; }
+}
+
+.sightseeing-section .card {
+    border: 1px solid #17a2b8;
+    box-shadow: 0 2px 4px rgba(23, 162, 184, 0.1);
+}
+
+.sightseeing-section .card-header {
+    background-color: #e7f3ff;
+    border-bottom: 1px solid #17a2b8;
+}
+
+.sightseeing-details {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.tourist-places-grid {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+.tourist-places-grid .form-check {
+    margin-bottom: 8px;
+    padding-left: 1.5rem;
+}
+
+.tourist-places-grid .form-check:last-child {
+    margin-bottom: 0;
+}
+
+.sightseeing-distance-display {
+    text-align: center;
+    padding: 10px;
+}
+
+.sightseeing-distance-display .badge {
+    font-size: 1rem;
+    padding: 8px 12px;
+}
+
+.sightseeing-summary-item {
+    padding: 3px 0;
+    font-size: 0.9rem;
+}
+
+/* Loading States */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .multicity-row {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .multicity-row .col-md-1 {
+        margin-top: 10px;
+    }
+    
+    .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+    
+    #addMulticityRowBtn,
+    #validateMulticityBtn {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .tourist-places-grid {
+        max-height: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .multicity-row .row > div {
+        margin-bottom: 10px;
+    }
+    
+    .sightseeing-section .row > div {
+        margin-bottom: 15px;
+    }
+    
+    .route-summary {
+        font-size: 0.9rem;
+    }
+}
+
+/* Accessibility Improvements */
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .multicity-row {
+        border-color: #000000;
+        background-color: #ffffff;
+    }
+    
+    .multicity-row:hover {
+        border-color: #0000ff;
+    }
+    
+    .invalid-feedback {
+        font-weight: bold;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .multicity-row,
+    .sightseeing-section,
+    .sightseeing-details,
+    #validationResults {
+        animation: none;
+        transition: none;
+    }
+}
