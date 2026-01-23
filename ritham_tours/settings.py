@@ -254,10 +254,10 @@ RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID', default='')
 RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='')
 
 # WhatsApp Cloud API Configuration
-WHATSAPP_ACCESS_TOKEN = config('WHATSAPP_ACCESS_TOKEN', default='')
-WHATSAPP_PHONE_NUMBER_ID = config('WHATSAPP_PHONE_NUMBER_ID', default='')
-WHATSAPP_BUSINESS_ACCOUNT_ID = config('WHATSAPP_BUSINESS_ACCOUNT_ID', default='')
-WHATSAPP_VERIFY_TOKEN = config('WHATSAPP_VERIFY_TOKEN', default='ritham_webhook_verify_2024')
+# WHATSAPP_ACCESS_TOKEN = config('WHATSAPP_ACCESS_TOKEN', default='')
+# WHATSAPP_PHONE_NUMBER_ID = config('WHATSAPP_PHONE_NUMBER_ID', default='')
+# WHATSAPP_BUSINESS_ACCOUNT_ID = config('WHATSAPP_BUSINESS_ACCOUNT_ID', default='')
+# WHATSAPP_VERIFY_TOKEN = config('WHATSAPP_VERIFY_TOKEN', default='ritham_webhook_verify_2024')
 
 # Email Configuration - Google App Password
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -274,9 +274,9 @@ COMPANY_EMAIL = 'rithamtravels@gmail.com'
 CONTACT_EMAIL = 'rithamtravels@gmail.com'
 
 # WhatsApp Configuration (using Twilio or similar)
-WHATSAPP_API_KEY = config('WHATSAPP_API_KEY', default='')
-WHATSAPP_API_SECRET = config('WHATSAPP_API_SECRET', default='')
-WHATSAPP_PHONE_NUMBER = config('WHATSAPP_PHONE_NUMBER', default='+919787110763')
+# WHATSAPP_API_KEY = config('WHATSAPP_API_KEY', default='')
+# WHATSAPP_API_SECRET = config('WHATSAPP_API_SECRET', default='')
+# WHATSAPP_PHONE_NUMBER = config('WHATSAPP_PHONE_NUMBER', default='+919787110763')
 
 # Google API Configuration
 GOOGLE_PLACES_API_KEY = config('GOOGLE_PLACES_API_KEY', default='')
