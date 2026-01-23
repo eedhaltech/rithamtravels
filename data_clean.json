@@ -1,0 +1,5770 @@
+[
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$W4GeYaC9PUrGqOOKFoC97E$KVTq7cCSwj6OqrpJ4cmoJ+/lPT8dOFoTdBIItqyruMY=",
+    "last_login": "2025-12-07T13:54:15.908Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-12-07T10:59:51.777Z",
+    "user_type": "customer",
+    "phone_number": null,
+    "address": null,
+    "email": "admin@rithamtours.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$AzPmpJAn5tRGM2YDtASVoJ$pIWupcJqnyOMcJkw08u0pVkPdAke7Zp57Yn4DHfj3fY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "muthu",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:56:41.687Z",
+    "user_type": "travels",
+    "phone_number": null,
+    "address": null,
+    "email": "muthuselvan39820@gmail.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$Xlvd4SqiuWUjmi1ixpI0li$XMAppmGwrquIxtTkyFvzueG6aKh4ENk2lIq6BsPjcRk=",
+    "last_login": "2025-12-07T19:17:20.988Z",
+    "is_superuser": false,
+    "username": "muthu_",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T19:17:05.988Z",
+    "user_type": "customer",
+    "phone_number": null,
+    "address": null,
+    "email": "muthuselvan3@gmail.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$pkvToI4lXe44P5oZAYVnYc$nsXTibfU0AnXULS6pREt0solJUglCwYYm1RmmmISSSQ=",
+    "last_login": "2026-01-15T15:52:53.888Z",
+    "is_superuser": false,
+    "username": "muthu_ms",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-12-07T19:26:22.855Z",
+    "user_type": "travels",
+    "phone_number": null,
+    "address": null,
+    "email": "muthu@gmail.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$FRCrQiYvTQ1FhR35Mehmxs$MpYO5zrVbpHS+FQ+n7GwzSJtZEXg3ufDiul057pXpX8=",
+    "last_login": "2025-12-19T07:40:25.241Z",
+    "is_superuser": false,
+    "username": "customer",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-19T07:40:10.845Z",
+    "user_type": "customer",
+    "phone_number": null,
+    "address": null,
+    "email": "customer@gmail.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$ifKVpHbUtQNwcEeGeWbsTk$aHT/mXvmLgYvnRCmlmEBAlYtAq1BVKDbeCWbyMZzuyo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "admin_ritham",
+    "first_name": "Admin",
+    "last_name": "Ritham",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-01-16T18:56:17.546Z",
+    "user_type": "travels",
+    "phone_number": null,
+    "address": null,
+    "email": "admin@rithamtravels.in",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$eT58adJ0pMlKmL6lixqLzV$GnrKzf1leVacyCBkdnme8lG640Q4P+qBNsCXsvbQvA8=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "info_ritham",
+    "first_name": "Info",
+    "last_name": "Ritham",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-01-16T18:56:17.790Z",
+    "user_type": "travels",
+    "phone_number": null,
+    "address": null,
+    "email": "info@rithamtravels.in",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "otp": "627472",
+    "created_at": "2026-01-16T18:59:00.082Z",
+    "expires_at": "2026-01-16T19:09:00.082Z",
+    "is_used": true,
+    "attempts": 0,
+    "max_attempts": 3,
+    "ip_address": null,
+    "user_agent": ""
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "otp": "831394",
+    "created_at": "2026-01-16T18:59:03.675Z",
+    "expires_at": "2026-01-16T19:09:03.674Z",
+    "is_used": true,
+    "attempts": 0,
+    "max_attempts": 3,
+    "ip_address": null,
+    "user_agent": ""
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "otp": "148760",
+    "created_at": "2026-01-16T18:59:04.813Z",
+    "expires_at": "2026-01-16T19:09:04.813Z",
+    "is_used": true,
+    "attempts": 0,
+    "max_attempts": 3,
+    "ip_address": null,
+    "user_agent": ""
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 4,
+  "fields": {
+    "user": 2,
+    "otp": "071966",
+    "created_at": "2026-01-16T18:59:05.052Z",
+    "expires_at": "2026-01-16T19:09:05.052Z",
+    "is_used": true,
+    "attempts": 0,
+    "max_attempts": 3,
+    "ip_address": null,
+    "user_agent": ""
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 5,
+  "fields": {
+    "user": 2,
+    "otp": "699743",
+    "created_at": "2026-01-16T18:59:13.994Z",
+    "expires_at": "2026-01-16T19:09:13.994Z",
+    "is_used": true,
+    "attempts": 0,
+    "max_attempts": 3,
+    "ip_address": null,
+    "user_agent": ""
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 6,
+  "fields": {
+    "user": 2,
+    "otp": "344812",
+    "created_at": "2026-01-16T18:59:23.966Z",
+    "expires_at": "2026-01-16T19:09:23.966Z",
+    "is_used": true,
+    "attempts": 0,
+    "max_attempts": 3,
+    "ip_address": null,
+    "user_agent": ""
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 8,
+  "fields": {
+    "user": 2,
+    "otp": "548999",
+    "created_at": "2026-01-16T19:05:21.908Z",
+    "expires_at": "2026-01-16T19:15:21.908Z",
+    "is_used": true,
+    "attempts": 0,
+    "max_attempts": 3,
+    "ip_address": null,
+    "user_agent": ""
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 9,
+  "fields": {
+    "user": 2,
+    "otp": "500684",
+    "created_at": "2026-01-16T19:08:01.666Z",
+    "expires_at": "2026-01-16T19:18:01.666Z",
+    "is_used": true,
+    "attempts": 0,
+    "max_attempts": 3,
+    "ip_address": null,
+    "user_agent": ""
+  }
+},
+{
+  "model": "accounts.passwordresetotp",
+  "pk": 10,
+  "fields": {
+    "user": 6,
+    "otp": "710175",
+    "created_at": "2026-01-16T19:21:22.961Z",
+    "expires_at": "2026-01-16T19:31:22.960Z",
+    "is_used": true,
+    "attempts": 2,
+    "max_attempts": 3,
+    "ip_address": "127.0.0.1",
+    "user_agent": "Test Browser"
+  }
+},
+{
+  "model": "accounts.otpattemptlog",
+  "pk": 1,
+  "fields": {
+    "user": 6,
+    "otp_instance": 10,
+    "attempted_otp": "000000",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Test Browser",
+    "is_successful": false,
+    "failure_reason": "Invalid OTP",
+    "created_at": "2026-01-16T19:21:29.068Z"
+  }
+},
+{
+  "model": "accounts.otpattemptlog",
+  "pk": 2,
+  "fields": {
+    "user": 6,
+    "otp_instance": 10,
+    "attempted_otp": "710175",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Test Browser",
+    "is_successful": true,
+    "failure_reason": "",
+    "created_at": "2026-01-16T19:21:29.091Z"
+  }
+},
+{
+  "model": "accounts.customerprofile",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "address": null,
+    "emergency_contact": null,
+    "created_at": "2025-12-07T19:17:06.718Z",
+    "updated_at": "2026-01-16T09:40:06.457Z"
+  }
+},
+{
+  "model": "accounts.customerprofile",
+  "pk": 2,
+  "fields": {
+    "user": 5,
+    "address": null,
+    "emergency_contact": null,
+    "created_at": "2025-12-19T07:40:11.207Z",
+    "updated_at": "2026-01-16T09:40:06.457Z"
+  }
+},
+{
+  "model": "accounts.travelsprofile",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "company_name": "Ritham Tours & Travels",
+    "gst_number": null,
+    "business_address": null,
+    "license_number": null,
+    "created_at": "2025-12-07T18:56:41.998Z",
+    "updated_at": "2026-01-16T09:40:06.495Z"
+  }
+},
+{
+  "model": "accounts.travelsprofile",
+  "pk": 2,
+  "fields": {
+    "user": 4,
+    "company_name": "Ritham Tours & Travels",
+    "gst_number": null,
+    "business_address": null,
+    "license_number": null,
+    "created_at": "2025-12-07T19:26:23.162Z",
+    "updated_at": "2026-01-16T09:40:06.495Z"
+  }
+},
+{
+  "model": "accounts.travelsprofile",
+  "pk": 3,
+  "fields": {
+    "user": 6,
+    "company_name": "Ritham Tours & Travels",
+    "gst_number": null,
+    "business_address": "Coimbatore, Tamil Nadu, India",
+    "license_number": null,
+    "created_at": "2026-01-16T18:56:17.786Z",
+    "updated_at": "2026-01-16T18:56:17.786Z"
+  }
+},
+{
+  "model": "accounts.travelsprofile",
+  "pk": 4,
+  "fields": {
+    "user": 7,
+    "company_name": "Ritham Tours & Travels",
+    "gst_number": null,
+    "business_address": "Coimbatore, Tamil Nadu, India",
+    "license_number": null,
+    "created_at": "2026-01-16T18:56:18.010Z",
+    "updated_at": "2026-01-16T18:56:18.010Z"
+  }
+},
+{
+  "model": "accounts.systemsettings",
+  "pk": 1,
+  "fields": {
+    "upi_payments_enabled": false,
+    "razorpay_enabled": true,
+    "default_payment_method": "driver",
+    "advance_payment_percentage": "20.00",
+    "booking_cancellation_enabled": true,
+    "auto_booking_confirmation": false,
+    "sms_notifications_enabled": true,
+    "email_notifications_enabled": true,
+    "whatsapp_notifications_enabled": true,
+    "gst_enabled": false,
+    "hill_station_charges_enabled": true,
+    "dynamic_pricing_enabled": false,
+    "maintenance_mode": false,
+    "online_booking_enabled": true,
+    "show_vehicle_images": true,
+    "primary_phone": "+91 97871 10763",
+    "secondary_phone": "",
+    "email_address": "rithamtravels@gmail.com",
+    "whatsapp_number": "+91 97871 10763",
+    "facebook_url": "https://www.facebook.com/share/1G4KuLPscB/",
+    "instagram_url": "https://www.instagram.com/rithamtoursandtravels",
+    "youtube_url": "https://youtube.com/@rithamtoursandtravels?si=rJulxr_AG9qUCaqI",
+    "linkedin_url": "https://www.linkedin.com/in/krishna-moorthy-9879689b/?originalSubdomain=in",
+    "created_at": "2026-01-16T09:44:02.064Z",
+    "updated_at": "2026-01-21T19:06:29.625Z",
+    "updated_by": null
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 1,
+  "fields": {
+    "title": "Complete Guide to Ooty: The Queen of Hill Stations",
+    "slug": "top-10-places-visit-ooty",
+    "content": "# Complete Guide to Ooty: The Queen of Hill Stations\n\nNestled in the Nilgiri Hills of Tamil Nadu, Ooty (officially known as Udhagamandalam) stands as one of India's most beloved hill stations. At an elevation of 2,240 meters above sea level, this charming destination offers a perfect escape from the scorching heat of the plains.\n\n## Why Visit Ooty?\n\nOoty's colonial charm, combined with its natural beauty, makes it a perfect destination for families, couples, and solo travelers. The town's pleasant climate throughout the year, lush green landscapes, and rich biodiversity attract millions of visitors annually.\n\n## Best Time to Visit\n\n**Peak Season (April to June):** Perfect weather with temperatures ranging from 15°C to 25°C. This is the best time for sightseeing, but expect crowds and higher prices.\n\n**Monsoon Season (July to September):** Heavy rainfall transforms the landscape into a lush green paradise. Ideal for nature lovers but some outdoor activities may be restricted.\n\n**Winter Season (October to March):** Cool and pleasant weather with temperatures dropping to 5°C at night. Perfect for cozy stays and enjoying the misty mornings.\n\n## Top Attractions in Ooty\n\n### 1. Ooty Lake\nThe heart of Ooty tourism, this artificial lake offers boating facilities and beautiful walking paths. Built in 1824, the lake is surrounded by eucalyptus trees and offers paddle boats, row boats, and motor boats.\n\n**Timings:** 8:00 AM to 6:00 PM\n**Entry Fee:** ₹10 per person\n**Boating Charges:** ₹50-150 per person depending on boat type\n\n### 2. Nilgiri Mountain Railway (Toy Train)\nA UNESCO World Heritage Site, this narrow-gauge railway connects Mettupalayam to Ooty. The journey offers breathtaking views of tea gardens, forests, and valleys.\n\n**Journey Duration:** 5 hours from Mettupalayam\n**Ticket Price:** ₹50-500 depending on class\n**Best Seats:** Window seats on the right side for better views\n\n### 3. Botanical Gardens\nEstablished in 1848, these gardens spread over 55 acres showcase a variety of plants, flowers, and trees. The annual flower show in May is a major attraction.\n\n**Timings:** 7:00 AM to 6:30 PM\n**Entry Fee:** ₹30 for adults, ₹10 for children\n**Special Features:** Fossil tree trunk, Italian-style garden, conservatory\n\n### 4. Doddabetta Peak\nThe highest point in the Nilgiris at 2,637 meters, offering panoramic views of the surrounding hills and valleys. The telescope house at the summit provides enhanced viewing experience.\n\n**Timings:** 8:30 AM to 6:00 PM\n**Entry Fee:** ₹5 per person\n**Telescope Charges:** ₹2 per viewing\n\n### 5. Rose Garden\nHome to over 20,000 varieties of roses spread across 10 acres. The garden is particularly beautiful during the blooming season from April to June.\n\n**Timings:** 8:30 AM to 6:00 PM\n**Entry Fee:** ₹15 for adults, ₹10 for children\n**Best Time:** Early morning for photography\n\n## Adventure Activities\n\n### Trekking\n- **Doddabetta Trek:** Easy to moderate difficulty\n- **Mukurthi Peak Trek:** Challenging trek for experienced hikers\n- **Avalanche Lake Trek:** Moderate difficulty with stunning lake views\n\n### Mountain Biking\nExplore the winding roads and forest trails on two wheels. Several rental shops offer quality mountain bikes.\n\n### Horse Riding\nAvailable at Ooty Lake and various other locations throughout the town.\n\n## Local Cuisine\n\n### Must-Try Dishes\n- **Varkey:** Traditional Ooty biscuit, perfect with tea\n- **Homemade Chocolates:** Available at numerous local shops\n- **Nilgiri Tea:** Fresh from the local plantations\n- **Eucalyptus Oil:** Natural remedy and souvenir\n\n### Popular Restaurants\n- **Earl's Secret:** Fine dining with continental cuisine\n- **Ascot Multi Cuisine Restaurant:** Local and international dishes\n- **Shinkow's Chinese Restaurant:** Authentic Chinese food\n- **Hyderabad Biryani House:** Delicious biryanis and Indian cuisine\n\n## Shopping in Ooty\n\n### Commercial Street\nThe main shopping area offering everything from woolens to spices.\n\n### Tibetan Market\nUnique handicrafts, jewelry, and Tibetan artifacts.\n\n### Tea Shops\nFresh Nilgiri tea directly from plantations at wholesale prices.\n\n## Accommodation Options\n\n### Luxury Hotels\n- **Taj Savoy Hotel:** Heritage property with colonial charm\n- **Fortune Resort Sullivan Court:** Modern amenities with hill views\n- **Sinclairs Retreat Ooty:** Peaceful location with excellent service\n\n### Budget Options\n- **YWCA Guest House:** Clean and affordable\n- **Hotel Lakeview:** Good location near Ooty Lake\n- **Reflections Guest House:** Homely atmosphere\n\n## Getting There\n\n### By Air\nNearest airport is Coimbatore (88 km away). Regular flights from major Indian cities.\n\n### By Train\nOoty railway station is connected to Mettupalayam via the famous Nilgiri Mountain Railway.\n\n### By Road\nWell-connected by road from major South Indian cities:\n- From Coimbatore: 88 km (2.5 hours)\n- From Bangalore: 270 km (6 hours)\n- From Mysore: 125 km (3 hours)\n\n## Travel Tips\n\n1. **Pack Warm Clothes:** Even in summer, evenings can be chilly\n2. **Book in Advance:** Especially during peak season\n3. **Carry Rain Gear:** Weather can be unpredictable\n4. **Try Local Transport:** Auto-rickshaws and local buses are economical\n5. **Respect Nature:** Follow eco-friendly practices\n6. **Photography:** Early morning and late evening offer the best light\n7. **Health Precautions:** Carry basic medicines for altitude sickness\n\n## Nearby Attractions\n\n### Coonoor (19 km)\nFamous for Sim's Park and Lamb's Rock viewpoint.\n\n### Kotagiri (31 km)\nOldest hill station in the Nilgiris with tea estates.\n\n### Mudumalai National Park (64 km)\nWildlife sanctuary with elephants, tigers, and diverse flora.\n\n## Conclusion\n\nOoty remains one of India's most cherished hill stations, offering a perfect blend of natural beauty, colonial heritage, and modern amenities. Whether you're seeking adventure, relaxation, or cultural experiences, Ooty has something for everyone. Plan your visit during the right season, book accommodations in advance, and prepare for an unforgettable experience in the Queen of Hill Stations.\n\n*Ready to explore Ooty? Contact Ritham Tours & Travels for customized packages and hassle-free bookings!*",
+    "excerpt": "Discover the enchanting beauty of Ooty with our comprehensive travel guide covering attractions, best time to visit, accommodation, and insider tips.",
+    "image": "ooty_travel_guide.png",
+    "author": 1,
+    "is_published": true,
+    "views": 1,
+    "created_at": "2025-12-07T11:00:06.439Z",
+    "updated_at": "2025-12-19T10:24:36.001Z"
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 2,
+  "fields": {
+    "title": "Kodaikanal Travel Guide: Princess of Hill Stations",
+    "slug": "best-time-visit-kodaikanal",
+    "content": "# Kodaikanal Travel Guide: Princess of Hill Stations\n\nPerched at an altitude of 2,133 meters in the Western Ghats of Tamil Nadu, Kodaikanal is a mesmerizing hill station known for its pristine lakes, misty mountains, and pleasant climate. Often called the \"Princess of Hill Stations,\" Kodaikanal offers a perfect retreat for nature lovers and adventure enthusiasts.\n\n## Overview of Kodaikanal\n\nKodaikanal, meaning \"Gift of the Forest\" in Tamil, was established as a hill station by American missionaries in 1845. The town's unique geography, surrounded by the Palani Hills, creates a microclimate that remains pleasant throughout the year.\n\n## Best Time to Visit\n\n**Summer (March to May):** Peak tourist season with temperatures between 20°C to 35°C. Perfect for sightseeing and outdoor activities.\n\n**Monsoon (June to September):** Heavy rainfall creates lush green landscapes. Ideal for experiencing the natural beauty but some activities may be limited.\n\n**Winter (October to February):** Cool and misty weather with temperatures dropping to 8°C. Perfect for cozy stays and enjoying the serene atmosphere.\n\n## Top Attractions\n\n### 1. Kodaikanal Lake (Kodai Lake)\nThe star-shaped artificial lake is the centerpiece of Kodaikanal tourism. Built in 1863, this 60-acre lake offers boating, cycling, and horse riding around its perimeter.\n\n**Activities:**\n- Pedal boating and rowing\n- Cycling around the 5 km perimeter\n- Horse riding\n- Photography at sunrise and sunset\n\n**Timings:** 6:00 AM to 6:00 PM\n**Boating Charges:** ₹150-300 per boat for 30 minutes\n\n### 2. Coaker's Walk\nA 1-kilometer paved pedestrian path along the edge of steep slopes, offering spectacular views of the valleys below. Named after Lieutenant Coaker who mapped the area.\n\n**Best Time:** Early morning and evening\n**Entry:** Free\n**Special Features:** Telescope house for enhanced viewing\n\n### 3. Bryant Park\nA beautifully maintained botanical garden spread over 20.5 acres, showcasing a variety of flowers, plants, and trees. The annual flower show in May attracts thousands of visitors.\n\n**Timings:** 8:00 AM to 6:00 PM\n**Entry Fee:** ₹5 for adults, ₹3 for children\n**Highlights:** Rose garden, glass house, boat-shaped flower bed\n\n### 4. Pillar Rocks\nThree giant rock pillars standing 122 meters high, offering breathtaking views of the surrounding valleys and hills. The viewpoint provides excellent photography opportunities.\n\n**Distance from Town:** 8 km\n**Best Time:** Morning and evening\n**Entry:** Free\n**Facilities:** Telescope, snack stalls, parking\n\n### 5. Silver Cascade Falls\nA 180-feet waterfall located 8 km from Kodaikanal on the way to Madurai. The water appears silver as it cascades down the rocks, hence the name.\n\n**Best Time to Visit:** During and after monsoons\n**Entry:** Free\n**Activities:** Photography, nature walks\n\n### 6. Berijam Lake\nA pristine lake located 21 km from Kodaikanal, surrounded by forests and offering excellent opportunities for nature photography and bird watching.\n\n**Permit Required:** Yes, from Forest Department\n**Timings:** 9:30 AM to 3:30 PM\n**Entry Fee:** ₹30 per person + ₹150 for camera\n\n## Adventure Activities\n\n### Trekking\n**Popular Treks:**\n- Dolphin's Nose Trek: 3 km moderate trek\n- Perumal Peak Trek: Highest peak in Kodaikanal\n- Pine Forest Trek: Easy walk through pine plantations\n- Vattakanal Trek: Scenic village trek\n\n### Rock Climbing\nSeveral locations around Kodaikanal offer rock climbing opportunities for beginners and experienced climbers.\n\n### Cycling\nRent bicycles and explore the winding roads, pine forests, and scenic viewpoints at your own pace.\n\n### Boating and Water Sports\nKodaikanal Lake offers various water activities including pedal boating, rowing, and fishing (with permits).\n\n## Local Cuisine and Shopping\n\n### Must-Try Foods\n- **Homemade Chocolates:** Kodaikanal is famous for its chocolate factories\n- **Plums:** Fresh local plums available in season\n- **Eucalyptus Oil:** Natural and therapeutic\n- **Mushroom Dishes:** Fresh mushrooms from local farms\n- **Pears:** Sweet and juicy local variety\n\n### Shopping Areas\n**Anna Salai (Main Bazaar):** Woolens, spices, homemade chocolates\n**Tibetan Refugee Market:** Handicrafts, jewelry, artifacts\n**Local Markets:** Fresh fruits, vegetables, and local products\n\n### Popular Restaurants\n- **Tava Vegetarian Restaurant:** Pure vegetarian South Indian cuisine\n- **Astoria Veg Restaurant:** Multi-cuisine vegetarian food\n- **Cloud Street Café:** Continental and Chinese dishes\n- **Muncheez:** Fast food and snacks\n\n## Accommodation Options\n\n### Luxury Resorts\n- **The Carlton:** 5-star luxury with valley views\n- **Sterling Kodai Lake:** Premium resort near the lake\n- **Villa Retreat:** Heritage property with modern amenities\n\n### Mid-Range Hotels\n- **Hotel Kodai International:** Good location and facilities\n- **JC Residency:** Comfortable stay with valley views\n- **Kodai Resort Hotel:** Family-friendly with garden views\n\n### Budget Options\n- **Greenlands Youth Hostel:** Backpacker-friendly\n- **Hotel Tamil Nadu (TTDC):** Government-run budget hotel\n- **Zostel Kodaikanal:** Modern hostel with dormitory and private rooms\n\n## Getting There\n\n### By Air\n**Nearest Airport:** Madurai Airport (120 km)\n**Flight Connections:** Regular flights from Chennai, Bangalore, and Mumbai\n\n### By Train\n**Nearest Railway Station:** Kodai Road (80 km)\n**Train Connections:** Connected to major South Indian cities\n\n### By Road\n**Well-connected by road:**\n- From Chennai: 465 km (8-9 hours)\n- From Bangalore: 455 km (8-9 hours)\n- From Coimbatore: 175 km (4 hours)\n- From Madurai: 120 km (3 hours)\n\n## Travel Tips\n\n1. **Book Accommodation Early:** Especially during peak season and holidays\n2. **Carry Cash:** Many local vendors don't accept cards\n3. **Respect Local Culture:** Dress modestly when visiting religious places\n4. **Environmental Responsibility:** Don't litter and follow eco-friendly practices\n5. **Health Precautions:** Carry basic medicines and stay hydrated\n6. **Photography:** Best light conditions during golden hours\n7. **Local Transport:** Auto-rickshaws and taxis are readily available\n8. **Weather Updates:** Check weather conditions before trekking\n\n## Conclusion\n\nKodaikanal offers a perfect blend of natural beauty, adventure activities, and peaceful retreat from city life. Whether you're planning a romantic getaway, family vacation, or solo adventure, this Princess of Hill Stations has something special for everyone. The cool climate, scenic beauty, and warm hospitality make it an ideal destination year-round.\n\n*Plan your Kodaikanal adventure with Ritham Tours & Travels for a memorable and hassle-free experience!*",
+    "excerpt": "Explore the misty mountains and serene lakes of Kodaikanal with our detailed guide including must-visit places, activities, and travel tips.",
+    "image": "kodaikanal_travel_guide.png",
+    "author": 1,
+    "is_published": true,
+    "views": 8,
+    "created_at": "2025-12-07T11:00:06.441Z",
+    "updated_at": "2025-12-19T10:27:30.911Z"
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 3,
+  "fields": {
+    "title": "Munnar: Kerala's Tea Garden Paradise - Complete Travel Guide",
+    "slug": "munnar-tea-gardens-guide",
+    "content": "# Munnar: Kerala's Tea Garden Paradise - Complete Travel Guide\n\nNestled in the Western Ghats of Kerala at an altitude of 1,600 meters, Munnar is a breathtaking hill station renowned for its sprawling tea plantations, misty mountains, and rich biodiversity. This former summer resort of the British Raj has evolved into one of South India's most popular tourist destinations.\n\n## Introduction to Munnar\n\nMunnar, meaning \"three rivers\" in Malayalam, is located at the confluence of three mountain streams - Mudrapuzha, Nallathanni, and Kundala. The town's landscape is dominated by rolling hills covered in emerald green tea bushes, creating a mesmerizing carpet that stretches as far as the eye can see.\n\n## Best Time to Visit\n\n**Winter (October to March):** The ideal time with pleasant weather, clear skies, and temperatures ranging from 15°C to 25°C. Perfect for sightseeing and outdoor activities.\n\n**Summer (April to May):** Warm but comfortable with temperatures up to 30°C. Good for tea plantation visits and nature walks.\n\n**Monsoon (June to September):** Heavy rainfall transforms the landscape into a lush green paradise. Ideal for experiencing the raw beauty of nature, though some activities may be restricted.\n\n## Top Attractions in Munnar\n\n### 1. Tea Plantations and Museums\nMunnar's identity is inseparable from its tea culture. The region produces some of India's finest tea varieties.\n\n**Tata Tea Museum:**\n- Timings: 9:00 AM to 4:00 PM\n- Entry Fee: ₹75 for adults, ₹50 for children\n- Highlights: Vintage tea processing equipment, tea tasting sessions, historical photographs\n\n**Popular Tea Estates:**\n- Kolukkumalai Tea Estate (highest tea plantation in the world)\n- Lockhart Tea Estate\n- Harrison Malayalam Tea Estate\n\n### 2. Eravikulam National Park\nHome to the endangered Nilgiri Tahr, this 97 sq km national park is a biodiversity hotspot.\n\n**Key Features:**\n- Anamudi Peak (highest peak in South India at 2,695 meters)\n- Neelakurinji flowers (blooms once in 12 years)\n- Over 130 bird species\n- Unique shola forests\n\n**Timings:** 7:00 AM to 6:00 PM\n**Entry Fee:** ₹125 for adults, ₹60 for children\n**Best Time:** Early morning for wildlife spotting\n\n### 3. Mattupetty Dam and Lake\nBuilt in 1953, this concrete arch dam creates a beautiful reservoir surrounded by hills and forests.\n\n**Activities:**\n- Boating (speed boats and pedal boats)\n- Photography\n- Nature walks\n- Picnicking\n\n**Timings:** 9:00 AM to 5:00 PM\n**Boating Charges:** ₹300-500 per boat\n\n### 4. Top Station\nLocated at an altitude of 1,700 meters, this viewpoint offers panoramic views of the Western Ghats and Tamil Nadu plains.\n\n**Distance from Munnar:** 32 km\n**Best Time:** Early morning for sunrise views\n**Special Feature:** Neelakurinji viewing point (seasonal)\n\n### 5. Kundala Lake\nA picturesque artificial lake surrounded by tea plantations and hills, perfect for a peaceful retreat.\n\n**Activities:**\n- Pedal boating\n- Photography\n- Nature walks\n- Picnicking\n\n**Entry Fee:** ₹10 per person\n**Boating Charges:** ₹150 per boat for 30 minutes\n\n## Adventure Activities\n\n### Trekking\n**Popular Trekking Routes:**\n- **Anamudi Peak Trek:** Challenging trek to South India's highest peak\n- **Meesapulimala Trek:** Second highest peak in Western Ghats\n- **Chokramudi Trek:** Moderate difficulty with stunning views\n- **Lakshmi Hills Trek:** Easy trek suitable for beginners\n\n### Rock Climbing and Rappelling\nSeveral adventure tour operators offer rock climbing and rappelling experiences in the rocky terrain around Munnar.\n\n### Paragliding\nExperience the thrill of flying over tea plantations and valleys with certified instructors.\n\n### Mountain Biking\nExplore the winding roads and forest trails on mountain bikes available for rent.\n\n### Wildlife Safari\nJeep safaris in Eravikulam National Park and surrounding areas for wildlife spotting.\n\n## Tea Culture and Experiences\n\n### Tea Plantation Tours\n**What to Expect:**\n- Guided walks through tea gardens\n- Tea plucking experience\n- Processing unit visits\n- Tea tasting sessions\n- Purchase of fresh tea varieties\n\n### Tea Varieties Available:\n- Black Tea (Orange Pekoe, Broken Orange Pekoe)\n- Green Tea\n- White Tea\n- Flavored Teas (Cardamom, Ginger, Lemon)\n- Organic Teas\n\n## Getting There\n\n### By Air\n**Nearest Airport:** Cochin International Airport (110 km)\n**Flight Connections:** Regular flights from major Indian and international cities\n**Travel Time:** 3.5 hours by road from airport\n\n### By Train\n**Nearest Railway Stations:**\n- Aluva (110 km) - Major station with good connectivity\n- Ernakulam (130 km) - Junction with multiple train connections\n\n### By Road\n**Well-connected by road:**\n- From Kochi: 130 km (4 hours)\n- From Bangalore: 460 km (9 hours)\n- From Chennai: 540 km (10 hours)\n- From Coimbatore: 160 km (4 hours)\n\n## Conclusion\n\nMunnar offers an unparalleled experience of natural beauty, cultural richness, and adventure activities. Whether you're a nature lover, adventure enthusiast, or someone seeking peaceful retreat, Munnar's tea gardens, wildlife, and pleasant climate provide the perfect backdrop for an unforgettable vacation.\n\n*Experience the magic of Munnar with Ritham Tours & Travels - your gateway to Kerala's tea garden paradise!*",
+    "excerpt": "Experience the lush green tea plantations and cool climate of Munnar with our comprehensive guide to attractions, activities, and accommodation.",
+    "image": "kerala_tea.jpg",
+    "author": 1,
+    "is_published": true,
+    "views": 7,
+    "created_at": "2025-12-07T11:00:06.444Z",
+    "updated_at": "2025-12-19T10:27:30.917Z"
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 4,
+  "fields": {
+    "title": "Best Road Trip Routes from Coimbatore: Ultimate Guide",
+    "slug": "road-trip-safety-tips",
+    "content": "# Best Road Trip Routes from Coimbatore: Ultimate Guide\n\nCoimbatore, the textile capital of South India, serves as an excellent base for exploring some of the most scenic and culturally rich destinations in the region. With its strategic location in Tamil Nadu, bordered by Kerala and Karnataka, Coimbatore offers access to diverse landscapes, from misty hill stations to pristine beaches, ancient temples to modern cities.\n\n## Why Choose Coimbatore for Road Trips?\n\n**Strategic Location:** Coimbatore's central position provides easy access to multiple states and diverse destinations within a few hours' drive.\n\n**Excellent Road Infrastructure:** Well-maintained highways and state roads ensure comfortable and safe travel.\n\n**Vehicle Availability:** Numerous car rental services and tour operators offer various vehicle options.\n\n**Climate Advantage:** Pleasant weather for most of the year makes it ideal for road trips.\n\n## Essential Road Trip Preparation\n\n### Vehicle Checklist\n- **Engine and Oil:** Check engine oil, coolant, and brake fluid levels\n- **Tires:** Ensure proper tire pressure and tread depth\n- **Lights:** Test headlights, taillights, and indicators\n- **Emergency Kit:** First aid kit, spare tire, jack, and basic tools\n- **Documentation:** Valid driving license, vehicle registration, and insurance papers\n\n### Packing Essentials\n- **Navigation:** GPS device or smartphone with offline maps\n- **Safety:** Emergency contact numbers, roadside assistance details\n- **Comfort:** Pillows, blankets, snacks, and water\n- **Entertainment:** Music playlists, audiobooks, games for passengers\n- **Weather Gear:** Appropriate clothing for destination climate\n\n## Top Road Trip Routes from Coimbatore\n\n### 1. Coimbatore to Ooty (88 km - 2.5 hours)\n**Route:** Coimbatore → Mettupalayam → Coonoor → Ooty\n\n**Highlights:**\n- Scenic mountain roads with 36 hairpin bends\n- Tea estates and eucalyptus forests\n- Pleasant climate throughout the journey\n- Multiple viewpoints for photography\n\n**Best Stops:**\n- **Mettupalayam:** Base station for Nilgiri Mountain Railway\n- **Coonoor:** Sim's Park and Lamb's Rock viewpoint\n- **Wellington:** Nilgiri Hills military station\n\n**Travel Tips:**\n- Start early morning to avoid traffic\n- Carry warm clothes as temperature drops significantly\n- Fuel up in Coimbatore as petrol pumps are limited on hills\n- Drive carefully on winding mountain roads\n\n### 2. Coimbatore to Kodaikanal (175 km - 4 hours)\n**Route:** Coimbatore → Dindigul → Batlagundu → Kodaikanal\n\n**Highlights:**\n- Diverse landscapes from plains to hills\n- Traditional Tamil Nadu villages\n- Spectacular views of Western Ghats\n- Cool climate and misty mountains\n\n**Best Stops:**\n- **Dindigul:** Famous for biryani and historical fort\n- **Batlagundu:** Gateway to Kodaikanal with scenic beauty\n- **Perumal Malai:** Viewpoint with panoramic vistas\n\n**Travel Tips:**\n- Take NH183 for better road conditions\n- Stop at Dindigul for authentic biryani lunch\n- Last 20 km involves steep climbing with hairpin bends\n- Check weather conditions before starting\n\n### 3. Coimbatore to Munnar (160 km - 4 hours)\n**Route:** Coimbatore → Udumalaipettai → Marayoor → Munnar\n\n**Highlights:**\n- Journey through three states (Tamil Nadu, Kerala)\n- Transition from dry lands to lush tea plantations\n- Spice gardens and cardamom estates\n- Spectacular mountain scenery\n\n**Best Stops:**\n- **Udumalaipettai:** Border town with local markets\n- **Marayoor:** Sandalwood forests and ancient dolmens\n- **Chinnar Wildlife Sanctuary:** Optional wildlife spotting\n\n**Travel Tips:**\n- Carry valid ID for interstate travel\n- Road conditions improve significantly after entering Kerala\n- Stop at spice gardens for fresh cardamom and pepper\n- Book accommodation in advance, especially during peak season\n\n### 4. Coimbatore to Mysore (200 km - 4 hours)\n**Route:** Coimbatore → Salem → Dharmapuri → Krishnagiri → Mysore\n\n**Highlights:**\n- Historical cities and cultural heritage\n- Diverse landscapes and agricultural regions\n- Ancient temples and architectural marvels\n- Royal heritage of Mysore\n\n**Best Stops:**\n- **Salem:** Steel city with Yercaud hills nearby\n- **Dharmapuri:** Hogenakkal Falls (seasonal detour)\n- **Krishnagiri:** Famous for mangoes and roses\n\n**Travel Tips:**\n- Take NH44 for fastest route\n- Alternative scenic route via Sathyamangalam Wildlife Sanctuary\n- Stop for traditional South Indian meals\n- Visit during Dasara festival for cultural experience\n\n### 5. Coimbatore to Kochi (190 km - 4.5 hours)\n**Route:** Coimbatore → Palakkad → Thrissur → Kochi\n\n**Highlights:**\n- Transition from Tamil Nadu to Kerala\n- Coconut groves and backwater glimpses\n- Cultural diversity and architectural heritage\n- Coastal beauty and port city charm\n\n**Best Stops:**\n- **Palakkad:** Palakkad Fort and traditional Kerala architecture\n- **Thrissur:** Cultural capital with famous Vadakkunnathan Temple\n- **Chalakudy:** Athirappilly Falls (seasonal detour)\n\n**Travel Tips:**\n- NH544 offers excellent road conditions\n- Experience Kerala's unique culture and cuisine\n- Carry light cotton clothes for humid coastal climate\n- Book houseboat in advance for backwater experience\n\n## Safety Tips for Road Trips\n\n### Driving Safety\n1. **Speed Limits:** Adhere to posted speed limits\n2. **Rest Breaks:** Take breaks every 2 hours\n3. **Night Driving:** Avoid driving in unfamiliar areas after dark\n4. **Weather Conditions:** Check weather forecasts before departure\n5. **Emergency Contacts:** Keep local emergency numbers handy\n\n### Health and Safety\n1. **First Aid:** Carry basic medical supplies\n2. **Hydration:** Drink plenty of water, especially in summer\n3. **Food Safety:** Eat at reputable restaurants\n4. **Sun Protection:** Use sunscreen and wear protective clothing\n5. **Insurance:** Ensure vehicle and travel insurance are valid\n\n## Budget Planning\n\n### Fuel Costs (Approximate)\n- Coimbatore to Ooty: ₹800-1,000\n- Coimbatore to Kodaikanal: ₹1,200-1,500\n- Coimbatore to Munnar: ₹1,100-1,400\n- Coimbatore to Mysore: ₹1,400-1,800\n- Coimbatore to Kochi: ₹1,300-1,700\n\n### Additional Costs\n- **Toll Charges:** ₹100-500 depending on route\n- **Parking:** ₹20-100 per location\n- **Food:** ₹200-500 per person per day\n- **Accommodation:** ₹1,000-5,000 per night depending on category\n\n## Environmental Responsibility\n\n### Eco-Friendly Practices\n1. **Waste Management:** Don't litter, carry trash bags\n2. **Water Conservation:** Use water responsibly\n3. **Wildlife Protection:** Don't disturb animals or their habitats\n4. **Local Economy:** Support local businesses and communities\n5. **Carbon Footprint:** Consider carpooling or eco-friendly vehicles\n\n## Conclusion\n\nRoad trips from Coimbatore offer incredible diversity in terms of destinations, experiences, and cultural immersion. Whether you're seeking adventure in the mountains, relaxation by the backwaters, or cultural exploration in historic cities, the region provides endless possibilities.\n\n*Plan your perfect road trip from Coimbatore with Ritham Tours & Travels - your trusted partner for memorable journeys across South India!*",
+    "excerpt": "Plan your perfect road trip from Coimbatore with our guide to scenic routes, must-visit destinations, and travel tips for an unforgettable journey.",
+    "image": "roadtrip.png",
+    "author": 1,
+    "is_published": true,
+    "views": 3,
+    "created_at": "2025-12-07T11:00:06.447Z",
+    "updated_at": "2025-12-19T10:32:51.575Z"
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 5,
+  "fields": {
+    "title": "Budget-Friendly Tour Packages in South India: Complete Guide",
+    "slug": "budget-friendly-tour-packages",
+    "content": "# Budget-Friendly Tour Packages in South India: Complete Guide\n\nSouth India offers incredible diversity in landscapes, culture, and experiences, making it a perfect destination for budget-conscious travelers. From misty hill stations to pristine beaches, ancient temples to modern cities, you can explore the region without breaking the bank. This comprehensive guide will help you plan affordable yet memorable trips across South India.\n\n## Why Choose South India for Budget Travel?\n\n**Affordable Accommodation:** Wide range of budget hotels, hostels, and homestays\n**Economical Transportation:** Excellent public transport network and affordable private options\n**Reasonable Food Costs:** Delicious local cuisine at pocket-friendly prices\n**Free Attractions:** Many temples, beaches, and natural spots have no entry fees\n**Value for Money:** More experiences per rupee compared to other regions\n\n## Budget Planning Basics\n\n### Daily Budget Estimates (Per Person)\n**Ultra Budget:** ₹800-1,200 per day\n- Dormitory accommodation: ₹300-500\n- Local food: ₹200-300\n- Local transport: ₹100-200\n- Attractions: ₹100-200\n\n**Budget:** ₹1,200-2,000 per day\n- Budget hotel/guesthouse: ₹600-1,000\n- Mix of local and restaurant food: ₹300-500\n- Mix of public and private transport: ₹200-300\n- Attractions and activities: ₹200-300\n\n**Mid-Budget:** ₹2,000-3,500 per day\n- Comfortable hotel: ₹1,200-2,000\n- Restaurant meals: ₹500-800\n- Private transport: ₹400-600\n- Attractions and activities: ₹300-500\n\n## Top Budget-Friendly Destinations\n\n### 1. Pondicherry (Puducherry)\n**Why Budget-Friendly:**\n- Free beach access and French Quarter walks\n- Affordable guesthouses and hostels\n- Reasonable food prices\n- Easy to explore on foot or bicycle\n\n**Budget Highlights:**\n- **Accommodation:** ₹500-1,500 per night\n- **Food:** ₹150-400 per meal\n- **Transport:** Bicycle rental ₹100-200 per day\n- **Attractions:** Most beaches and heritage walks are free\n\n**Must-Do Budget Activities:**\n- Walk through French Quarter (Free)\n- Visit Auroville (₹50 entry to Matrimandir viewing point)\n- Beach hopping (Free)\n- Bicycle tour of the city (₹200-300)\n\n### 2. Hampi, Karnataka\n**Why Budget-Friendly:**\n- UNESCO World Heritage Site with low entry fees\n- Cheap accommodation options\n- Inexpensive local food\n- Most ruins can be explored on foot\n\n**Budget Highlights:**\n- **Accommodation:** ₹400-1,200 per night\n- **Food:** ₹100-300 per meal\n- **Transport:** Bicycle/scooter rental ₹150-300 per day\n- **Attractions:** ₹40 entry for main sites\n\n**Must-Do Budget Activities:**\n- Explore Virupaksha Temple (Free)\n- Sunrise at Hemakuta Hill (Free)\n- Bicycle tour of ruins (₹150 rental + ₹40 entry)\n- Coracle ride in Tungabhadra River (₹100-200)\n\n### 3. Mahabalipuram, Tamil Nadu\n**Why Budget-Friendly:**\n- Ancient monuments with minimal entry fees\n- Beach town with affordable seafood\n- Good budget accommodation options\n- Compact area, easy to walk around\n\n**Budget Highlights:**\n- **Accommodation:** ₹600-1,500 per night\n- **Food:** ₹200-500 per meal\n- **Transport:** Walking + occasional auto-rickshaw\n- **Attractions:** ₹40 for monument complex\n\n**Must-Do Budget Activities:**\n- Shore Temple visit (₹40)\n- Beach walks and sunrise viewing (Free)\n- Arjuna's Penance and Five Rathas (₹40)\n- Local seafood at beach shacks (₹200-400)\n\n### 4. Coorg, Karnataka\n**Why Budget-Friendly:**\n- Beautiful homestays at reasonable prices\n- Free coffee plantation walks\n- Affordable local transport\n- Many natural attractions are free\n\n**Budget Highlights:**\n- **Accommodation:** ₹800-2,000 per night (homestays)\n- **Food:** ₹200-400 per meal\n- **Transport:** Local bus ₹20-50, shared taxi ₹100-200\n- **Attractions:** Most waterfalls and viewpoints are free\n\n**Must-Do Budget Activities:**\n- Coffee plantation walks (Free with homestay)\n- Abbey Falls visit (₹15 entry)\n- Raja's Seat sunset viewing (₹5 entry)\n- Dubare Elephant Camp (₹100 entry)\n\n### 5. Varkala, Kerala\n**Why Budget-Friendly:**\n- Stunning cliff-top beach with free access\n- Budget guesthouses and hostels\n- Affordable Ayurvedic treatments\n- Great value seafood restaurants\n\n**Budget Highlights:**\n- **Accommodation:** ₹600-1,800 per night\n- **Food:** ₹200-500 per meal\n- **Transport:** Walking + occasional auto-rickshaw\n- **Activities:** Beach access free, Ayurvedic massage ₹500-1,000\n\n**Must-Do Budget Activities:**\n- Cliff-top beach walks (Free)\n- Sunset viewing from cliff (Free)\n- Ayurvedic massage (₹500-1,000)\n- Visit Janardanaswamy Temple (Free)\n\n## Budget Transportation Options\n\n### Inter-City Travel\n**Government Buses:**\n- Most economical option\n- Extensive network covering all destinations\n- Sleeper buses for overnight journeys\n- Cost: ₹1-3 per km\n\n**Trains:**\n- Comfortable and affordable\n- Sleeper class for budget travel\n- Book in advance for better prices\n- Cost: ₹0.50-2 per km depending on class\n\n**Shared Taxis/Cabs:**\n- Good for hill stations and remote areas\n- Share costs with other travelers\n- Faster than buses\n- Cost: ₹3-6 per km (shared)\n\n### Local Transportation\n**Public Buses:** ₹5-30 for city travel\n**Auto-rickshaws:** ₹10-15 per km (negotiate or use meter)\n**Bicycle Rental:** ₹100-200 per day\n**Scooter Rental:** ₹300-500 per day\n\n## Budget Accommodation Options\n\n### Hostels and Backpacker Places\n**Zostel:** Modern hostels in major cities (₹500-800 per night)\n**Goibibo/OYO Budget Hotels:** Standardized budget accommodation (₹800-1,500)\n**Local Hostels:** Independent hostels with basic facilities (₹300-600)\n\n### Homestays\n**Village Homestays:** Authentic experience with local families (₹600-1,200)\n**Plantation Stays:** Coffee/tea estate accommodation (₹800-2,000)\n**Beach Homestays:** Coastal family accommodations (₹700-1,500)\n\n### Government Accommodation\n**TTDC (Tamil Nadu):** Government-run hotels and lodges (₹600-1,500)\n**KTDC (Kerala):** Kerala Tourism Development Corporation properties (₹800-2,000)\n**Karnataka Tourism:** State-run accommodations (₹700-1,800)\n\n## Budget Food Guide\n\n### Local Eateries\n**South Indian Meals:** Complete thali for ₹80-150\n**Street Food:** Dosa, idli, vada for ₹20-60 each\n**Local Restaurants:** Full meals for ₹100-250\n**Tea Stalls:** Snacks and beverages for ₹10-50\n\n### Regional Specialties to Try\n**Tamil Nadu:**\n- Chettinad meals (₹120-200)\n- Filter coffee (₹15-30)\n- Banana leaf meals (₹80-150)\n\n**Kerala:**\n- Sadya (traditional feast) (₹150-300)\n- Fish curry meals (₹100-200)\n- Appam and stew (₹60-120)\n\n**Karnataka:**\n- Bisi bele bath (₹60-100)\n- Mysore pak (₹100-200 per kg)\n- Udupi meals (₹80-150)\n\n## Money-Saving Tips\n\n### Accommodation\n1. **Book in Advance:** Better rates and availability\n2. **Travel Off-Season:** Significant discounts during non-peak times\n3. **Stay Longer:** Weekly/monthly rates are often cheaper\n4. **Share Rooms:** Split costs with fellow travelers\n5. **Homestays:** Often include meals and local experiences\n\n### Transportation\n1. **Book Train Tickets Early:** Advance booking for better prices\n2. **Use Government Buses:** Most economical for long distances\n3. **Share Rides:** Split taxi costs with other travelers\n4. **Walk When Possible:** Explore cities on foot\n5. **Rent Bicycles:** Eco-friendly and economical for short distances\n\n### Food\n1. **Eat Local:** Street food and local eateries are cheapest\n2. **Avoid Tourist Restaurants:** Often overpriced\n3. **Cook Sometimes:** If staying in hostels with kitchen facilities\n4. **Drink Tap Water:** After proper filtration/boiling\n5. **Buy Fruits from Markets:** Cheaper than restaurants\n\n### Activities\n1. **Free Attractions:** Beaches, temples, viewpoints\n2. **Group Discounts:** Many attractions offer group rates\n3. **Student Discounts:** Carry student ID for reduced entry fees\n4. **Local Festivals:** Free cultural experiences\n5. **Nature Activities:** Hiking, swimming, bird watching\n\n## Sample Budget Itineraries\n\n### 7-Day Tamil Nadu Circuit (₹8,000-12,000 per person)\n**Day 1-2:** Chennai (₹2,000-3,000)\n**Day 3-4:** Mahabalipuram (₹1,500-2,500)\n**Day 5-6:** Pondicherry (₹2,000-3,000)\n**Day 7:** Return to Chennai (₹500-1,000)\n\n### 10-Day Kerala Backwaters & Hills (₹12,000-18,000 per person)\n**Day 1-2:** Kochi (₹2,500-3,500)\n**Day 3-4:** Munnar (₹3,000-4,500)\n**Day 5-6:** Thekkady (₹2,500-3,500)\n**Day 7-8:** Alleppey (₹3,000-4,500)\n**Day 9-10:** Varkala (₹2,000-3,000)\n\n### 14-Day Karnataka Heritage Trail (₹15,000-22,000 per person)\n**Day 1-3:** Bangalore (₹3,500-5,000)\n**Day 4-6:** Mysore (₹3,000-4,500)\n**Day 7-9:** Coorg (₹3,500-5,000)\n**Day 10-12:** Hampi (₹2,500-3,500)\n**Day 13-14:** Return via Bangalore (₹2,500-4,000)\n\n## Budget Travel Safety Tips\n\n1. **Keep Emergency Cash:** Always have backup money\n2. **Travel Insurance:** Essential for budget travelers\n3. **Share Itinerary:** Keep someone informed of your plans\n4. **Avoid Isolated Areas:** Especially when traveling alone\n5. **Trust Your Instincts:** If something feels wrong, leave\n6. **Keep Copies:** Important documents and contact numbers\n7. **Stay Connected:** Regular check-ins with family/friends\n\n## Conclusion\n\nSouth India offers incredible value for budget travelers, combining rich cultural experiences, stunning natural beauty, and warm hospitality at affordable prices. With proper planning and smart choices, you can explore this diverse region without compromising on experiences or safety.\n\nThe key to successful budget travel in South India lies in embracing local culture, being flexible with your plans, and focusing on experiences rather than luxury. Whether you're a backpacker, student, or simply someone who wants to travel smart, South India welcomes you with open arms and countless affordable adventures.\n\n*Start your budget-friendly South India adventure with Ritham Tours & Travels - we'll help you maximize experiences while minimizing costs!*",
+    "excerpt": "Discover how to explore South India on a budget with our comprehensive guide to affordable destinations, accommodation, food, and transportation options.",
+    "image": "vacation.jpg",
+    "author": 1,
+    "is_published": true,
+    "views": 7,
+    "created_at": "2025-12-07T11:00:06.449Z",
+    "updated_at": "2025-12-19T10:32:51.579Z"
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 6,
+  "fields": {
+    "title": "Family-Friendly Destinations in Tamil Nadu: Complete Guide",
+    "slug": "family-friendly-destinations",
+    "content": "# Family-Friendly Destinations in Tamil Nadu: Complete Guide\n\nTamil Nadu, the land of ancient temples, rich culture, and diverse landscapes, offers numerous family-friendly destinations that cater to travelers of all ages. From educational temple visits to exciting beach activities, from hill station retreats to wildlife encounters, Tamil Nadu provides the perfect backdrop for memorable family vacations.\n\n## Why Tamil Nadu is Perfect for Family Travel\n\n**Rich Cultural Heritage:** Ancient temples and historical sites provide educational experiences\n**Diverse Landscapes:** Hills, beaches, plains, and forests offer varied experiences\n**Family-Friendly Infrastructure:** Good accommodation and transportation options\n**Safe Environment:** Generally safe for families with children\n**Affordable Options:** Budget-friendly destinations and activities\n**Local Hospitality:** Warm and welcoming people who love children\n\n## Top Family-Friendly Destinations\n\n### 1. Chennai - The Gateway City\n**Why Perfect for Families:**\n- Modern amenities and infrastructure\n- Educational attractions and museums\n- Beautiful beaches for children\n- Good healthcare facilities\n- Variety of accommodation options\n\n**Family Attractions:**\n**Marina Beach:**\n- Second longest urban beach in the world\n- Safe for children with lifeguards\n- Horse riding and beach activities\n- Street food and local snacks\n- Best time: Evening (4 PM - 7 PM)\n\n**Government Museum:**\n- Excellent collection of artifacts\n- Children's section with interactive displays\n- Bronze gallery and natural history section\n- Entry: ₹15 for adults, ₹10 for children\n- Timings: 9:30 AM - 5:00 PM (closed on Fridays)\n\n**Birla Planetarium:**\n- Educational shows about astronomy\n- Special children's programs\n- Air-conditioned comfort\n- Entry: ₹25 for adults, ₹15 for children\n- Shows: Multiple times daily\n\n**VGP Universal Kingdom:**\n- Amusement park with rides for all ages\n- Water park section\n- Safe and well-maintained rides\n- Entry: ₹200-400 depending on package\n- Timings: 10:00 AM - 8:00 PM\n\n### 2. Ooty - The Queen of Hill Stations\n**Why Perfect for Families:**\n- Pleasant climate year-round\n- Safe environment for children\n- Variety of activities and attractions\n- Good accommodation options\n- Easy accessibility\n\n**Family Attractions:**\n**Ooty Lake:**\n- Boating activities for the whole family\n- Paddle boats and row boats available\n- Beautiful walking paths around the lake\n- Horse riding for children\n- Entry: ₹10, Boating: ₹50-150 per person\n\n**Nilgiri Mountain Railway (Toy Train):**\n- UNESCO World Heritage experience\n- Scenic journey through mountains\n- Exciting for children and adults\n- Book in advance for window seats\n- Journey time: 5 hours from Mettupalayam\n\n**Botanical Gardens:**\n- 55 acres of beautiful plants and flowers\n- Perfect for family picnics\n- Annual flower show in May\n- Educational for children\n- Entry: ₹30 for adults, ₹10 for children\n\n**Rose Garden:**\n- Thousands of rose varieties\n- Beautiful for photography\n- Pleasant walking paths\n- Best visited in morning\n- Entry: ₹15 for adults, ₹10 for children\n\n### 3. Kodaikanal - The Princess of Hill Stations\n**Why Perfect for Families:**\n- Cool climate and clean air\n- Safe boating activities\n- Beautiful nature walks\n- Child-friendly attractions\n- Good medical facilities\n\n**Family Attractions:**\n**Kodaikanal Lake:**\n- Star-shaped lake perfect for boating\n- Cycling around the lake perimeter\n- Horse riding for children\n- Safe and well-maintained\n- Boating: ₹150-300 per boat\n\n**Bryant Park:**\n- Beautiful botanical garden\n- Perfect for family picnics\n- Flower shows and exhibitions\n- Children's play areas\n- Entry: ₹5 for adults, ₹3 for children\n\n**Coaker's Walk:**\n- 1 km paved walking path\n- Spectacular valley views\n- Safe for children\n- Telescope house for enhanced viewing\n- Free entry\n\n**Bear Shola Falls:**\n- Easy trek suitable for families\n- Beautiful waterfall\n- Picnic spots available\n- Best during monsoon season\n- Free entry\n\n### 4. Mahabalipuram - Ancient Wonders by the Sea\n**Why Perfect for Families:**\n- UNESCO World Heritage Site\n- Educational value for children\n- Beautiful beach location\n- Compact area, easy to explore\n- Good accommodation options\n\n**Family Attractions:**\n**Shore Temple:**\n- Ancient temple by the sea\n- Great for photography\n- Educational about history\n- Best visited during sunrise/sunset\n- Entry: ₹40 for Indians\n\n**Five Rathas (Pancha Rathas):**\n- Unique rock-cut temples\n- Each carved from single stone\n- Interesting for children to explore\n- Good for learning about architecture\n- Entry: ₹40 for Indians\n\n**Arjuna's Penance:**\n- Massive rock carving\n- Depicts scenes from Mahabharata\n- Educational storytelling opportunity\n- Free to view\n- Best photographed in morning light\n\n**Mahabalipuram Beach:**\n- Clean and safe beach\n- Good for children to play\n- Camel rides available\n- Beach shacks for snacks\n- Free access\n\n### 5. Kanyakumari - Land's End\n**Why Perfect for Families:**\n- Unique geographical location\n- Spiritual and educational significance\n- Beautiful sunrise and sunset views\n- Safe environment\n- Good connectivity\n\n**Family Attractions:**\n**Vivekananda Rock Memorial:**\n- Accessible by ferry\n- Educational about Swami Vivekananda\n- Beautiful views of the ocean\n- Safe ferry rides\n- Entry: ₹30 + ₹57 for ferry\n\n**Thiruvalluvar Statue:**\n- 133-feet tall statue\n- Represents Tamil culture\n- Accessible by ferry\n- Great for photography\n- Combined ticket with Rock Memorial\n\n**Kanyakumari Beach:**\n- Confluence of three seas\n- Unique sunset and sunrise views\n- Safe for families\n- Local shops and eateries\n- Free access\n\n**Gandhi Memorial:**\n- Educational about Mahatma Gandhi\n- Beautiful architecture\n- Peaceful environment\n- Good for teaching history\n- Entry: ₹2\n\n## Family-Friendly Activities\n\n### Educational Experiences\n**Temple Visits:**\n- Learn about Tamil culture and history\n- Architectural appreciation\n- Spiritual experiences\n- Photography opportunities\n\n**Museums and Galleries:**\n- Interactive learning experiences\n- Historical artifacts and exhibits\n- Cultural understanding\n- Air-conditioned comfort\n\n### Adventure Activities (Age-Appropriate)\n**Boating:**\n- Available in most hill stations\n- Safe and supervised\n- Suitable for all ages\n- Life jackets provided\n\n**Nature Walks:**\n- Easy treks suitable for children\n- Wildlife spotting opportunities\n- Fresh air and exercise\n- Educational about flora and fauna\n\n**Beach Activities:**\n- Sand castle building\n- Shell collecting\n- Beach games\n- Swimming (supervised areas only)\n\n## Family Accommodation Options\n\n### Hill Stations\n**Family Resorts:**\n- Multiple room configurations\n- Children's play areas\n- Family-friendly dining\n- Organized activities\n- Price range: ₹3,000-8,000 per night\n\n**Homestays:**\n- Local family experience\n- Home-cooked meals\n- Cultural immersion\n- Personal attention\n- Price range: ₹1,500-4,000 per night\n\n### Beach Destinations\n**Beach Resorts:**\n- Direct beach access\n- Swimming pools\n- Children's activities\n- Water sports facilities\n- Price range: ₹2,500-7,000 per night\n\n**Family Hotels:**\n- Connecting rooms available\n- Child-friendly amenities\n- Restaurant with kids' menu\n- Safe environment\n- Price range: ₹1,800-5,000 per night\n\n### Cities\n**Family Hotels:**\n- Spacious rooms\n- Modern amenities\n- Central locations\n- Good restaurants\n- Price range: ₹2,000-6,000 per night\n\n**Service Apartments:**\n- Kitchen facilities\n- More space for families\n- Washing facilities\n- Home-like comfort\n- Price range: ₹2,500-5,500 per night\n\n## Family Travel Tips\n\n### Planning and Preparation\n1. **Book in Advance:** Especially during school holidays\n2. **Pack Appropriately:** Consider climate and activities\n3. **Carry Medications:** Basic first aid and regular medicines\n4. **Plan Rest Days:** Don't over-schedule with young children\n5. **Research Destinations:** Know about facilities and attractions\n\n### During Travel\n1. **Stay Hydrated:** Carry water bottles for everyone\n2. **Frequent Breaks:** Stop regularly during long journeys\n3. **Snack Preparation:** Carry healthy snacks for children\n4. **Entertainment:** Books, games, tablets for long journeys\n5. **Safety First:** Always supervise children near water bodies\n\n### Health and Safety\n1. **Travel Insurance:** Essential for family trips\n2. **Emergency Contacts:** Keep local emergency numbers handy\n3. **Sun Protection:** Sunscreen, hats, and protective clothing\n4. **Food Safety:** Eat at reputable restaurants\n5. **Stay Together:** Keep children close in crowded areas\n\n## Sample Family Itineraries\n\n### 5-Day Chennai & Mahabalipuram (₹15,000-25,000 for family of 4)\n**Day 1:** Arrival in Chennai, Marina Beach\n**Day 2:** Government Museum, Birla Planetarium, VGP Universal Kingdom\n**Day 3:** Travel to Mahabalipuram, Shore Temple\n**Day 4:** Five Rathas, Arjuna's Penance, Beach time\n**Day 5:** Return to Chennai, departure\n\n### 7-Day Ooty & Kodaikanal (₹20,000-35,000 for family of 4)\n**Day 1:** Travel to Ooty, Ooty Lake\n**Day 2:** Toy Train, Botanical Gardens\n**Day 3:** Doddabetta Peak, Rose Garden\n**Day 4:** Travel to Kodaikanal\n**Day 5:** Kodaikanal Lake, Bryant Park\n**Day 6:** Coaker's Walk, Bear Shola Falls\n**Day 7:** Return journey\n\n### 4-Day Kanyakumari & Nearby (₹12,000-20,000 for family of 4)\n**Day 1:** Arrival, Kanyakumari Beach, sunset viewing\n**Day 2:** Vivekananda Rock Memorial, Thiruvalluvar Statue\n**Day 3:** Gandhi Memorial, local sightseeing\n**Day 4:** Departure\n\n## Budget Considerations\n\n### Cost-Saving Tips\n1. **Travel Off-Season:** Avoid peak tourist seasons\n2. **Book Package Deals:** Often more economical than individual bookings\n3. **Use Public Transport:** Where safe and convenient\n4. **Eat Local:** Try local restaurants instead of hotel dining\n5. **Group Discounts:** Many attractions offer family/group rates\n\n### Typical Family Expenses (Family of 4)\n**Accommodation:** ₹2,000-6,000 per night\n**Meals:** ₹1,000-2,500 per day\n**Transportation:** ₹500-2,000 per day\n**Attractions:** ₹200-800 per day\n**Miscellaneous:** ₹500-1,000 per day\n\n## Conclusion\n\nTamil Nadu offers an incredible variety of family-friendly destinations that combine education, entertainment, and cultural experiences. From the bustling city of Chennai to the serene hill stations of Ooty and Kodaikanal, from the ancient wonders of Mahabalipuram to the spiritual significance of Kanyakumari, every destination offers unique experiences for families.\n\nThe key to a successful family trip in Tamil Nadu lies in proper planning, choosing age-appropriate activities, and maintaining flexibility in your itinerary. With its rich heritage, natural beauty, and warm hospitality, Tamil Nadu promises to create lasting memories for your entire family.\n\n*Plan your perfect family vacation in Tamil Nadu with Ritham Tours & Travels - we specialize in creating memorable experiences for families of all sizes!*",
+    "excerpt": "Discover the best family-friendly destinations in Tamil Nadu with our comprehensive guide covering attractions, activities, and travel tips for all ages.",
+    "image": "friend_family.jpg",
+    "author": 1,
+    "is_published": true,
+    "views": 3,
+    "created_at": "2025-12-07T11:00:06.451Z",
+    "updated_at": "2025-12-19T10:32:51.587Z"
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 1,
+  "fields": {
+    "booking_number": "84648828",
+    "user": null,
+    "vehicle": 5,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Hopes Collage",
+    "drop_address": "iuojoijn9887 8 87h98h",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-08",
+    "pickup_time": "16:46:00",
+    "drop_date": "2025-12-10",
+    "drop_time": "16:47:00",
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "upi",
+    "total_amount": "0.00",
+    "advance_amount": "0.00",
+    "special_instructions": "erowopkmerw",
+    "status": "pending",
+    "created_at": "2025-12-07T12:05:06.251Z",
+    "updated_at": "2025-12-07T12:05:06.251Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 2,
+  "fields": {
+    "booking_number": "10318109",
+    "user": null,
+    "vehicle": 5,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Hopes Collage",
+    "drop_address": "iuojoijn9887 8 87h98h",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-08",
+    "pickup_time": "16:46:00",
+    "drop_date": "2025-12-10",
+    "drop_time": "16:47:00",
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "upi",
+    "total_amount": "0.00",
+    "advance_amount": "0.00",
+    "special_instructions": "erowopkmerw",
+    "status": "pending",
+    "created_at": "2025-12-07T12:05:09.673Z",
+    "updated_at": "2025-12-07T12:05:09.673Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 3,
+  "fields": {
+    "booking_number": "33597972",
+    "user": null,
+    "vehicle": 5,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Hopes Collage",
+    "drop_address": "iuojoijn9887 8 87h98h",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-08",
+    "pickup_time": "16:46:00",
+    "drop_date": "2025-12-10",
+    "drop_time": "16:47:00",
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "upi",
+    "total_amount": "0.00",
+    "advance_amount": "0.00",
+    "special_instructions": "erowopkmerw",
+    "status": "pending",
+    "created_at": "2025-12-07T12:05:11.783Z",
+    "updated_at": "2025-12-07T12:05:11.783Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 4,
+  "fields": {
+    "booking_number": "04035594",
+    "user": null,
+    "vehicle": 2,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Coimbatore",
+    "drop_address": "deajn",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-14",
+    "pickup_time": "23:28:00",
+    "drop_date": "2025-12-15",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "upi",
+    "total_amount": "8500.00",
+    "advance_amount": "1700.00",
+    "special_instructions": "",
+    "status": "confirmed",
+    "created_at": "2025-12-14T20:07:15.747Z",
+    "updated_at": "2025-12-14T20:10:14.155Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 5,
+  "fields": {
+    "booking_number": "46257408",
+    "user": null,
+    "vehicle": 2,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "9344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Coimbatore",
+    "drop_address": "Multi-city tour:\narea_2 → city_9 (2025-12-21)\ncity_9 → city_12 (2025-12-22)\ncity_12 → area_2 (2025-12-23)",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-21",
+    "pickup_time": "09:00:00",
+    "drop_date": "2025-12-23",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "office",
+    "total_amount": "12750.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-14T20:12:11.709Z",
+    "updated_at": "2025-12-14T20:12:11.709Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 6,
+  "fields": {
+    "booking_number": "36822817",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 2,
+    "children": 1,
+    "pickup_address": "ksoainalksdlnasdkljnasdk",
+    "drop_address": "madurai",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-20",
+    "pickup_time": "15:32:00",
+    "drop_date": "2025-12-22",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "9600.00",
+    "advance_amount": "1920.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-20T10:50:21.770Z",
+    "updated_at": "2025-12-20T10:50:21.770Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 7,
+  "fields": {
+    "booking_number": "13997381",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 2,
+    "children": 1,
+    "pickup_address": "ksoainalksdlnasdkljnasdk",
+    "drop_address": "madurai",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-20",
+    "pickup_time": "15:32:00",
+    "drop_date": "2025-12-22",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "9600.00",
+    "advance_amount": "1920.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-20T10:50:24.456Z",
+    "updated_at": "2025-12-20T10:50:24.456Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 8,
+  "fields": {
+    "booking_number": "70395723",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 2,
+    "children": 1,
+    "pickup_address": "ksoainalksdlnasdkljnasdk",
+    "drop_address": "madurai",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-20",
+    "pickup_time": "15:32:00",
+    "drop_date": "2025-12-22",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "9600.00",
+    "advance_amount": "1920.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-20T10:50:26.031Z",
+    "updated_at": "2025-12-20T10:50:26.031Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 9,
+  "fields": {
+    "booking_number": "73697693",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 2,
+    "children": 1,
+    "pickup_address": "ksoainalksdlnasdkljnasdk",
+    "drop_address": "madurai",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-20",
+    "pickup_time": "15:32:00",
+    "drop_date": "2025-12-22",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "9600.00",
+    "advance_amount": "1920.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-20T10:50:27.136Z",
+    "updated_at": "2025-12-20T10:50:27.136Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 10,
+  "fields": {
+    "booking_number": "47158232",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 2,
+    "children": 1,
+    "pickup_address": "ksoainalksdlnasdkljnasdk",
+    "drop_address": "madurai",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-20",
+    "pickup_time": "15:32:00",
+    "drop_date": "2025-12-22",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "9600.00",
+    "advance_amount": "1920.00",
+    "special_instructions": "",
+    "status": "confirmed",
+    "created_at": "2025-12-20T10:50:27.352Z",
+    "updated_at": "2025-12-20T10:51:24.671Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 11,
+  "fields": {
+    "booking_number": "55704265",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 2,
+    "children": 0,
+    "pickup_address": "Coimbatore",
+    "drop_address": "coimbatore",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-25",
+    "pickup_time": "01:36:00",
+    "drop_date": "2025-12-26",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "6400.00",
+    "advance_amount": "1280.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-24T17:33:55.774Z",
+    "updated_at": "2025-12-24T17:33:55.774Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 12,
+  "fields": {
+    "booking_number": "99664504",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 5,
+    "children": 2,
+    "pickup_address": "Coimbatore",
+    "drop_address": "kjlna adsjn a asndkljsn adjn aksjdn kasndkcjn adsk",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-25",
+    "pickup_time": "01:36:00",
+    "drop_date": "2025-12-26",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "6400.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-24T17:40:04.422Z",
+    "updated_at": "2025-12-24T17:40:04.422Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 13,
+  "fields": {
+    "booking_number": "82879798",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 4,
+    "children": 0,
+    "pickup_address": "Bangalore",
+    "drop_address": "frggoljk knjkl ",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-26",
+    "pickup_time": null,
+    "drop_date": "2026-01-02",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "upi",
+    "total_amount": "25600.00",
+    "advance_amount": "5120.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-26T14:51:44.474Z",
+    "updated_at": "2025-12-26T14:51:44.474Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 14,
+  "fields": {
+    "booking_number": "15793209",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 5,
+    "children": 0,
+    "pickup_address": "Bangalore",
+    "drop_address": "an ipowij oqipoi poqiw mow",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-26",
+    "pickup_time": null,
+    "drop_date": "2026-01-02",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "25600.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-26T14:58:27.259Z",
+    "updated_at": "2025-12-26T14:58:27.259Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 15,
+  "fields": {
+    "booking_number": "34236134",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 5,
+    "children": 3,
+    "pickup_address": "Chennai",
+    "drop_address": "coimbatore",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-29",
+    "pickup_time": "18:37:00",
+    "drop_date": "2026-01-07",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "32000.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-28T11:08:23.588Z",
+    "updated_at": "2025-12-28T11:08:23.588Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 16,
+  "fields": {
+    "booking_number": "72313001",
+    "user": null,
+    "vehicle": 3,
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541230",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 7,
+    "children": 0,
+    "pickup_address": "5 61 back side of Thiruvanmiyur holiday inn",
+    "drop_address": "reprok pw4 ower jwejqp ijpoi",
+    "pickup_city": "11",
+    "pickup_date": "2025-12-29",
+    "pickup_time": "20:10:00",
+    "drop_date": null,
+    "drop_time": "20:11:00",
+    "trip_type": "local",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "1000.00",
+    "advance_amount": "0.00",
+    "special_instructions": "oinijni",
+    "status": "pending",
+    "created_at": "2025-12-28T14:41:59.030Z",
+    "updated_at": "2025-12-28T14:41:59.030Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 17,
+  "fields": {
+    "booking_number": "58461378",
+    "user": null,
+    "vehicle": 7,
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541230",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "5 61 back side of Thiruvanmiyur holiday inn",
+    "drop_address": "knf jrier oierwniwner jnrw",
+    "pickup_city": "11",
+    "pickup_date": "2025-12-28",
+    "pickup_time": "20:19:00",
+    "drop_date": null,
+    "drop_time": "20:23:00",
+    "trip_type": "local",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "1000.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2025-12-28T14:51:39.231Z",
+    "updated_at": "2025-12-28T14:51:39.231Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 18,
+  "fields": {
+    "booking_number": "25970859",
+    "user": null,
+    "vehicle": 2,
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541230",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "5 61 back side of Thiruvanmiyur holiday inn",
+    "drop_address": "neo iqoiwjqoi ewpri qp",
+    "pickup_city": "11",
+    "pickup_date": "2025-12-23",
+    "pickup_time": "20:44:00",
+    "drop_date": null,
+    "drop_time": "21:41:00",
+    "trip_type": "local",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "office",
+    "total_amount": "750.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "confirmed",
+    "created_at": "2025-12-28T15:12:33.498Z",
+    "updated_at": "2026-01-16T14:05:33.415Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 19,
+  "fields": {
+    "booking_number": "32191482",
+    "user": null,
+    "vehicle": 2,
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541230",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "5 61 back side of Thiruvanmiyur holiday inn",
+    "drop_address": "loiujio iou ioun io",
+    "pickup_city": "11",
+    "pickup_date": "2025-12-29",
+    "pickup_time": "22:12:00",
+    "drop_date": null,
+    "drop_time": "21:14:00",
+    "trip_type": "online_cab",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "750.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "completed",
+    "created_at": "2025-12-28T15:47:01.200Z",
+    "updated_at": "2026-01-16T14:39:38.242Z",
+    "notification_preferences": {},
+    "last_notification_sent": "2026-01-16T14:40:09.225Z",
+    "notification_count": 1
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 20,
+  "fields": {
+    "booking_number": "60970405",
+    "user": null,
+    "vehicle": 1,
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541200",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "eij",
+    "drop_address": "iuhiouhi",
+    "pickup_city": "11",
+    "pickup_date": "2025-12-29",
+    "pickup_time": "21:27:00",
+    "drop_date": null,
+    "drop_time": null,
+    "trip_type": "online_cab",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "office",
+    "total_amount": "800.00",
+    "advance_amount": "0.00",
+    "special_instructions": "werioj woerwioer ",
+    "status": "confirmed",
+    "created_at": "2025-12-28T15:56:04.079Z",
+    "updated_at": "2026-01-16T14:03:26.285Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 21,
+  "fields": {
+    "booking_number": "35204133",
+    "user": null,
+    "vehicle": 8,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 4,
+    "children": 0,
+    "pickup_address": "Coimbatore",
+    "drop_address": "kaqewo ewn ja",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2025-12-29",
+    "pickup_time": "23:49:00",
+    "drop_date": "2025-12-30",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "office",
+    "total_amount": "6400.00",
+    "advance_amount": "0.00",
+    "special_instructions": "Cancellation Reason: weqn qwien iqnr nr inirwnoi newriwn\n\n",
+    "status": "cancelled",
+    "created_at": "2025-12-29T18:20:31.711Z",
+    "updated_at": "2025-12-29T18:24:29.011Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 22,
+  "fields": {
+    "booking_number": "10366651",
+    "user": null,
+    "vehicle": 7,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Coimbatore",
+    "drop_address": "Multi-city tour:\nArea 89 → Coimbatore (2026-01-16)\nCoimbatore → Chennai (2026-01-16)\nChennai → Area 89 (2026-01-17)",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2026-01-16",
+    "pickup_time": "09:00:00",
+    "drop_date": "2026-01-17",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "22977.20",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "confirmed",
+    "created_at": "2026-01-16T10:19:17.993Z",
+    "updated_at": "2026-01-16T14:00:47.904Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 23,
+  "fields": {
+    "booking_number": "TEST001",
+    "user": null,
+    "vehicle": null,
+    "name": "John Doe",
+    "email": "test@example.com",
+    "phone": "+919876543210",
+    "flight_train_no": null,
+    "landmark": null,
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Test Pickup Address, Bangalore",
+    "drop_address": "Test Drop Address, Mysore",
+    "pickup_city": "Bangalore",
+    "pickup_date": "2026-01-16",
+    "pickup_time": "09:00:00",
+    "drop_date": null,
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 2,
+    "total_distance": "300.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "5000.00",
+    "advance_amount": "1000.00",
+    "special_instructions": "",
+    "status": "confirmed",
+    "created_at": "2026-01-16T13:38:52.788Z",
+    "updated_at": "2026-01-16T13:58:50.680Z",
+    "notification_preferences": {},
+    "last_notification_sent": "2026-01-16T13:38:52.878Z",
+    "notification_count": 1
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 26,
+  "fields": {
+    "booking_number": "STATUSfff819a2",
+    "user": null,
+    "vehicle": null,
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "phone": "+919876543210",
+    "flight_train_no": null,
+    "landmark": null,
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Test Pickup Address, Bangalore",
+    "drop_address": "Test Drop Address, Mysore",
+    "pickup_city": "Bangalore",
+    "pickup_date": "2026-01-16",
+    "pickup_time": "10:00:00",
+    "drop_date": null,
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "150.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "3000.00",
+    "advance_amount": "600.00",
+    "special_instructions": null,
+    "status": "pending",
+    "created_at": "2026-01-16T14:24:09.218Z",
+    "updated_at": "2026-01-16T14:24:09.218Z",
+    "notification_preferences": {},
+    "last_notification_sent": "2026-01-16T14:24:17.036Z",
+    "notification_count": 1
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 27,
+  "fields": {
+    "booking_number": "STATUS32f5d14a",
+    "user": null,
+    "vehicle": null,
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "phone": "+919876543210",
+    "flight_train_no": null,
+    "landmark": null,
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Test Pickup Address, Bangalore",
+    "drop_address": "Test Drop Address, Mysore",
+    "pickup_city": "Bangalore",
+    "pickup_date": "2026-01-16",
+    "pickup_time": "10:00:00",
+    "drop_date": null,
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "150.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "3000.00",
+    "advance_amount": "600.00",
+    "special_instructions": null,
+    "status": "pending",
+    "created_at": "2026-01-16T14:31:56.545Z",
+    "updated_at": "2026-01-16T14:31:56.545Z",
+    "notification_preferences": {},
+    "last_notification_sent": null,
+    "notification_count": 0
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 28,
+  "fields": {
+    "booking_number": "STATUSafeca534",
+    "user": null,
+    "vehicle": null,
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "phone": "+919876543210",
+    "flight_train_no": null,
+    "landmark": null,
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Test Pickup Address, Bangalore",
+    "drop_address": "Test Drop Address, Mysore",
+    "pickup_city": "Bangalore",
+    "pickup_date": "2026-01-16",
+    "pickup_time": "10:00:00",
+    "drop_date": null,
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "150.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "3000.00",
+    "advance_amount": "600.00",
+    "special_instructions": null,
+    "status": "pending",
+    "created_at": "2026-01-16T14:33:30.106Z",
+    "updated_at": "2026-01-16T14:33:30.106Z",
+    "notification_preferences": {},
+    "last_notification_sent": "2026-01-16T17:12:12.762Z",
+    "notification_count": 3
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 29,
+  "fields": {
+    "booking_number": "35186670",
+    "user": null,
+    "vehicle": 1,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 2,
+    "children": 1,
+    "pickup_address": "hope college Coimbatore",
+    "drop_address": ";lkjhgfds",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2026-01-24",
+    "pickup_time": "10:00:00",
+    "drop_date": null,
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "472.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2026-01-21T15:32:26.636Z",
+    "updated_at": "2026-01-21T15:32:26.636Z",
+    "notification_preferences": {},
+    "last_notification_sent": "2026-01-21T15:32:38.565Z",
+    "notification_count": 1
+  }
+},
+{
+  "model": "bookings.booking",
+  "pk": 30,
+  "fields": {
+    "booking_number": "79128770",
+    "user": null,
+    "vehicle": 21,
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "9344089762",
+    "flight_train_no": "",
+    "landmark": "",
+    "adults": 1,
+    "children": 0,
+    "pickup_address": "Coimbatore",
+    "drop_address": "Hopes",
+    "pickup_city": "Coimbatore",
+    "pickup_date": "2026-01-22",
+    "pickup_time": "23:48:00",
+    "drop_date": "2026-01-28",
+    "drop_time": null,
+    "trip_type": "outstation",
+    "total_days": 1,
+    "total_distance": "0.00",
+    "multicity_routes": [],
+    "payment_type": "driver",
+    "total_amount": "14700.00",
+    "advance_amount": "0.00",
+    "special_instructions": "",
+    "status": "pending",
+    "created_at": "2026-01-21T19:14:57.847Z",
+    "updated_at": "2026-01-21T19:14:57.847Z",
+    "notification_preferences": {},
+    "last_notification_sent": "2026-01-21T19:15:06.925Z",
+    "notification_count": 1
+  }
+},
+{
+  "model": "bookings.gstrate",
+  "pk": 1,
+  "fields": {
+    "service_type": "transport",
+    "gst_percentage": "18.00",
+    "description": "GST for transport services including cab bookings, tours, and travel packages",
+    "is_active": true,
+    "effective_from": "2026-01-14",
+    "effective_to": null,
+    "created_at": "2026-01-14T21:35:21.881Z",
+    "updated_at": "2026-01-14T21:35:21.881Z"
+  }
+},
+{
+  "model": "bookings.gstrate",
+  "pk": 2,
+  "fields": {
+    "service_type": "accommodation",
+    "gst_percentage": "12.00",
+    "description": "GST for accommodation services",
+    "is_active": true,
+    "effective_from": "2026-01-14",
+    "effective_to": null,
+    "created_at": "2026-01-14T21:35:21.887Z",
+    "updated_at": "2026-01-14T21:35:21.887Z"
+  }
+},
+{
+  "model": "bookings.gstrate",
+  "pk": 3,
+  "fields": {
+    "service_type": "tour_package",
+    "gst_percentage": "18.00",
+    "description": "GST for tour packages and travel services",
+    "is_active": true,
+    "effective_from": "2026-01-14",
+    "effective_to": null,
+    "created_at": "2026-01-14T21:35:21.901Z",
+    "updated_at": "2026-01-14T21:35:21.901Z"
+  }
+},
+{
+  "model": "bookings.gstrate",
+  "pk": 4,
+  "fields": {
+    "service_type": "general",
+    "gst_percentage": "18.00",
+    "description": "GST for general services",
+    "is_active": true,
+    "effective_from": "2026-01-14",
+    "effective_to": null,
+    "created_at": "2026-01-14T21:35:21.904Z",
+    "updated_at": "2026-01-14T21:35:21.904Z"
+  }
+},
+{
+  "model": "bookings.extrapayment",
+  "pk": 1,
+  "fields": {
+    "booking": 23,
+    "amount": "500.00",
+    "description": "Additional fuel charges",
+    "added_by": null,
+    "added_at": "2026-01-16T13:38:58.467Z",
+    "is_paid": false,
+    "payment_date": null,
+    "payment_method": null,
+    "notes": null
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 1,
+  "fields": {
+    "booking": 23,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "+919876543210",
+    "status": "failed",
+    "sent_at": "2026-01-16T13:38:52.792Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Notification error: type object 'NotificationService' has no attribute 'safe_format_date'",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 2,
+  "fields": {
+    "booking": 23,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "test@example.com",
+    "status": "failed",
+    "sent_at": "2026-01-16T13:38:52.876Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Email error: 'EmailMessage' object has no attribute 'attach_alternative'",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 3,
+  "fields": {
+    "booking": 23,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "failed",
+    "sent_at": "2026-01-16T13:38:58.448Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 4,
+  "fields": {
+    "booking": 23,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "test@example.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T13:38:58.464Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 9,
+  "fields": {
+    "booking": 26,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "+919876543210",
+    "status": "failed",
+    "sent_at": "2026-01-16T14:24:11.000Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 10,
+  "fields": {
+    "booking": 26,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "jane@example.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T14:24:17.025Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 11,
+  "fields": {
+    "booking": 27,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "+919876543210",
+    "status": "failed",
+    "sent_at": "2026-01-16T14:31:58.476Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 12,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "+919876543210",
+    "status": "failed",
+    "sent_at": "2026-01-16T14:33:30.973Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 13,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "jane@example.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T14:33:39.958Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 14,
+  "fields": {
+    "booking": 28,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T14:34:06.980Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 15,
+  "fields": {
+    "booking": 19,
+    "notification_type": "final_bill",
+    "channel": "whatsapp",
+    "recipient": "9876541230",
+    "status": "failed",
+    "sent_at": "2026-01-16T14:39:48.313Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "final_bill_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 16,
+  "fields": {
+    "booking": 19,
+    "notification_type": "final_bill",
+    "channel": "email",
+    "recipient": "eedhaltech@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T14:40:09.222Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "final_bill_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 17,
+  "fields": {
+    "booking": 28,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "info@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:10:40.178Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 18,
+  "fields": {
+    "booking": 28,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "admin@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:10:40.181Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 19,
+  "fields": {
+    "booking": 28,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:10:40.184Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 20,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "+919876543210",
+    "status": "failed",
+    "sent_at": "2026-01-16T17:11:11.622Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 21,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "jane@example.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:11:32.956Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 22,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "info@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:11:39.272Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 23,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "admin@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:11:39.284Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 24,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:11:39.287Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 25,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "+919876543210",
+    "status": "failed",
+    "sent_at": "2026-01-16T17:12:00.052Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 26,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "jane@example.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:12:07.011Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 27,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "info@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:12:12.745Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 28,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "admin@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:12:12.758Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 29,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:12:12.760Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 30,
+  "fields": {
+    "booking": 28,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "+919876543210",
+    "status": "failed",
+    "sent_at": "2026-01-16T17:12:27.487Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 31,
+  "fields": {
+    "booking": 28,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "info@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:19:01.067Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 32,
+  "fields": {
+    "booking": 28,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "admin@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:19:01.079Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 33,
+  "fields": {
+    "booking": 28,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-16T17:19:01.081Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 34,
+  "fields": {
+    "booking": 29,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "09344089762",
+    "status": "failed",
+    "sent_at": "2026-01-21T15:32:27.930Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 35,
+  "fields": {
+    "booking": 29,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "muthuselvan39820@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-21T15:32:33.020Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 36,
+  "fields": {
+    "booking": 29,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "info@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-21T15:32:38.542Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 37,
+  "fields": {
+    "booking": 29,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "admin@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-21T15:32:38.557Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 38,
+  "fields": {
+    "booking": 29,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-21T15:32:38.561Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 39,
+  "fields": {
+    "booking": 29,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "info@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-21T15:32:44.360Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 40,
+  "fields": {
+    "booking": 29,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "admin@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-21T15:32:44.372Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 41,
+  "fields": {
+    "booking": 29,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-21T15:32:44.388Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 42,
+  "fields": {
+    "booking": 30,
+    "notification_type": "booking_confirmation",
+    "channel": "whatsapp",
+    "recipient": "9344089762",
+    "status": "failed",
+    "sent_at": "2026-01-21T19:14:58.493Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": "Unsupported post request. Object with ID 'messages' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+    "retry_count": 0,
+    "template_used": "booking_confirmation_whatsapp",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 43,
+  "fields": {
+    "booking": 30,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "muthuselvan39820@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-21T19:15:03.100Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 44,
+  "fields": {
+    "booking": 30,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "info@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-21T19:15:06.904Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 45,
+  "fields": {
+    "booking": 30,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "admin@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-21T19:15:06.918Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 46,
+  "fields": {
+    "booking": 30,
+    "notification_type": "booking_confirmation",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-21T19:15:06.922Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "booking_confirmation_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 47,
+  "fields": {
+    "booking": 30,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "info@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-21T19:15:12.063Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 48,
+  "fields": {
+    "booking": 30,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "admin@rithamtravels.in",
+    "status": "sent",
+    "sent_at": "2026-01-21T19:15:12.076Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "bookings.notificationrecord",
+  "pk": 49,
+  "fields": {
+    "booking": 30,
+    "notification_type": "admin_notification",
+    "channel": "email",
+    "recipient": "rithamtravels@gmail.com",
+    "status": "sent",
+    "sent_at": "2026-01-21T19:15:12.081Z",
+    "delivered_at": null,
+    "opened_at": null,
+    "clicked_at": null,
+    "error_message": null,
+    "retry_count": 0,
+    "template_used": "admin_notification_email",
+    "metadata": {}
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 1,
+  "fields": {
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "enquiry_type": "general",
+    "subject": "test Subject",
+    "message": "subject",
+    "is_resolved": false,
+    "created_at": "2025-12-26T13:24:57.286Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 2,
+  "fields": {
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "enquiry_type": "general",
+    "subject": "test Subject",
+    "message": "subject",
+    "is_resolved": false,
+    "created_at": "2025-12-26T13:25:01.473Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 3,
+  "fields": {
+    "name": "MuthuSelvaan S",
+    "email": "muthuselvan39820@gmail.com",
+    "phone": "09344089762",
+    "enquiry_type": "general",
+    "subject": "Booking Support",
+    "message": "i need solve",
+    "is_resolved": false,
+    "created_at": "2025-12-26T14:33:31.607Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 4,
+  "fields": {
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541230",
+    "enquiry_type": "general",
+    "subject": "test",
+    "message": "test message ",
+    "is_resolved": false,
+    "created_at": "2025-12-28T13:19:20.846Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 5,
+  "fields": {
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "asdff al,sd ",
+    "enquiry_type": "general",
+    "subject": "jiou",
+    "message": "oiuhiou",
+    "is_resolved": false,
+    "created_at": "2025-12-28T13:23:49.093Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 6,
+  "fields": {
+    "name": "refurqio hiu",
+    "email": "huiiuyiuybku@kjn",
+    "phone": "bkujhbkuhbkj",
+    "enquiry_type": "general",
+    "subject": "hbkjhb",
+    "message": "kjhbkjhbkjhbkj",
+    "is_resolved": false,
+    "created_at": "2025-12-28T13:24:05.870Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 7,
+  "fields": {
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541230",
+    "enquiry_type": "general",
+    "subject": "test",
+    "message": "hbiu hb ubiuhbiubiu ",
+    "is_resolved": false,
+    "created_at": "2025-12-28T13:29:53.315Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 8,
+  "fields": {
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541230",
+    "enquiry_type": "general",
+    "subject": "Booking Support",
+    "message": "qew ioqewiou ioeoqw e",
+    "is_resolved": false,
+    "created_at": "2026-01-16T17:20:08.501Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 9,
+  "fields": {
+    "name": "Test Customer",
+    "email": "test@example.com",
+    "phone": "+919876543210",
+    "enquiry_type": "general",
+    "subject": "Test Contact Form",
+    "message": "This is a test enquiry to verify email notifications are working.",
+    "is_resolved": false,
+    "created_at": "2026-01-16T17:27:48.476Z"
+  }
+},
+{
+  "model": "enquiries.enquiry",
+  "pk": 10,
+  "fields": {
+    "name": "Eedhal Tech",
+    "email": "eedhaltech@gmail.com",
+    "phone": "9876541200",
+    "enquiry_type": "general",
+    "subject": "General Inquiry",
+    "message": "io jpeoijqewpo iwe ewq ",
+    "is_resolved": false,
+    "created_at": "2026-01-16T17:37:09.350Z"
+  }
+},
+{
+  "model": "enquiries.testimonial",
+  "pk": 5,
+  "fields": {
+    "user": 4,
+    "name": "muthu_ms",
+    "email": "muthu@gmail.com",
+    "rating": 5,
+    "review": "knion piojpojp",
+    "image": "",
+    "is_featured": false,
+    "is_approved": true,
+    "created_at": "2025-12-19T07:45:06.761Z"
+  }
+},
+{
+  "model": "enquiries.testimonial",
+  "pk": 6,
+  "fields": {
+    "user": 5,
+    "name": "customer",
+    "email": "customer@gmail.com",
+    "rating": 5,
+    "review": "askjn",
+    "image": "",
+    "is_featured": false,
+    "is_approved": true,
+    "created_at": "2025-12-19T08:55:24.305Z"
+  }
+},
+{
+  "model": "enquiries.promotion",
+  "pk": 1,
+  "fields": {
+    "title": "Early Bird Discount",
+    "description": "Book 30 days in advance and get 15% off on all packages.",
+    "image": "",
+    "link": null,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.463Z",
+    "expires_at": null
+  }
+},
+{
+  "model": "enquiries.promotion",
+  "pk": 2,
+  "fields": {
+    "title": "Weekend Special",
+    "description": "Special rates for weekend bookings. Limited time offer!",
+    "image": "",
+    "link": null,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.465Z",
+    "expires_at": null
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 1,
+  "fields": {
+    "name": "Coimbatore",
+    "description": "Gateway to the Nilgiris",
+    "image": "",
+    "latitude": "11.0168000",
+    "longitude": "76.9558000",
+    "tourist_places": "Marudamalai Temple, VOC Park, Brookefields Mall, Gass Forest Museum, Perur Pateeswarar Temple, Black Thunder, Kovai Kutralam Falls",
+    "sightseeing_kilometers": "45.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 2,
+  "fields": {
+    "name": "Ooty",
+    "description": "Queen of Hill Stations",
+    "image": "",
+    "latitude": "11.4064000",
+    "longitude": "76.6932000",
+    "tourist_places": "Botanical Gardens, Ooty Lake, Doddabetta Peak, Rose Garden, Tea Gardens, Nilgiri Mountain Railway, Government Museum",
+    "sightseeing_kilometers": "35.00",
+    "is_hill_station": true,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 3,
+  "fields": {
+    "name": "Kodaikanal",
+    "description": "Princess of Hill Stations",
+    "image": "",
+    "latitude": "10.2381000",
+    "longitude": "77.4892000",
+    "tourist_places": "Kodai Lake, Bryant Park, Coakers Walk, Pillar Rocks, Silver Cascade Falls, Bear Shola Falls, Kurinji Andavar Temple",
+    "sightseeing_kilometers": "30.00",
+    "is_hill_station": true,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 4,
+  "fields": {
+    "name": "Munnar",
+    "description": "Tea Capital of South India",
+    "image": "",
+    "latitude": "10.0889000",
+    "longitude": "77.0595000",
+    "tourist_places": "Tea Museum, Mattupetty Dam, Echo Point, Kundala Lake, Top Station, Eravikulam National Park, Rose Gardens",
+    "sightseeing_kilometers": "40.00",
+    "is_hill_station": true,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 5,
+  "fields": {
+    "name": "Yercaud",
+    "description": "Jewel of the South",
+    "image": "",
+    "latitude": "11.7753000",
+    "longitude": "78.2186000",
+    "tourist_places": "Yercaud Lake, Lady's Seat, Gent's Seat, Killiyur Falls, Pagoda Point, Servarayan Temple, Rose Garden, Bear's Cave, Botanical Garden, Anna Park",
+    "sightseeing_kilometers": "25.00",
+    "is_hill_station": true,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 6,
+  "fields": {
+    "name": "Madurai",
+    "description": "City of Temples",
+    "image": "",
+    "latitude": "9.9252000",
+    "longitude": "78.1198000",
+    "tourist_places": "Meenakshi Amman Temple, Thirumalai Nayakkar Palace, Gandhi Memorial Museum, Alagar Hills, Pazhamudhir Solai, Samanar Hills, Vandiyur Mariamman Teppakulam, Koodal Azhagar Temple",
+    "sightseeing_kilometers": "35.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 7,
+  "fields": {
+    "name": "Rameshwaram",
+    "description": "Sacred Island",
+    "image": "",
+    "latitude": "9.2876000",
+    "longitude": "79.3129000",
+    "tourist_places": "Ramanathaswamy Temple, Dhanushkodi, Adam's Bridge, Agni Theertham, Gandhamadhana Parvatham, Five-faced Hanuman Temple, Jada Tirtham, Kothandaramaswamy Temple",
+    "sightseeing_kilometers": "30.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 8,
+  "fields": {
+    "name": "Kanyakumari",
+    "description": "Land's End",
+    "image": "",
+    "latitude": "8.0883000",
+    "longitude": "77.5385000",
+    "tourist_places": "Vivekananda Rock Memorial, Thiruvalluvar Statue, Kanyakumari Beach, Bhagavathy Amman Temple, Gandhi Memorial, Sunset Point, Wax Museum, Padmanabhapuram Palace",
+    "sightseeing_kilometers": "20.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 9,
+  "fields": {
+    "name": "Tanjore",
+    "description": "Cultural Capital",
+    "image": "",
+    "latitude": "10.7870000",
+    "longitude": "79.1378000",
+    "tourist_places": "Brihadeeswarar Temple, Tanjore Palace, Saraswathi Mahal Library, Art Gallery, Schwartz Church, Sivaganga Park, Sangeetha Mahal, Royal Museum",
+    "sightseeing_kilometers": "25.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 10,
+  "fields": {
+    "name": "Mysore",
+    "description": "City of Palaces",
+    "image": "",
+    "latitude": "12.2958000",
+    "longitude": "76.6394000",
+    "tourist_places": "Mysore Palace, Chamundi Hills, Brindavan Gardens, St. Philomena's Church, Jaganmohan Palace, Karanji Lake, Mysore Zoo, Lalitha Mahal, Railway Museum, Devaraja Market",
+    "sightseeing_kilometers": "40.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 11,
+  "fields": {
+    "name": "Chennai",
+    "description": "Gateway to South India",
+    "image": "",
+    "latitude": "13.0827000",
+    "longitude": "80.2707000",
+    "tourist_places": "Marina Beach, Fort St. George, Kapaleeshwarar Temple, Government Museum, Santhome Cathedral, Elliot's Beach, Mahabalipuram, Dakshinachitra, Phoenix MarketCity, Express Avenue Mall",
+    "sightseeing_kilometers": "60.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 12,
+  "fields": {
+    "name": "Ariyalur",
+    "description": "Solar city",
+    "image": "",
+    "latitude": "11.1401000",
+    "longitude": "79.0747000",
+    "tourist_places": "Gangaikonda Cholapuram, Darasuram Temple, Airavatesvara Temple, Fossil Park, Ariyalur Museum, Sendurai Lake, Jayankondam, Kumbakonam nearby temples",
+    "sightseeing_kilometers": "40.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 13,
+  "fields": {
+    "name": "Salem",
+    "description": null,
+    "image": "",
+    "latitude": "11.6643000",
+    "longitude": "78.1460000",
+    "tourist_places": "Mettur Dam, Kiliyur Falls, Shevaroy Hills, Kottai Mariamman Temple, Salem Steel Plant, Sugavaneswarar Temple, Sankagiri Fort, Botanical Garden, Anna Park, Kurumbapatti Zoological Park",
+    "sightseeing_kilometers": "45.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 14,
+  "fields": {
+    "name": "Trichy",
+    "description": null,
+    "image": "",
+    "latitude": "10.7905000",
+    "longitude": "78.7047000",
+    "tourist_places": "Rock Fort Temple, Srirangam Temple, Jambukeswarar Temple, Kallanai Dam, Mukkombu, St. Joseph Church, Government Museum, Puliyancholai Falls, Samayapuram Temple",
+    "sightseeing_kilometers": "50.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 15,
+  "fields": {
+    "name": "Tirunelveli",
+    "description": null,
+    "image": "",
+    "latitude": "8.7139000",
+    "longitude": "77.7567000",
+    "tourist_places": "Nellaiappar Temple, Courtallam Falls, Manimuthar Falls, Agasthiyar Falls, Kalakkad Wildlife Sanctuary, Krishnapuram Venkatachalapathy Temple, Sankaran Kovil, Tenkasi",
+    "sightseeing_kilometers": "60.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 16,
+  "fields": {
+    "name": "Coorg",
+    "description": null,
+    "image": "",
+    "latitude": "12.3375000",
+    "longitude": "75.8069000",
+    "tourist_places": "Abbey Falls, Raja's Seat, Omkareshwara Temple, Dubare Elephant Camp, Talakaveri, Bhagamandala, Iruppu Falls, Namdroling Monastery, Coffee Plantations, Mandalpatti",
+    "sightseeing_kilometers": "55.00",
+    "is_hill_station": true,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 17,
+  "fields": {
+    "name": "Wayanad",
+    "description": null,
+    "image": "",
+    "latitude": "11.6854000",
+    "longitude": "76.1320000",
+    "tourist_places": "Chembra Peak, Soochipara Falls, Edakkal Caves, Banasura Sagar Dam, Pookode Lake, Thirunelli Temple, Kuruva Island, Muthanga Wildlife Sanctuary, Lakkidi View Point",
+    "sightseeing_kilometers": "70.00",
+    "is_hill_station": true,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 18,
+  "fields": {
+    "name": "Pondicherry",
+    "description": null,
+    "image": "",
+    "latitude": "11.9416000",
+    "longitude": "79.8083000",
+    "tourist_places": "French Quarter, Auroville, Aurobindo Ashram, Paradise Beach, Promenade Beach, Bharathi Park, Pondicherry Museum, Sacred Heart Church, Manakula Vinayagar Temple",
+    "sightseeing_kilometers": "30.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 19,
+  "fields": {
+    "name": "Vellore",
+    "description": null,
+    "image": "",
+    "latitude": "12.9165000",
+    "longitude": "79.1325000",
+    "tourist_places": "Vellore Fort, Golden Temple, Jalakandeswarar Temple, Government Museum, Amirthi Zoological Park, Yelagiri Hills, Jalagamparai Falls, Ratnagiri Murugan Temple",
+    "sightseeing_kilometers": "40.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 20,
+  "fields": {
+    "name": "Thanjavur",
+    "description": null,
+    "image": "",
+    "latitude": "10.7870000",
+    "longitude": "79.1378000",
+    "tourist_places": "Brihadeeswarar Temple, Thanjavur Palace, Saraswathi Mahal Library, Art Gallery, Schwartz Church, Sivaganga Park, Sangeetha Mahal, Royal Museum, Punnainallur Mariamman Temple",
+    "sightseeing_kilometers": "30.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 21,
+  "fields": {
+    "name": "Kumbakonam",
+    "description": null,
+    "image": "",
+    "latitude": "10.9601000",
+    "longitude": "79.3788000",
+    "tourist_places": "Adi Kumbeswarar Temple, Sarangapani Temple, Mahamaham Tank, Nageswaran Temple, Ramaswamy Temple, Chakrapani Temple, Uppiliappan Temple, Darasuram Temple",
+    "sightseeing_kilometers": "25.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.city",
+  "pk": 22,
+  "fields": {
+    "name": "Tirupur",
+    "description": null,
+    "image": "",
+    "latitude": "11.1085000",
+    "longitude": "77.3411000",
+    "tourist_places": "Tirupur Kumaran Memorial, Noyyal River, Avinashi Temple, Udumalpet, Dharapuram, Kangeyam, Textile Showrooms, Thirumoorthy Hills, Amaravathi Dam",
+    "sightseeing_kilometers": "35.00",
+    "is_hill_station": false,
+    "hill_station_charge": "750.00",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 1,
+  "fields": {
+    "city": 1,
+    "name": "RS Puram",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 2,
+  "fields": {
+    "city": 1,
+    "name": "Gandhipuram",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 3,
+  "fields": {
+    "city": 1,
+    "name": "Saibaba Colony",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 4,
+  "fields": {
+    "city": 1,
+    "name": "Singanallur",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 5,
+  "fields": {
+    "city": 1,
+    "name": "Sitra",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 6,
+  "fields": {
+    "city": 11,
+    "name": "Adyar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 7,
+  "fields": {
+    "city": 11,
+    "name": "Marina Beach",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 8,
+  "fields": {
+    "city": 1,
+    "name": "Peelamedu",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 9,
+  "fields": {
+    "city": 1,
+    "name": "Vadavalli",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 10,
+  "fields": {
+    "city": 1,
+    "name": "Thudiyalur",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 11,
+  "fields": {
+    "city": 1,
+    "name": "Kuniyamuthur",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 12,
+  "fields": {
+    "city": 1,
+    "name": "Kalapatti",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 13,
+  "fields": {
+    "city": 2,
+    "name": "Charring Cross",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 14,
+  "fields": {
+    "city": 2,
+    "name": "Lower Bazaar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 15,
+  "fields": {
+    "city": 2,
+    "name": "Coonoor Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 16,
+  "fields": {
+    "city": 2,
+    "name": "Wellington",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 17,
+  "fields": {
+    "city": 2,
+    "name": "Mysore Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 18,
+  "fields": {
+    "city": 2,
+    "name": "Fernhill",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 19,
+  "fields": {
+    "city": 2,
+    "name": "Upper Bazaar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 20,
+  "fields": {
+    "city": 2,
+    "name": "Commercial Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 21,
+  "fields": {
+    "city": 3,
+    "name": "Lake Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 22,
+  "fields": {
+    "city": 3,
+    "name": "Coakers Walk",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 23,
+  "fields": {
+    "city": 3,
+    "name": "Hospital Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 24,
+  "fields": {
+    "city": 3,
+    "name": "Bazaar Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 25,
+  "fields": {
+    "city": 3,
+    "name": "Anna Salai",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 26,
+  "fields": {
+    "city": 3,
+    "name": "Bus Stand Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 27,
+  "fields": {
+    "city": 3,
+    "name": "Seven Roads Junction",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 28,
+  "fields": {
+    "city": 3,
+    "name": "Observatory Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 29,
+  "fields": {
+    "city": 4,
+    "name": "Old Munnar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 30,
+  "fields": {
+    "city": 4,
+    "name": "Kundala",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 31,
+  "fields": {
+    "city": 4,
+    "name": "Chinnakanal",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 32,
+  "fields": {
+    "city": 4,
+    "name": "Suryanelli",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 33,
+  "fields": {
+    "city": 4,
+    "name": "Top Station Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 34,
+  "fields": {
+    "city": 4,
+    "name": "Pallivasal",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 35,
+  "fields": {
+    "city": 4,
+    "name": "Mattupetty",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 36,
+  "fields": {
+    "city": 4,
+    "name": "New Munnar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 37,
+  "fields": {
+    "city": 5,
+    "name": "Montfort School Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 38,
+  "fields": {
+    "city": 5,
+    "name": "Main Bazaar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 39,
+  "fields": {
+    "city": 5,
+    "name": "Salem-Yercaud Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 40,
+  "fields": {
+    "city": 5,
+    "name": "Norton Bungalow",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 41,
+  "fields": {
+    "city": 5,
+    "name": "Lake Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 42,
+  "fields": {
+    "city": 5,
+    "name": "Temple Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 43,
+  "fields": {
+    "city": 5,
+    "name": "Grange",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 44,
+  "fields": {
+    "city": 11,
+    "name": "Guindy",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 45,
+  "fields": {
+    "city": 11,
+    "name": "Egmore",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 46,
+  "fields": {
+    "city": 11,
+    "name": "Mylapore",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 47,
+  "fields": {
+    "city": 11,
+    "name": "Nungambakkam",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 48,
+  "fields": {
+    "city": 11,
+    "name": "T. Nagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 49,
+  "fields": {
+    "city": 11,
+    "name": "Velachery",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 50,
+  "fields": {
+    "city": 11,
+    "name": "OMR",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 51,
+  "fields": {
+    "city": 11,
+    "name": "Anna Nagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 52,
+  "fields": {
+    "city": 6,
+    "name": "Meenakshi Temple Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 53,
+  "fields": {
+    "city": 6,
+    "name": "Thiruparankundram",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 54,
+  "fields": {
+    "city": 6,
+    "name": "Vilangudi",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 55,
+  "fields": {
+    "city": 6,
+    "name": "Goripalayam",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 56,
+  "fields": {
+    "city": 6,
+    "name": "Sellur",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 57,
+  "fields": {
+    "city": 6,
+    "name": "K.K. Nagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 58,
+  "fields": {
+    "city": 6,
+    "name": "Tallakulam",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 59,
+  "fields": {
+    "city": 6,
+    "name": "Anna Nagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 60,
+  "fields": {
+    "city": 10,
+    "name": "Ashoka Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 61,
+  "fields": {
+    "city": 10,
+    "name": "JLB Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 62,
+  "fields": {
+    "city": 10,
+    "name": "Chamundipuram",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 63,
+  "fields": {
+    "city": 10,
+    "name": "Kuvempunagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 64,
+  "fields": {
+    "city": 10,
+    "name": "Vijayanagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 65,
+  "fields": {
+    "city": 10,
+    "name": "Sayyaji Rao Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 66,
+  "fields": {
+    "city": 10,
+    "name": "Nazarbad",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 67,
+  "fields": {
+    "city": 10,
+    "name": "Hebbal",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 68,
+  "fields": {
+    "city": 8,
+    "name": "Kovalam Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 69,
+  "fields": {
+    "city": 8,
+    "name": "South Car Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 70,
+  "fields": {
+    "city": 8,
+    "name": "North Car Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 71,
+  "fields": {
+    "city": 8,
+    "name": "Main Bazaar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 72,
+  "fields": {
+    "city": 8,
+    "name": "Sannathi Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 73,
+  "fields": {
+    "city": 8,
+    "name": "Beach Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 74,
+  "fields": {
+    "city": 7,
+    "name": "East Car Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 75,
+  "fields": {
+    "city": 7,
+    "name": "Temple Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 76,
+  "fields": {
+    "city": 7,
+    "name": "West Car Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 77,
+  "fields": {
+    "city": 7,
+    "name": "Bus Stand Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 78,
+  "fields": {
+    "city": 7,
+    "name": "North Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 79,
+  "fields": {
+    "city": 7,
+    "name": "South Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 80,
+  "fields": {
+    "city": 7,
+    "name": "Dhanushkodi Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 81,
+  "fields": {
+    "city": 9,
+    "name": "Medical College Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 82,
+  "fields": {
+    "city": 9,
+    "name": "Gandhi Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 83,
+  "fields": {
+    "city": 9,
+    "name": "Trichy Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 84,
+  "fields": {
+    "city": 9,
+    "name": "Big Temple Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 85,
+  "fields": {
+    "city": 9,
+    "name": "Anna Salai",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 86,
+  "fields": {
+    "city": 9,
+    "name": "Kutchery Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 87,
+  "fields": {
+    "city": 9,
+    "name": "Palace Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 88,
+  "fields": {
+    "city": 12,
+    "name": "Collectorate Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 89,
+  "fields": {
+    "city": 12,
+    "name": "Sendurai Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 90,
+  "fields": {
+    "city": 12,
+    "name": "Bus Stand Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 91,
+  "fields": {
+    "city": 12,
+    "name": "Udayarpalayam Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 92,
+  "fields": {
+    "city": 12,
+    "name": "Main Bazaar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 93,
+  "fields": {
+    "city": 12,
+    "name": "Jayankondam Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 94,
+  "fields": {
+    "city": 13,
+    "name": "Kondalampatti",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 95,
+  "fields": {
+    "city": 13,
+    "name": "Ammapet",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 96,
+  "fields": {
+    "city": 13,
+    "name": "Fairlands",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 97,
+  "fields": {
+    "city": 13,
+    "name": "Hasthampatti",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 98,
+  "fields": {
+    "city": 13,
+    "name": "Five Roads",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 99,
+  "fields": {
+    "city": 13,
+    "name": "Shevapet",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 100,
+  "fields": {
+    "city": 13,
+    "name": "Junction",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 101,
+  "fields": {
+    "city": 13,
+    "name": "Suramangalam",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 102,
+  "fields": {
+    "city": 14,
+    "name": "Manachanallur Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 103,
+  "fields": {
+    "city": 14,
+    "name": "Cantonment",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 104,
+  "fields": {
+    "city": 14,
+    "name": "Woraiyur",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 105,
+  "fields": {
+    "city": 14,
+    "name": "K.K. Nagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 106,
+  "fields": {
+    "city": 14,
+    "name": "Srirangam",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 107,
+  "fields": {
+    "city": 14,
+    "name": "Golden Rock",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 108,
+  "fields": {
+    "city": 14,
+    "name": "Thillai Nagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 109,
+  "fields": {
+    "city": 14,
+    "name": "Puthur",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 110,
+  "fields": {
+    "city": 15,
+    "name": "Palayamkottai",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 111,
+  "fields": {
+    "city": 15,
+    "name": "Tirunelveli Junction",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 112,
+  "fields": {
+    "city": 15,
+    "name": "Vannarpet",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 113,
+  "fields": {
+    "city": 15,
+    "name": "Town Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 114,
+  "fields": {
+    "city": 15,
+    "name": "High Ground",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 115,
+  "fields": {
+    "city": 15,
+    "name": "Melapalayam",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 116,
+  "fields": {
+    "city": 15,
+    "name": "Reddiarpatti",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 117,
+  "fields": {
+    "city": 15,
+    "name": "Junction",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 118,
+  "fields": {
+    "city": 16,
+    "name": "Bhagamandala Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 119,
+  "fields": {
+    "city": 16,
+    "name": "Virajpet",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 120,
+  "fields": {
+    "city": 16,
+    "name": "Madikeri Town",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 121,
+  "fields": {
+    "city": 16,
+    "name": "Raja's Seat Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 122,
+  "fields": {
+    "city": 16,
+    "name": "Somwarpet",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 123,
+  "fields": {
+    "city": 16,
+    "name": "Talakaveri Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 124,
+  "fields": {
+    "city": 16,
+    "name": "Abbey Falls Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 125,
+  "fields": {
+    "city": 16,
+    "name": "Kushalnagar",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 126,
+  "fields": {
+    "city": 17,
+    "name": "Kalpetta",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 127,
+  "fields": {
+    "city": 17,
+    "name": "Mananthavady",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 128,
+  "fields": {
+    "city": 17,
+    "name": "Pulpally",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 129,
+  "fields": {
+    "city": 17,
+    "name": "Panamaram",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 130,
+  "fields": {
+    "city": 17,
+    "name": "Meppadi",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 131,
+  "fields": {
+    "city": 17,
+    "name": "Vythiri",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 132,
+  "fields": {
+    "city": 17,
+    "name": "Ambalavayal",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 133,
+  "fields": {
+    "city": 17,
+    "name": "Sultan Bathery",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 134,
+  "fields": {
+    "city": 18,
+    "name": "White Town",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 135,
+  "fields": {
+    "city": 18,
+    "name": "Boulevard",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 136,
+  "fields": {
+    "city": 18,
+    "name": "Auroville Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 137,
+  "fields": {
+    "city": 18,
+    "name": "Mission Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 138,
+  "fields": {
+    "city": 18,
+    "name": "French Quarter",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 139,
+  "fields": {
+    "city": 18,
+    "name": "Tamil Quarter",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 140,
+  "fields": {
+    "city": 18,
+    "name": "Nehru Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 141,
+  "fields": {
+    "city": 18,
+    "name": "Goubert Avenue",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 142,
+  "fields": {
+    "city": 19,
+    "name": "Bagayam",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 143,
+  "fields": {
+    "city": 19,
+    "name": "Thottapalayam",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 144,
+  "fields": {
+    "city": 19,
+    "name": "Officer Line",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 145,
+  "fields": {
+    "city": 19,
+    "name": "Fort Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 146,
+  "fields": {
+    "city": 19,
+    "name": "CMC Campus",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 147,
+  "fields": {
+    "city": 19,
+    "name": "Kosapet",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 148,
+  "fields": {
+    "city": 19,
+    "name": "Saidapet",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 149,
+  "fields": {
+    "city": 19,
+    "name": "Katpadi",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 150,
+  "fields": {
+    "city": 20,
+    "name": "Gandhi Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 151,
+  "fields": {
+    "city": 20,
+    "name": "Trichy Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 152,
+  "fields": {
+    "city": 20,
+    "name": "Anna Salai",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 153,
+  "fields": {
+    "city": 20,
+    "name": "Palace Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 154,
+  "fields": {
+    "city": 20,
+    "name": "Medical College Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 155,
+  "fields": {
+    "city": 20,
+    "name": "Big Temple Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 156,
+  "fields": {
+    "city": 20,
+    "name": "East Main Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 157,
+  "fields": {
+    "city": 20,
+    "name": "Kutchery Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 158,
+  "fields": {
+    "city": 21,
+    "name": "Nageswaran Koil Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 159,
+  "fields": {
+    "city": 21,
+    "name": "Sarangapani Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 160,
+  "fields": {
+    "city": 21,
+    "name": "Kumbakonam Head Post Office",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 161,
+  "fields": {
+    "city": 21,
+    "name": "Big Bazaar Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 162,
+  "fields": {
+    "city": 21,
+    "name": "TSR Big Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 163,
+  "fields": {
+    "city": 21,
+    "name": "Ayyavoo Naidu Street",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 164,
+  "fields": {
+    "city": 21,
+    "name": "Mahamaham Tank Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 165,
+  "fields": {
+    "city": 22,
+    "name": "Udumalpet Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 166,
+  "fields": {
+    "city": 22,
+    "name": "SIDCO Industrial Estate",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 167,
+  "fields": {
+    "city": 22,
+    "name": "Kumaran Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 168,
+  "fields": {
+    "city": 22,
+    "name": "Palladam Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 169,
+  "fields": {
+    "city": 22,
+    "name": "Avinashi Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 170,
+  "fields": {
+    "city": 22,
+    "name": "Dharapuram Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 171,
+  "fields": {
+    "city": 22,
+    "name": "Textile Area",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.localarea",
+  "pk": 172,
+  "fields": {
+    "city": 22,
+    "name": "Kangeyam Road",
+    "latitude": null,
+    "longitude": null
+  }
+},
+{
+  "model": "tours.route",
+  "pk": 1,
+  "fields": {
+    "from_city": 1,
+    "to_city": 2,
+    "distance": "90.00",
+    "one_way_fixed_rate": null
+  }
+},
+{
+  "model": "tours.route",
+  "pk": 2,
+  "fields": {
+    "from_city": 1,
+    "to_city": 3,
+    "distance": "175.00",
+    "one_way_fixed_rate": null
+  }
+},
+{
+  "model": "tours.route",
+  "pk": 3,
+  "fields": {
+    "from_city": 1,
+    "to_city": 4,
+    "distance": "160.00",
+    "one_way_fixed_rate": null
+  }
+},
+{
+  "model": "tours.route",
+  "pk": 4,
+  "fields": {
+    "from_city": 1,
+    "to_city": 6,
+    "distance": "235.00",
+    "one_way_fixed_rate": null
+  }
+},
+{
+  "model": "tours.route",
+  "pk": 5,
+  "fields": {
+    "from_city": 1,
+    "to_city": 11,
+    "distance": "495.00",
+    "one_way_fixed_rate": null
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 1,
+  "fields": {
+    "city": 2,
+    "name": "Botanical Gardens",
+    "description": "Popular tourist spot in Ooty",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 2,
+  "fields": {
+    "city": 2,
+    "name": "Rose Garden",
+    "description": "Popular tourist spot in Ooty",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 3,
+  "fields": {
+    "city": 2,
+    "name": "Ooty Lake",
+    "description": "Popular tourist spot in Ooty",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 4,
+  "fields": {
+    "city": 2,
+    "name": "Doddabetta Peak",
+    "description": "Popular tourist spot in Ooty",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 5,
+  "fields": {
+    "city": 3,
+    "name": "Kodaikanal Lake",
+    "description": "Popular tourist spot in Kodaikanal",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 6,
+  "fields": {
+    "city": 3,
+    "name": "Coaker's Walk",
+    "description": "Popular tourist spot in Kodaikanal",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 7,
+  "fields": {
+    "city": 3,
+    "name": "Bear Shola Falls",
+    "description": "Popular tourist spot in Kodaikanal",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 8,
+  "fields": {
+    "city": 3,
+    "name": "Pillar Rocks",
+    "description": "Popular tourist spot in Kodaikanal",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 9,
+  "fields": {
+    "city": 4,
+    "name": "Tea Gardens",
+    "description": "Popular tourist spot in Munnar",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 10,
+  "fields": {
+    "city": 4,
+    "name": "Mattupetty Dam",
+    "description": "Popular tourist spot in Munnar",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 11,
+  "fields": {
+    "city": 4,
+    "name": "Eravikulam National Park",
+    "description": "Popular tourist spot in Munnar",
+    "image": ""
+  }
+},
+{
+  "model": "tours.sightseeingspot",
+  "pk": 12,
+  "fields": {
+    "city": 4,
+    "name": "Top Station",
+    "description": "Popular tourist spot in Munnar",
+    "image": ""
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 1,
+  "fields": {
+    "tariff_type": "local_hour",
+    "city": null,
+    "vehicle": 1,
+    "base_price": "600.00",
+    "price_per_hour": "150.00",
+    "min_hours": 4,
+    "description": "Local hour basis tariff for Swift Dzire (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 2,
+  "fields": {
+    "tariff_type": "local_hour",
+    "city": null,
+    "vehicle": 2,
+    "base_price": "640.00",
+    "price_per_hour": "160.00",
+    "min_hours": 4,
+    "description": "Local hour basis tariff for Etios (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 3,
+  "fields": {
+    "tariff_type": "local_hour",
+    "city": null,
+    "vehicle": 3,
+    "base_price": "1000.00",
+    "price_per_hour": "250.00",
+    "min_hours": 4,
+    "description": "Local hour basis tariff for Innova (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 4,
+  "fields": {
+    "tariff_type": "local_hour",
+    "city": null,
+    "vehicle": 4,
+    "base_price": "1200.00",
+    "price_per_hour": "300.00",
+    "min_hours": 4,
+    "description": "Local hour basis tariff for Innova Crysta (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 5,
+  "fields": {
+    "tariff_type": "local_hour",
+    "city": null,
+    "vehicle": 6,
+    "base_price": "1200.00",
+    "price_per_hour": "300.00",
+    "min_hours": 4,
+    "description": "Local hour basis tariff for Innova Hycross (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 6,
+  "fields": {
+    "tariff_type": "local_hour",
+    "city": null,
+    "vehicle": 5,
+    "base_price": "1200.00",
+    "price_per_hour": "300.00",
+    "min_hours": 4,
+    "description": "Local hour basis tariff for Corolla Altis (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 7,
+  "fields": {
+    "tariff_type": "local_hour",
+    "city": null,
+    "vehicle": 7,
+    "base_price": "1600.00",
+    "price_per_hour": "400.00",
+    "min_hours": 4,
+    "description": "Local hour basis tariff for Traveller 12 Seater (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 8,
+  "fields": {
+    "tariff_type": "local_hour",
+    "city": null,
+    "vehicle": 8,
+    "base_price": "2000.00",
+    "price_per_hour": "500.00",
+    "min_hours": 4,
+    "description": "Local hour basis tariff for Traveller 17 Seater (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 9,
+  "fields": {
+    "tariff_type": "outstation_day",
+    "city": null,
+    "vehicle": 1,
+    "base_price": "2500.00",
+    "price_per_hour": "2500.00",
+    "min_hours": 1,
+    "description": "Outstation Day tariff for Swift Dzire (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 10,
+  "fields": {
+    "tariff_type": "outstation_day",
+    "city": null,
+    "vehicle": 2,
+    "base_price": "2600.00",
+    "price_per_hour": "2600.00",
+    "min_hours": 1,
+    "description": "Outstation Day tariff for Etios (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 11,
+  "fields": {
+    "tariff_type": "outstation_day",
+    "city": null,
+    "vehicle": 3,
+    "base_price": "4000.00",
+    "price_per_hour": "4000.00",
+    "min_hours": 1,
+    "description": "Outstation Day tariff for Innova (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 12,
+  "fields": {
+    "tariff_type": "outstation_day",
+    "city": null,
+    "vehicle": 4,
+    "base_price": "4500.00",
+    "price_per_hour": "4500.00",
+    "min_hours": 1,
+    "description": "Outstation Day tariff for Innova Crysta (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 13,
+  "fields": {
+    "tariff_type": "outstation_day",
+    "city": null,
+    "vehicle": 6,
+    "base_price": "4500.00",
+    "price_per_hour": "4500.00",
+    "min_hours": 1,
+    "description": "Outstation Day tariff for Innova Hycross (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 14,
+  "fields": {
+    "tariff_type": "outstation_day",
+    "city": null,
+    "vehicle": 5,
+    "base_price": "4500.00",
+    "price_per_hour": "4500.00",
+    "min_hours": 1,
+    "description": "Outstation Day tariff for Corolla Altis (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 15,
+  "fields": {
+    "tariff_type": "outstation_day",
+    "city": null,
+    "vehicle": 7,
+    "base_price": "6000.00",
+    "price_per_hour": "6000.00",
+    "min_hours": 1,
+    "description": "Outstation Day tariff for Traveller 12 Seater (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 16,
+  "fields": {
+    "tariff_type": "outstation_day",
+    "city": null,
+    "vehicle": 8,
+    "base_price": "7500.00",
+    "price_per_hour": "7500.00",
+    "min_hours": 1,
+    "description": "Outstation Day tariff for Traveller 17 Seater (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 17,
+  "fields": {
+    "tariff_type": "outstation_km",
+    "city": null,
+    "vehicle": 1,
+    "base_price": "3000.00",
+    "price_per_hour": "12.00",
+    "min_hours": 250,
+    "description": "Outstation Km tariff for Swift Dzire (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 18,
+  "fields": {
+    "tariff_type": "outstation_km",
+    "city": null,
+    "vehicle": 2,
+    "base_price": "3250.00",
+    "price_per_hour": "13.00",
+    "min_hours": 250,
+    "description": "Outstation Km tariff for Etios (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 19,
+  "fields": {
+    "tariff_type": "outstation_km",
+    "city": null,
+    "vehicle": 3,
+    "base_price": "4500.00",
+    "price_per_hour": "18.00",
+    "min_hours": 250,
+    "description": "Outstation Km tariff for Innova (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 20,
+  "fields": {
+    "tariff_type": "outstation_km",
+    "city": null,
+    "vehicle": 4,
+    "base_price": "5000.00",
+    "price_per_hour": "20.00",
+    "min_hours": 250,
+    "description": "Outstation Km tariff for Innova Crysta (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 21,
+  "fields": {
+    "tariff_type": "outstation_km",
+    "city": null,
+    "vehicle": 6,
+    "base_price": "5000.00",
+    "price_per_hour": "20.00",
+    "min_hours": 250,
+    "description": "Outstation Km tariff for Innova Hycross (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 22,
+  "fields": {
+    "tariff_type": "outstation_km",
+    "city": null,
+    "vehicle": 5,
+    "base_price": "5000.00",
+    "price_per_hour": "20.00",
+    "min_hours": 250,
+    "description": "Outstation Km tariff for Corolla Altis (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 23,
+  "fields": {
+    "tariff_type": "outstation_km",
+    "city": null,
+    "vehicle": 7,
+    "base_price": "6250.00",
+    "price_per_hour": "25.00",
+    "min_hours": 250,
+    "description": "Outstation Km tariff for Traveller 12 Seater (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "tours.tariff",
+  "pk": 24,
+  "fields": {
+    "tariff_type": "outstation_km",
+    "city": null,
+    "vehicle": 8,
+    "base_price": "7500.00",
+    "price_per_hour": "30.00",
+    "min_hours": 250,
+    "description": "Outstation Km tariff for Traveller 17 Seater (AC)",
+    "is_active": true
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 1,
+  "fields": {
+    "name": "Swift Dzire",
+    "description": "",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "16.00",
+    "driver_charge_per_day": "500.00",
+    "per_day_fee": "5205.00",
+    "min_km_per_day": 100,
+    "fare_per_hour": "0.00",
+    "min_hours_local": 3,
+    "min_hours_fee_local": "400.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "0.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.305Z",
+    "updated_at": "2026-01-16T08:37:55.993Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 2,
+  "fields": {
+    "name": "Etios",
+    "description": "",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "15.00",
+    "driver_charge_per_day": "500.00",
+    "per_day_fee": "6300.00",
+    "min_km_per_day": 100,
+    "fare_per_hour": "0.00",
+    "min_hours_local": 3,
+    "min_hours_fee_local": "600.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "0.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.309Z",
+    "updated_at": "2026-01-16T08:37:40.859Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 3,
+  "fields": {
+    "name": "Innova",
+    "description": "",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "18.00",
+    "driver_charge_per_day": "500.00",
+    "per_day_fee": "6000.00",
+    "min_km_per_day": 100,
+    "fare_per_hour": "0.00",
+    "min_hours_local": 3,
+    "min_hours_fee_local": "400.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "0.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.316Z",
+    "updated_at": "2026-01-16T08:37:25.007Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 4,
+  "fields": {
+    "name": "Innova Crysta",
+    "description": "",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "22.00",
+    "driver_charge_per_day": "600.00",
+    "per_day_fee": "4620.00",
+    "min_km_per_day": 100,
+    "fare_per_hour": "0.00",
+    "min_hours_local": 3,
+    "min_hours_fee_local": "400.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "0.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.318Z",
+    "updated_at": "2026-01-16T08:37:12.434Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 5,
+  "fields": {
+    "name": "Corolla Altis",
+    "description": "",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "28.00",
+    "driver_charge_per_day": "600.00",
+    "per_day_fee": "5000.00",
+    "min_km_per_day": 100,
+    "fare_per_hour": "0.00",
+    "min_hours_local": 3,
+    "min_hours_fee_local": "300.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "0.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.320Z",
+    "updated_at": "2026-01-16T08:36:58.316Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 6,
+  "fields": {
+    "name": "Innova Hycross",
+    "description": "",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "27.00",
+    "driver_charge_per_day": "600.00",
+    "per_day_fee": "3560.00",
+    "min_km_per_day": 100,
+    "fare_per_hour": "0.00",
+    "min_hours_local": 3,
+    "min_hours_fee_local": "400.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "0.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.322Z",
+    "updated_at": "2026-01-16T08:36:41.299Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 7,
+  "fields": {
+    "name": "Traveller 12 Seater",
+    "description": "",
+    "image": "",
+    "max_seats": 12,
+    "luggage_capacity": "",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "24.00",
+    "driver_charge_per_day": "700.00",
+    "per_day_fee": "3000.00",
+    "min_km_per_day": 100,
+    "fare_per_hour": "0.00",
+    "min_hours_local": 6,
+    "min_hours_fee_local": "600.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "0.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.323Z",
+    "updated_at": "2026-01-16T03:39:16.773Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 8,
+  "fields": {
+    "name": "Traveller 17 Seater",
+    "description": "",
+    "image": "",
+    "max_seats": 17,
+    "luggage_capacity": "",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "27.00",
+    "driver_charge_per_day": "700.00",
+    "per_day_fee": "2500.00",
+    "min_km_per_day": 100,
+    "fare_per_hour": "0.00",
+    "min_hours_local": 3,
+    "min_hours_fee_local": "500.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "100.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2025-12-07T11:00:06.328Z",
+    "updated_at": "2026-01-16T03:39:04.615Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 10,
+  "fields": {
+    "name": "BMW 3 Series",
+    "description": "Luxury sedan with premium comfort and advanced features",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "2 Large + 2 Small",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "35.00",
+    "driver_charge_per_day": "800.00",
+    "per_day_fee": "3500.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "450.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "1800.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "35.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.171Z",
+    "updated_at": "2026-01-21T15:12:22.171Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 11,
+  "fields": {
+    "name": "BMW 5 Series",
+    "description": "Executive luxury sedan with spacious interior and premium amenities",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "3 Large + 2 Small",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "45.00",
+    "driver_charge_per_day": "1000.00",
+    "per_day_fee": "4500.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "550.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "2200.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "45.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.192Z",
+    "updated_at": "2026-01-21T15:12:22.192Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 12,
+  "fields": {
+    "name": "BMW X3",
+    "description": "Luxury SUV with all-terrain capability and premium comfort",
+    "image": "",
+    "max_seats": 5,
+    "luggage_capacity": "3 Large + 3 Small",
+    "fuel_type": "diesel",
+    "ac_type": "ac",
+    "fare_per_km": "40.00",
+    "driver_charge_per_day": "900.00",
+    "per_day_fee": "4000.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "500.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "2000.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "40.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.195Z",
+    "updated_at": "2026-01-21T15:12:22.195Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 13,
+  "fields": {
+    "name": "Audi A4",
+    "description": "Premium luxury sedan with cutting-edge technology and comfort",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "2 Large + 2 Small",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "38.00",
+    "driver_charge_per_day": "850.00",
+    "per_day_fee": "3800.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "480.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "1920.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "38.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.202Z",
+    "updated_at": "2026-01-21T15:12:22.202Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 14,
+  "fields": {
+    "name": "Audi A6",
+    "description": "Executive luxury sedan with sophisticated design and premium features",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "3 Large + 2 Small",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "48.00",
+    "driver_charge_per_day": "1100.00",
+    "per_day_fee": "4800.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "600.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "2400.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "48.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.206Z",
+    "updated_at": "2026-01-21T15:12:22.206Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 15,
+  "fields": {
+    "name": "Audi Q5",
+    "description": "Luxury SUV with quattro all-wheel drive and premium interior",
+    "image": "",
+    "max_seats": 5,
+    "luggage_capacity": "3 Large + 3 Small",
+    "fuel_type": "diesel",
+    "ac_type": "ac",
+    "fare_per_km": "42.00",
+    "driver_charge_per_day": "950.00",
+    "per_day_fee": "4200.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "520.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "2080.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "42.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.211Z",
+    "updated_at": "2026-01-21T15:12:22.211Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 16,
+  "fields": {
+    "name": "Mercedes-Benz C-Class",
+    "description": "Luxury sedan with elegant design and advanced safety features",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "2 Large + 2 Small",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "36.00",
+    "driver_charge_per_day": "800.00",
+    "per_day_fee": "3600.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "460.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "1840.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "36.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.215Z",
+    "updated_at": "2026-01-21T15:12:22.215Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 17,
+  "fields": {
+    "name": "Mercedes-Benz E-Class",
+    "description": "Executive luxury sedan with superior comfort and technology",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "3 Large + 2 Small",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "46.00",
+    "driver_charge_per_day": "1000.00",
+    "per_day_fee": "4600.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "580.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "2320.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "46.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.218Z",
+    "updated_at": "2026-01-21T15:12:22.218Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 18,
+  "fields": {
+    "name": "Jaguar XF",
+    "description": "British luxury sedan with distinctive design and performance",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "2 Large + 2 Small",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "44.00",
+    "driver_charge_per_day": "950.00",
+    "per_day_fee": "4400.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "560.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "2240.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "44.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.223Z",
+    "updated_at": "2026-01-21T15:12:22.223Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 19,
+  "fields": {
+    "name": "Volvo XC90",
+    "description": "Luxury SUV with 7-seater capacity and advanced safety features",
+    "image": "",
+    "max_seats": 7,
+    "luggage_capacity": "4 Large + 4 Small",
+    "fuel_type": "diesel",
+    "ac_type": "ac",
+    "fare_per_km": "38.00",
+    "driver_charge_per_day": "900.00",
+    "per_day_fee": "3800.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "480.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "1920.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "38.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.226Z",
+    "updated_at": "2026-01-21T15:12:22.226Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 20,
+  "fields": {
+    "name": "Toyota Camry Hybrid",
+    "description": "Eco-friendly luxury sedan with hybrid technology",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "2 Large + 2 Small",
+    "fuel_type": "hybrid",
+    "ac_type": "ac",
+    "fare_per_km": "28.00",
+    "driver_charge_per_day": "700.00",
+    "per_day_fee": "2800.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "350.00",
+    "min_hours_local": 4,
+    "min_hours_fee_local": "1400.00",
+    "max_distance_min_hours": 40,
+    "fare_per_km_local": "28.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.229Z",
+    "updated_at": "2026-01-21T15:12:22.229Z"
+  }
+},
+{
+  "model": "vehicles.vehicle",
+  "pk": 21,
+  "fields": {
+    "name": "Honda City",
+    "description": "Comfortable sedan with good fuel efficiency and modern features",
+    "image": "",
+    "max_seats": 4,
+    "luggage_capacity": "2 Large + 1 Small",
+    "fuel_type": "petrol",
+    "ac_type": "ac",
+    "fare_per_km": "16.00",
+    "driver_charge_per_day": "500.00",
+    "per_day_fee": "1600.00",
+    "min_km_per_day": 250,
+    "fare_per_hour": "200.00",
+    "min_hours_local": 3,
+    "min_hours_fee_local": "600.00",
+    "max_distance_min_hours": 30,
+    "fare_per_km_local": "16.00",
+    "is_available": true,
+    "is_active": true,
+    "created_at": "2026-01-21T15:12:22.233Z",
+    "updated_at": "2026-01-21T15:12:22.233Z"
+  }
+}
+]
